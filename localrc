@@ -16,7 +16,7 @@ function precmd()
   _titlebar
 }
 
-export PS1='metalgear: %1~$(git_info_for_prompt)%# '
+export PS1='[metalgear %1~$(git_info_for_prompt)]%# '
 
 # allow the use of the Home/End keys
 bindkey '\e[1~' beginning-of-line
