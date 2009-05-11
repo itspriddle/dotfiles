@@ -1,0 +1,24 @@
+# Set terminal title
+function _titlebar()
+{
+  case "$TERM" in
+  xterm*|rxvt*)
+      PROMPT_COMMAND='echo -ne "\033]0;metalgear: ${PWD/$HOME/~}\007"'
+      echo -ne "\033]0;metalgear: ${PWD/$HOME/~}\007"
+      ;;
+  *)
+      ;;
+  esac
+}
+
+function precmd()
+{
+  _titlebar
+}
+
+export PS1='metalgear: %1~$(git_info_for_prompt)%# '
+
+# allow the use of the Home/End keys
+bindkey '\e[1~' beginning-of-line
+bindkey '\e[4~' end-of-line
+

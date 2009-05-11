@@ -1,0 +1,19 @@
+# allow the use of the Home/End keys
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+
+# allow the use of the Delete/Insert keys
+"\e[3~": delete-char
+"\e[2~": quoted-insert
+
+# allow ctrl/alt + arrow keys to work
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+
+# Case insensitive tab completion
+set completion-ignore-case on
+
+# Shows all matches
+set show-all-if-ambiguous on

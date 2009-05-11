@@ -1,0 +1,8 @@
+# Force sudo on gem install
+if [[ "$1" == "install" ]]; then
+  sudo command gem $@
+else
+  command gem $@
+fi
+
+
