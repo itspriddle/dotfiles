@@ -1,0 +1,4 @@
+function manp ()
+{
+  man -t $* | ps2pdf - - | open -f -a Preview
+}
