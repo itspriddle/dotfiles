@@ -3,7 +3,6 @@ function _titlebar()
 {
   case "$TERM" in
   xterm*|rxvt*)
-      PROMPT_COMMAND='echo -ne "\033]0;metalgear: ${PWD/$HOME/~}\007"'
       echo -ne "\033]0;metalgear: ${PWD/$HOME/~}\007"
       ;;
   *)
@@ -16,9 +15,18 @@ function precmd()
   _titlebar
 }
 
-export PS1='[metalgear %1~$(git_info_for_prompt)]%# '
 
 # allow the use of the Home/End keys
 bindkey '\e[1~' beginning-of-line
 bindkey '\e[4~' end-of-line
 
+# Put these in /etc/paths
+#export PATH="/opt/local/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin"
+
+export GISTY_DIR="$HOME/Documents/gists"
+export LSCOLORS=ExGxFxdxCxDxDxBxBxExEx
+export EDITOR='mate -w'
+
+#export TERM='xterm'
+export MANPATH="/usr/local/man:/usr/local/mysql/man:$MANPATH"
+export PS1='[metalgear %1~$(git_info_for_prompt)]%# '

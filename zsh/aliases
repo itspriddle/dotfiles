@@ -2,10 +2,6 @@
 alias ..='cd ..'
 
 # ls
-#alias ls="ls -F"
-#alias l="ls -lAh"
-#alias ll="ls -l"
-#alias la='ls -A'
 alias l='ls'
 alias ll='ls -lh'
 alias lla='ls -alh'
@@ -27,6 +23,7 @@ alias gco='git checkout'
 alias gb='git branch'
 alias gs='git status'
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+alias gw='git instaweb --httpd=webrick -b open'
 
 # rails
 alias sc='script/console'
@@ -35,7 +32,7 @@ alias sg='script/generate'
 alias a='autotest -rails'
 alias tlog='tail -f log/development.log'
 alias scaffold='script/generate nifty_scaffold'
-alias migrate='rake db:migrate db:test:clone'
+alias migrate='rake db:migrate'
 alias rst='touch tmp/restart.txt'
 
 # commands starting with % for pasting from web
