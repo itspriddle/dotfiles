@@ -4,7 +4,6 @@ set guioptions-=R " disable right scrollbar
 set guioptions-=l " disable left scrollbar
 set guioptions-=L " disable left scrollbar
 
-set scrolloff=8
 
 set guifont=Espresso\ Mono:h11
 set guitablabel=%t
@@ -12,7 +11,7 @@ set guitablabel=%t
 
 "colorscheme sunburst
 "colorscheme ir_black
-colorscheme slate
+colorscheme desert
 
 set number
 
@@ -33,3 +32,11 @@ imap <D-[> <C-O><<
 nmap <D-/> ,c<space>
 vmap <D-/> ,c<space>
 imap <D-/> <C-O>,c<space>
+
+set cursorline
+
+" Spelling
+if v:version >= 700
+  set spell
+endif
+
