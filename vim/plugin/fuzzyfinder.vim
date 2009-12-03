@@ -1579,12 +1579,10 @@ let g:FuzzyFinderOptions = { 'Base':{}, 'Buffer':{}, 'File':{}, 'Dir':{},
       \                      'GivenFile':{}, 'GivenDir':{}, 'GivenCmd':{},
       \                      'CallbackFile':{}, 'CallbackItem':{}, }
 "-----------------------------------------------------------------------------
-"let g:FuzzyFinderOptions.Base.key_open           = '<CR>'
-let g:FuzzyFinderOptions.Base.key_open           = '<C-l>'
+let g:FuzzyFinderOptions.Base.key_open           = '<CR>'
 let g:FuzzyFinderOptions.Base.key_open_split     = '<C-j>'
 let g:FuzzyFinderOptions.Base.key_open_vsplit    = '<C-k>'
-"let g:FuzzyFinderOptions.Base.key_open_tab       = '<C-l>'
-let g:FuzzyFinderOptions.Base.key_open_tab       = '<CR>'
+let g:FuzzyFinderOptions.Base.key_open_tab       = '<C-l>'
 let g:FuzzyFinderOptions.Base.key_next_mode      = '<C-t>'
 let g:FuzzyFinderOptions.Base.key_prev_mode      = '<C-y>'
 let g:FuzzyFinderOptions.Base.key_ignore_case    = '<C-g><C-g>'
