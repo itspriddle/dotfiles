@@ -40,3 +40,6 @@ if v:version >= 700
   set spell
 endif
 
+" Let full screen mode use the whole screen
+set fuopt+=maxhorz
+
