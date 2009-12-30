@@ -2,10 +2,9 @@
 require 'rubygems'
 require 'irb/completion'
 require 'irb/ext/save-history'
-
-# Colorize
 require 'wirble'
-#Wirble.init          # This causes problems when exiting IRB
+require 'pp'
+
 Wirble.colorize
 
 IRB.conf[:SAVE_HISTORY] = 2000
@@ -19,6 +18,7 @@ IRB.conf[:AUTO_INDENT] = true
 IRB_START_TIME = Time.now.to_i
 at_exit { puts "\nirb session duration: #{Time.seconds_to_timestamp(Time.now.to_i - IRB_START_TIME)}" }
 
+alias q exit
 
 class Time
   def self.seconds_to_timestamp(seconds = 0)
