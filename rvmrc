@@ -1,0 +1,4 @@
+rvm_make_flags="-j 3"
+rvm_archflags="-arch x86_64"
+rvm_path=/opt/rvm
+
