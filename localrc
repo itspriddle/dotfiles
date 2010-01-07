@@ -23,10 +23,15 @@ bindkey '\e[4~' end-of-line
 # Put these in /etc/paths
 #export PATH="/opt/local/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin"
 
-export GISTY_DIR="$HOME/Documents/gists"
 export LSCOLORS=ExGxFxdxCxDxDxBxBxExEx
 export EDITOR='mate -w'
 
 #export TERM='xterm'
 export MANPATH="/usr/local/man:/usr/local/mysql/man:$MANPATH"
 export PS1='[metalgear %1~$(git_info_for_prompt)]%# '
+
+# Ruby/gems
+export PATH="$HOME/.gem/ruby/1.8/bin:$PATH"
+export GEM_HOME="$HOME/.gem/ruby/1.8"
+export GEM_PATH="$HOME/.gem/ruby/1.8"
+
