@@ -1,5 +1,6 @@
 # cd
 alias ..='cd ..'
+alias ...='cd ../..'
 
 # ls
 alias l='ls'
@@ -34,6 +35,7 @@ alias tlog='tail -f log/development.log'
 alias scaffold='script/generate nifty_scaffold'
 alias migrate='rake db:migrate'
 alias rst='touch tmp/restart.txt'
+alias remigrate='rake db:migrate VERSION=0 && rake db:migrate && rake db:seed'
 
 # commands starting with % for pasting from web
 alias %=' '
