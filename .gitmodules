@@ -1,0 +1,3 @@
+[submodule "Library/Application Support/TextMate"]
+	path = Library/Application Support/TextMate
+	url = git://github.com/itspriddle/textmate-config.git
