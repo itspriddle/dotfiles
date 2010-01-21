@@ -20,6 +20,14 @@ at_exit { puts "\nirb session duration: #{Time.seconds_to_timestamp(Time.now.to_
 
 alias q exit
 
+def time(times = 1)
+  require 'benchmark'
+  ret = nil
+  Benchmark.bm { |x| x.report { times.times { ret = yield } } }
+  ret
+end
+
+
 class Time
   def self.seconds_to_timestamp(seconds = 0)
     out = []
