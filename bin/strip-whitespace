@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ "$1" = "" ]; then
+  echo "Usage: $0 [file|directory]"
+  exit 1
+fi
+
+strip() {
+  find $1 -type f -exec perl -i -pe 's/[\t ]+$//g' {} \; -exec echo Annihilated whitepsace in {} \;
+}
+
+strip $1
+

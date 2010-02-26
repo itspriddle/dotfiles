@@ -1,0 +1,2 @@
+#!/bin/sh
+open /System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app

@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+# = USAGE
+#  jsmin big.js
+#  jsmin < big.js > small.js
+#  curl -O http://example.com/big.js | jsmin > small.js
+#
+
+require 'rubygems'
+
+begin
+  require 'jsmin'
+rescue LoadError => boom
+  warn "Couldn't load JSMin: #{boom}"
+end
+
+def help
+  require 'rdoc/usage'
+  RDoc.usage('USAGE')
+end
+
+def from_file
+  file = ARGV.first
+  return help if file.nil?
+  JSMin.minify(File.open(file, 'r').read)
+end
+
+def from_stdin
+  JSMin.minify($stdin)
+end
+
+if $stdin.tty?
+  puts from_file
+else
+  puts from_stdin
+end
+
