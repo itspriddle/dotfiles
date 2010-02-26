@@ -3,7 +3,7 @@ function _titlebar()
 {
   case "$TERM" in
   xterm*|rxvt*)
-      echo -ne "\033]0;metalgear: ${PWD/$HOME/~}\007"
+      echo -ne "\033]0;metalgear: ${PWD/$HOME/~}$(git_info_for_prompt)\007"
       ;;
   *)
       ;;
