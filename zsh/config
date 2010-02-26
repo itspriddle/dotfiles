@@ -1,4 +1,4 @@
-[[ -d ~/bin ]] && export PATH="~/bin:${PATH}"
+[[ -d ~/bin ]] && export PATH="$HOME/bin:${PATH}"
 
 # makes color constants available
 autoload -U colors
