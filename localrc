@@ -16,10 +16,6 @@ function precmd()
 }
 
 
-# allow the use of the Home/End keys
-bindkey '\e[1~' beginning-of-line
-bindkey '\e[4~' end-of-line
-
 # Put these in /etc/paths
 #export PATH="/opt/local/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin"
 
