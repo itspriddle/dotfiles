@@ -1,5 +1,5 @@
 [user]
-  name = Joshua Priddle
+  name  = Joshua Priddle
   email = jpriddle@nevercraft.net
 
 [color]
@@ -23,7 +23,7 @@
 #   untracked = cyan
 
 [core]
-  whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  whitespace   = fix,-indent-with-non-tab,trailing-space,cr-at-eol
   excludesfile = /Users/priddle/.gitignore
   editor       = mate -w
 
