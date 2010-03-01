@@ -1,14 +1,14 @@
 [user]
-	name = Joshua Priddle
-	email = jpriddle@nevercraft.net
+  name = Joshua Priddle
+  email = jpriddle@nevercraft.net
 
 [color]
-	ui = auto
+  ui = auto
 
-# [color "branch"]
-#  current = yellow reverse
-#  local   = yellow
-#  remote  = green
+[color "branch"]
+  current = yellow reverse
+  local   = yellow
+  remote  = green
 
 # [color "diff"]
 #   meta       = yellow bold
@@ -16,25 +16,24 @@
 #   old        = red bold
 #   new        = green bold
 #   whitespace = red reverse
-
+#
 # [color "status"]
-#  added     = yellow
-#  changed   = green
-#  untracked = cyan
+#   added     = yellow
+#   changed   = green
+#   untracked = cyan
 
 [core]
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-	excludesfile = /Users/priddle/.gitignore
-	editor       = mate -w
+  excludesfile = /Users/priddle/.gitignore
+  editor       = mate -w
 
 [github]
-	user         = itspriddle
-	token        = 21fb1a10ad22d5c9e949206f9b3d87a6
+  user  = itspriddle
+  token = token
 
 [alias]
-	lg      = log --graph --pretty=format:'[%Cred%h%Creset] - %Cred%ae%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-	up      = !sh -c 'git pull && git log --pretty=format:\"%Cred%h - %ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}..'
-	pa      = add --patch
-	unstage = reset HEAD --
-	last    = log -1 HEAD
-
+  lg      = log --graph --pretty=format:'[%Cred%h%Creset] - %Cred%ae%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  up      = !sh -c 'git pull && git log --pretty=format:\"%Cred%h - %ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}..'
+  pa      = add --patch
+  unstage = reset HEAD --
+  last    = log -1 HEAD
