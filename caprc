@@ -1,1 +1,5 @@
-require 'capistrano_colors'
+begin
+  require 'capistrano_colors'
+rescue LoadError => boom
+  warn "Couldn't load capistrano colors: #{boom}"
+end
