@@ -1,3 +1,6 @@
 [submodule "Library/Application Support/TextMate"]
 	path = Library/Application Support/TextMate
 	url = git://github.com/itspriddle/textmate-config.git
+[submodule "Library/Application Support/vim/config"]
+	path = Library/Application Support/vim/config
+	url = git://github.com/itspriddle/vim-config
