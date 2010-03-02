@@ -7,7 +7,7 @@ task :install do
     source, file = file, File.basename(file)
 
     puts "linking ~/.#{file}"
-    #system %Q{rm -f "$HOME/.#{file}"}
+    system %Q{unlink "$HOME/.#{file}"}
     system %Q{ln -s "$PWD/#{source}" "$HOME/.#{file}"}
   end
 end
@@ -18,7 +18,5 @@ task :untracked do
 end
 
 def manifest
-  files = Dir['*']
-  files -= %w(Rakefile)
-  files.sort
+  %w[vim vimrc gvimrc].sort
 end
