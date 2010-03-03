@@ -1,11 +1,15 @@
-#!/usr/bin/ruby
-require 'rubygems'
-require 'irb/completion'
+require 'rubygems' if RUBY_VERSION.to_f == 1.8
+
 require 'irb/ext/save-history'
-require 'wirble'
 require 'pp'
 
-Wirble.colorize
+begin
+  require 'wirble'
+  Wirble.init
+  Wirble.colorize
+rescue LoadError => err
+  warn "Couldn't load Wirble: #{err}"
+end
 
 IRB.conf[:SAVE_HISTORY] = 2000
 IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
@@ -14,60 +18,65 @@ IRB.conf[:PROMPT_MODE] = :SIMPLE
 
 IRB.conf[:AUTO_INDENT] = true
 
-### irb session duration
-IRB_START_TIME = Time.now.to_i
-at_exit { puts "\nirb session duration: #{Time.seconds_to_timestamp(Time.now.to_i - IRB_START_TIME)}" }
 
 alias q exit
 
-def time(times = 1)
-  require 'benchmark'
-  ret = nil
-  Benchmark.bm { |x| x.report { times.times { ret = yield } } }
-  ret
-end
+IRB_START_TIME = Time.now
+at_exit { puts "\n#{IRB.session_duration}" }
 
+### irb session duration
+module IRB
+  def self.session_duration
+    return unless defined?(IRB_START_TIME) && IRB_START_TIME.is_a?(Time)
 
-class Time
-  def self.seconds_to_timestamp(seconds = 0)
-    out = []
-
-    mins = (seconds.to_f / 60.0).floor
+    seconds = Time.now.to_i - IRB_START_TIME.to_i
+    mins    = (seconds.to_f / 60.0).floor
 
     if mins.to_f >= 60
       hours = (mins.to_f / 60).floor
-      mins = (mins.to_f - (hours.to_f * 60.0))
+      mins  = (mins.to_f - (hours.to_f * 60.0))
     end
 
     if hours.to_f >= 24
-      days = (hours.to_f / 24.0).floor
+      days  = (hours.to_f / 24.0).floor
       hours = (hours.to_f % 24.0).floor
     end
 
     if days.to_f >= 7
       weeks = (days.to_f / 7).floor
-      days = (days - (weeks * 7)).floor
+      days  = (days - (weeks * 7)).floor
     end
 
     secs = (seconds % 60).floor
 
-    out << "#{weeks.to_i} week#{weeks > 1 ? 's' : ''}"  unless weeks.nil? or weeks.to_i == 0
-    out << "#{days.to_i} day#{days > 1 ? 's' : ''}"     unless days.nil?  or days.to_i == 0
-    out << "#{hours.to_i} hour#{hours > 1 ? 's' : ''}"  unless hours.nil? or hours.to_i == 0
-    out << "#{mins.to_i} minute#{mins > 1 ? 's' : ''}"  unless mins.nil?  or mins.to_i == 0
-
-    sec_stamp = "#{secs.to_i} second#{secs == 1 ? '' : 's'}"
-    if out.size == 0
-      sec_stamp
-    else
-      out.join(', ') + " and #{sec_stamp}"
+    out = [].tap do |o|
+      o << "#{weeks.to_i} week#{weeks > 1 ? 's' : ''}"  unless weeks.nil? or weeks.to_i == 0
+      o << "#{days.to_i} day#{days > 1 ? 's' : ''}"     unless days.nil?  or days.to_i == 0
+      o << "#{hours.to_i} hour#{hours > 1 ? 's' : ''}"  unless hours.nil? or hours.to_i == 0
+      o << "#{mins.to_i} minute#{mins > 1 ? 's' : ''}"  unless mins.nil?  or mins.to_i == 0
     end
 
+    sec_stamp = "#{secs.to_i} second#{secs == 1 ? '' : 's'}"
+
+    label = 'irb session duration: '
+
+    if out.size == 0
+      label << sec_stamp
+    else
+      label << out.join(', ') + " and #{sec_stamp}"
+    end
   end
 end
 
-
 class Object
+  # run benchmarks: time { do something }
+  def time(times = 1)
+    require 'benchmark'
+    ret = nil
+    Benchmark.bm { |x| x.report { times.times { ret = yield } } }
+    ret
+  end
+
   # list methods which aren't in superclass
   def local_methods(obj = self)
     (obj.methods - obj.class.superclass.instance_methods).sort
@@ -104,4 +113,4 @@ def paste
   `pbpaste`
 end
 
-load File.dirname(__FILE__) + '/.railsrc' if $0 == 'irb' && ENV['RAILS_ENV']
+load File.dirname(__FILE__) + '/.railsrc' if ($0 == 'irb' or $0 == 'ruby') && ENV['RAILS_ENV']
