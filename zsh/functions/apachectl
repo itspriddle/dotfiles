@@ -1,8 +1,0 @@
-# Force sudo on gem install
-if [[ `whoami` != "root" ]]; then
-  sudo command apachectl $@
-else
-  command apachectl $@
-fi
-
-

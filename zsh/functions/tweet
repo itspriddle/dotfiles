@@ -1,4 +1,0 @@
-function tweet {
-  curl -n -d status="$*" https://twitter.com/statuses/update.xml --insecure -H "X-Twitter-Client: 1337tweet" &> /dev/null
-  echo "tweet'd"
-}

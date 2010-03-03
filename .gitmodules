@@ -4,3 +4,6 @@
 [submodule "Library/Application Support/vim/config"]
 	path = Library/Application Support/vim/config
 	url = git://github.com/itspriddle/vim-config
+[submodule "Library/Application Support/zsh"]
+	path = Library/Application Support/zsh
+	url = git://github.com/itspriddle/zsh-config

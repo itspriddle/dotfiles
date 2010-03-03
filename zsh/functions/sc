@@ -1,7 +1,0 @@
-function sc() {
-  if [ -f ./script/rails ]; then
-    rails console $argv
-  else
-    ./script/console $argv
-  fi
-}
