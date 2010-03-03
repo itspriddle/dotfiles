@@ -7,3 +7,9 @@
 [submodule "Library/Application Support/zsh"]
 	path = Library/Application Support/zsh
 	url = git://github.com/itspriddle/zsh-config
+[submodule "zsh"]
+	path = zsh
+	url = git://github.com/itspriddle/zsh-config
+[submodule "vim"]
+	path = vim
+	url = git://github.com/itspriddle/vim-config
