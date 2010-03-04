@@ -1,14 +1,17 @@
-require 'rubygems' if RUBY_VERSION.to_f == 1.8
+loadus = %w[irb/completion irb/ext/save-history looksee/shortcuts wirble pp]
+loadus.unshift 'rubygems' if RUBY_VERSION.to_f == 1.8
 
-require 'irb/ext/save-history'
-require 'pp'
+loadus.each do |gem|
+  begin
+    require gem
+  rescue LoadError => err
+    warn "Couldn't load #{gem}: #{err}"
+  end
+end
 
-begin
-  require 'wirble'
+if defined?(Wirble)
   Wirble.init
   Wirble.colorize
-rescue LoadError => err
-  warn "Couldn't load Wirble: #{err}"
 end
 
 IRB.conf[:SAVE_HISTORY] = 2000
@@ -97,20 +100,14 @@ class Object
   end
 end
 
-def copy(str)
-  IO.popen('pbcopy', 'w') { |f| f << str.to_s }
-end
+module Kernel
+	def copy(str)
+	  IO.popen('pbcopy', 'w') { |f| f << str.to_s }
+	end
 
-def copy_history
-  history = Readline::HISTORY.entries
-  index   = history.rindex("exit") || -1
-  content = history[(index+1)..-2].join("\n")
-  puts content
-  copy content
-end
-
-def paste
-  `pbpaste`
+	def paste
+	  `pbpaste`
+	end
 end
 
 load File.dirname(__FILE__) + '/.railsrc' if ($0 == 'irb' or $0 == 'ruby') && ENV['RAILS_ENV']
