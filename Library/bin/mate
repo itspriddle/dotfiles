@@ -1,0 +1,11 @@
+function mate() {
+  if [ $# -eq 0 ]; then
+    local tm_arg='.'
+  else
+    local tm_arg="$@"
+  fi
+  /Applications/TextMate.app/Contents/Resources/mate $tm_arg
+}
+
+mate $@
+
