@@ -1,3 +1,5 @@
+#!/bin/sh
+
 function mate() {
   if [ $# -eq 0 ]; then
     local tm_arg='.'
@@ -8,4 +10,3 @@ function mate() {
 }
 
 mate $@
-
