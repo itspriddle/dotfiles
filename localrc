@@ -3,7 +3,7 @@ function _titlebar()
 {
   case "$TERM" in
   xterm*|rxvt*)
-      echo -ne "\033]0;${PROMPT_HOST:=$HOST}: ${PWD/$HOME/~}$(git_info_for_prompt)\007"
+      echo -ne "\033]0;${PROMPT_HOST:=$HOST}: ${PWD/$HOME/~} $(git_info_for_prompt)\007"
       ;;
   *)
       ;;
@@ -14,9 +14,11 @@ function precmd()
 {
   _titlebar
 }
-
+export TERM='xterm-color'
 export PROMPT_HOST="macbook"
-export PS1="[${PROMPT_HOST:=$HOST} %1~\$(git_info_for_prompt)]%# "
+#export PS1="[${PROMPT_HOST:=$HOST} %1~%{$fg_bold[green]%}\$(git_info_for_prompt)%{$reset_color%}]%# "
+export PS1='[%{$fg_bold[blue]%}%~%{$reset_color%}%{$fg_bold[green]%}$(git_info_for_prompt)%{$reset_color%}]%# '
+
 declare PROMPT=$PS1
 #declare RPROMPT=$'%T %{\e[01;31m%}[%!]%{\e[0m%}'
 
