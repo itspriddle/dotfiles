@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$1" = "" ]; then
+if [ $# -eq 0 ]; then
   echo "Usage: $0 [file|directory]"
   exit 1
 fi
@@ -10,4 +10,3 @@ strip() {
 }
 
 strip $1
-
