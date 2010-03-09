@@ -10,7 +10,7 @@ set viminfo='20,\"50 	" read/write a .viminfo file, don't store more
 			" than 50 lines of registers
 set history=50 		" keep 50 lines of command line history
 set ruler 		" show the cursor position all the time
-set tabstop=4		" set tab width = 4
+"set tabstop=4		" set tab width = 4
 set showcmd 		" Show (partial) command in status line.
 set showmatch 		" Show matching brackets.
 "set autowrite 		" Automatically save before commands like :next and :make
@@ -20,9 +20,9 @@ set mouse=a 		" Enable mouse usage (all modes) in terminals
 " Uncomment the following to have Vim load indentation rules according to the
 " detected filetype. Per default Debian Vim only load filetype specific
 " plugins.
-"if has("autocmd")
-"  filetype indent on
-"endif
+if has("autocmd")
+  filetype indent on
+endif
 
 " Only do this part when compiled with support for autocommands
 if has("autocmd")
