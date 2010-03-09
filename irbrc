@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 loadus = %w[irb/completion irb/ext/save-history looksee/shortcuts wirble pp]
 loadus.unshift 'rubygems' if RUBY_VERSION.to_f == 1.8
 
