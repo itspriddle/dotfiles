@@ -103,13 +103,13 @@ module Kernel
     ret
   end
 
-	def copy(str)
-	  IO.popen('pbcopy', 'w') { |f| f << str.to_s }
-	end
+  def copy(str)
+    IO.popen('pbcopy', 'w') { |f| f << str.to_s }
+  end
 
-	def paste
-	  `pbpaste`
-	end
+  def paste
+    `pbpaste`
+  end
 end
 
 load File.dirname(__FILE__) + '/.railsrc' if ($0 == 'irb' or $0 == 'ruby') && ENV['RAILS_ENV']
