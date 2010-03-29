@@ -1,5 +1,3 @@
-"filetype plugin indent on 		" Automatically detect file types.
-filetype plugin on 		" Automatically detect file types.
 set nocompatible 	" We don't want vi compatibility.
 
 syntax enable		" enable syntax highlighting
@@ -10,7 +8,9 @@ set viminfo='20,\"50 	" read/write a .viminfo file, don't store more
 			" than 50 lines of registers
 set history=50 		" keep 50 lines of command line history
 set ruler 		" show the cursor position all the time
-"set tabstop=4		" set tab width = 4
+set tabstop=4		" set tab width = 4
+set shiftwidth=4
+set noexpandtab
 set showcmd 		" Show (partial) command in status line.
 set showmatch 		" Show matching brackets.
 "set autowrite 		" Automatically save before commands like :next and :make
@@ -21,7 +21,7 @@ set mouse=a 		" Enable mouse usage (all modes) in terminals
 " detected filetype. Per default Debian Vim only load filetype specific
 " plugins.
 if has("autocmd")
-  filetype indent on
+  filetype plugin indent on
 endif
 
 " Only do this part when compiled with support for autocommands
@@ -54,7 +54,7 @@ set incsearch  " show the `best match so far' as search strings are typed:
 
 
 " Kill trailing whitespace from documents on save
-"autocmd BufWritePre * :%s/\s\+$//e
+autocmd BufWritePre * :%s/\s\+$//e
 
 " Remap space to :
 noremap <space> :
@@ -112,5 +112,10 @@ let g:gist_browser_command = 'echo %URL% | pbcopy'
 
 map <Leader>gco :GitCheckout<space>
 
+" bind ctrl-l to hashrocket
+imap <C-l> <Space>=><Space>
+
+
 " Write file if you forget to `sudo vim'
 "command W w !sudo tee % >/dev/null
+
