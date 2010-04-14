@@ -13,5 +13,5 @@ task :install do
 end
 
 def manifest
-  %w[caprc gitignore hushlogin inputrc localrc railsrc rvmrc paths].sort
+  %w[caprc gitignore hushlogin inputrc localrc railsrc rvmrc paths my.cnf].sort
 end
