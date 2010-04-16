@@ -1,0 +1,4 @@
+"@\UF702" = "moveToBeginningOfLine:"; 
+"@\UF703" = "moveToEndOfLine:"; 
+"$@\UF702" = "moveToBeginningOfLineAndModifySelection:"; 
+"$@\UF703" = "moveToEndOfLineAndModifySelection:";
