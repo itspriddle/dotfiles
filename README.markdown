@@ -38,7 +38,7 @@ The following plugins are installed
 * vim-git
 * vim-liquid
 * vim-markdown
-* vim-pathogen.vim *REQUIRED*
+* vim-pathogen *REQUIRED*
 * vim-rails
 * vim-ruby
 
