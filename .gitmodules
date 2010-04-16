@@ -34,3 +34,6 @@
 [submodule "vim/bundle/gist"]
 	path = vim/bundle/gist
 	url = git://github.com/mattn/gist-vim.git
+[submodule "vim/bundle/ruby"]
+	path = vim/bundle/ruby
+	url = git://github.com/vim-ruby/vim-ruby.git
