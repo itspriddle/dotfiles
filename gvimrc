@@ -18,7 +18,7 @@ set number
 " Align assignments/hashes similar to TextMate
 vmap <D-M-]> :Align =I => =<CR>
 
-map ,t :FuzzyFinderTextMate<CR>
+"map ,t :FuzzyFinderTextMate<CR>
 
 " bind command-] to shift right
 nmap <D-]> >>
