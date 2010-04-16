@@ -1,34 +1,34 @@
-[submodule "bundle/fuzzyfinder"]
+[submodule "vim/bundle/fuzzyfinder"]
 	path = vim/bundle/fuzzyfinder
 	url = git://github.com/itspriddle/vim-fuzzyfinder-pathogen.git
-[submodule "bundle/nerdtree"]
+[submodule "vim/bundle/nerdtree"]
 	path = vim/bundle/nerdtree
 	url = git://github.com/scrooloose/nerdtree.git
-[submodule "bundle/snipmate"]
+[submodule "vim/bundle/snipmate"]
 	path = vim/bundle/snipmate
 	url = git://github.com/msanders/snipmate.vim.git
-[submodule "bundle/align"]
+[submodule "vim/bundle/align"]
 	path = vim/bundle/align
 	url = git://github.com/tsaleh/vim-align.git
-[submodule "bundle/endwise"]
+[submodule "vim/bundle/endwise"]
 	path = vim/bundle/endwise
 	url = git://github.com/tpope/vim-endwise.git
-[submodule "bundle/fugitive"]
+[submodule "vim/bundle/fugitive"]
 	path = vim/bundle/fugitive
 	url = git://github.com/tpope/vim-fugitive.git
-[submodule "bundle/liquid"]
+[submodule "vim/bundle/liquid"]
 	path = vim/bundle/liquid
 	url = git://github.com/tpope/vim-liquid.git
-[submodule "bundle/markdown"]
+[submodule "vim/bundle/markdown"]
 	path = vim/bundle/markdown
 	url = git://github.com/tpope/vim-markdown.git
-[submodule "bundle/rails"]
+[submodule "vim/bundle/rails"]
 	path = vim/bundle/rails
 	url = git://github.com/tpope/vim-rails.git
-[submodule "bundle/git"]
+[submodule "vim/bundle/git"]
 	path = vim/bundle/git
 	url = git://github.com/tpope/vim-git.git
-[submodule "bundle/themes"]
+[submodule "vim/bundle/themes"]
 	path = vim/bundle/themes
 	url = git://github.com/itspriddle/vim-themes.git
 [submodule "vim/bundle/gist"]
