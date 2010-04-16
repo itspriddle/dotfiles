@@ -1,2 +1,0 @@
-delimitMate.vba: call delete('/Users/priddle/.vim/doc/delimitMate.txt')|call delete('/Users/priddle/.vim/plugin/delimitMate.vim')
-Align.vba: call delete('/Users/priddle/.vim/plugin/AlignPlugin.vim')|call delete('/Users/priddle/.vim/plugin/AlignMapsPlugin.vim')|call delete('/Users/priddle/.vim/plugin/cecutil.vim')|call delete('/Users/priddle/.vim/doc/Align.txt')|call delete('/Users/priddle/.vim/autoload/Align.vim')|call delete('/Users/priddle/.vim/autoload/AlignMaps.vim')
