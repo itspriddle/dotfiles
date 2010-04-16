@@ -31,3 +31,6 @@
 [submodule "bundle/themes"]
 	path = vim/bundle/themes
 	url = git://github.com/itspriddle/vim-themes.git
+[submodule "vim/bundle/gist"]
+	path = vim/bundle/gist
+	url = git://github.com/mattn/gist-vim.git
