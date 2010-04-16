@@ -1,3 +1,8 @@
+filetype off
+call pathogen#helptags()
+call pathogen#runtime_append_all_bundles()
+
+
 set nocompatible 	" We don't want vi compatibility.
 
 syntax enable		" enable syntax highlighting
