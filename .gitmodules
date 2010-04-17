@@ -49,3 +49,6 @@
 [submodule "vim/bundle/ack"]
 	path = vim/bundle/ack
 	url = git://github.com/mileszs/ack.vim.git
+[submodule "vim/bundle/lesscss"]
+	path = vim/bundle/lesscss
+	url = git://gist.github.com/369178.git
