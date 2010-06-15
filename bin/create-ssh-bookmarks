@@ -1,0 +1,56 @@
+#!/usr/bin/env ruby
+
+## Customizable stuff:
+$locations_dir = File.expand_path("~/Library") + "/SSH Locations"
+
+require "fileutils"
+
+$debug = ARGV[0] == '-d'
+
+FileUtils.mkdir_p($locations_dir)
+FileUtils.rm(Dir.glob($locations_dir + "/*"))
+
+def make_webloc(hostname)
+  loc_filename = $locations_dir + "/#{hostname} (ssh).webloc"
+  begin
+    File.open(loc_filename, 'w') do |file|
+      file.write <<-XML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+        <dict>
+            <key>URL</key>
+            <string>ssh://#{hostname}</string>
+        </dict>
+        </plist>
+      XML
+    end
+  rescue Exception => e
+    STDERR.write "Can't write webloc file #{loc_filename} for host #{hostname}: #{e}"
+  end
+end
+
+# Known hosts:
+['/etc/ssh/ssh_known_hosts', File.expand_path('~/.ssh/known_hosts')].each do |path|
+  begin
+    File.open(path).each do |line|
+      hostname = line.split(',')[0]
+      make_webloc(hostname) unless hostname.match(/ /)
+    end
+  rescue Errno::ENOENT => e
+    puts "Can't open #{path}: #{e}" if $debug
+  end
+end
+
+# SSH Config parsing:
+['/etc/ssh/ssh_config', File.expand_path('~/.ssh/config')].each do |path|
+  begin
+    File.open(path).each do |line|
+      if line.match /^\s*Host\s+(\S+)\s*$/
+        host = $1
+        make_webloc(host) unless host.match /\*/
+      end
+    end
+  rescue Errno::ENOENT => e
+  end
+end
