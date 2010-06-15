@@ -9,10 +9,10 @@ to keep things relatively tidy.
 Installation
 ------------
 
-Before installing, backup ~/.vim ~/.vimrc and ~/.gvimrc
+Before installing, backup `~/.vim` `~/.vimrc` and `~/.gvimrc`
 
-I keep this repo in ~/Library/dotfiles/vim and symlink
-~/.vim ~/.vimrc and ~/.gvimrc. This lets me run a
+I keep this repo in `~/Library/dotfiles/vim` and symlink
+`~/.vim`, `~/.vimrc` and `~/.gvimrc`. This lets me run a
 quick `git pull origin master` to fetch the latest
 updates.
 
