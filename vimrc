@@ -22,6 +22,8 @@ set showmatch 		" Show matching brackets.
 "set hidden 		" Hide buffers when they are abandoned
 set mouse=a 		" Enable mouse usage (all modes) in terminals
 
+let mapleader = ","
+
 " Uncomment the following to have Vim load indentation rules according to the
 " detected filetype. Per default Debian Vim only load filetype specific
 " plugins.
@@ -40,9 +42,7 @@ if has("autocmd")
   \ endif
 endif
 
-map ,d :execute 'NERDTreeToggle ' .getcwd()<CR>
-nmap ,t :FuzzyFinderTextMate<CR>
-nmap ,r :FuzzyFinderMruFile<CR>
+map <leader>d :execute 'NERDTreeToggle ' .getcwd()<CR>
 
 " Code folding
 "au BufWinLeave ?* mkview
@@ -108,14 +108,14 @@ let g:gist_detect_filetype = 1
 
 
 " ,F to startup an ack search
-map ,f :Ack<space>
+map <leader>f :Ack<space>
 
 " gist.vim
 " Copy gist url to clipboard when adding
 let g:gist_open_browser_after_post = 1
 let g:gist_browser_command = 'echo %URL% | pbcopy'
 
-map <Leader>gco :GitCheckout<space>
+map <leader>gco :GitCheckout<space>
 
 " bind ctrl-l to hashrocket
 imap <C-l> <Space>=><Space>
@@ -123,4 +123,11 @@ imap <C-l> <Space>=><Space>
 
 " Write file if you forget to `sudo vim'
 "command W w !sudo tee % >/dev/null
+
+"let g:CommandTMaxHeight = 20
+"let g:CommandTMatchWindowAtTop = 1
+""let g:CommandTAcceptSelectionTabMap = '<CR>'
+
+nmap ,t :FuzzyFinderTextMate<CR>
+nmap ,r :FuzzyFinderMruFile<CR>
 
