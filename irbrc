@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-loadus = %w[irb/completion irb/ext/save-history looksee/shortcuts wirble pp]
+loadus = %w[irb/completion irb/ext/save-history looksee/shortcuts wirble pp ap]
 loadus.unshift 'rubygems' if RUBY_VERSION.to_f == 1.8
 
 loadus.each do |gem|
