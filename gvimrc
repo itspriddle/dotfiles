@@ -5,18 +5,15 @@ set guioptions-=l " disable left scrollbar
 set guioptions-=L " disable left scrollbar
 
 
-set guifont=Espresso\ Mono:h12
+set guifont=Espresso\ Mono:h11
 set guitablabel=%t
 "set transparency=7
 
-"colorscheme sunburst
 colorscheme ir_black
-"colorscheme desert
+"colorscheme vilight
 
 set number
 
-" Align assignments/hashes similar to TextMate
-vmap <D-M-]> :Align =I => =<CR>
 
 "map ,t :FuzzyFinderTextMate<CR>
 
@@ -47,7 +44,7 @@ endif
 set fuopt+=maxhorz
 
 " binds \ T to taglist (sorta like textmate apple-shift-t)
-map ,T :TlistToggle<CR>
+map <leader>T :TlistToggle<CR>
 let Tlist_Ctags_Cmd='/opt/local/bin/ctags'
 let Tlist_Show_Menu=1
 let Tlist_GainFocus_On_ToggleOpen=1
@@ -60,4 +57,7 @@ let Tlist_Use_Right_Window=1
 imap <M-BS>         <C-w>
 " cmd-backspace: delete line
 imap <D-BS>         <C-u>
+
+" Align assignments/hashes similar to TextMate
+vmap <D-M-]> :Align =I => =<CR>
 
