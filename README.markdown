@@ -11,41 +11,41 @@ My dot files, randomly collected over the years.
 
 ### Details
 
-**caprc**
+**caprc** 
 Loads the `capistrano_colors` gem so you see colors on `cap deploy`
 
-**gemrc**
+**gemrc** 
 Sets options for `gem`, disables docs for faster installs
 
-**gitconfig**
+**gitconfig** 
 My base gitconfig
 
-**gitignore**
+**gitignore** 
 Systemwide git ignore file
 
-**hushlogin**
+**hushlogin** 
 Silences any messages from being printed when opening a shell (such as `/etc/motd`)
 
-**inputrc**
+**inputrc** 
 Terminal behavior
 
-**irbrc**
+**irbrc** 
 Configure `irb` defaults, and add some helper methods
 
-**localrc**
+**localrc** 
 Shell configurations local to this machine
 
-**localrc-private**
+**localrc-private** 
 Shell configurations local to this machine, kept out of the git repo
 
-**my.cnf**
+**my.cnf** 
 Set options for `mysql`
 
-**paths**
+**paths** 
 Extra paths added to `PATH` when ZSH is sourced
 
-**railsrc**
+**railsrc** 
 Extra `irb` settings/helpers loaded only for a rails app
 
-**rvmrc**
+**rvmrc** 
 Settings for `rvm`
