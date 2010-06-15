@@ -9,6 +9,7 @@ task :install do
     puts "linking ~/.#{file}"
     system %Q{unlink "$HOME/.#{file}"}
     system %Q{ln -s "$PWD/#{source}" "$HOME/.#{file}"}
+    puts "Done! Update `#{ENV['HOME']}/.paths'!"
   end
 end
 
