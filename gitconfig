@@ -42,11 +42,14 @@
   last    = !git --no-pager log -1 HEAD && echo
   web     = instaweb --httpd=webrick -b open
   pending = !git --no-pager log origin/master..master && echo
-  browse  = !open $(\
-    echo "`git config remote.origin.url`" |\
-    ruby -e \"print 'http://' + ARGF.read.sub(/^(git\\:\\/\\/|git@|http\\:\\/\\/)/, '').sub(':', '/').sub(/\\.git\\$/, '')\"\
+  browse  = !open $( \
+    echo "`git config remote.origin.url`" | \
+    ruby -e \"url = ARGF.read\" \
+         -e \"url.sub!(/^(git\\:\\/\\/|git@|http\\:\\/\\/|https\\:\\/\\/)/, '')\" \
+         -e \"url.sub!(':', '/')\" \
+         -e \"url.sub!(/\\.git\\$/, '')\" \
+         -e \"print 'http://' + url\" \
   )
 
 [push]
   default = current
-
