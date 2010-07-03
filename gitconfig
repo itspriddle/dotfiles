@@ -43,7 +43,7 @@
   web     = instaweb --httpd=webrick -b open
   pending = !git --no-pager log origin/master..master && echo
   browse  = !open $( \
-    echo "`git config remote.origin.url`" | \
+    echo \"`git config remote.origin.url`\" | \
     ruby -e \"url = ARGF.read\" \
          -e \"url.sub!(/^(git\\:\\/\\/|git@|http\\:\\/\\/|https\\:\\/\\/)/, '')\" \
          -e \"url.sub!(':', '/')\" \
