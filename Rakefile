@@ -15,6 +15,7 @@ end
 
 def manifest
   %w[
+    ackrc
     caprc
     gitignore
     hushlogin
