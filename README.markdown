@@ -18,10 +18,8 @@ updates.
 
     mkdir ~/Library/dotfiles
     cd ~/Library/dotfiles
-    git clone git://github.com/itspriddle/vim-config.git vim
+    git clone git://github.com/itspriddle/vim-config.git vim --recursive
     cd vim
-    git submodule init
-    git submodule update
     rake install
 
 Included Plugins
