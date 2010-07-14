@@ -61,3 +61,6 @@ imap <D-BS>         <C-u>
 " Align assignments/hashes similar to TextMate
 vmap <D-M-]> :Align =I => =<CR>
 
+" No blinking cursors
+set gcr=a:blinkon0
+
