@@ -1,3 +1,13 @@
+if has("gui_macvim")
+  " No blinking cursors
+  set macmeta
+  macmenu &File.New\ Tab key=<nop>
+  map <D-t> <Plug>PeepOpen
+  " Let full screen mode use the whole screen
+  set fuopt+=maxhorz
+end
+
+set gcr=a:blinkon0
 set guioptions-=T " hide toolbar
 set guioptions-=r " disable right scrollbar
 set guioptions-=R " disable right scrollbar
@@ -13,9 +23,7 @@ colorscheme ir_black
 "colorscheme vilight
 
 set number
-
-
-"map ,t :FuzzyFinderTextMate<CR>
+set cursorline
 
 " bind command-] to shift right
 nmap <D-]> >>
@@ -33,15 +41,11 @@ nmap <D-/> ,c<space>
 vmap <D-/> ,c<space>
 imap <D-/> <C-O>,c<space>
 
-set cursorline
-
 " Spelling
 if v:version >= 700
   set spell
 endif
 
-" Let full screen mode use the whole screen
-set fuopt+=maxhorz
 
 " binds \ T to taglist (sorta like textmate apple-shift-t)
 map <leader>T :TlistToggle<CR>
@@ -56,11 +60,9 @@ let Tlist_Use_Right_Window=1
 " opt-backspace: delete word
 imap <M-BS>         <C-w>
 " cmd-backspace: delete line
+
 imap <D-BS>         <C-u>
 
 " Align assignments/hashes similar to TextMate
 vmap <D-M-]> :Align =I => =<CR>
-
-" No blinking cursors
-set gcr=a:blinkon0
 
