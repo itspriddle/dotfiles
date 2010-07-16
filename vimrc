@@ -100,7 +100,9 @@ imap <C-l> <Space>=><Space>
 "let g:CommandTMatchWindowAtTop = 1
 ""let g:CommandTAcceptSelectionTabMap = '<CR>'
 
-" FuzzyFinder
-nmap <leader>t :FuzzyFinderTextMate<CR>
-nmap <leader>r :FuzzyFinderMruFile<CR>
+if ! has("gui_macvim")
+  " FuzzyFinder
+  nmap <leader>t :FuzzyFinderTextMate<CR>
+  nmap <leader>r :FuzzyFinderMruFile<CR>
+endif
 
