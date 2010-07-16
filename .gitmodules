@@ -55,3 +55,6 @@
 [submodule "vim/bundle/jslint"]
 	path = vim/bundle/jslint
 	url = git://github.com/itspriddle/jslint-vim.git
+[submodule "vim/bundle/tcomment"]
+	path = vim/bundle/tcomment
+	url = git://github.com/tsaleh/vim-tcomment.git
