@@ -55,3 +55,6 @@
 [submodule "vim/bundle/tcomment"]
 	path = vim/bundle/tcomment
 	url = git://github.com/tsaleh/vim-tcomment.git
+[submodule "vim/bundle/openser"]
+	path = vim/bundle/openser
+	url = git@github.com:itspriddle/vim-openser.git
