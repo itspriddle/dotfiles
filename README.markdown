@@ -30,8 +30,8 @@ The following plugins are installed in `vim/bundle/`
 * [Ack.vim](http://github.com/mileszs/ack.vim)
 * [Fuzzy Finder/Fuzzy Finder TextMate](http://github.com/itspriddle/vim-fuzzyfinder-pathogen)
 * [gist.vim](http://github.com/mattn/gist-vim)
+* [jslint.vim](http://github.com/itspriddle/vim-jslint)
 * jquery.vim
-* [NERDcommenter](http://github.com/scrooloose/nerdcommenter)
 * [NERDtree](http://github.com/scrooloose/nerdtree)
 * [snipmate](http://github.com/msanders/snipmate.vim) (and tons of [extra snippets](http://github.com/scrooloose/snipmate-snippets))
 * [taglist.vim](http://github.com/esukram/taglist.vim)
@@ -39,8 +39,11 @@ The following plugins are installed in `vim/bundle/`
 * [vim-endwise](http://github.com/tpope/vim-endwise)
 * [vim-fugitive](http://github.com/tpope/vim-fugitive)
 * [vim-git](http://github.com/tpope/vim-git)
+* [vim-lesscss](http://github.com/itspriddle/vim-lesscss)
 * [vim-liquid](http://github.com/tpope/vim-liquid)
 * [vim-markdown](http://github.com/tpope/vim-markdown)
+* [vim-openser](http://github.com/itspriddle/vim-openser)
 * [vim-pathogen](http://github.com/tpope/vim-pathogen) *REQUIRED*
 * [vim-rails](http://github.com/tpope/vim-rails)
 * [vim-ruby](http://github.com/vim-ruby/vim-ruby)
+* [vim-tcomment](http://github.com/tsaleh/vim-tcomment)
