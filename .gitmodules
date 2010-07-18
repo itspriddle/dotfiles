@@ -48,10 +48,10 @@
 	url = git://github.com/mileszs/ack.vim.git
 [submodule "vim/bundle/lesscss"]
 	path = vim/bundle/lesscss
-	url = git://github.com/itspriddle/less-vim.git
+	url = git://github.com/itspriddle/vim-lesscss.git
 [submodule "vim/bundle/jslint"]
 	path = vim/bundle/jslint
-	url = git://github.com/itspriddle/jslint-vim.git
+	url = git://github.com/itspriddle/vim-jslint.git
 [submodule "vim/bundle/tcomment"]
 	path = vim/bundle/tcomment
 	url = git://github.com/tsaleh/vim-tcomment.git
