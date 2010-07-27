@@ -1,0 +1,13 @@
+load('/home/priddle/Library/Scripts/fulljslint.js')
+
+var body = arguments[0];
+
+var result = JSLINT(body);
+
+if (result) {
+  print('JSLINT - No errors.');
+} else {
+  print('JSLINT - Errors found:');
+}
+print(JSLINT.report());
+
