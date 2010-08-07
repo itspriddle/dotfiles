@@ -1,49 +1,18 @@
-# TERMINAL PROMPT
-function _titlebar()
-{
-  case "$TERM" in
-  xterm*|rxvt*)
-      echo -ne "\033]0;${PROMPT_HOST:=$HOST}: ${PWD/$HOME/~} $(git_info_for_prompt)\007"
-      ;;
-  *)
-      ;;
-  esac
-}
+# Local config
 
-function precmd()
-{
-  _titlebar
-}
-export TERM='xterm-color'
 export PROMPT_HOST="macbook"
-#export PS1="[${PROMPT_HOST:=$HOST} %1~%{$fg_bold[green]%}\$(git_info_for_prompt)%{$reset_color%}]%# "
-export PS1='[%{$fg_bold[blue]%}%~%{$reset_color%}%{$fg_bold[green]%}$(git_info_for_prompt)%{$reset_color%}]%# '
 
-declare PROMPT=$PS1
-#declare RPROMPT=$'%T %{\e[01;31m%}[%!]%{\e[0m%}'
+export TERM='xterm-color'
 
 export GITIGNORE='[^.]*'
 
 export LSCOLORS=ExGxFxdxCxDxDxBxBxExEx
 export EDITOR='mate -w'
 
-export MANPATH="/usr/local/man:/usr/local/mysql/man:$MANPATH"
-
-if [ -f ~/.paths ]; then
-	LOAD_PATHS=""
-	while read line
-	do
-		LOAD_PATHS="$LOAD_PATHS:$line"
-	done < ~/.paths
-	LOAD_PATHS="$LOAD_PATHS[2,-1]"
-	export PATH="$LOAD_PATHS:$PATH"
-	unset LOAD_PATHS
-fi
+# RVM
+#[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
+#export IRBRC="$HOME/.irbrc"
 
 export GEM_HOME="$HOME/.gem/ruby/1.8"
 export GEM_PATH="$HOME/.gem/ruby/1.8"
-
-# RVM
-#[[ -s /opt/rvm/scripts/rvm ]] && source /opt/rvm/scripts/rvm
-#export IRBRC="$HOME/.irbrc"
 
