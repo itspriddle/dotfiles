@@ -57,4 +57,7 @@
 	url = git://github.com/tsaleh/vim-tcomment.git
 [submodule "vim/bundle/openser"]
 	path = vim/bundle/openser
-	url = git@github.com:itspriddle/vim-openser.git
+	url = git://github.com/itspriddle/vim-openser.git
+[submodule "vim/bundle/javascript-indent"]
+	path = vim/bundle/javascript-indent
+	url = git://github.com/itspriddle/vim-javascript-indent.git
