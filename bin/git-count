@@ -1,0 +1,9 @@
+#!/bin/sh
+
+arg=$1; shift
+if test "$arg" = "--all"; then
+  git shortlog -n $@ | grep "):" | sed 's|:||'
+  echo
+fi
+
+echo total `git log --oneline | wc -l`
