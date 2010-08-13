@@ -28,6 +28,7 @@ Included Plugins
 The following plugins are installed in `vim/bundle/`
 
 * [Ack.vim](http://github.com/mileszs/ack.vim)
+* [Command-T](http://github.com/wincent/Command-T)
 * [Fuzzy Finder/Fuzzy Finder TextMate](http://github.com/itspriddle/vim-fuzzyfinder-pathogen)
 * [gist.vim](http://github.com/mattn/gist-vim)
 * [jslint.vim](http://github.com/itspriddle/vim-jslint)
