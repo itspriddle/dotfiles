@@ -1,6 +1,3 @@
-[submodule "vim/bundle/fuzzyfinder"]
-	path = vim/bundle/fuzzyfinder
-	url = git://github.com/itspriddle/vim-fuzzyfinder-pathogen.git
 [submodule "vim/bundle/nerdtree"]
 	path = vim/bundle/nerdtree
 	url = git://github.com/scrooloose/nerdtree.git
@@ -64,3 +61,6 @@
 [submodule "vim/bundle/markdown-preview"]
 	path = vim/bundle/markdown-preview
 	url = git://github.com/robgleeson/vim-markdown-preview.git
+[submodule "vim/bundle/command-t"]
+	path = vim/bundle/command-t
+	url = git://github.com/wincent/Command-T.git
