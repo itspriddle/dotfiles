@@ -61,3 +61,6 @@
 [submodule "vim/bundle/javascript-indent"]
 	path = vim/bundle/javascript-indent
 	url = git://github.com/itspriddle/vim-javascript-indent.git
+[submodule "vim/bundle/markdown-preview"]
+	path = vim/bundle/markdown-preview
+	url = git://github.com/robgleeson/vim-markdown-preview.git
