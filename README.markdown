@@ -39,9 +39,11 @@ The following plugins are installed in `vim/bundle/`
 * [vim-endwise](http://github.com/tpope/vim-endwise)
 * [vim-fugitive](http://github.com/tpope/vim-fugitive)
 * [vim-git](http://github.com/tpope/vim-git)
+* [vim-javascript-indent](http://github.com/itspriddle/vim-javascript-indent)
 * [vim-lesscss](http://github.com/itspriddle/vim-lesscss)
 * [vim-liquid](http://github.com/tpope/vim-liquid)
 * [vim-markdown](http://github.com/tpope/vim-markdown)
+* [vim-markdown-preview](http://github.com/robgleeson/vim-markdown-preview)
 * [vim-openser](http://github.com/itspriddle/vim-openser)
 * [vim-pathogen](http://github.com/tpope/vim-pathogen) *REQUIRED*
 * [vim-rails](http://github.com/tpope/vim-rails)
