@@ -47,5 +47,6 @@ The following plugins are installed in `vim/bundle/`
 * [vim-openser](http://github.com/itspriddle/vim-openser)
 * [vim-pathogen](http://github.com/tpope/vim-pathogen) *REQUIRED*
 * [vim-rails](http://github.com/tpope/vim-rails)
+* [vim-rename](http://github.com/itspriddle/vim-rename)
 * [vim-ruby](http://github.com/vim-ruby/vim-ruby)
 * [vim-tcomment](http://github.com/tsaleh/vim-tcomment)

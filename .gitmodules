@@ -64,3 +64,6 @@
 [submodule "vim/bundle/command-t"]
 	path = vim/bundle/command-t
 	url = git://github.com/wincent/Command-T.git
+[submodule "vim/bundle/rename"]
+	path = vim/bundle/rename
+	url = git://github.com/itspriddle/vim-rename.git
