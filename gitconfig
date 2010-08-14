@@ -45,7 +45,7 @@
   browse  = !open $( \
     echo \"`git config remote.origin.url`\" | \
     ruby -e \"url = ARGF.read\" \
-         -e \"url.sub!(/^(git\\:\\/\\/|git@|http\\:\\/\\/|https\\:\\/\\/)/, '')\" \
+         -e \"url.sub!(%r{^(git(://|@)|http(s?)://)}, '')\" \
          -e \"url.sub!(':', '/')\" \
          -e \"url.sub!(/\\.git\\$/, '')\" \
          -e \"print 'http://' + url\" \
