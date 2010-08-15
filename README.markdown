@@ -37,6 +37,7 @@ The following plugins are installed in `vim/bundle/`
 * [snipmate](http://github.com/msanders/snipmate.vim) (and tons of [extra snippets](http://github.com/scrooloose/snipmate-snippets))
 * [taglist.vim](http://github.com/esukram/taglist.vim)
 * [vim-align](http://github.com/tsaleh/vim-align)
+* [vim-coffee-script](http://github.com/kchmck/vim-coffee-script)
 * [vim-endwise](http://github.com/tpope/vim-endwise)
 * [vim-fugitive](http://github.com/tpope/vim-fugitive)
 * [vim-git](http://github.com/tpope/vim-git)
