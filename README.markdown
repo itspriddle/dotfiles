@@ -32,7 +32,7 @@ The following plugins are installed in `vim/bundle/`
 * [Fuzzy Finder/Fuzzy Finder TextMate](http://github.com/itspriddle/vim-fuzzyfinder-pathogen)
 * [gist.vim](http://github.com/mattn/gist-vim)
 * [jslint.vim](http://github.com/itspriddle/vim-jslint)
-* jquery.vim
+* [jquery.vim](http://github.com/bronson/vim-jquery)
 * [NERDtree](http://github.com/scrooloose/nerdtree)
 * [snipmate](http://github.com/msanders/snipmate.vim) (and tons of [extra snippets](http://github.com/scrooloose/snipmate-snippets))
 * [taglist.vim](http://github.com/esukram/taglist.vim)
