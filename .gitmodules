@@ -82,3 +82,6 @@
 [submodule "vim/bundle/conque"]
 	path = vim/bundle/conque
 	url = git://github.com/rson/vim-conque.git
+[submodule "vim/bundle/mustache"]
+	path = vim/bundle/mustache
+	url = git://github.com/itspriddle/vim-mustache.git
