@@ -48,6 +48,7 @@ The following plugins are installed in `vim/bundle/`
 * [vim-liquid](http://github.com/tpope/vim-liquid)
 * [vim-markdown](http://github.com/tpope/vim-markdown)
 * [vim-markdown-preview](http://github.com/robgleeson/vim-markdown-preview)
+* [vim-mustache](http://github.com/itspriddle/vim-mustache)
 * [vim-openser](http://github.com/itspriddle/vim-openser)
 * [vim-pathogen](http://github.com/tpope/vim-pathogen) *REQUIRED*
 * [vim-rails](http://github.com/tpope/vim-rails)
