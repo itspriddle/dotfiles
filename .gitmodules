@@ -73,3 +73,6 @@
 [submodule "vim/bundle/jquery"]
 	path = vim/bundle/jquery
 	url = git://github.com/bronson/vim-jquery.git
+[submodule "vim/bundle/rake"]
+	path = vim/bundle/rake
+	url = git://github.com/tpope/vim-rake.git
