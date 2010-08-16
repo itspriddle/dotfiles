@@ -41,6 +41,7 @@ The following plugins are installed in `vim/bundle/`
 * [vim-endwise](http://github.com/tpope/vim-endwise)
 * [vim-fugitive](http://github.com/tpope/vim-fugitive)
 * [vim-git](http://github.com/tpope/vim-git)
+* [vim-haml](http://github.com/tpope/vim-haml)
 * [vim-javascript-indent](http://github.com/itspriddle/vim-javascript-indent)
 * [vim-lesscss](http://github.com/itspriddle/vim-lesscss)
 * [vim-liquid](http://github.com/tpope/vim-liquid)
