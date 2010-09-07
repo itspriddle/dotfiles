@@ -85,3 +85,6 @@
 [submodule "vim/bundle/mustache"]
 	path = vim/bundle/mustache
 	url = git://github.com/itspriddle/vim-mustache.git
+[submodule "vim/bundle/jekyll"]
+	path = vim/bundle/jekyll
+	url = git://github.com/csexton/jekyll.vim.git
