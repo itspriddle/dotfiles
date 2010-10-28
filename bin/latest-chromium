@@ -3,7 +3,7 @@
 # if it's different from the currently installed version.
 set -e
 
-build_url="http://build.chromium.org/buildbot/snapshots/chromium-rel-mac"
+build_url="http://build.chromium.org/f/chromium/snapshots/chromium-rel-mac/"
 install_dir="/Applications/Chromium.app"
 
 # determine the currently installed chromium build number
