@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-loadus = %w[irb/completion irb/ext/save-history looksee/shortcuts wirble pp ap]
+loadus = %w[irb/completion irb/ext/save-history wirble pp ap]
 loadus.unshift 'rubygems' if RUBY_VERSION.to_f == 1.8
 
 loadus.each do |gem|
@@ -112,4 +112,5 @@ module Kernel
   end
 end
 
-load File.dirname(__FILE__) + '/.railsrc' if ($0 == 'irb' or $0 == 'ruby') && ENV['RAILS_ENV']
+load File.dirname(__FILE__) + '/.railsrc' if (ENV['RAILS_ENV'] && ($0 == 'irb' or $0 == 'ruby')) || $0 =~ /script\/rails/ || $0 =~ /script\/console/
+

@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 
 # Just for Rails...
-if rails_env = ENV['RAILS_ENV']
+if rails_env = (ENV['RAILS_ENV'] || Rails.env)
   rails_root = File.basename(Dir.pwd)
   IRB.conf[:PROMPT] ||= {}
   IRB.conf[:PROMPT][:RAILS] = {
@@ -20,7 +20,7 @@ if rails_env = ENV['RAILS_ENV']
     # Load RAILS_ROOT/.railsrc if it exists
     # this will allow you to add helpers for script/console
     # on a per-project basis
-    localrc = File.expand_path(RAILS_ROOT) + '/.railsrc'
+    localrc = File.expand_path(Dir.pwd) + '/.railsrc'
     load localrc if File.exist?(localrc)
   end
 end
