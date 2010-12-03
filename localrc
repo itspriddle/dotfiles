@@ -13,6 +13,8 @@ export EDITOR='mate -w'
 #[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
 #export IRBRC="$HOME/.irbrc"
 
+[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
+
 export GEM_HOME="$HOME/.gem/ruby/1.8"
 export GEM_PATH="$HOME/.gem/ruby/1.8"
 
