@@ -109,7 +109,7 @@ Gem::Specification.new do |s|
   s.version          = #{name}::Version
   s.date             = Time.now.strftime('%Y-%m-%d')
   s.summary          = '#{name}: Description here'
-  s.homepage         = 'http://github.com/itspriddle/#{gem}'
+  s.homepage         = 'https://github.com/itspriddle/#{gem}'
   s.authors          = ['Joshua Priddle']
   s.email            = 'jpriddle@nevercraft.net'
 
