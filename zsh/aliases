@@ -25,7 +25,7 @@ alias gca='git commit -a'
 alias gco='git checkout'
 alias gb='git branch'
 alias gs='git status -sb'
-alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+alias grm="git status | grep deleted | cut -f2 -d ':' | sed 's/^ *//; s/ *\$//; s/ /\\\\ /g' | xargs git rm"
 alias gw='git web'
 
 # rails
