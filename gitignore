@@ -1,5 +1,21 @@
+# OS X
 .DS_Store
-.svn
+Icon?
+._*
 *~
+.Spotlight-V100
+.Trashes
+
+# svn
+/.svn/*
+*/.svn/*
+
+# vim
 *.swp
+.*.sw[a-z]
+
+# ctags
+tags
+TAGS
+
 .rvmrc
