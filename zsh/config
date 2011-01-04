@@ -1,0 +1,63 @@
+#!/usr/bin/env zsh
+
+# makes color constants available
+autoload -U colors
+colors
+
+# enable colored output from ls, etc
+export CLICOLOR=1
+
+fpath=(~/.zsh/functions $fpath)
+
+autoload -U ~/.zsh/functions/*(:t)
+
+HISTFILE=~/.zsh_history
+HISTSIZE=5000
+SAVEHIST=5000
+REPORTTIME=10
+
+setopt NO_BG_NICE
+setopt NO_HUP
+setopt NO_LIST_BEEP
+setopt LOCAL_OPTIONS
+setopt LOCAL_TRAPS
+setopt PROMPT_SUBST
+setopt CORRECT
+setopt COMPLETE_IN_WORD
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt EXTENDED_HISTORY
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_SPACE
+setopt HIST_NO_STORE
+setopt HIST_NO_FUNCTIONS
+setopt NO_HIST_BEEP
+setopt HIST_SAVE_NO_DUPS
+
+# Leave =/&; out of WORDCHARS so ^W acts more nicely
+# # -- still not ideal
+WORDCHARS='*?_-.[]~\!#$%^(){}<>|`@#$%^*()+:?''`'
+
+bindkey '^[^[[D' backward-word
+bindkey '^[^[[C' forward-word
+bindkey '^[[5D'  beginning-of-line
+bindkey '^[[5C'  end-of-line
+bindkey '^[[3~'  delete-char
+bindkey '^?'     backward-delete-char
+bindkey '\e[1~'  beginning-of-line
+bindkey '\e[4~'  end-of-line
+
+
+
+zle -N history-beginning-search-backward-end _history-search-end
+zle -N history-beginning-search-forward-end _history-search-end
+
+# See functions/_history-search-end
+bindkey "\e[A" history-beginning-search-backward-end
+bindkey "\e[B" history-beginning-search-forward-end
+
+# Escape special characters in URLs when pasting to the terminal
+autoload -U url-quote-magic
+zle -N self-insert url-quote-magic

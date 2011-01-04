@@ -1,0 +1,49 @@
+#!/usr/bin/env zsh
+
+# cd
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# ls
+alias l='ls'
+alias ll='ls -lh'
+alias lla='ls -alh'
+alias ls='ls -G'
+alias lk='ls -lSr'
+alias la='ls -A'
+alias lr='ls -lR'
+alias lt='ls -ltr'
+alias lm='ls -al | more'
+
+# git
+alias ga='git add'
+alias gl='git pull'
+alias gp='git push'
+alias gd='git diff'
+alias gc='git commit'
+alias gca='git commit -a'
+alias gco='git checkout'
+alias gb='git branch'
+alias gs='git status -sb'
+alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+alias gw='git web'
+
+# rails
+#alias sc='script/console'
+alias ss='script/server'
+alias sg='script/generate'
+alias a='autotest -rails'
+alias tlog="clear && tail -f -n 0 \${1:-log/\${RAILS_ENV:-development}.log}"
+alias migrate='rake db:migrate'
+alias rst='touch tmp/restart.txt'
+alias remigrate='rake db:migrate VERSION=0 && rake db:migrate && rake db:seed'
+
+# commands starting with % for pasting from web
+alias %=' '
+
+# Others
+alias path='echo -e ${PATH//:/\\n}'
+alias rm='rm -iv'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias grep='grep --color'

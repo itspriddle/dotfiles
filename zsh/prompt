@@ -1,0 +1,35 @@
+#!/usr/bin/env zsh
+
+# Use vcs_info to get git prompt
+autoload -Uz vcs_info
+
+zstyle ':vcs_info:*'      enable git
+zstyle ':vcs_info:git*:*' get-revision true
+zstyle ':vcs_info:git*:*' check-for-changes true
+zstyle ':vcs_info:git*:*' unstagedstr ''
+zstyle ':vcs_info:git*:*' stagedstr ' ⚡'
+zstyle ':vcs_info:git*'   actionformats " (%b%c|%a)"
+zstyle ':vcs_info:git*'   formats       " (%b%c)"
+#zstyle ':vcs_info:git*'   actionformats "(%s|%a) %12.12i %c%u %b%m"
+#zstyle ':vcs_info:git*'   formats       "(%s) %12.12i %c%u %b%m"
+
+__zgit_info() {
+  vcs_info
+  if [ -n "$vcs_info_msg_0_" ]; then
+    print $vcs_info_msg_0_
+  fi
+}
+
+__set_prompt_title() {
+  case "$TERM" in
+    xterm*|rxvt*)
+      print -Pn "\e]0;%n@${PROMPT_HOST}: %~\a"
+      ;;
+  esac
+}
+
+precmd() {
+  __set_prompt_title
+}
+
+export PROMPT='%{$fg_bold[blue]%}%3~%{$reset_color%}%{$fg_bold[green]%}$(__zgit_info)%{$reset_color%} > '

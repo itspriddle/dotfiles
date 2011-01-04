@@ -1,0 +1,8 @@
+# cd to a file should take you to the dir that contains the file
+function cd () {
+  if [[ -f $1 ]]; then
+    builtin cd $1:h
+  else
+    builtin cd $1
+  fi
+}
