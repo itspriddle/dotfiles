@@ -1,0 +1,75 @@
+#!/bin/bash
+
+##
+# DotBlock API Client
+# Created 2011-02-23 by Joshua Priddle <jpriddle@nevercraft.net>
+#
+
+if [ -z $(which curl) ]; then
+  echo "Can't find curl."
+  exit
+fi
+
+if [[ ! -f ~/.netrc ]] || [[ -z $(grep 'api.dotblock.com' ~/.netrc) ]]; then
+  setup
+  exit
+fi
+
+setup() {
+  printf "
+  Create ~/.netrc with the following:
+
+  machine api.dotblock.com
+    login DOTBLOCKEMAIL
+    password DOTBLOCKPASSWORD
+  \n"
+}
+
+usage() {
+  printf "
+  Usage:
+
+    ${0} [command]
+
+  Commands:
+
+    server-list                : List virtual server ids for this account
+    server-info <serverid>     : Show info for <serverid>
+    server-boot <serverid>     : Boot <serverid>
+    server-reboot <serverid>   : Reboot <serverid>
+    server-suspend <serverid>  : Suspend <serverid>
+    server-resume <serverid>   : Resume <serverid>
+    server-shutdown <serverid> : Shutdown <serverid>
+
+  \n"
+}
+
+CURL="curl -n -s http://api.dotblock.com/"
+
+send_request() {
+  $CURL$*
+}
+
+list_servers() {
+  send_request "/v1/servers.json" | grep -o -e '"id":[0-9]\+' | sed 's/"id"://g'
+}
+
+send_server_command() {
+  send_request "/v1/servers/$1.json" -X PUT -d "action=$2"
+}
+
+server_info() {
+  send_request "/v1/servers/$1.json"
+}
+
+case "$1" in
+  server-list)     list_servers;;
+  server-info)     server_info "$2";;
+  server-boot)     send_server_command "$2" "boot";;
+  server-reboot)   send_server_command "$2" "reboot";;
+  server-suspend)  send_server_command "$2" "suspend";;
+  server-resume)   send_server_command "$2" "resume";;
+  server-shutdown) send_server_command "$2" "shutdown";;
+  setup)           setup;;
+  *)               usage;;
+esac
