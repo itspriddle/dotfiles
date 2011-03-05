@@ -17,3 +17,6 @@ set completion-ignore-case on
 
 # Shows all matches
 set show-all-if-ambiguous on
+
+"\e[B": history-search-forward
+"\e[A": history-search-backward
