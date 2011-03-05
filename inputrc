@@ -1,3 +1,9 @@
+# Case insensitive tab completion
+set completion-ignore-case on
+
+# Shows all matches
+set show-all-if-ambiguous on
+
 # allow the use of the Home/End keys
 "\e[1~": beginning-of-line
 "\e[4~": end-of-line
@@ -7,16 +13,13 @@
 "\e[2~": quoted-insert
 
 # allow ctrl/alt + arrow keys to work
-"\e[5C": forward-word
-"\e[5D": backward-word
+"\e[5C":  forward-word
+"\e[5D":  backward-word
 "\e\e[C": forward-word
 "\e\e[D": backward-word
 
-# Case insensitive tab completion
-set completion-ignore-case on
-
-# Shows all matches
-set show-all-if-ambiguous on
-
+# search history with up/down, filters by command line contents
+# (see https://gist.github.com/855839)
 "\e[B": history-search-forward
 "\e[A": history-search-backward
+
