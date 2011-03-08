@@ -48,8 +48,8 @@ bindkey '^[[3~'  delete-char
 bindkey '^?'     backward-delete-char
 bindkey '\e[1~'  beginning-of-line
 bindkey '\e[4~'  end-of-line
-bindkey '\e[A'   history-search-backward
-bindkey '\e[B'   history-search-forward
+bindkey '\e[A'   history-beginning-search-backward
+bindkey '\e[B'   history-beginning-search-forward
 
 # Escape special characters in URLs when pasting to the terminal
 autoload -U url-quote-magic
