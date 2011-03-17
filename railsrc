@@ -15,8 +15,10 @@ if rails_env = (ENV['RAILS_ENV'] || Rails.env)
   # Called after the irb session is initialized and Rails has
   # been loaded (props: Mike Clark).
   IRB.conf[:IRB_RC] = Proc.new do
-    ActiveRecord::Base.logger = Logger.new(STDOUT)
-    ActiveRecord::Base.instance_eval { alias :[] :find }
+    if defined?(ActiveRecord)
+      ActiveRecord::Base.logger = Logger.new(STDOUT)
+      ActiveRecord::Base.instance_eval { alias :[] :find }
+    end
     # Load RAILS_ROOT/.railsrc if it exists
     # this will allow you to add helpers for script/console
     # on a per-project basis
