@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -f ./script/rails ]; then
+  rails console $*
+else
+  ./script/console $*
+fi
