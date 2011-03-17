@@ -40,6 +40,11 @@ setopt HIST_SAVE_NO_DUPS
 # # -- still not ideal
 WORDCHARS='*?_-.[]~\!#$%^(){}<>|`@#$%^*()+:?''`'
 
+autoload history-search-end
+
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+
 bindkey '^[^[[D' backward-word
 bindkey '^[^[[C' forward-word
 bindkey '^[[5D'  beginning-of-line
@@ -48,8 +53,8 @@ bindkey '^[[3~'  delete-char
 bindkey '^?'     backward-delete-char
 bindkey '\e[1~'  beginning-of-line
 bindkey '\e[4~'  end-of-line
-bindkey '\e[A'   history-beginning-search-backward
-bindkey '\e[B'   history-beginning-search-forward
+bindkey '\e[A'   history-beginning-search-backward-end
+bindkey '\e[B'   history-beginning-search-forward-end
 
 # Escape special characters in URLs when pasting to the terminal
 autoload -U url-quote-magic
