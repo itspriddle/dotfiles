@@ -6,4 +6,3 @@
 . ~/.zsh/prompt
 
 [[ -f ~/.localrc ]] && . ~/.localrc
-[[ -f ~/.localrc-private ]] && . ~/.localrc-private
