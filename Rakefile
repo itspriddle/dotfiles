@@ -13,6 +13,14 @@ task :install do
   end
 end
 
+def linux?
+  !! `uname -a`.chomp.match(/^Linux/)
+end
+
+def osx?
+  !! `uname -a`.chomp.match(/^Darwin/)
+end
+
 def manifest
   %w[
     ackrc
@@ -27,5 +35,7 @@ def manifest
     my.cnf
     irbrc
     gemrc
+    zshrc
+    zsh
   ].sort
 end
