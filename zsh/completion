@@ -19,3 +19,9 @@ zstyle ':completion:*:kill:*'   force-list always
 zstyle ':completion:*:messages'     format '%d'
 zstyle ':completion:*:warnings'     format 'No matches for: %d'
 zstyle ':completion:*'              group-name ''
+
+_force_rehash() {
+  (( CURRENT == 1 )) && rehash
+  return 1	# Because we didn't really complete anything
+}
+zstyle ':completion:*' completer _force_rehash _complete _approximate
