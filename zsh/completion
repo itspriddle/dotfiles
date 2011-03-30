@@ -12,6 +12,9 @@ zstyle ':completion:*' insert-tab pending
 # Completing process IDs with menu selection:
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:kill:*'   force-list always
+zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=$color[cyan]=$color[red]"
+
+zstyle ':completion:*:processes-names' command 'ps -e -o comm='
 
 # Verbose completion
 #zstyle ':completion:*'              verbose yes
