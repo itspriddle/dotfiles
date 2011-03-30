@@ -59,3 +59,9 @@ bindkey '\e[B'   history-beginning-search-forward-end
 # Escape special characters in URLs when pasting to the terminal
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
+
+# alt+m
+bindkey "^[m" copy-prev-shell-word
+
+# alt+w
+bindkey '\ew' kill-region
