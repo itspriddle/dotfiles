@@ -28,8 +28,17 @@ __set_prompt_title() {
   esac
 }
 
-precmd() {
-  __set_prompt_title
+__set_git_prompt() {
+  local git_status
+  git_status=$(git_info_for_prompt)
+  if [ ! -z $git_status ]; then
+    export GIT_PROMPT="%{$fg_bold[green]%}$git_status%{$reset_color%}"
+  fi
 }
 
-export PROMPT='%{$fg_bold[blue]%}%3~%{$reset_color%}%{$fg_bold[green]%}$(git_info_for_prompt)%{$reset_color%} > '
+precmd() {
+  __set_prompt_title
+  __set_git_prompt
+}
+
+export PROMPT='%{$fg_bold[blue]%}%3~%{$reset_color%}%{$GIT_PROMPT%} > '
