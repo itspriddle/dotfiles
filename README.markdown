@@ -41,9 +41,6 @@ Shell configurations local to this machine, kept out of the git repo
 **my.cnf**  
 Set options for `mysql`
 
-**paths**  
-Extra paths added to `PATH` when ZSH is sourced
-
 **railsrc**  
 Extra `irb` settings/helpers loaded only for a rails app
 
