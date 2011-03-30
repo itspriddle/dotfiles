@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+export HISTCONTROL=ignoredups
+export HISTSIZE=5000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+#shopt -s checkwinsize
+
+function set_prompt {
+  PS1="\033[094m\W\033[0m\033[092m$(__git_ps1)\033[0m $ "
+
+  case "$TERM" in
+  xterm*|rxvt*)
+      echo -ne "\033]0;macbook: ${PWD/$HOME/~}\007"
+      ;;
+  *)
+      ;;
+  esac
+}
+
+export PROMPT_COMMAND=set_prompt
