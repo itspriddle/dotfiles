@@ -5,10 +5,17 @@ alias ..='cd ..'
 alias ...='cd ../..'
 
 # ls
+# --color for Linux, -G for BSD
+ls --color 2> /dev/null &> /dev/null
+if [ $? -eq 0 ]; then
+  alias ls='ls --color'
+else
+  alias ls='ls -G'
+fi
+
 alias l='ls'
 alias ll='ls -lh'
 alias lla='ls -alh'
-alias ls='ls -G'
 alias lk='ls -lSr'
 alias la='ls -A'
 alias lr='ls -lR'
@@ -29,17 +36,12 @@ alias grm="git status | grep deleted | cut -f2 -d ':' | sed 's/^ *//; s/ *\$//; 
 alias gw='git web'
 
 # rails
-#alias sc='script/console'
 alias ss='script/server'
 alias sg='script/generate'
 alias a='autotest -rails'
 alias tlog="clear && tail -f -n 0 \${1:-log/\${RAILS_ENV:-development}.log}"
 alias migrate='rake db:migrate'
-alias rst='touch tmp/restart.txt'
 alias remigrate='rake db:migrate VERSION=0 && rake db:migrate && rake db:seed'
-
-# commands starting with % for pasting from web
-alias %=' '
 
 # Others
 alias path='echo -e ${PATH//:/\\n}'
