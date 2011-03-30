@@ -1,44 +1,47 @@
 #!/usr/bin/env zsh
 
 # Use vcs_info to get git prompt
-#autoload -Uz vcs_info
+autoload -Uz vcs_info
+autoload -Uz add-zsh-hook
 
-#zstyle ':vcs_info:*'      enable git
-#zstyle ':vcs_info:git*:*' get-revision true
-#zstyle ':vcs_info:git*:*' check-for-changes true
-#zstyle ':vcs_info:git*:*' unstagedstr ''
-#zstyle ':vcs_info:git*:*' stagedstr ' ⚡'
-#zstyle ':vcs_info:git*'   actionformats " (%b%c|%a)"
-#zstyle ':vcs_info:git*'   formats       " (%b%c)"
-##zstyle ':vcs_info:git*'   actionformats "(%s|%a) %12.12i %c%u %b%m"
-##zstyle ':vcs_info:git*'   formats       "(%s) %12.12i %c%u %b%m"
+zstyle ':vcs_info:*'      enable git
+zstyle ':vcs_info:git*:*' get-revision true
+zstyle ':vcs_info:git*:*' check-for-changes true
+#zstyle ':vcs_info:git*:*' unstagedstr '' # %u
+zstyle ':vcs_info:git*:*' stagedstr " ⚡"  # %c
+zstyle ':vcs_info:git*'   actionformats " (%b%c|%a)"
+zstyle ':vcs_info:git*'   formats       " (%b%c)"
 
-#__zgit_info() {
-#  vcs_info
-#  if [ -n "$vcs_info_msg_0_" ]; then
-#    print $vcs_info_msg_0_
-#  fi
-#}
+josh_prompt_setup() {
+  add-zsh-hook precmd josh_prompt_precmd
+}
 
-__set_prompt_title() {
+josh_prompt_precmd() {
+  local git_prompt dir_prompt host_prompt
+
   case "$TERM" in
     xterm*|rxvt*)
       print -Pn "\e]0;%n@${PROMPT_HOST}: %~\a"
       ;;
   esac
-}
 
-__set_git_prompt() {
-  local git_status
-  git_status=$(git_info_for_prompt)
-  if [ ! -z $git_status ]; then
-    export GIT_PROMPT="%{$fg_bold[green]%}$git_status%{$reset_color%}"
+  vcs_info
+
+  if [ -n "$vcs_info_msg_0_" ]; then
+    git_prompt="%{$fg_bold[green]%}$vcs_info_msg_0_%{$reset_color%}"
+  else
+    git_prompt=""
   fi
+
+  dir_prompt="%{$fg_bold[blue]%}%3~%{$reset_color%}"
+
+  if [[ -n $SSH_CONNECTION ]]; then
+    host_prompt="%{$fg_bold[yellow]%}%M%{$reset_color%} "
+  else
+    host_prompt=""
+  fi
+
+  PS1="${host_prompt}${dir_prompt}${git_prompt} > "
 }
 
-precmd() {
-  __set_prompt_title
-  __set_git_prompt
-}
-
-export PROMPT='%{$fg_bold[blue]%}%3~%{$reset_color%}%{$GIT_PROMPT%} > '
+josh_prompt_setup
