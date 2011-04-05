@@ -43,14 +43,14 @@
   web     = instaweb --httpd=webrick -b open
   count   = shortlog -sn
   pending = !git --no-pager log origin/master..master && echo
-  browse  = !open $( \
+  browse  = !url=$( \
     echo \"`git config remote.origin.url`\" | \
-    ruby -e \"url = ARGF.read\" \
-         -e \"url.sub!(%r{^(git(://|@)|http(s?)://)}, '')\" \
-         -e \"url.sub!(':', '/')\" \
-         -e \"url.sub!(/\\.git\\$/, '')\" \
-         -e \"print 'http://' + url\" \
-  )
+    ruby -e \"url = ARGF.read.chomp\" \
+         -e \"url.sub! %r{^(git(://|@)|http(s?)://)}, ''\" \
+         -e \"url.sub! ':', '/'\" \
+         -e \"url.sub! %r{\\.git\\$}, ''\" \
+         -e \"print('http://' + url) if url != ''\" \
+  ) && [[ -n $url ]] && open $url || echo \"Can't find origin.\" && exit 1
 
 [push]
   default = current
