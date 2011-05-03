@@ -2,12 +2,17 @@ if has("gui_macvim")
   set macmeta
 
   " Command-T opens PeepOpen
-  macmenu &File.New\ Tab key=<nop>
-  map <D-t> <Plug>PeepOpen
+  "macmenu &File.New\ Tab key=<nop>
+  "map <D-t> <Plug>PeepOpen
 
   " Let full screen mode use the whole screen
   set fuopt+=maxhorz
+
+  set transparency=6
 end
+
+set vb " HACK: disables audio bell by enabling visual bell
+       " which doesnt work in macvim right now
 
 set gcr=a:blinkon0 " No blinking cursor
 set guioptions-=T  " hide toolbar
@@ -17,8 +22,10 @@ set guioptions-=l  " disable left scrollbar
 set guioptions-=L  " disable left scrollbar
 
 set guifont=Espresso\ Mono:h11
-set guitablabel=%M%t
+set guitablabel=%t
+set title titlestring=%f
 
+set lines=48 columns=150
 
 set number
 set cursorline
@@ -59,13 +66,10 @@ imap <M-BS> <C-w>
 " cmd-backspace: delete line
 imap <D-BS> <C-u>
 
-" Align assignments/hashes similar to TextMate
-vmap <D-M-]> :Align =I => =<CR>
-
 " Bind CMD-/ to comments (Like TextMate)
 nmap <D-/> <C-_><C-_><space>
 vmap <D-/> <C-_><C-_><space>
 imap <D-/> <C-_><C-_><space>
 
-colorscheme ir_black
+colorscheme Sunburst
 
