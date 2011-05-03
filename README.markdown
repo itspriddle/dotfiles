@@ -22,6 +22,12 @@ updates.
     cd vim
     rake install
 
+Updating
+--------
+
+    cd ~/Library/dotfiles/vim
+    rake update_plugins
+
 Included Plugins
 ----------------
 
