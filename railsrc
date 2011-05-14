@@ -1,32 +1,38 @@
 #!/usr/bin/ruby
 
-# Just for Rails...
-if rails_env = (ENV['RAILS_ENV'] || Rails.env)
-  rails_root = File.basename(Dir.pwd)
-  IRB.conf[:PROMPT] ||= {}
-  IRB.conf[:PROMPT][:RAILS] = {
-    :PROMPT_I => "#{rails_root}> ",
-    :PROMPT_S => "#{rails_root}* ",
-    :PROMPT_C => "#{rails_root}? ",
-    :RETURN   => "=> %s\n"
-  }
-  IRB.conf[:PROMPT_MODE] = :RAILS
+exit unless rails_env = (ENV['RAILS_ENV'] || Rails.env)
 
-  # Called after the irb session is initialized and Rails has
-  # been loaded (props: Mike Clark).
-  IRB.conf[:IRB_RC] = Proc.new do
-    if defined?(ActiveRecord)
-      ActiveRecord::Base.logger = Logger.new(STDOUT)
-      ActiveRecord::Base.instance_eval { alias :[] :find }
-    end
-    # Load RAILS_ROOT/.railsrc if it exists
-    # this will allow you to add helpers for script/console
-    # on a per-project basis
-    localrc = File.expand_path(Dir.pwd) + '/.railsrc'
-    load localrc if File.exist?(localrc)
+rails_root = File.basename(Dir.pwd)
+IRB.conf[:PROMPT] ||= {}
+IRB.conf[:PROMPT][:RAILS] = {
+  :PROMPT_I => "#{rails_root}> ",
+  :PROMPT_S => "#{rails_root}* ",
+  :PROMPT_C => "#{rails_root}? ",
+  :RETURN   => "=> %s\n"
+}
+IRB.conf[:PROMPT_MODE] = :RAILS
+
+# Called after the irb session is initialized and Rails has
+# been loaded (props: Mike Clark).
+IRB.conf[:IRB_RC] = Proc.new do
+  if defined?(ActiveRecord)
+    ActiveRecord::Base.logger = Logger.new(STDOUT)
+    ActiveRecord::Base.instance_eval { alias :[] :find }
   end
+  # Load RAILS_ROOT/.railsrc if it exists
+  # this will allow you to add helpers for script/console
+  # on a per-project basis
+  localrc = File.expand_path(Dir.pwd) + '/.railsrc'
+  load localrc if File.exist?(localrc)
 end
 
+def sql(query)
+  if query =~ /^select/
+    ActiveRecord::Base.connection.select_all query
+  else
+    ActiveRecord::Base.connection.execute query
+  end
+end
 
 def change_log(stream)
   ActiveRecord::Base.logger = Logger.new(stream)
@@ -41,3 +47,8 @@ def hide_log
   change_log(nil)
 end
 
+# Rails3
+if Rails.version.split('.').first.to_i >= 3
+  include Rails.application.routes.url_helpers
+  default_url_options[:host] = Rails.application.class.parent_name.downcase
+end
