@@ -6,6 +6,6 @@ rescue LoadError => boom
   warn "Couldn't load capistrano colors: #{boom}"
 end
 
-Dir["#{ENV['HOME']}/.recipes/*.rb"].each do |tasks|
+Dir["#{ENV['HOME']}/.capistrano/recipes/*.rb"].each do |tasks|
   load tasks
 end
