@@ -1,11 +1,10 @@
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+if [[ -n "$PS1" ]]; then
+  source ~/.zsh/aliases
+  source ~/.bash/completions
+  source ~/.bash/config
 
-source ~/.zsh/aliases
-source ~/.bash/completions
-source ~/.bash/config
-
-# use .localrc for settings specific to one system
-if [ -f ~/.localrc ]; then
-  source ~/.localrc
+  # use .localrc for settings specific to one system
+  if [ -f ~/.localrc ]; then
+    source ~/.localrc
+  fi
 fi
