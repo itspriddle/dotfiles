@@ -21,7 +21,7 @@ josh_prompt_precmd() {
 
   case "$TERM" in
     xterm*|rxvt*)
-      print -Pn "\e]0;%n@${PROMPT_HOST}: %~\a"
+      print -Pn "\e]0;%n:%~\a"
       ;;
   esac
 
