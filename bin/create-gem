@@ -7,26 +7,26 @@ DIR = File.basename(Dir.pwd)
 class GemTemplate
 
   def self.create!
-    gem = self.new
-    gem.create_readme
-    gem.create_lib
-    gem.create_tests
-    gem.create_gemspec
-    gem.create_gemfile
-    gem.create_rakefile
-    gem
+    new_gem = self.new
+    new_gem.create_readme
+    new_gem.create_lib
+    new_gem.create_tests
+    new_gem.create_gemspec
+    new_gem.create_gemfile
+    new_gem.create_rakefile
+    new_gem
   end
 
-  def gem
+  def dir
     ::DIR
   end
 
   def gem_path
-    gem.gsub('-', '/')
+    dir.gsub('-', '/')
   end
 
   def name
-    gem.split('-').map { |seg| seg.gsub(/(?:^|_| )(.)/) { $1.upcase } }.join('::').gsub('Viatalk', 'ViaTalk')
+    dir.split('-').map { |seg| seg.gsub(/(?:^|_| )(.)/) { $1.upcase } }.join('::')
   end
 
   def lib_dir
@@ -49,7 +49,7 @@ class GemTemplate
   end
 
   def create_gemspec
-    File.open("#{gem}.gemspec", "w+") { |file| file.puts gemspec_template }
+    File.open("#{dir}.gemspec", "w+") { |file| file.puts gemspec_template }
   end
 
   def create_gemfile
@@ -105,11 +105,11 @@ $:.unshift 'lib'
 require '#{gem_path}/version'
 
 Gem::Specification.new do |s|
-  s.name             = '#{gem}'
+  s.name             = '#{dir}'
   s.version          = #{name}::Version
   s.date             = Time.now.strftime('%Y-%m-%d')
   s.summary          = '#{name}: Description here'
-  s.homepage         = 'https://github.com/itspriddle/#{gem}'
+  s.homepage         = 'https://github.com/itspriddle/#{dir}'
   s.authors          = ['Joshua Priddle']
   s.email            = 'jpriddle@nevercraft.net'
 
@@ -118,7 +118,7 @@ Gem::Specification.new do |s|
   s.files           += Dir['lib/**/*']
   s.files           += Dir['test/**/*']
 
-  # s.executables      = ['#{gem}']
+  # s.executables      = ['#{dir}']
 
   # s.add_dependency('gem', '= 0.0.0')
 
@@ -162,8 +162,8 @@ task :publish do
 
   ver = #{name}::Version
 
-  sh "gem build #{gem}.gemspec"
-  sh "gem push #{gem}-\#{ver}.gem"
+  sh "gem build #{dir}.gemspec"
+  sh "gem push #{dir}-\#{ver}.gem"
   sh "git tag -a -m '#{name} v\#{ver}' v\#{ver}"
   sh "git push origin v\#{ver}"
   sh "git push origin master"
@@ -185,11 +185,10 @@ TEMPLATE
   end
 end
 
-gem = GemTemplate.create!
+new_gem = GemTemplate.create!
 
 puts <<-MSG
 
-  Setup #{gem.name}!
+  Setup #{new_gem.name}!
 
 MSG
-
