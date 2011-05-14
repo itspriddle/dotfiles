@@ -120,5 +120,4 @@ module Kernel
   end
 end
 
-load File.dirname(__FILE__) + '/.railsrc' if (ENV['RAILS_ENV'] && ($0 == 'irb' or $0 == 'ruby')) || $0 =~ /script\/rails/ || $0 =~ /script\/console/
-
+load File.dirname(__FILE__) + '/.railsrc' if ENV['RAILS_ENV'] || defined? Rails
