@@ -9,4 +9,3 @@ end
 Dir["#{ENV['HOME']}/.recipes/*.rb"].each do |tasks|
   load tasks
 end
-
