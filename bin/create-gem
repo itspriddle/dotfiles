@@ -10,7 +10,7 @@ class GemTemplate
     new_gem = self.new
     new_gem.create_readme
     new_gem.create_lib
-    new_gem.create_tests
+    new_gem.create_specs
     new_gem.create_gemspec
     new_gem.create_gemfile
     new_gem.create_rakefile
@@ -43,9 +43,10 @@ class GemTemplate
     File.open("#{lib_dir}/version.rb", "w+") { |file| file.puts version_template }
   end
 
-  def create_tests
-    FileUtils.mkdir("test")
-    File.open("test/test_helper.rb", "w+") { |file| file.puts test_helper_template }
+  def create_specs
+    FileUtils.mkdir_p("spec/#{gem_path}")
+    File.open("spec/spec_helper.rb", "w+") { |file| file.puts spec_helper_template }
+    File.open("spec/#{gem_path}_spec.rb", "w+") { |file| file.puts main_spec_template }
   end
 
   def create_gemspec
@@ -85,15 +86,14 @@ class GemTemplate
     write_module %{autoload :Version, "#{gem_path}/version"}
   end
 
-  def test_helper_template; <<-TEMPLATE
-require 'rubygems'
-require 'test/unit'
-require 'shoulda'
+  def main_spec_template; <<-TEMPLATE
+require 'spec_helper'
 
-begin
-  require 'turn'
-rescue LoadError
+describe #{name} do
+  it "has some specs"
 end
+TEMPLATE
+  end
 
 require '#{gem_path}'
 TEMPLATE
@@ -105,24 +105,24 @@ $:.unshift 'lib'
 require '#{gem_path}/version'
 
 Gem::Specification.new do |s|
-  s.name             = '#{dir}'
-  s.version          = #{name}::Version
-  s.date             = Time.now.strftime('%Y-%m-%d')
-  s.summary          = '#{name}: Description here'
-  s.homepage         = 'https://github.com/itspriddle/#{dir}'
-  s.authors          = ['Joshua Priddle']
-  s.email            = 'jpriddle@nevercraft.net'
+  s.name       = '#{dir}'
+  s.version    = #{name}::Version
+  s.date       = Time.now.strftime('%Y-%m-%d')
+  s.summary    = '#{name}: Description here'
+  s.homepage   = 'https://github.com/itspriddle/#{dir}'
+  s.authors    = ['Joshua Priddle']
+  s.email      = 'jpriddle@nevercraft.net'
 
-  s.files            = %w[ Rakefile README.markdown ]
-  #s.files           += Dir['bin/**/*']
-  s.files           += Dir['lib/**/*']
-  s.files           += Dir['test/**/*']
+  s.files      = %w[ Rakefile README.markdown ]
+  s.files     += Dir['bin/**/*'] if File.exists? 'bin'
+  s.files     += Dir['lib/**/*']
+  s.files     += Dir['spec/**/*']
 
   # s.executables      = ['#{dir}']
 
   # s.add_dependency('gem', '= 0.0.0')
 
-  s.add_development_dependency('shoulda')
+  s.add_development_dependency('rspec', '~> 2.5')
 
   s.extra_rdoc_files = ['README.markdown']
   s.rdoc_options     = ["--charset=UTF-8"]
@@ -135,19 +135,26 @@ TEMPLATE
   end
 
   def gemfile_template
-    "gemspec\n"
+    "source 'http://rubygems.org'\ngemspec\n"
   end
 
   def rakefile_template; <<-TEMPLATE
 $:.unshift 'lib'
 
-task :default => :test
+begin
+  require 'bundler'
+  Bundler::GemHelper.install_tasks
+rescue LoadError
+  puts "Please install bundler (gem install bundler)"
+  exit
+end
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test' << '.'
-  test.pattern = 'test/**/*_test.rb'
-  test.verbose = true
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new :spec
+rescue LoadError
+  puts "Please install rspec (bundle install)"
+  exit
 end
 
 desc "Open an irb session preloaded with this library"
@@ -155,21 +162,7 @@ task :console do
   sh "irb -rubygems -r ./#{lib} -I ./lib"
 end
 
-require 'sdoc_helpers'
-desc "Push a new version to Gemcutter"
-task :publish do
-  require '#{gem_path}/version'
-
-  ver = #{name}::Version
-
-  sh "gem build #{dir}.gemspec"
-  sh "gem push #{dir}-\#{ver}.gem"
-  sh "git tag -a -m '#{name} v\#{ver}' v\#{ver}"
-  sh "git push origin v\#{ver}"
-  sh "git push origin master"
-  sh "git clean -fd"
-  sh "rake pages"
-end
+task :default => :spec
 TEMPLATE
   end
 
