@@ -18,5 +18,5 @@ end
 desc "Update all installed plugins"
 task :update_plugins do
   puts "Updating plugins"
-  sh "git submodule foreach git checkout master && git pull origin master"
+  sh "git submodule foreach 'git checkout master; git pull origin master'"
 end
