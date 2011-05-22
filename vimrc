@@ -121,7 +121,7 @@ imap <C-l> <Space>=><Space>
 "set list
 
 " Snipmate
-let g:snippets_dir = '~/.vim/bundle/snipmate-snippets/,~/.vim/bundle/joshs-snippets/'
+let g:snippets_dir = '~/.vim/bundle/joshs-snippets/,~/.vim/bundle/snipmate-snippets/'
 
 " Window Jumping
 map <C-J> <C-W>j
