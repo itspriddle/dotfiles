@@ -170,3 +170,7 @@ if ! has("gui")
   " Fix omnicomplete fg color
   highlight PmenuSel ctermfg=black
 endif
+
+" Disable F1 help menu
+nmap <F1> <nop>
+imap <F1> <nop>
