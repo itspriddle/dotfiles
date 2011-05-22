@@ -171,6 +171,12 @@ if ! has("gui")
   highlight PmenuSel ctermfg=black
 endif
 
+" Tabular.vim
+nmap <Leader>a= :Tabularize /=[>]\?<CR>
+vmap <Leader>a= :Tabularize /=[>]\?<CR>
+nmap <Leader>a: :Tabularize /:\zs*/l0r1<CR>
+vmap <Leader>a: :Tabularize /:\zs*/l0r1<CR>
+
 " Disable F1 help menu
 nmap <F1> <nop>
 imap <F1> <nop>
