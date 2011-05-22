@@ -55,15 +55,9 @@
 [submodule "vim/bundle/javascript-indent"]
 	path = vim/bundle/javascript-indent
 	url = git://github.com/itspriddle/vim-javascript-indent.git
-[submodule "vim/bundle/markdown-preview"]
-	path = vim/bundle/markdown-preview
-	url = git://github.com/robgleeson/vim-markdown-preview.git
 [submodule "vim/bundle/command-t"]
 	path = vim/bundle/command-t
 	url = git://github.com/wincent/Command-T.git
-[submodule "vim/bundle/rename"]
-	path = vim/bundle/rename
-	url = git://github.com/itspriddle/vim-rename.git
 [submodule "vim/bundle/coffee-script"]
 	path = vim/bundle/coffee-script
 	url = git://github.com/kchmck/vim-coffee-script.git
