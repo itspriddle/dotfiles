@@ -180,3 +180,7 @@ vmap <Leader>a: :Tabularize /:\zs*/l0r1<CR>
 " Disable F1 help menu
 nmap <F1> <nop>
 imap <F1> <nop>
+" Make ctrl+a/ctrl+e work in insert mode
+imap <c-a> <c-o>0
+imap <c-e> <c-o>$
+
