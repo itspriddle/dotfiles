@@ -16,4 +16,6 @@ export EDITOR='mate -w'
 [[ -z "$GEM_HOME" ]] && export GEM_HOME="$HOME/.gem/ruby/1.8"
 [[ -z "$GEM_PATH" ]] && export GEM_PATH="$HOME/.gem/ruby/1.8"
 
+# Load a 'private' file with sensitive info that shouldn't be
+# kept in this repository
 [[ -f ~/.localrc-private ]] && . ~/.localrc-private
