@@ -242,7 +242,7 @@ Description Here
 
 ## Copyright
 
-Copyright (c) #{Time.now.year} Joshua Priddle. See LICENSE for details.
+Copyright (c) #{Time.now.year} #{author_name}. See LICENSE for details.
 
 TEMPLATE
   end
