@@ -2,71 +2,79 @@
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 
-set nocompatible        " We don't want vi compatibility.
+" We don't want vi compatibility.
+set nocompatible
 
-syntax enable           " enable syntax highlighting
+" Show line numbers
+set number
+set ruler
 
-set bs=indent,eol,start " allow backspacing over everything in insert mode
-set viminfo='20,\"50    " read/write a .viminfo file, don't store more
-                        " than 50 lines of registers
-set history=50          " keep 50 lines of command line history
-set ruler               " show the cursor position all the time
-set tabstop=4           " set tab width = 4
-set shiftwidth=4
-set noexpandtab
-set showcmd             " Show (partial) command in status line.
-set showmatch           " Show matching brackets.
+" enable syntax highlighting
+syntax on
 
-set hlsearch            " highlight searches
-set ignorecase          " make searches case-insensitive, unless they contain upper-case letters:
+" Set encoding
+set encoding=utf-8
+
+" Whitespace
+set nowrap
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+"set listchars=tab:▸\
+"set list
+
+" Allow backspacing over everything in insert mode
+set bs=indent,eol,start
+
+" Keep 50 items in command history
+set history=50
+
+" Show (partial) command in statusline
+set showcmd
+set showmatch
+
+" Searching
+set hlsearch
+set ignorecase
 set smartcase
-set incsearch           " show the `best match so far' as search strings are typed:
-"set gdefault           " assume the /g flag on :s substitutions to replace all matches in a line:
-"set enc=utf-8          " UTF-8 Default encoding
+set incsearch
 
-set splitbelow          " :sp => open split BELOW
-set splitright          " :vsp => open vsplit on RIGHT
+" Horizontal splits open below the current buffer
+set splitbelow
 
-if has("autocmd")
-  filetype indent on
+" Vertical splits open to the right of the current buffer
+set splitright
 
-  autocmd FileType *   set ai sw=2 sts=2 et
-  autocmd FileType php set ai sw=4 sts=4 noet
-  autocmd FileType js  set ai sw=2 sts=2 et
+" Backups
+set backupdir=~/.vim/backup
+set directory=~/.vim/backup
 
-  " In text files, always limit the width of text to 78 characters
-  autocmd BufRead *.txt set tw=78
+" Omni completion
+set wildmode=list:longest,list:full
+set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*
 
-  " When editing a file, always jump to the last cursor position
-  autocmd BufReadPost *
-  \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-  \   exe "normal! g'\"" |
-  \ endif
+" Statusline
+set laststatus=2
+"set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]
+"set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [L:%l/%L\ C:%v\ (%p%%)]
 
-  " Strip trailing whitespace before saving
-  " Markdown uses trailing whitespace, so don't
-  " do it if we're editing markdown
-  "autocmd BufWritePre *
-  "\ if &ft !~# '^\%(markdown\|liquid\)$' |
-  "\   :%s/\s\+$//e |
-  "\ endif
-
-  " highlight trailing whitespace in red
-  highlight ExtraWhitespace ctermbg=red guibg=red
-  match ExtraWhitespace /\s\+$/
-  autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-  autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-  autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-  autocmd BufWinLeave * call clearmatches()
-
-endif
-
-"let ruby_no_trail_space_error=1
-
+" Mappings
 let mapleader = ","
 
-set laststatus=2
-set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]
+" ,pa to toggle paste mode
+map <leader>pa :set paste!<BAR>:set paste?<CR>
+
+" Disable F1 help menu
+nmap <F1> <nop>
+imap <F1> <nop>
+
+" Make ctrl+a/ctrl+e work in insert mode
+imap <C-a> <C-o>0
+imap <C-e> <C-o>$
+
+" bind ctrl-l to hashrocket
+imap <C-l> <Space>=><Space>
 
 " Remap space to :
 noremap <space> :
@@ -74,54 +82,10 @@ noremap <space> :
 " Scrolling
 noremap J <C-D>
 noremap K <C-U>
-
-" Disable the arrow keys so you're
-" forced to scroll like a man
 "map <up> <nop>
 "map <down> <nop>
 "map <left> <nop>
 "map <right> <nop>
-
-" Correct some spelling mistakes
-ia teh      the
-ia htis     this
-ia tihs     this
-ia funciton function
-ia fucntion function
-ia funtion  function
-ia retunr   return
-ia reutrn   return
-ia sefl     self
-ia eslf     self
-
-
-" ,d to open NERDTree
-" refresh it after opening so we see any changes
-map <leader>d :NERDTreeToggle<CR>
-
-" ,F to startup an ack search
-map <leader>f :Ack<space>
-
-" gist.vim
-let g:gist_open_browser_after_post = 1
-let g:gist_browser_command = 'echo %URL% | pbcopy'
-let g:gist_clip_command = 'pbcopy'
-let g:gist_detect_filetype = 1
-
-" ,gco to run :GitCheckout
-map <leader>gco :GitCheckout<space>
-
-" bind ctrl-l to hashrocket
-imap <C-l> <Space>=><Space>
-
-" Write file if you forget to `sudo vim'
-"command W w !sudo tee % >/dev/null
-
-"set listchars=tab:▸\
-"set list
-
-" Snipmate
-let g:snippets_dir = '~/.vim/bundle/joshs-snippets/,~/.vim/bundle/snipmate-snippets/'
 
 " Window Jumping
 map <C-J> <C-W>j
@@ -129,13 +93,115 @@ map <C-K> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" Map Ctrl-D to Ctrl-N for autocompletion similar to TextMate
-imap <C-D> <C-N>
+" NERDTree
+" ,d to open NERDTree
+map <leader>d :NERDTreeToggle<CR>
 
-"let php_sql_query = 1
-"let php_htmlInStrings = 1
+" Show hidden files in NERDTree
+"let NERDTreeShowHidden=1
 
-" NERDTree utility function
+" ack.vim
+" ,f to startup an ack search
+map <leader>f :Ack<space>
+
+" Tabular.vim
+nmap <Leader>a= :Tabularize /=[>]\?<CR>
+vmap <Leader>a= :Tabularize /=[>]\?<CR>
+nmap <Leader>a: :Tabularize /:\zs*/l0r1<CR>
+vmap <Leader>a: :Tabularize /:\zs*/l0r1<CR>
+
+" gist.vim
+let g:gist_open_browser_after_post = 1
+let g:gist_browser_command = 'echo %URL% | pbcopy'
+let g:gist_clip_command = 'pbcopy'
+let g:gist_detect_filetype = 1
+
+" Snipmate
+let g:snippets_dir = '~/.vim/bundle/joshs-snippets/,~/.vim/bundle/snipmate-snippets/'
+
+" CommandT
+let g:CommandTMaxHeight = 20
+
+" Auto Commands
+
+" Automatically load .vimrc source when saved
+autocmd BufWritePost .vimrc source $MYVIMRC
+
+" Update NERDTree when window is focused
+autocmd FocusGained * call s:UpdateNERDTree()
+
+" Close all open buffers on entering a window if the only
+" buffer that's left is the NERDTree buffer
+autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
+
+" make uses real tabs
+autocmd FileType make set noexpandtab
+
+" Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
+autocmd BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru} set ft=ruby
+
+" md, markdown, and mk are markdown and define buffer-local preview
+autocmd BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkup()
+
+" add json syntax highlighting
+autocmd BufNewFile,BufRead *.json set ft=javascript
+
+".txt files
+autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
+
+" make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
+autocmd FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+
+" Strip trailing whitespace before saving
+" Markdown uses trailing whitespace, so don't do it if we're editing markdown
+autocmd BufWritePre *
+\ if &ft !~# '^\%(markdown\|liquid\)$' |
+\   :%s/\s\+$//e |
+\ endif
+
+" Rememeber last location in file
+if has("autocmd")
+  autocmd BufReadPost *
+  \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+  \   exe "normal! g'\"" |
+  \ endif
+endif
+
+" load the plugin and indent settings for the detected filetype
+filetype plugin indent on
+
+" Fix omnicomplete fg color
+if ! has("gui")
+  highlight PmenuSel ctermfg=black
+endif
+
+""" Utility functions
+
+" Quits vim if NERDTree is the only active buffer
+function s:CloseIfOnlyNerdTreeLeft()
+  if exists("t:NERDTreeBufName")
+    if bufwinnr(t:NERDTreeBufName) != -1
+      if winnr("$") == 1
+        q
+      endif
+    endif
+  endif
+endfunction
+
+" Setup wrapping for text files
+function s:setupWrapping()
+  set wrap
+  set wrapmargin=2
+  set textwidth=72
+endfunction
+
+" Setup Markup and Hammer
+function s:setupMarkup()
+  call s:setupWrapping()
+  map <buffer> <Leader>p :Hammer<CR>
+endfunction
+
+" Refresh NERDTree
 function! s:UpdateNERDTree(...)
   let stay = 0
 
@@ -158,29 +224,4 @@ function! s:UpdateNERDTree(...)
     CommandTFlush
   endif
 endfunction
-
-autocmd FocusGained * call s:UpdateNERDTree()
-
-let g:CommandTMaxHeight = 10
-
-" Automatically load .vimrc source when saved
-autocmd BufWritePost .vimrc source $MYVIMRC
-
-if ! has("gui")
-  " Fix omnicomplete fg color
-  highlight PmenuSel ctermfg=black
-endif
-
-" Tabular.vim
-nmap <Leader>a= :Tabularize /=[>]\?<CR>
-vmap <Leader>a= :Tabularize /=[>]\?<CR>
-nmap <Leader>a: :Tabularize /:\zs*/l0r1<CR>
-vmap <Leader>a: :Tabularize /:\zs*/l0r1<CR>
-
-" Disable F1 help menu
-nmap <F1> <nop>
-imap <F1> <nop>
-" Make ctrl+a/ctrl+e work in insert mode
-imap <c-a> <c-o>0
-imap <c-e> <c-o>$
 
