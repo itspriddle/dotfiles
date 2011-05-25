@@ -73,6 +73,9 @@ imap <F1> <nop>
 imap <C-a> <C-o>0
 imap <C-e> <C-o>$
 
+" Make ctrl+a jump to beginning of line in command mode
+cnoremap <C-a> <C-b>
+
 " bind ctrl-l to hashrocket
 imap <C-l> <Space>=><Space>
 
