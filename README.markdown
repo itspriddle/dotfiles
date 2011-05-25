@@ -5,7 +5,6 @@ My dot files, randomly collected over the years.
 ## Contents
 
 * ZSH configs
-* VIM configs
 * Git configs
 * irb configs
 
