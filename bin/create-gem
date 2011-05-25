@@ -1,5 +1,10 @@
 #!/usr/bin/env ruby
 
+# Usage:
+#   mkdir my_new_gem
+#   cd my_new_gem
+#   create-gem
+
 require 'fileutils'
 
 DIR = File.basename(Dir.pwd)
