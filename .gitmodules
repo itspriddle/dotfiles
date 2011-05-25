@@ -94,3 +94,6 @@
 [submodule "vim/bundle/supertab"]
 	path = vim/bundle/supertab
 	url = git://github.com/ervandew/supertab.git
+[submodule "vim/bundle/conque"]
+	path = vim/bundle/conque
+	url = git://github.com/rson/vim-conque.git
