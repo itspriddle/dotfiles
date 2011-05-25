@@ -43,9 +43,6 @@
 [submodule "vim/bundle/lesscss"]
 	path = vim/bundle/lesscss
 	url = git://github.com/itspriddle/vim-lesscss.git
-[submodule "vim/bundle/jslint"]
-	path = vim/bundle/jslint
-	url = git://github.com/itspriddle/vim-jslint.git
 [submodule "vim/bundle/tcomment"]
 	path = vim/bundle/tcomment
 	url = git://github.com/tsaleh/vim-tcomment.git
@@ -97,3 +94,6 @@
 [submodule "vim/bundle/conque"]
 	path = vim/bundle/conque
 	url = git://github.com/rson/vim-conque.git
+[submodule "vim/bundle/jslint"]
+	path = vim/bundle/jslint
+	url = git://github.com/hallettj/jslint.vim.git
