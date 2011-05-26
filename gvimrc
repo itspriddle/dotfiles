@@ -71,5 +71,4 @@ nmap <D-/> <C-_><C-_><space>
 vmap <D-/> <C-_><C-_><space>
 imap <D-/> <C-_><C-_><space>
 
-colorscheme Sunburst
 
