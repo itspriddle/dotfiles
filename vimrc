@@ -108,6 +108,9 @@ map <leader>d :NERDTreeToggle<CR>
 " Show hidden files in NERDTree
 "let NERDTreeShowHidden=1
 
+let NERDChristmasTree=1
+let NERDTreeIgnore=['\.pyc$', '\.rbc$', '\~$', 'coverage/*$']
+
 " ack.vim
 " ,f to startup an ack search
 map <leader>f :Ack<space>
@@ -130,7 +133,19 @@ let g:snippets_dir = '~/.vim/bundle/joshs-snippets/,~/.vim/bundle/snipmate-snipp
 " CommandT
 let g:CommandTMaxHeight = 20
 
+" ruby.vim
+let ruby_space_errors = 1
+let ruby_operators = 1
+
+" rspec.vim
+let g:RspecBin = 'rspec'
+
 " Auto Commands
+
+" run `clear` when vim exists
+" if ! has("gui")
+"   autocmd VimLeave * :!clear
+" endif
 
 " Automatically load .vimrc source when saved
 autocmd BufWritePost .vimrc source $MYVIMRC
