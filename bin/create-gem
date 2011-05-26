@@ -168,6 +168,7 @@ $:.unshift 'lib'
 require '#{gem_path}/version'
 
 Gem::Specification.new do |s|
+  s.platform   = Gem::Platform::RUBY
   s.name       = '#{dir}'
   s.version    = #{name}::Version
   s.date       = Time.now.strftime('%Y-%m-%d')
