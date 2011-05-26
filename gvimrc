@@ -1,10 +1,6 @@
 if has("gui_macvim")
   set macmeta
 
-  " Command-T opens PeepOpen
-  "macmenu &File.New\ Tab key=<nop>
-  "map <D-t> <Plug>PeepOpen
-
   " Let full screen mode use the whole screen
   set fuopt+=maxhorz
 
