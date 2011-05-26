@@ -41,12 +41,12 @@ set list
 
 " bind command-] to shift right
 nmap <D-]> >>
-vmap <D-]> >>
+vmap <D-]> >gv
 imap <D-]> <C-O>>>
 
 " bind command-[ to shift left
 nmap <D-[> <<
-vmap <D-[> <<
+vmap <D-[> <gv
 imap <D-[> <C-O><<
 
 
@@ -67,8 +67,8 @@ imap <M-BS> <C-w>
 imap <D-BS> <C-u>
 
 " Bind CMD-/ to comments (Like TextMate)
-nmap <D-/> <C-_><C-_><space>
-vmap <D-/> <C-_><C-_><space>
-imap <D-/> <C-_><C-_><space>
+nmap <D-/> <C-_><C-_>
+vmap <D-/> <C-_><C-_>gv
+imap <D-/> <C-_><C-_>
 
 
