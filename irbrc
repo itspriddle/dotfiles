@@ -24,13 +24,11 @@ if defined?(AwesomePrint)
   end
 end
 
-IRB.conf[:SAVE_HISTORY] = 2000
-IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
-
-IRB.conf[:PROMPT_MODE] = :SIMPLE
-
-IRB.conf[:AUTO_INDENT] = true
-
+# This stuff is busted
+#IRB.conf[:SAVE_HISTORY] = 2000
+#IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
+#IRB.conf[:PROMPT_MODE] = :SIMPLE
+#IRB.conf[:AUTO_INDENT] = true
 
 alias q exit
 
@@ -62,12 +60,11 @@ module IRB
 
     secs = (seconds % 60).floor
 
-    out = [].tap do |o|
-      o << "#{weeks.to_i} week#{weeks > 1 ? 's' : ''}"  unless weeks.nil? or weeks.to_i == 0
-      o << "#{days.to_i} day#{days > 1 ? 's' : ''}"     unless days.nil?  or days.to_i == 0
-      o << "#{hours.to_i} hour#{hours > 1 ? 's' : ''}"  unless hours.nil? or hours.to_i == 0
-      o << "#{mins.to_i} minute#{mins > 1 ? 's' : ''}"  unless mins.nil?  or mins.to_i == 0
-    end
+    out = []
+    out << "#{weeks.to_i} week#{weeks > 1 ? 's' : ''}"  unless weeks.nil? or weeks.to_i == 0
+    out << "#{days.to_i} day#{days > 1 ? 's' : ''}"     unless days.nil?  or days.to_i == 0
+    out << "#{hours.to_i} hour#{hours > 1 ? 's' : ''}"  unless hours.nil? or hours.to_i == 0
+    out << "#{mins.to_i} minute#{mins > 1 ? 's' : ''}"  unless mins.nil?  or mins.to_i == 0
 
     sec_stamp = "#{secs.to_i} second#{secs == 1 ? '' : 's'}"
 
