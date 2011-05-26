@@ -7,7 +7,7 @@ export TERM='xterm-color'
 export GITIGNORE='[^.]*'
 
 export LSCOLORS=ExGxFxdxCxDxDxBxBxExEx
-export EDITOR='mate -w'
+export EDITOR='mvim -R'
 
 # RVM
 [[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
