@@ -59,6 +59,11 @@ set laststatus=2
 "set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]
 "set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [L:%l/%L\ C:%v\ (%p%%)]
 
+" Default colorscheme
+set t_Co=256
+set background=dark
+colorscheme solarized
+
 " Mappings
 let mapleader = ","
 
