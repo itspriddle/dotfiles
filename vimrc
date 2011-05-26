@@ -186,7 +186,7 @@ endif
 """ Utility functions
 
 " Quits vim if NERDTree is the only active buffer
-function s:CloseIfOnlyNerdTreeLeft()
+function! s:CloseIfOnlyNerdTreeLeft()
   if exists("t:NERDTreeBufName")
     if bufwinnr(t:NERDTreeBufName) != -1
       if winnr("$") == 1
@@ -197,14 +197,14 @@ function s:CloseIfOnlyNerdTreeLeft()
 endfunction
 
 " Setup wrapping for text files
-function s:setupWrapping()
+function! s:setupWrapping()
   set wrap
   set wrapmargin=2
   set textwidth=72
 endfunction
 
 " Setup Markup and Hammer
-function s:setupMarkup()
+function! s:setupMarkup()
   call s:setupWrapping()
   map <buffer> <Leader>p :Hammer<CR>
 endfunction
