@@ -1,1 +1,1 @@
---ignore-dir=build
+--ignore-dir=build,vendor,coverage
