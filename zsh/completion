@@ -1,48 +1,25 @@
 #!/usr/bin/env zsh
+unsetopt menu_complete   # do not autoselect the first completion entry
+unsetopt flowcontrol
+setopt auto_menu         # show completion menu on succesive tab press
+#setopt complete_in_word
+setopt complete_aliases
+setopt always_to_end
 
 autoload -U compinit
 compinit -i
 
-zmodload -i zsh/complist
-
-# matches case insensitive for lowercase
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-
 # pasting with tabs doesn't perform completion
 zstyle ':completion:*' insert-tab pending
 
-# Completing process IDs with menu selection:
-zstyle ':completion:*:*:kill:*' menu yes select
-zstyle ':completion:*:kill:*'   force-list always
-zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=$color[cyan]=$color[red]"
-
-zstyle ':completion:*:processes-names' command 'ps -e -o comm='
-
-# Verbose completion
-#zstyle ':completion:*'              verbose yes
-#zstyle ':completion:*:descriptions' format '%B%d%b'
-zstyle ':completion:*:messages'     format '%d'
-zstyle ':completion:*:warnings'     format 'No matches for: %d'
-zstyle ':completion:*'              group-name ''
-
+# HACK: Force rehash of items in PATH
 _force_rehash() {
   (( CURRENT == 1 )) && rehash
   return 1	# Because we didn't really complete anything
 }
 zstyle ':completion:*' completer _force_rehash _complete _approximate
 
+# SSH host completion
 _ssh_hosts=(${${${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}//]:[0-9]*}//\[}) || _ssh_hosts=()
-
 hosts=("${_ssh_hosts[@]}" localhost)
-
 zstyle ':completion:*:hosts' hosts $hosts
-
-# Don't complete uninteresting users
-zstyle ':completion:*:*:*:users' ignored-patterns \
-        adm amanda apache avahi beaglidx bin cacti canna clamav daemon \
-        dbus distcache dovecot fax ftp games gdm gkrellmd gopher \
-        hacluster haldaemon halt hsqldb ident junkbust ldap lp mail \
-        mailman mailnull mldonkey mysql nagios \
-        named netdump news nfsnobody nobody nscd ntp nut nx openvpn \
-        operator pcap postfix postgres privoxy pulse pvm quagga radvd \
-        rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs

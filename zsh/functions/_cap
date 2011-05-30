@@ -1,7 +1,7 @@
 #compdef cap
 
 if [ -f Capfile ]; then
-  recent=`last_modified .cap_tasks~ Capfile **/deploy.rb`
+  recent=`ls -t .cap_tasks~ Capfile **/deploy.rb 2> /dev/null | head -n 1`
   if [[ $recent != '.cap_tasks~' ]]; then
     cap --tasks | grep '#' | cut -d " " -f 2 > .cap_tasks~
   fi
