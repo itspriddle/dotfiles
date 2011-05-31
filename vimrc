@@ -52,7 +52,7 @@ set directory=~/.vim/backup
 
 " Omni completion
 set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*
+set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,coverage/*
 
 " Statusline
 set laststatus=2
