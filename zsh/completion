@@ -9,20 +9,21 @@ setopt always_to_end
 autoload -U compinit
 compinit -i
 
+# Case insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# Ambiguous case insensitive completion
+# Eg: ites[tab] completes to Sites
+#zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
 # pasting with tabs doesn't perform completion
 zstyle ':completion:*' insert-tab pending
 
 # Force rehash of commands
 zstyle ":completion:*:commands" rehash 1
 
-# HACK: Force rehash of items in PATH
-#_force_rehash() {
-#  (( CURRENT == 1 )) && rehash
-#  return 1	# Because we didn't really complete anything
-#}
-#zstyle ':completion:*' completer _force_rehash _complete _approximate
-
 # SSH host completion
 _ssh_hosts=(${${${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}//]:[0-9]*}//\[}) || _ssh_hosts=()
 hosts=("${_ssh_hosts[@]}" localhost)
+
 zstyle ':completion:*:hosts' hosts $hosts
