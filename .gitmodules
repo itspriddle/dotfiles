@@ -91,3 +91,6 @@
 [submodule "vim/bundle/rspec"]
 	path = vim/bundle/rspec
 	url = git://github.com/taq/vim-rspec.git
+[submodule "vim/bundle/nerdtree-helpers"]
+	path = vim/bundle/nerdtree-helpers
+	url = git://github.com/itspriddle/vim-nerdtree-helpers.git
