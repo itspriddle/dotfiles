@@ -6,40 +6,37 @@ if has("gui_macvim")
 
   " Set window transparency to 20%
   "set transparency=2
-end
 
-" HACK: disables audio bell by enabling visual bell
-" which doesnt work in macvim right now
-set visualbell
+  " HACK: disables audio bell by enabling visual bell
+  " which doesnt work in macvim right now
+  set visualbell
 
-set gcr=a:blinkon0 " No blinking cursor
-set guioptions-=T  " hide toolbar
-set guioptions-=r  " disable right scrollbar
-set guioptions-=R  " disable right scrollbar
-set guioptions-=l  " disable left scrollbar
-set guioptions-=L  " disable left scrollbar
+  " Set default font
+  set guifont=Espresso\ Mono:h12
+  "set guifont=Monaco:h12
+endif
 
-set guifont=Espresso\ Mono:h12
-"set guifont=Monaco:h12
+" Disable blinking cursor
+set gcr=a:blinkon0
+
+" Hide toolbar and scrollbars
+set guioptions-=TrRlL
+
+" Label/tabbar title
 set guitablabel=%t
 set title titlestring=%f
 
 " Default window size
 set lines=48 columns=150
 
-
 " Highlight the current line
 set cursorline
 
+" Highlight spelling errors
 set spell
 
-set nowrap
-
-
 " Highlight tabs and eol
-set listchars=tab:▸\ ,eol:¬,trail:·
-set list
-
+set list listchars=tab:▸\ ,eol:¬,trail:·
 
 function! ToggleBG()
   if &bg == 'light'
@@ -51,12 +48,12 @@ endfunction
 
 map <leader>bg :call ToggleBG()<cr>
 
-" bind command-] to shift right
+" cmd-] to shift right
 nmap <D-]> >>
 vmap <D-]> >gv
 imap <D-]> <C-O>>>
 
-" bind command-[ to shift left
+" cmd-[ to shift left
 nmap <D-[> <<
 vmap <D-[> <gv
 imap <D-[> <C-O><<
@@ -67,9 +64,7 @@ imap <M-BS> <C-w>
 " cmd-backspace: delete line
 imap <D-BS> <C-u>
 
-" Bind CMD-/ to comments (Like TextMate)
+" cmd-/: comment/uncomment
 nmap <D-/> <C-_><C-_>
 vmap <D-/> <C-_><C-_>gv
 imap <D-/> <C-_><C-_>
-
-
