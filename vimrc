@@ -150,9 +150,6 @@ let g:RspecBin = 'rspec'
 " Automatically load .vimrc source when saved
 autocmd BufWritePost .vimrc source $MYVIMRC
 
-" Update NERDTree when window is focused
-autocmd FocusGained * call s:UpdateNERDTree()
-
 " Close all open buffers on entering a window if the only
 " buffer that's left is the NERDTree buffer
 autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
