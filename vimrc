@@ -223,28 +223,3 @@ function! s:setupMarkup()
   call s:setupWrapping()
   map <buffer> <Leader>p :Hammer<CR>
 endfunction
-
-" Refresh NERDTree
-function! s:UpdateNERDTree(...)
-  let stay = 0
-
-  if(exists("a:1"))
-    let stay = a:1
-  end
-
-  if exists("t:NERDTreeBufName")
-    let nr = bufwinnr(t:NERDTreeBufName)
-    if nr != -1
-      exe nr . "wincmd w"
-      exe substitute(mapcheck("R"), "<CR>", "", "")
-      if !stay
-        wincmd p
-      end
-    endif
-  endif
-
-  if exists(":CommandTFlush") == 2
-    CommandTFlush
-  endif
-endfunction
-
