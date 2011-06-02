@@ -106,13 +106,12 @@ map <C-l> <C-W>l
 map <leader>d :NERDTreeToggle<CR>
 
 " Show hidden files in NERDTree
-"let NERDTreeShowHidden=1
-
-let NERDChristmasTree=1
-let NERDTreeIgnore=['\.pyc$', '\.rbc$', '\~$', 'coverage/*$']
+"let g:NERDTreeShowHidden  = 1 " Show hidden files
+let g:NERDChristmasTree = 1
+let g:NERDTreeIgnore    = ['\.pyc$', '\.rbc$', '\~$', 'coverage/*$']
+let g:NERDTreeDirArrows = 1
 
 " ack.vim
-" ,f to startup an ack search
 map <leader>f :Ack<space>
 
 " Tabular.vim
@@ -123,9 +122,9 @@ vmap <Leader>a: :Tabularize /:\zs*/l0r1<CR>
 
 " gist.vim
 let g:gist_open_browser_after_post = 1
-let g:gist_browser_command = 'echo %URL% | pbcopy'
-let g:gist_clip_command = 'pbcopy'
-let g:gist_detect_filetype = 1
+let g:gist_browser_command         = 'echo %URL% | pbcopy'
+let g:gist_clip_command            = 'pbcopy'
+let g:gist_detect_filetype         = 1
 
 " Snipmate
 let g:snippets_dir = '~/.vim/bundle/joshs-snippets/,~/.vim/bundle/snipmate-snippets/'
@@ -134,8 +133,8 @@ let g:snippets_dir = '~/.vim/bundle/joshs-snippets/,~/.vim/bundle/snipmate-snipp
 let g:CommandTMaxHeight = 20
 
 " ruby.vim
-let ruby_space_errors = 1
-let ruby_operators = 1
+let g:ruby_space_errors = 1
+let g:ruby_operators    = 1
 
 " rspec.vim
 let g:RspecBin = 'rspec'
