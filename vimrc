@@ -150,10 +150,6 @@ let g:RspecBin = 'rspec'
 " Automatically load .vimrc source when saved
 autocmd BufWritePost .vimrc source $MYVIMRC
 
-" Close all open buffers on entering a window if the only
-" buffer that's left is the NERDTree buffer
-autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
-
 " make uses real tabs
 autocmd FileType make set noexpandtab
 
@@ -194,19 +190,6 @@ filetype plugin indent on
 if ! has("gui")
   highlight PmenuSel ctermfg=black
 endif
-
-""" Utility functions
-
-" Quits vim if NERDTree is the only active buffer
-function! s:CloseIfOnlyNerdTreeLeft()
-  if exists("t:NERDTreeBufName")
-    if bufwinnr(t:NERDTreeBufName) != -1
-      if winnr("$") == 1
-        q
-      endif
-    endif
-  endif
-endfunction
 
 " Setup wrapping for text files
 function! s:setupWrapping()
