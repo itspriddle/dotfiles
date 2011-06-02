@@ -20,7 +20,11 @@ endif
 set gcr=a:blinkon0
 
 " Hide toolbar and scrollbars
-set guioptions-=TrRlL
+set guioptions-=T
+set guioptions-=r
+set guioptions-=R
+set guioptions-=l
+set guioptions-=L
 
 " Label/tabbar title
 set guitablabel=%t
