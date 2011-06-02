@@ -140,6 +140,16 @@ let ruby_operators = 1
 " rspec.vim
 let g:RspecBin = 'rspec'
 
+" taglist.vim
+let g:Tlist_Ctags_Cmd               = '/opt/local/bin/ctags'
+let g:Tlist_Show_Menu               = 1
+let g:Tlist_GainFocus_On_ToggleOpen = 1
+let g:Tlist_Close_On_Select         = 1
+let g:Tlist_Compact_Format          = 1
+let g:Tlist_Enable_Fold_Column      = 0
+let g:Tlist_Use_Right_Window        = 1
+map <leader>T :TlistToggle<CR>
+
 " Auto Commands
 
 " run `clear` when vim exists
