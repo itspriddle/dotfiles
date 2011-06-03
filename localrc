@@ -2,13 +2,6 @@
 
 export PROMPT_HOST="macbook"
 
-export TERM='xterm-color'
-
-export GITIGNORE='[^.]*'
-
-export LSCOLORS=ExGxFxdxCxDxDxBxBxExEx
-export EDITOR='mvim -R'
-
 # RVM
 [[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
 
@@ -19,3 +12,5 @@ export EDITOR='mvim -R'
 # Load a 'private' file with sensitive info that shouldn't be
 # kept in this repository
 [[ -f ~/.localrc-private ]] && . ~/.localrc-private
+
+# vim:set ft=zsh:

@@ -4,9 +4,6 @@
 autoload -U colors
 colors
 
-# enable colored output from ls, etc
-export CLICOLOR=1
-
 fpath=(~/.zsh/functions $fpath)
 
 autoload -U ~/.zsh/functions/*(:t)

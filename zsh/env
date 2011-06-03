@@ -1,0 +1,19 @@
+# enable colored output from ls, etc
+
+export CLICOLOR=1
+export TERM='xterm-color'
+export GITIGNORE='[^.]*'
+export LSCOLORS=ExGxFxdxCxDxDxBxBxExEx
+export EDITOR='mvim -R'
+export NODE_PATH="/opt/local/lib/node"
+
+for another_bin in \
+  /opt/local/bin \
+  /opt/local/share/npm/bin \
+  $HOME/Library/dotfiles/bin \
+  $HOME/Library/dotfiles/private-bin
+do
+  [[ -e $another_bin ]] && export PATH=$another_bin:$PATH
+done
+
+# vim:set ft=zsh:

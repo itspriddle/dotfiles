@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-for config (config aliases history completion prompt)
+for config (env config aliases history completion prompt)
   source ~/.zsh/$config
 
 [[ -f ~/.localrc ]] && source ~/.localrc
