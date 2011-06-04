@@ -91,3 +91,6 @@
 [submodule "vim/bundle/nerdtree-helpers"]
 	path = vim/bundle/nerdtree-helpers
 	url = git://github.com/itspriddle/vim-nerdtree-helpers.git
+[submodule "vim/bundle/jquery"]
+	path = vim/bundle/jquery
+	url = git://github.com/itspriddle/vim-jquery.git
