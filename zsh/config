@@ -21,6 +21,9 @@ setopt LOCAL_TRAPS
 # # -- still not ideal
 WORDCHARS='*?_-.[]~\!#$%^(){}<>|`@#$%^*()+:?''`'
 
+# emacs style keybindings
+bindkey -e
+
 # alt+left
 bindkey '\e\e[D' backward-word
 
