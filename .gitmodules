@@ -34,9 +34,6 @@
 [submodule "vim/bundle/snipmate-snippets"]
 	path = vim/bundle/snipmate-snippets
 	url = git://github.com/scrooloose/snipmate-snippets.git
-[submodule "vim/bundle/taglist"]
-	path = vim/bundle/taglist
-	url = git://github.com/esukram/taglist.vim.git
 [submodule "vim/bundle/ack"]
 	path = vim/bundle/ack
 	url = git://github.com/mileszs/ack.vim.git
@@ -94,3 +91,6 @@
 [submodule "vim/bundle/jquery"]
 	path = vim/bundle/jquery
 	url = git://github.com/itspriddle/vim-jquery.git
+[submodule "vim/bundle/tagbar"]
+	path = vim/bundle/tagbar
+	url = git://github.com/majutsushi/tagbar.git
