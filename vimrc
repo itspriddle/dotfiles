@@ -67,6 +67,9 @@ colorscheme solarized
 " Mappings
 let mapleader = ","
 
+" ,wr to toggle wrap/no wrap
+map <leader>wr :set nowrap!<BAR>:set nowrap?<CR>
+
 " ,pa to toggle paste mode
 map <leader>pa :set paste!<BAR>:set paste?<CR>
 
