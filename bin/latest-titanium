@@ -1,9 +1,20 @@
 #!/bin/sh
 
 echo "Building Titanium Mobile"
-cd ~/Development/Mobile/titanium_mobile
+[[ ! -f ~/Code/Mobile/titanium_mobile ]] && mkdir -p ~/Code/Mobile/titanium_mobile
+cd ~/Code/Mobile/titanium_mobile
 git pull origin master
-scons
+case "$1" in
+  iphone)
+    scons -Q iphone=1
+    ;;
+  android)
+    scons -Q android=1
+    ;;
+  *)
+    scons
+    ;;
+esac
 unzip dist/mobilesdk-*-osx.zip -d ~/Library/Application\ Support/Titanium/
 cd -
 echo "Done"
