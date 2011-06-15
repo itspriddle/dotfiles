@@ -193,11 +193,6 @@ endif
 " load the plugin and indent settings for the detected filetype
 filetype plugin indent on
 
-" Fix omnicomplete fg color
-if ! has("gui")
-  highlight PmenuSel ctermfg=black
-endif
-
 " Setup wrapping for text files
 function! s:setupWrapping()
   set wrap
@@ -210,3 +205,5 @@ function! s:setupMarkup()
   call s:setupWrapping()
   map <buffer> <Leader>p :Hammer<CR>
 endfunction
+
+" vim:set ft=vim:

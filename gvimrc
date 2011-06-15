@@ -80,3 +80,5 @@ imap <D-BS> <C-u>
 nmap <D-/> <C-_><C-_>
 vmap <D-/> <C-_><C-_>gv
 imap <D-/> <C-_><C-_>
+
+" vim:set ft=vim:
