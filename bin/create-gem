@@ -152,7 +152,6 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER  IN  AN
 ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN  THE
 SOFTWARE.
-
 TEMPLATE
   end
 
@@ -187,6 +186,7 @@ Gem::Specification.new do |s|
   # s.add_dependency('gem', '= 0.0.0')
 
   s.add_development_dependency('rspec', '~> 2.5')
+  s.add_development_dependency('rake', '~> 0.8.7')
 
   s.extra_rdoc_files = ['README.markdown']
   s.rdoc_options     = ["--charset=UTF-8"]
@@ -215,7 +215,9 @@ end
 
 begin
   require 'rspec/core/rake_task'
-  RSpec::Core::RakeTask.new :spec
+  RSpec::Core::RakeTask.new :spec do |t|
+    t.rspec_opts = %w[--color --format documentation]
+  end
 rescue LoadError
   puts "Please install rspec (bundle install)"
   exit
@@ -241,15 +243,13 @@ Description Here
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so I don't break it in a future version
   unintentionally.
-* Commit, do not mess with Rakefile, version, or history. (If you want to have
-  your own version, that is fine but bump version in a commit by itself I can
-  ignore when I pull)
+* Commit, do not bump version. (If you want to have your own version, that is
+  fine but bump version in a commit by itself I can ignore when I pull).
 * Send me a pull request. Bonus points for topic branches.
 
 ## Copyright
 
 Copyright (c) #{Time.now.year} #{author_name}. See LICENSE for details.
-
 TEMPLATE
   end
 
