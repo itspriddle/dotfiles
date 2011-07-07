@@ -5,6 +5,8 @@ setopt auto_menu         # show completion menu on succesive tab press
 #setopt complete_in_word
 setopt complete_aliases
 setopt always_to_end
+# Make aliases complete properly (eg: gco => git checkout)
+setopt no_complete_aliases
 
 autoload -U compinit
 compinit -i
