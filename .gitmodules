@@ -94,3 +94,6 @@
 [submodule "vim/bundle/tagbar"]
 	path = vim/bundle/tagbar
 	url = git://github.com/majutsushi/tagbar.git
+[submodule "vim/bundle/supercollider"]
+	path = vim/bundle/supercollider
+	url = git://github.com/sbl/scvim.git
