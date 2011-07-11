@@ -35,6 +35,7 @@ def manifest
     my.cnf
     irbrc
     gemrc
+    zshenv
     zshrc
     zsh
   ].sort
