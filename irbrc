@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-loadus = %w[irb/completion irb/ext/save-history wirble pp ap]
+loadus = %w[irb/completion wirb pp ap]
 loadus.unshift 'rubygems' if RUBY_VERSION.to_f == 1.8
 
 loadus.each do |gem|
@@ -11,10 +11,7 @@ loadus.each do |gem|
   end
 end
 
-if defined?(Wirble)
-  Wirble.init
-  Wirble.colorize
-end
+Wirb.start if defined?(Wirb)
 
 if defined?(AwesomePrint)
   IRB::Irb.class_eval do
