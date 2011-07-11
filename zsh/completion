@@ -29,3 +29,6 @@ _ssh_hosts=(${${${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}//]:[
 hosts=("${_ssh_hosts[@]}" localhost)
 
 zstyle ':completion:*:hosts' hosts $hosts
+
+# Git flow
+zstyle ':completion:*:*:git:*' user-commands flow:'description for foo'
