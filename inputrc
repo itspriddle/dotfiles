@@ -1,8 +1,37 @@
+# /etc/inputrc - global inputrc for libreadline
+# See readline(3readline) and `info rluserman' for more information.
+
+# Be 8 bit clean.
+set input-meta on
+set output-meta on
+
+# To allow the use of 8bit-characters like the german umlauts, uncomment
+# the line below. However this makes the meta key not work as a meta key,
+# which is annoying to those which don't need to type in 8-bit characters.
+
+# set convert-meta off
+
+# try to enable the application keypad when it is called.  Some systems
+# need this to enable the arrow keys.
+# set enable-keypad on
+
+# see /usr/share/doc/bash/inputrc.arrows for other codes of arrow keys
+
+# do not bell on tab-completion
+set bell-style none
+# set bell-style visible
+
+# some defaults / modifications for the emacs mode
+$if mode=emacs
+
 # Case insensitive tab completion
 set completion-ignore-case on
 
 # Shows all matches
 set show-all-if-ambiguous on
+
+# Hide hidden files in tab completion
+set match-hidden-files off
 
 # allow the use of the Home/End keys
 "\e[1~": beginning-of-line
@@ -12,14 +41,26 @@ set show-all-if-ambiguous on
 "\e[3~": delete-char
 "\e[2~": quoted-insert
 
-# allow ctrl/alt + arrow keys to work
-"\e[5C":  forward-word
-"\e[5D":  backward-word
-"\e\e[C": forward-word
-"\e\e[D": backward-word
+# mappings for "page up" and "page down" to step to the beginning/end
+# of the history
+# "\e[5~": beginning-of-history
+# "\e[6~": end-of-history
+
+# alternate mappings for "page up" and "page down" to search the history
+# "\e[5~": history-search-backward
+# "\e[6~": history-search-forward
 
 # search history with up/down, filters by command line contents
 # (see https://gist.github.com/855839)
-"\e[B": history-search-forward
 "\e[A": history-search-backward
+"\e[B": history-search-forward
 
+# mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
+ "\e[1;5C": forward-word
+ "\e[1;5D": backward-word
+ "\e[5C": forward-word
+ "\e[5D": backward-word
+ "\e\e[C": forward-word
+ "\e\e[D": backward-word
+
+$endif
