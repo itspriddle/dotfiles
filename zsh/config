@@ -34,12 +34,16 @@ bindkey '\e\e[C' forward-word
 bindkey '\e[3~'  delete-char
 
 # End key
-bindkey '\e[1~'  beginning-of-line
 bindkey '\e[4~'  end-of-line
 
+# home key
+bindkey '\e[1~'  beginning-of-line
+
 # ctrl+left
-bindkey '\e[5D'  beginning-of-line
-bindkey '\e[5C'  end-of-line
+bindkey '^[[1;5D'  beginning-of-line
+
+# ctrl+right
+bindkey '^[[1;5C'  end-of-line
 
 # Escape special characters in URLs when pasting to the terminal
 autoload -U url-quote-magic
