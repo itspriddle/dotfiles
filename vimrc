@@ -63,6 +63,10 @@ set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [L:%l/%L\ C:%v\ (%p%%)]
 set t_Co=256
 set background=dark
 colorscheme solarized
+" Per-dir .vimrc
+set exrc
+set secure
+
 
 " Mappings
 let mapleader = ","
@@ -176,11 +180,7 @@ autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
 autocmd FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
 
 " Strip trailing whitespace before saving
-" Markdown uses trailing whitespace, so don't do it if we're editing markdown
-autocmd BufWritePre *
-\ if &ft !~# '^\%(markdown\|liquid\)$' |
-\   :%s/\s\+$//e |
-\ endif
+autocmd BufWritePre * call s:stripTrailingWhiteSpace()
 
 " Rememeber last location in file
 if has("autocmd")
@@ -204,6 +204,16 @@ endfunction
 function! s:setupMarkup()
   call s:setupWrapping()
   map <buffer> <Leader>p :Hammer<CR>
+endfunction
+
+" Strip trailing white space
+function! s:stripTrailingWhiteSpace()
+  if ! exists('g:noStripTrailingWhiteSpace')
+    " Markdown uses trailing whitespace, so don't do it if we're editing markdown
+    if &ft !~# '^\%(markdown\|liquid\)$'
+      :%s/\s\+$//e
+    endif
+  endif
 endfunction
 
 " vim:set ft=vim:
