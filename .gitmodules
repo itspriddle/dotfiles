@@ -97,3 +97,6 @@
 [submodule "vim/bundle/supercollider"]
 	path = vim/bundle/supercollider
 	url = git://github.com/sbl/scvim.git
+[submodule "vim/bundle/stripper"]
+	path = vim/bundle/stripper
+	url = git://github.com/itspriddle/vim-stripper.git
