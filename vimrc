@@ -59,14 +59,9 @@ set laststatus=2
 "set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]
 set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [L:%l/%L\ C:%v\ (%p%%)]
 
-" Default colorscheme
-set t_Co=256
-set background=dark
-colorscheme solarized
 " Per-dir .vimrc
 set exrc
 set secure
-
 
 " Mappings
 let mapleader = ","
@@ -159,7 +154,7 @@ map <leader>T :TagbarToggle<CR>
 " endif
 
 " Automatically load .vimrc source when saved
-autocmd BufWritePost .vimrc source $MYVIMRC
+"autocmd BufWritePost .vimrc source $MYVIMRC
 
 " make uses real tabs
 autocmd FileType make set noexpandtab
@@ -179,8 +174,6 @@ autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
 " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
 autocmd FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
 
-" Strip trailing whitespace before saving
-autocmd BufWritePre * call s:stripTrailingWhiteSpace()
 
 " Rememeber last location in file
 if has("autocmd")
@@ -197,7 +190,7 @@ filetype plugin indent on
 function! s:setupWrapping()
   set wrap
   set wrapmargin=2
-  set textwidth=72
+  set textwidth=78
 endfunction
 
 " Setup Markup and Hammer
@@ -206,14 +199,9 @@ function! s:setupMarkup()
   map <buffer> <Leader>p :Hammer<CR>
 endfunction
 
-" Strip trailing white space
-function! s:stripTrailingWhiteSpace()
-  if ! exists('g:noStripTrailingWhiteSpace')
-    " Markdown uses trailing whitespace, so don't do it if we're editing markdown
-    if &ft !~# '^\%(markdown\|liquid\)$'
-      :%s/\s\+$//e
-    endif
-  endif
-endfunction
+" Include local vim config
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
 
 " vim:set ft=vim:
