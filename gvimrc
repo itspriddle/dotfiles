@@ -12,16 +12,7 @@ if has("gui_macvim")
   set visualbell
 
   " Set default font
-  set guifont=Espresso\ Mono:h12
-  "set guifont=Monaco:h12
-
-  " Light bg from 7AM - 7PM
-  let s:hr = str2nr(strftime('%H'))
-  if s:hr < 7 || s:hr > 19
-    set bg=dark
-  else
-    set bg=light
-  endif
+  set guifont=Monaco:h12
 endif
 
 " Disable blinking cursor
@@ -80,5 +71,10 @@ imap <D-BS> <C-u>
 nmap <D-/> <C-_><C-_>
 vmap <D-/> <C-_><C-_>gv
 imap <D-/> <C-_><C-_>
+
+" Include local vim config
+if filereadable(expand("~/.gvimrc.local"))
+  source ~/.gvimrc.local
+endif
 
 " vim:set ft=vim:
