@@ -100,3 +100,6 @@
 [submodule "vim/bundle/stripper"]
 	path = vim/bundle/stripper
 	url = git://github.com/itspriddle/vim-stripper.git
+[submodule "vim/bundle/surround"]
+	path = vim/bundle/surround
+	url = git://github.com/tpope/vim-surround.git
