@@ -72,6 +72,12 @@ nmap <D-/> <C-_><C-_>
 vmap <D-/> <C-_><C-_>gv
 imap <D-/> <C-_><C-_>
 
+" Window size
+map <C-M-l> :set columns+=10<cr>
+map <C-M-h> :set columns-=10<cr>
+map <C-M-k> :set lines-=5<cr>
+map <C-M-j> :set lines+=5<cr>
+
 " Include local vim config
 if filereadable(expand("~/.gvimrc.local"))
   source ~/.gvimrc.local
