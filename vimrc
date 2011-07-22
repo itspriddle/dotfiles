@@ -107,6 +107,10 @@ map <C-l> <C-W>l
 " ,d to open NERDTree
 map <leader>d :NERDTreeToggle<CR>
 
+" opt+U to toggle word case
+map <M-U> g~iw
+imap <M-U> <C-o>g~iw
+
 " Show hidden files in NERDTree
 "let g:NERDTreeShowHidden  = 1 " Show hidden files
 let g:NERDChristmasTree = 1
