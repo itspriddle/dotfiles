@@ -29,6 +29,9 @@ set guioptions-=L
 set guitablabel=%t
 set title titlestring=%f
 
+" Line numbers
+set number
+
 " Default window size
 set lines=48 columns=150
 
