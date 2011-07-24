@@ -45,11 +45,7 @@ set spell
 set list listchars=tab:▸\ ,eol:¬,trail:·
 
 function! ToggleBG()
-  if &bg == 'light'
-    set bg=dark
-  else
-    set bg=light
-  endif
+  let &background = ( &background == "dark" ? "light" : "dark" )
 endfunction
 
 map <leader>bg :call ToggleBG()<cr>
