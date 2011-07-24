@@ -63,10 +63,13 @@ set secure
 let mapleader = ","
 
 " ,wr to toggle wrap/no wrap
-map <leader>wr :set nowrap!<BAR>:set nowrap?<CR>
+map <leader>wr :set nowrap! nowrap?<CR>
 
 " ,pa to toggle paste mode
-map <leader>pa :set paste!<BAR>:set paste?<CR>
+map <leader>pa :set paste! paste?<CR>
+
+" ,n to toggle line numbers
+map <leader>n :set number! number?<CR>
 
 " Disable F1 help menu
 nmap <F1> <nop>
