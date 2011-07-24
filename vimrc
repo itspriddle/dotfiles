@@ -98,8 +98,8 @@ noremap K <C-U>
 "map <right> <nop>
 
 " Window Jumping
-map <C-J> <C-W>j
-map <C-K> <C-W>k
+map <C-j> <C-W>j
+map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
