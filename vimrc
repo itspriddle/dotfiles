@@ -5,10 +5,6 @@ call pathogen#helptags()
 " We don't want vi compatibility.
 set nocompatible
 
-" Show line numbers
-set number
-set ruler
-
 " enable syntax highlighting
 syntax on
 
