@@ -103,3 +103,6 @@
 [submodule "bundle/pathogen"]
 	path = bundle/pathogen
 	url = git://github.com/tpope/vim-pathogen.git
+[submodule "bundle/speeddating"]
+	path = bundle/speeddating
+	url = git://github.com/tpope/vim-speeddating.git
