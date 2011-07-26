@@ -76,6 +76,9 @@ map <leader>pa :set paste! paste?<CR>
 " ,n to toggle line numbers
 map <leader>n :set number! number?<CR>
 
+" ,l to toggle list
+map <leader>l :set list! list?<CR>
+
 " Disable F1 help menu
 nmap <F1> <nop>
 imap <F1> <nop>
