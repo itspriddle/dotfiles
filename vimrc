@@ -47,6 +47,10 @@ set splitright
 set backupdir=~/.vim/backup
 set directory=~/.vim/backup
 
+" Folding
+set viewdir=~/.vim/view
+set viewoptions=folds,cursor
+
 " Omni completion
 set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,coverage/*
@@ -177,6 +181,10 @@ autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
 
 " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
 autocmd FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+
+" Save folds
+autocmd BufWinLeave * silent! mkview
+autocmd BufWinEnter * silent! loadview
 
 
 " Rememeber last location in file
