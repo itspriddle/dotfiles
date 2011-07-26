@@ -3,12 +3,10 @@ alias ..='cd ..'
 alias ...='cd ../..'
 
 # ls
-# --color for Linux, -G for BSD
-ls --color 2> /dev/null &> /dev/null
-if [ $? -eq 0 ]; then
-  alias ls='ls --color'
-else
+if [ $(uname) = "Darwin" ]; then
   alias ls='ls -G'
+else
+  alias ls='ls --color'
 fi
 
 alias l='ls'

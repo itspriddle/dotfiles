@@ -17,7 +17,7 @@ setopt HIST_NO_FUNCTIONS
 setopt NO_HIST_BEEP
 setopt HIST_SAVE_NO_DUPS
 
-autoload history-search-end
+autoload -U history-search-end
 
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
