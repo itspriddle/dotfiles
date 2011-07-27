@@ -46,5 +46,6 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias grep='grep --color'
 alias apachectl='sudo apachectl'
+alias crontab='EDITOR=vim crontab'
 
 # vim:set ft=zsh:
