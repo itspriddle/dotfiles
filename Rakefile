@@ -9,7 +9,6 @@ task :install do
     puts "linking ~/.#{file}"
     system %Q{unlink "$HOME/.#{file}"}
     system %Q{ln -s "$PWD/#{source}" "$HOME/.#{file}"}
-    puts "Done! Update `#{ENV['HOME']}/.paths'!"
   end
 end
 
@@ -24,14 +23,17 @@ end
 def manifest
   %w[
     ackrc
+    bash
+    bashrc
+    bash_profile
     caprc
+    capistrano
     gitignore
     hushlogin
     inputrc
     localrc
     railsrc
     rvmrc
-    paths
     my.cnf
     irbrc
     gemrc
