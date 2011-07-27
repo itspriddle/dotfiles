@@ -1,18 +1,30 @@
 #!/usr/bin/env bash
 
+if [ -f /etc/bashrc ]; then
+ . /etc/bashrc
+fi
+
 export HISTCONTROL=ignoredups
 export HISTSIZE=5000
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-#shopt -s checkwinsize
+set_prompt() {
+  local BLUE="\[\033[1;34m\]"
+  local GREEN="\[\033[1;32m\]"
+  local NOCOLOR="\[\033[0m\]"
 
-function set_prompt {
-  PS1="\033[094m\W\033[0m\033[092m$(__git_ps1)\033[0m $ "
+  local git_tmp=$(__git_ps1)
+
+  local GIT=
+
+  if [ "$git_tmp" ]; then
+    GIT="${GREEN}${git_tmp}${NOCOLOR}"
+  fi
+
+  PS1="${BLUE}\W${NOCOLOR}${GIT} $ "
 
   case "$TERM" in
   xterm*|rxvt*)
-      echo -ne "\033]0;macbook: ${PWD/$HOME/~}\007"
+      echo -ne "\033]0;priddle:${PWD/$HOME/~}\007"
       ;;
   *)
       ;;
@@ -20,3 +32,7 @@ function set_prompt {
 }
 
 export PROMPT_COMMAND=set_prompt
+
+# History
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
