@@ -1,4 +1,5 @@
 if [[ -n "$PS1" ]]; then
+  source ~/.dotfiles/paths
   source ~/.zsh/aliases
   source ~/.bash/completions
   source ~/.bash/config
