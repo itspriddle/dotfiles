@@ -1,7 +1,6 @@
 " Load pathogen.vim
 source ~/.vim/bundle/pathogen/autoload/pathogen.vim
 call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
 
 " We don't want vi compatibility.
 set nocompatible
