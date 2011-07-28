@@ -94,14 +94,14 @@ imap <C-e> <C-o>$
 cnoremap <C-a> <C-b>
 
 " bind ctrl-l to hashrocket
-imap <C-l> <Space>=><Space>
+imap <C-l> <space>=><space>
 
 " Remap space to :
 noremap <space> :
 
 " Scrolling
-noremap J <C-D>
-noremap K <C-U>
+noremap J <C-d>
+noremap K <C-u>
 "map <up> <nop>
 "map <down> <nop>
 "map <left> <nop>
@@ -118,8 +118,8 @@ map <C-l> <C-W>l
 map <leader>d :NERDTreeToggle<CR>
 
 " opt+U to toggle word case
-map <M-U> g~iw
-imap <M-U> <C-o>g~iw
+map <M-u> g~iw
+imap <M-u> <C-o>g~iw
 
 " Show hidden files in NERDTree
 "let g:NERDTreeShowHidden  = 1 " Show hidden files
