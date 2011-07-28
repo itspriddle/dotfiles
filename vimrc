@@ -154,6 +154,7 @@ let g:gist_detect_filetype         = 1
 
 " Snipmate
 let g:snippets_dir = '~/.vim/bundle/joshs-snippets/,~/.vim/bundle/snipmate-snippets/'
+source ~/.vim/bundle/snipmate-snippets/support_functions.vim
 
 " CommandT
 let g:CommandTMaxHeight = 20
