@@ -50,6 +50,11 @@ endfunction
 
 map <leader>bg :call ToggleBG()<cr>
 
+" Format paragraph
+vmap <C-q> gq
+nmap <C-q> gqap
+imap <C-q> <C-o>gqap
+
 " cmd-] to shift right
 nmap <D-]> >>
 vmap <D-]> >gv
