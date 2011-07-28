@@ -63,6 +63,11 @@ set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [L:%l/%L\ C:%v\ (%p%%)]
 set exrc
 set secure
 
+" Disable tooltips (doesn't work in ~/.gvimrc)
+if has("gui_macvim")
+  set noballooneval
+endif
+
 " Mappings
 let mapleader = ","
 
