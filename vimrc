@@ -1,9 +1,9 @@
+" We don't want vi compatibility.
+set nocompatible
+
 " Load pathogen.vim
 source ~/.vim/bundle/pathogen/autoload/pathogen.vim
 call pathogen#runtime_append_all_bundles()
-
-" We don't want vi compatibility.
-set nocompatible
 
 " enable syntax highlighting
 syntax on
