@@ -113,6 +113,13 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" :w!! to save w/ sudo
+cmap w!! w !sudo tee % > /dev/null
+
+" ctrl+j/ctrl+k to move up/down in insert mode
+imap <C-j> <C-o>gj
+imap <C-k> <C-o>gk
+
 " NERDTree
 " ,d to open NERDTree
 map <leader>d :NERDTreeToggle<CR>
@@ -120,6 +127,9 @@ map <leader>d :NERDTreeToggle<CR>
 " opt+U to toggle word case
 map <M-u> g~iw
 imap <M-u> <C-o>g~iw
+
+" Clear search highlighting
+nmap <leader>/ :nohlsearch<cr>
 
 " Show hidden files in NERDTree
 "let g:NERDTreeShowHidden  = 1 " Show hidden files
