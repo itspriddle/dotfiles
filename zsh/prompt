@@ -21,7 +21,11 @@ josh_prompt_precmd() {
 
   case "$TERM" in
     xterm*|rxvt*)
-      print -Pn "\e]0;%n:%~\a"
+      if [[ -n $SSH_CONNECTION ]]; then
+        print -Pn "\e]0;%M@%n:%~\a"
+      else
+        print -Pn "\e]0;%n:%~\a"
+      fi
       ;;
   esac
 
