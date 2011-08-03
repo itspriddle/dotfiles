@@ -48,7 +48,7 @@ def hide_log
 end
 
 # Rails3
-if Rails.version.split('.').first.to_i >= 3
+if defined?(::Rails) && Rails.version.split('.').first.to_i >= 3
   include Rails.application.routes.url_helpers
   default_url_options[:host] = Rails.application.class.parent_name.downcase
 end

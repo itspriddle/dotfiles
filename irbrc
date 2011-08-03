@@ -114,4 +114,4 @@ module Kernel
   end
 end
 
-load File.dirname(__FILE__) + '/.railsrc' if ENV['RAILS_ENV'] || defined? Rails
+load File.dirname(__FILE__) + '/.railsrc' if ENV['RAILS_ENV'] || defined?(::Rails)
