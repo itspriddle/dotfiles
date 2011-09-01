@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ -f /etc/bashrc ]; then
- . /etc/bashrc
+  source /etc/bashrc
 fi
 
 export HISTCONTROL=ignoredups
@@ -23,10 +23,12 @@ set_prompt() {
   PS1="${BLUE}\W${NOCOLOR}${GIT} $ "
 
   case "$TERM" in
-  xterm*|rxvt*)
-      echo -ne "\033]0;priddle:${PWD/$HOME/~}\007"
-      ;;
-  *)
+    xterm*|rxvt*)
+      if [[ -n $SSH_CONNECTION ]]; then
+        PS1="$PS1 \e]2;\u@\h:\w\a"
+      else
+        PS1="$PS1 \e]2;\h:\w\a"
+      fi
       ;;
   esac
 }
