@@ -25,9 +25,9 @@ set_prompt() {
   case "$TERM" in
     xterm*|rxvt*)
       if [[ -n $SSH_CONNECTION ]]; then
-        PS1="$PS1 \e]2;\u@\h:\w\a"
+        PS1="$PS1\e]2;\u@\h:\w\a"
       else
-        PS1="$PS1 \e]2;\h:\w\a"
+        PS1="$PS1\e]2;\h:\w\a"
       fi
       ;;
   esac
