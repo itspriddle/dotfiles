@@ -70,6 +70,9 @@ endif
 " Mappings
 let mapleader = ","
 
+" ,e to go to command-mode with cursor at _, eg: ':Edit _'
+map <leader>e :Edit<space>
+
 " ,wr to toggle wrap/no wrap
 map <leader>wr :set nowrap! nowrap?<CR>
 
@@ -100,8 +103,11 @@ imap <C-l> <space>=><space>
 noremap <space> :
 
 " Scrolling
-noremap J <C-d>
-noremap K <C-u>
+" I dont like these - 9/16/2011
+"noremap J <C-d>
+"noremap K <C-u>
+
+" Scroll like a man
 "map <up> <nop>
 "map <down> <nop>
 "map <left> <nop>
@@ -145,6 +151,8 @@ nmap <Leader>a= :Tabularize /^[^=]*\zs=>\?<CR>
 vmap <Leader>a= :Tabularize /^[^=]*\zs=>\?<CR>
 nmap <Leader>a: :Tabularize /:\zs/l0r1<CR>
 vmap <Leader>a: :Tabularize /:\zs/l0r1<CR>
+nmap <Leader>a, :Tabularize /,\zs/l1r0<CR>
+vmap <Leader>a, :Tabularize /,\zs/l1r0<CR>
 
 " gist.vim
 let g:gist_open_browser_after_post = 1

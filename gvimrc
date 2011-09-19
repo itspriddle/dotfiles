@@ -13,6 +13,7 @@ if has("gui_macvim")
 
   " Set default font
   set guifont=Monaco:h12
+
 endif
 
 " Disable blinking cursor
@@ -28,6 +29,9 @@ set guioptions-=L
 " Label/tabbar title
 set guitablabel=%t
 set title titlestring=%f
+
+" Highlight column 80
+set colorcolumn=80
 
 " Line numbers
 set number
