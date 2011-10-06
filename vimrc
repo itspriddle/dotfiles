@@ -102,6 +102,9 @@ imap <C-l> <space>=><space>
 " Remap space to :
 noremap <space> :
 
+" Visually select the text that was last edited/pasted
+nmap gV `[v`]
+
 " Scrolling
 " I dont like these - 9/16/2011
 "noremap J <C-d>
