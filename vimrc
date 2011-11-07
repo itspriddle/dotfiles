@@ -73,6 +73,12 @@ let mapleader = ","
 " ,e to go to command-mode with cursor at _, eg: ':Edit _'
 map <leader>e :Edit<space>
 
+" ,s to go to command-mode with cursor at _, eg: ':sp _'
+map <leader>s :sp<space>
+
+" ,v to go to command-mode with cursor at _, eg: ':vsp _'
+map <leader>v :vsp<space>
+
 " ,wr to toggle wrap/no wrap
 map <leader>wr :set nowrap! nowrap?<CR>
 
