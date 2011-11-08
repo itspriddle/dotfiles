@@ -109,9 +109,6 @@
 [submodule "bundle/rename"]
 	path = bundle/rename
 	url = https://github.com/vim-scripts/Rename.git
-[submodule "bundle/rvm"]
-	path = bundle/rvm
-	url = https://github.com/tpope/vim-rvm.git
 [submodule "bundle/zoomwin"]
 	path = bundle/zoomwin
 	url = https://github.com/vim-scripts/ZoomWin.git
