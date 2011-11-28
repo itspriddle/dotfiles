@@ -1,3 +1,5 @@
+" Initialization {{{
+
 " We don't want vi compatibility.
 set nocompatible
 
@@ -8,10 +10,25 @@ call pathogen#runtime_append_all_bundles()
 " enable syntax highlighting
 syntax on
 
-" Set encoding
+" load the plugin and indent settings for the detected filetype
+filetype plugin indent on
+
+" }}}
+
+" General settings {{{
+
 set encoding=utf-8
 
-" Whitespace
+" Allow backspacing over everything in insert mode
+set bs=indent,eol,start
+
+" Keep 50 items in command history
+set history=50
+
+" }}}
+
+" Whitespace {{{
+
 set nowrap
 set tabstop=2
 set shiftwidth=2
@@ -20,21 +37,37 @@ set expandtab
 "set listchars=tab:▸\
 "set list
 
-" Allow backspacing over everything in insert mode
-set bs=indent,eol,start
+" }}}
 
-" Keep 50 items in command history
-set history=50
+" Indentation {{{
+
+" set autoindent
+" set nosmartindent
+" set nocindent
+
+" }}}
+
+" Statusline {{{
+
+set laststatus=2
+set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [T:%Y\ F:%{&ff}]\ [L:%l/%L\ C:%v\ (%p%%)]
 
 " Show (partial) command in statusline
 set showcmd
 set showmatch
 
-" Searching
+" }}}
+
+" Searching {{{
+"
 set hlsearch
 set ignorecase
 set smartcase
 set incsearch
+
+" }}}
+
+" Split {{{
 
 " Horizontal splits open below the current buffer
 set splitbelow
@@ -42,54 +75,63 @@ set splitbelow
 " Vertical splits open to the right of the current buffer
 set splitright
 
-" Backups
+" }}}
+
+" Backup {{{
+
 set backupdir=~/.vim/backup
 set directory=~/.vim/backup
 
-" Folding
+" }}}
+
+" Fold/view {{{
+
 set viewdir=~/.vim/view
 set viewoptions=folds,cursor
+set foldmethod=marker
 
-" Omni completion
+" }}}
+
+" Omni completion {{{
+
 set wildmode=list:longest,list:full
+"set wildmenu
+"set wildmode=list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,coverage/*
 
-" Statusline
-set laststatus=2
-set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [T:%Y\ F:%{&ff}]\ [L:%l/%L\ C:%v\ (%p%%)]
+" }}}
 
-" Per-dir .vimrc
-set exrc
-set secure
+" Mappings {{{
 
-" Disable tooltips (doesn't work in ~/.gvimrc)
-if has("gui_macvim")
-  set noballooneval
-endif
-
-" Mappings
 let mapleader = ","
 
-" ,e to go to command-mode with cursor at _, eg: ':Edit _'
+" ,r - :Rename, opens command line with `:Rename /path/to/current/file`
+map <leader>r :Rename =expand("%:p")<cr><space>
+
+" ,q - Quit buffer (:quit)
+map <leader>q :quit<cr>
+
+" ,Q - Quit buffer (:quit!)
+map <leader>Q :quit!<cr>
+
+" ,e - Go to command-mode with cursor at _, eg: ':Edit _'
 map <leader>e :Edit<space>
 
-" ,s to go to command-mode with cursor at _, eg: ':sp _'
-map <leader>s :sp<space>
-
-" ,v to go to command-mode with cursor at _, eg: ':vsp _'
-map <leader>v :vsp<space>
-
 " ,wr to toggle wrap/no wrap
-map <leader>wr :set nowrap! nowrap?<CR>
+map <leader>wr :set nowrap! nowrap?<cr>
 
 " ,pa to toggle paste mode
-map <leader>pa :set paste! paste?<CR>
+map <leader>pa :set paste! paste?<cr>
 
 " ,n to toggle line numbers
-map <leader>n :set number! number?<CR>
+map <leader>n :set number! number?<cr>
 
 " ,l to toggle list
-map <leader>l :set list! list?<CR>
+map <leader>l :set list! list?<cr>
+
+" Buffers
+nnoremap <Tab> :bnext<cr>
+nnoremap <S-Tab> :bprevious<cr>
 
 " Disable F1 help menu
 nmap <F1> <nop>
@@ -105,22 +147,20 @@ cnoremap <C-a> <C-b>
 " bind ctrl-l to hashrocket
 imap <C-l> <space>=><space>
 
+" ,s - Open the associated file in a horizontal split (ruby)
+map <leader>s :AS<cr>
+
+" ,v - Open the associated file in a vertical split (ruby)
+map <leader>v :AV<cr>
+
+" ,z - Toggle fold visibility
+map <leader>z zi
+
 " Remap space to :
 noremap <space> :
 
 " Visually select the text that was last edited/pasted
 nmap gV `[v`]
-
-" Scrolling
-" I dont like these - 9/16/2011
-"noremap J <C-d>
-"noremap K <C-u>
-
-" Scroll like a man
-"map <up> <nop>
-"map <down> <nop>
-"map <left> <nop>
-"map <right> <nop>
 
 " Window Jumping
 map <C-j> <C-W>j
@@ -137,7 +177,7 @@ imap <C-k> <C-o>gk
 
 " NERDTree
 " ,d to open NERDTree
-map <leader>d :NERDTreeToggle<CR>
+map <leader>d :NERDTreeToggle<cr>
 
 " opt+U to toggle word case
 map <M-u> g~iw
@@ -146,22 +186,33 @@ imap <M-u> <C-o>g~iw
 " Clear search highlighting
 nmap <leader>/ :nohlsearch<cr>
 
-" Show hidden files in NERDTree
-"let g:NERDTreeShowHidden  = 1 " Show hidden files
-let g:NERDChristmasTree = 1
-let g:NERDTreeIgnore    = ['\.pyc$', '\.rbc$', '\~$', 'coverage/*$']
-let g:NERDTreeDirArrows = 1
+map <M-c> :%s/{\_.\{-}}/\=substitute(submatch(0), '\n', '', 'g')/<cr>
 
 " ack.vim
 map <leader>f :Ack<space>
 
 " Tabular.vim
-nmap <Leader>a= :Tabularize /^[^=]*\zs=>\?<CR>
-vmap <Leader>a= :Tabularize /^[^=]*\zs=>\?<CR>
-nmap <Leader>a: :Tabularize /:\zs/l0r1<CR>
-vmap <Leader>a: :Tabularize /:\zs/l0r1<CR>
-nmap <Leader>a, :Tabularize /,\zs/l1r0<CR>
-vmap <Leader>a, :Tabularize /,\zs/l1r0<CR>
+nmap <Leader>a= :Tabularize /^[^=]*\zs=>\?<cr>
+vmap <Leader>a= :Tabularize /^[^=]*\zs=>\?<cr>
+nmap <Leader>a: :Tabularize /:\zs/l0r1<cr>
+vmap <Leader>a: :Tabularize /:\zs/l0r1<cr>
+nmap <Leader>a, :Tabularize /,\zs/l1r0<cr>
+vmap <Leader>a, :Tabularize /,\zs/l1r0<cr>
+
+" ZoomWin
+map <leader><leader> :ZoomWin<cr>
+
+" Tagbar
+map <leader>T :TagbarToggle<cr>
+
+" }}}
+
+" Plugin settings {{{
+
+" nerdTREE.vim
+let g:NERDChristmasTree = 1
+let g:NERDTreeIgnore    = ['\.pyc$', '\.rbc$', '\~$', 'coverage/*$']
+let g:NERDTreeDirArrows = 1
 
 " gist.vim
 let g:gist_open_browser_after_post = 1
@@ -174,7 +225,7 @@ let g:snippets_dir = '~/.vim/bundle/joshs-snippets/,~/.vim/bundle/snipmate-snipp
 source ~/.vim/bundle/snipmate-snippets/support_functions.vim
 
 " CommandT
-let g:CommandTMaxHeight = 20
+" let g:CommandTMaxHeight = 20
 
 " ruby.vim
 let g:ruby_space_errors = 1
@@ -186,51 +237,57 @@ let g:RspecBin = 'rspec'
 " tagbar.vim
 let g:tagbar_ctags_bin = '/opt/local/bin/ctags'
 let g:tagbar_autofocus = 1
-map <leader>T :TagbarToggle<CR>
 
-" Auto Commands
+" }}}
 
-" run `clear` when vim exists
-" if ! has("gui")
-"   autocmd VimLeave * :!clear
-" endif
+" Auto Commands {{{
 
-" Automatically load .vimrc source when saved
-"autocmd BufWritePost .vimrc source $MYVIMRC
-
-" make uses real tabs
-autocmd FileType make set noexpandtab
-
-" Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
-autocmd BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru} set ft=ruby
-
-" md, markdown, and mk are markdown and define buffer-local preview
-autocmd BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkup()
-
-" add json syntax highlighting
-autocmd BufNewFile,BufRead *.json set ft=javascript
-
-".txt files
-autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
-
-" make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
-autocmd FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
-
-" Save folds
-autocmd BufWinLeave * silent! mkview
-autocmd BufWinEnter * silent! loadview
-
-
-" Rememeber last location in file
 if has("autocmd")
-  autocmd BufReadPost *
-  \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-  \   exe "normal! g'\"" |
-  \ endif
+  " make uses real tabs
+  autocmd FileType make set noexpandtab
+
+  " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
+  autocmd BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru} set ft=ruby
+
+  " md, markdown, and mk are markdown and define buffer-local preview
+  autocmd BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupWrapping()
+
+  " add json syntax highlighting
+  autocmd BufNewFile,BufRead *.json set ft=javascript
+
+  ".txt files
+  autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
+
+  " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
+  autocmd FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+
+  " Save folds
+  autocmd BufWinLeave * silent! mkview
+  autocmd BufWinEnter * silent! loadview
+
+  " CSS
+  "autocmd filetype css,scss set foldmethod=marker foldmarker=@group,@end
+  autocmd filetype css setlocal equalprg=csstidy\ -\ --silent=true
+
+  autocmd VimEnter .git/COMMIT_EDITMSG exe "normal! gg"
+
+  " Rememeber last location in file
+  autocmd BufReadPost * call s:restoreLastCursorLocation()
+
+  " Doesnt work right
+  "autocmd TabEnter * silent! TMFocus
 endif
 
-" load the plugin and indent settings for the detected filetype
-filetype plugin indent on
+" }}}
+
+" Functions {{{
+
+" Restores the last cursor position, used when opening a new buffer
+function! s:restoreLastCursorLocation()
+  if line("'\"") > 0 && line ("'\"") <= line("$")
+    exe "normal! g'\""
+  endif
+endfunction
 
 " Setup wrapping for text files
 function! s:setupWrapping()
@@ -239,15 +296,14 @@ function! s:setupWrapping()
   set textwidth=78
 endfunction
 
-" Setup Markup and Hammer
-function! s:setupMarkup()
-  call s:setupWrapping()
-  map <buffer> <Leader>p :Hammer<CR>
-endfunction
+" }}}
 
-" Include local vim config
+" Include local vim config {{{
+
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
-" vim:set ft=vim:
+" }}}
+
+" vim:ft=vim:foldmethod=marker:foldlevel=0

@@ -1,23 +1,11 @@
-if has("gui_macvim")
-  set macmeta
-
-  " Let full screen mode use the whole screen
-  set fuopt+=maxhorz
-
-  " Set window transparency to 20%
-  "set transparency=2
-
-  " HACK: disables audio bell by enabling visual bell
-  " which doesnt work in macvim right now
-  set visualbell
-
-  " Set default font
-  set guifont=Monaco:h12
-
+if ! has("gui_macvim")
+  finish
 endif
 
-" Disable blinking cursor
-set gcr=a:blinkon0
+" Window settings {{{
+
+" Let full screen mode use the whole screen
+set fuopt+=maxhorz
 
 " Hide toolbar and scrollbars
 set guioptions-=T
@@ -30,17 +18,24 @@ set guioptions-=L
 set guitablabel=%t
 set title titlestring=%f
 
+" Default window size
+set lines=48 columns=150
+
+" }}}
+
+" Other settings  {{{
+
 " Highlight column 80
 set colorcolumn=80
 
 " Line numbers
 set number
 
-" Default window size
-set lines=48 columns=150
-
 " Highlight the current line
 set cursorline
+
+" Show fold column
+set foldcolumn=2
 
 " Highlight spelling errors
 set spell
@@ -48,9 +43,25 @@ set spell
 " Highlight tabs and eol
 set list listchars=tab:▸\ ,eol:¬,trail:·
 
-function! ToggleBG()
-  let &background = ( &background == "dark" ? "light" : "dark" )
-endfunction
+" Enable alt key as meta key
+set macmeta
+
+" Set window transparency to 20%
+"set transparency=2
+
+" HACK: disables audio bell by enabling visual bell which doesnt work in
+" macvim right now
+set visualbell
+
+" Set default font
+set guifont=Monaco:h12
+
+" Disable blinking cursor
+set gcr=a:blinkon0
+
+" }}}
+
+" Mappings {{{
 
 map <leader>bg :call ToggleBG()<cr>
 
@@ -80,9 +91,22 @@ nmap <D-/> <C-_><C-_>
 vmap <D-/> <C-_><C-_>gv
 imap <D-/> <C-_><C-_>
 
-" Include local vim config
+" }}}
+
+" Functions {{{
+
+function! ToggleBG()
+  let &background = ( &background == "dark" ? "light" : "dark" )
+endfunction
+
+" }}}
+
+" Include local gvim config {{{
+
 if filereadable(expand("~/.gvimrc.local"))
   source ~/.gvimrc.local
 endif
 
-" vim:set ft=vim:
+" }}}
+
+" vim:ft=vim:foldmethod=marker:foldlevel=0
