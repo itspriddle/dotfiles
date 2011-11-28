@@ -115,3 +115,9 @@
 [submodule "bundle/scss-syntax"]
 	path = bundle/scss-syntax
 	url = https://github.com/cakebaker/scss-syntax.vim.git
+[submodule "bundle/tabman"]
+	path = bundle/tabman
+	url = https://github.com/kien/tabman.vim.git
+[submodule "bundle/css-color"]
+	path = bundle/css-color
+	url = https://github.com/ap/vim-css-color.git
