@@ -1,8 +1,10 @@
-#!/usr/bin/env zsh
+# Load base config files
+for config (config aliases history completion prompt) source ~/.zsh/$config
 
-for config (config aliases history completion prompt)
-  source ~/.zsh/$config
-
+# Load plugin files
 for plugin ($HOME/.zsh/plugins/*) source $plugin
 
+# Load settings specific to this machine
 [[ -f ~/.localrc ]] && source ~/.localrc
+
+# vim:set ft=zsh:

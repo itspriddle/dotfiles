@@ -3,7 +3,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 
 # ls
-if [ $(uname) = "Darwin" ]; then
+if [ $ZSH_PLATFORM = "Darwin" ]; then
   alias ls='ls -G'
 else
   alias ls='ls --color'
@@ -34,10 +34,12 @@ alias gw='git web'
 # rails
 alias ss='script/server'
 alias sg='script/generate'
-alias a='autotest -rails'
 alias tlog="clear && tail -f -n 0 \${1:-log/\${RAILS_ENV:-development}.log}"
 alias migrate='rake db:migrate'
 alias remigrate='rake db:migrate VERSION=0 && rake db:migrate && rake db:seed'
+alias rg="rails generate"
+alias rc="rails console"
+alias sc="rails console"
 
 # Others
 alias path='echo -e ${PATH//:/\\n}'
@@ -45,7 +47,14 @@ alias rm='rm -iv'
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias grep='grep --color'
-alias apachectl='sudo apachectl'
-alias crontab='EDITOR=vim crontab'
+alias dush='du -shc'
+
+# OS X
+if [[ $ZSH_PLATFORM = "Darwin" ]]; then
+  alias apachectl='sudo apachectl'
+  alias crontab='EDITOR=vim crontab'
+  alias mute="osascript -e 'set volume output muted true'"
+  alias unmute="osascript -e 'set volume output muted false'"
+fi
 
 # vim:set ft=zsh:
