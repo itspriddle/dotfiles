@@ -5,7 +5,7 @@
 set input-meta on
 set output-meta on
 
-# To allow the use of 8bit-characters like the german umlauts, uncomment
+# To allow the use of 8bit-characters like the german umlauts, comment out
 # the line below. However this makes the meta key not work as a meta key,
 # which is annoying to those which don't need to type in 8-bit characters.
 
@@ -19,7 +19,6 @@ set output-meta on
 
 # do not bell on tab-completion
 set bell-style none
-# set bell-style visible
 
 # some defaults / modifications for the emacs mode
 $if mode=emacs
@@ -50,17 +49,31 @@ set match-hidden-files off
 # "\e[5~": history-search-backward
 # "\e[6~": history-search-forward
 
+# mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+
+$if term=rxvt
+"\e[8~": end-of-line
+"\eOc": forward-word
+"\eOd": backward-word
+$endif
+
+# for non RH/Debian xterm, can't hurt for RH/Debian xterm
+# "\eOH": beginning-of-line
+# "\eOF": end-of-line
+
+# for freebsd console
+# "\e[H": beginning-of-line
+# "\e[F": end-of-line
+#
 # search history with up/down, filters by command line contents
 # (see https://gist.github.com/855839)
 "\e[A": history-search-backward
 "\e[B": history-search-forward
-
-# mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
- "\e[1;5C": forward-word
- "\e[1;5D": backward-word
- "\e[5C": forward-word
- "\e[5D": backward-word
- "\e\e[C": forward-word
- "\e\e[D": backward-word
 
 $endif
