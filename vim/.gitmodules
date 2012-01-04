@@ -40,9 +40,6 @@
 [submodule "bundle/lesscss"]
 	path = bundle/lesscss
 	url = https://github.com/itspriddle/vim-lesscss.git
-[submodule "bundle/openser"]
-	path = bundle/openser
-	url = https://github.com/itspriddle/vim-openser.git
 [submodule "bundle/javascript-indent"]
 	path = bundle/javascript-indent
 	url = https://github.com/itspriddle/vim-javascript-indent.git
