@@ -177,7 +177,7 @@ imap <C-k> <C-o>gk
 
 " NERDTree
 " ,d to open NERDTree
-map <leader>d :NERDTreeToggle<cr>
+map <leader>d :NERDTreeTabsToggle<cr>
 
 " opt+U to toggle word case
 map <M-u> g~iw
