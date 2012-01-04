@@ -4,9 +4,6 @@ endif
 
 " Window settings {{{
 
-" Let full screen mode use the whole screen
-set fuopt+=maxhorz
-
 " Hide toolbar and scrollbars
 set guioptions-=T
 set guioptions-=r
