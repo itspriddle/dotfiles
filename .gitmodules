@@ -76,9 +76,6 @@
 [submodule "bundle/rspec"]
 	path = bundle/rspec
 	url = https://github.com/taq/vim-rspec.git
-[submodule "bundle/nerdtree-helpers"]
-	path = bundle/nerdtree-helpers
-	url = https://github.com/itspriddle/vim-nerdtree-helpers.git
 [submodule "bundle/jquery"]
 	path = bundle/jquery
 	url = https://github.com/itspriddle/vim-jquery.git
