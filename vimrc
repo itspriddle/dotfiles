@@ -79,14 +79,14 @@ set splitright
 
 " Backup {{{
 
-set backupdir=~/.vim/backup
-set directory=~/.vim/backup
+set backupdir=~/.vim/.backup
+set directory=~/.vim/.backup
 
 " }}}
 
 " Fold/view {{{
 
-set viewdir=~/.vim/view
+set viewdir=~/.vim/.view
 set viewoptions=folds,cursor
 set foldmethod=marker
 
