@@ -106,9 +106,6 @@
 [submodule "bundle/tcomment"]
 	path = bundle/tcomment
 	url = https://github.com/tomtom/tcomment_vim.git
-[submodule "bundle/rename"]
-	path = bundle/rename
-	url = https://github.com/vim-scripts/Rename.git
 [submodule "bundle/zoomwin"]
 	path = bundle/zoomwin
 	url = https://github.com/vim-scripts/ZoomWin.git
