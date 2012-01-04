@@ -88,7 +88,7 @@ set directory=~/.vim/.backup
 
 set viewdir=~/.vim/.view
 set viewoptions=folds,cursor
-set foldmethod=marker
+set foldmethod=manual
 
 " }}}
 
