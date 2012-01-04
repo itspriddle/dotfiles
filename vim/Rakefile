@@ -19,17 +19,17 @@ namespace :plugins do
 end
 
 namespace :cleanup do
-  desc "Cleanup ~/.vim/{view,backup}/*"
+  desc "Cleanup ~/.vim/.{view,backup}/*"
   task :all => [:view, :backup]
 
-  desc "Cleanup ~/.vim/view/*"
+  desc "Cleanup ~/.vim/.view/*"
   task :view do
-    sh "rm -f #{ENV['HOME']}/.vim/view/*"
+    sh "rm -f #{ENV['HOME']}/.vim/.view/*"
   end
 
-  desc "Cleanup ~/.vim/backup/*"
+  desc "Cleanup ~/.vim/.backup/*"
   task :backup do
-    sh "rm -f #{ENV['HOME']}/.vim/backup/*"
+    sh "rm -f #{ENV['HOME']}/.vim/.backup/*"
   end
 end
 
