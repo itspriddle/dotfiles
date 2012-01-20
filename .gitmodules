@@ -73,9 +73,6 @@
 [submodule "bundle/solarized"]
 	path = bundle/solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
-[submodule "bundle/rspec"]
-	path = bundle/rspec
-	url = https://github.com/taq/vim-rspec.git
 [submodule "bundle/jquery"]
 	path = bundle/jquery
 	url = https://github.com/itspriddle/vim-jquery.git
@@ -115,3 +112,6 @@
 [submodule "bundle/repeat"]
 	path = bundle/repeat
 	url = https://github.com/tpope/vim-repeat.git
+[submodule "bundle/rspec"]
+	path = bundle/rspec
+	url = https://github.com/skwp/vim-rspec.git
