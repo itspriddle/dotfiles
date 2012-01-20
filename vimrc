@@ -177,7 +177,7 @@ imap <C-k> <C-o>gk
 
 " NERDTree
 " ,d to open NERDTree
-map <leader>d :NERDTreeTabsToggle<cr>
+map <leader>d :NERDTreeToggle<cr>
 
 " opt+U to toggle word case
 map <M-u> g~iw
@@ -192,10 +192,11 @@ map <M-c> :%s/{\_.\{-}}/\=substitute(submatch(0), '\n', '', 'g')/<cr>
 map <leader>f :Ack<space>
 
 " Tabular.vim
+" TODO: use AddTabularPattern! instead of repeating these
 nmap <Leader>a= :Tabularize /^[^=]*\zs=>\?<cr>
 vmap <Leader>a= :Tabularize /^[^=]*\zs=>\?<cr>
-nmap <Leader>a: :Tabularize /:\zs/l0r1<cr>
-vmap <Leader>a: :Tabularize /:\zs/l0r1<cr>
+nmap <Leader>a: :Tabularize /^[^:]*:\zs/l0l1<cr>
+vmap <Leader>a: :Tabularize /^[^:]*:\zs/l0l1<cr>
 nmap <Leader>a, :Tabularize /,\zs/l1r0<cr>
 vmap <Leader>a, :Tabularize /,\zs/l1r0<cr>
 
