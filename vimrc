@@ -186,6 +186,7 @@ imap <M-u> <C-o>g~iw
 " Clear search highlighting
 nmap <leader>/ :nohlsearch<cr>
 
+" Format CSS (Crappy..)
 map <M-c> :%s/{\_.\{-}}/\=substitute(submatch(0), '\n', '', 'g')/<cr>
 
 " ack.vim
