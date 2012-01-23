@@ -39,6 +39,7 @@ alias remigrate='rake db:migrate VERSION=0 && rake db:migrate && rake db:seed'
 alias rg="rails generate"
 alias rc="rails console"
 alias sc="rails console"
+alias be="bundle exec"
 
 # Others
 alias path='echo -e ${PATH//:/\\n}'
