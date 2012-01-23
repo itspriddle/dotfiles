@@ -38,7 +38,8 @@ set foldcolumn=2
 set spell
 
 " Highlight tabs and eol
-set list listchars=tab:▸\ ,eol:¬,trail:·
+set list
+set listchars=tab:▸\ ,eol:¬,trail:·
 
 " Enable alt key as meta key
 set macmeta
@@ -106,4 +107,4 @@ endif
 
 " }}}
 
-" vim:ft=vim:foldmethod=marker:foldlevel=0
+" vim:ft=vim:foldmethod=marker
