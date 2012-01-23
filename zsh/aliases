@@ -34,7 +34,6 @@ alias gw='git web'
 # rails
 alias ss='script/server'
 alias sg='script/generate'
-alias tlog="clear && tail -f -n 0 \${1:-log/\${RAILS_ENV:-development}.log}"
 alias migrate='rake db:migrate'
 alias remigrate='rake db:migrate VERSION=0 && rake db:migrate && rake db:seed'
 alias rg="rails generate"
