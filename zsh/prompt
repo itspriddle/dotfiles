@@ -12,12 +12,8 @@ zstyle ':vcs_info:git*:*' stagedstr " ⚡"  # %c
 zstyle ':vcs_info:git*'   actionformats " (%b%c|%a)"
 zstyle ':vcs_info:git*'   formats       " (%b%c)"
 
-josh_prompt_setup() {
-  add-zsh-hook precmd josh_prompt_precmd
-}
-
 josh_prompt_precmd() {
-  local git_prompt dir_prompt host_prompt
+  local git_prompt dir_prompt host_prompt branch_color dir_color host_color
 
   case "$TERM" in
     xterm*|rxvt*)
@@ -31,16 +27,20 @@ josh_prompt_precmd() {
 
   vcs_info
 
+  branch_color="green"
+  dir_color="blue"
+  host_color="yellow"
+
   if [[ -n $vcs_info_msg_0_ ]]; then
-    git_prompt="%{$fg_bold[green]%}$vcs_info_msg_0_%{$reset_color%}"
+    git_prompt="%{$fg_bold[$branch_color]%}$vcs_info_msg_0_%{$terminfo[sgr0]%}"
   else
     git_prompt=""
   fi
 
-  dir_prompt="%{$fg_bold[blue]%}%3~%{$reset_color%}"
+  dir_prompt="%{$fg_bold[$dir_color]%}%3~%{$terminfo[sgr0]%}"
 
   if [[ -n $SSH_CONNECTION ]]; then
-    host_prompt="%{$fg_bold[yellow]%}%n@%M%{$reset_color%} "
+    host_prompt="%{$fg_bold[$host_color]%}%n@%M%{$terminfo[sgr0]%} "
   else
     host_prompt=""
   fi
@@ -48,4 +48,4 @@ josh_prompt_precmd() {
   PS1="${host_prompt}${dir_prompt}${git_prompt} > "
 }
 
-josh_prompt_setup
+add-zsh-hook precmd josh_prompt_precmd
