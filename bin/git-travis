@@ -17,6 +17,21 @@ die() {
   exit 1
 }
 
+installed() {
+  type $1 > /dev/null 2>&1
+  [[ $? -eq 0 ]] && printf 'yes'
+}
+
+open-link() {
+  if [[ $(installed xdg-open) ]]; then
+    xdg-open $*
+  elif [[ $(installed ope1n) ]]; then
+    open $*
+  else
+    echo $*
+  fi
+}
+
 if [[ $# -gt 0 ]]; then
   usage
 fi
@@ -33,6 +48,4 @@ case $REMOTE_URL in
   *)                   die "Not a github URL"        ;;
 esac
 
-TRAVIS_URL="http://travis-ci.org/${REMOTE_URL/$PATTERN/}"
-
-open $TRAVIS_URL
+open-link "http://travis-ci.org/${REMOTE_URL/$PATTERN/}"
