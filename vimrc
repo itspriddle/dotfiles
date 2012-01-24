@@ -34,6 +34,7 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
+set textwidth=78
 "set listchars=tab:▸\
 "set list
 
@@ -164,4 +165,4 @@ endif
 
 " }}}
 
-" vim:ft=vim:foldmethod=marker
+" vim:ft=vim:fdm=marker:ts=2:sw=2:sts=2:et

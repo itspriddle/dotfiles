@@ -1,4 +1,5 @@
 " Buffers
+
 nnoremap <Tab> :bnext<cr>
 nnoremap <S-Tab> :bprevious<cr>
 
@@ -9,11 +10,7 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " ,r - :Rename, opens command line with `:Rename /path/to/current/file`
-"
-" Note that there is an invisible ^R character immediately preceding the =
-" sign below. To type it in vim, press ctrl+v, ctrl+r (without releasing the
-" ctrl key).
-map <leader>r :Rename =expand("%:p")<cr><space>
+map <leader>r :Rename %:p<cr><space>
 
 " ,q - Quit buffer (:quit)
 map <leader>q :quit<cr>
