@@ -25,7 +25,7 @@ installed() {
 open-link() {
   if [[ $(installed xdg-open) ]]; then
     xdg-open $*
-  elif [[ $(installed ope1n) ]]; then
+  elif [[ $(installed open) ]]; then
     open $*
   else
     echo $*
