@@ -1,6 +1,6 @@
 [user]
-  name  = Joshua Priddle
-  email = jpriddle@nevercraft.net
+  name = Joshua Priddle
+  email = jpriddle@me.com
 
 [github]
   user  = itspriddle
@@ -37,9 +37,10 @@
   browser = open
 
 [help]
-  format = web
+  format  = web
 
 [alias]
+  msg     = commit --allow-empty -m
   man     = help --man
   lg      = log --graph --abbrev-commit --date=relative
   up      = !git pull && git lg HEAD@{1}..
@@ -49,12 +50,10 @@
   web     = instaweb --httpd=webrick -b open
   count   = shortlog -sn
   pending = !git --no-pager log origin/master..master && echo
+  browse  = !hub browse  -- $(git symbolic-ref HEAD | sed 's|refs/heads|tree|')
   compare = !hub compare
-  browse  = !url=$( \
-    echo \"`git config remote.origin.url`\" | \
-    ruby -e \"url = ARGF.read.chomp\" \
-         -e \"url.sub! %r{^(git(://|@)|http(s?)://)}, ''\" \
-         -e \"url.sub! ':', '/'\" \
-         -e \"url.sub! %r{\\.git\\$}, ''\" \
-         -e \"print('http://' + url) if url != ''\" \
-  ) && [[ -n $url ]] && open $url || echo \"Can't find origin.\" && exit 1
+  oreilly = commit -m \"Fuck it, well do it live\"
+  shorten = "!sh -c 'curl -s -i http://git.io -F url=$1 | grep Location' -"
+
+
+# vim:set ft=gitconfig:
