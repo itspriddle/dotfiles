@@ -31,4 +31,7 @@ hosts=("${_ssh_hosts[@]}" localhost)
 zstyle ':completion:*:hosts' hosts $hosts
 
 # Git flow
-zstyle ':completion:*:*:git:*' user-commands flow:'description for foo'
+
+zstyle ':completion:*:*:git:*' user-commands \
+  travis:'Open travis-ci.org page for this repo' \
+  flow:'Git flow'
