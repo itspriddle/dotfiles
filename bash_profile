@@ -1,4 +1,14 @@
-for file in $HOME/.bashrc $HOME/.paths
+new_paths=(
+  $HOME/.dotfiles/bin
+  $HOME/.dotfiles/private-bin
+  /opt/local/bin
+)
+
+for p in "${new_paths[@]}"
 do
-  [[ -f $file ]] && source $file
+  [[ -d $p ]] && export PATH="$p:$PATH"
 done
+
+source $HOME/.bashrc
+
+# vim:set ft=sh:
