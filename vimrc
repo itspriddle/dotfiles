@@ -118,10 +118,6 @@ map <leader>n :set number! number?<cr>
 " ,l to toggle list
 map <leader>l :set list! list?<cr>
 
-" Disable F1 help menu
-nmap <F1> <nop>
-imap <F1> <nop>
-
 " Make ctrl+a/ctrl+e work in insert mode
 imap <C-a> <C-o>0
 imap <C-e> <C-o>$
