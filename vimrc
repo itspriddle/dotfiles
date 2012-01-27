@@ -106,9 +106,6 @@ set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,coverage/*
 
 let mapleader = ","
 
-" ,e - Go to command-mode with cursor at _, eg: ':Edit _'
-map <leader>e :Edit<space>
-
 " ,wr to toggle wrap/no wrap
 map <leader>wr :set nowrap! nowrap?<cr>
 
