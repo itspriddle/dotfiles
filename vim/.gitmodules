@@ -115,3 +115,6 @@
 [submodule "bundle/rspec"]
 	path = bundle/rspec
 	url = https://github.com/skwp/vim-rspec.git
+[submodule "bundle/cucumber"]
+	path = bundle/cucumber
+	url = https://github.com/tpope/vim-cucumber.git
