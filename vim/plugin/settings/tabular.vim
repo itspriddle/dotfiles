@@ -1,18 +1,23 @@
 " tabular.vim
 
 function! s:registerTabularPatterns()
-  AddTabularPattern! assignment /^[^=]*\zs=>\?
-  AddTabularPattern! colon      /^[^:]*:\zs/l0l1
-  AddTabularPattern! comma      /,\zs/l1r0
+  AddTabularPattern! assignment  /^[^=]*\zs=>\?/
+  AddTabularPattern! first_colon /^[^:]*:\zs/l0l1
+  AddTabularPattern! first_comma /^[^,]*\zs,/l1r0
 endfunction
 
 function! s:makeMap(key, pattern)
-  execute "nmap <leader>a".a:key." :Tabularize ".a:pattern."<cr>"
-  execute "vmap <leader>a".a:key." :Tabularize ".a:pattern."<cr>"
+  for m in ['n', 'v']
+    execute m."map <leader>a".a:key." :Tabularize ".a:pattern."<cr>"
+  endfor
 endfunction
 
-autocmd VimEnter * call s:registerTabularPatterns()
+augroup tabular
+  autocmd!
+  autocmd VimEnter * call s:registerTabularPatterns()
+augroup END
 
-call s:makeMap("=", "assignment")
-call s:makeMap(":", "colon")
-call s:makeMap(",", "comma")
+call s:makeMap("=",       "assignment")
+call s:makeMap(":",       "first_colon")
+call s:makeMap(",",       "first_comma")
+call s:makeMap("<space>", "multiple_spaces")
