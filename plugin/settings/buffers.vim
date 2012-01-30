@@ -10,7 +10,7 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " ,r - :Rename, opens command line with `:Rename /path/to/current/file`
-map <leader>r :Rename %:p<cr><space>
+map <leader>r :Rename <c-r>=expand('%:p')<cr><space>
 
 " ,q - Quit buffer (:quit)
 map <leader>q :quit<cr>
