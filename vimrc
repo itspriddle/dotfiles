@@ -23,7 +23,7 @@ set encoding=utf-8
 set backspace=indent,eol,start
 
 " Keep 50 items in command history
-set history=50
+set history=500
 
 " }}}
 
