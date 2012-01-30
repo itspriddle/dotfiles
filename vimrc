@@ -107,7 +107,7 @@ set wildignore+=*.rbc                            " Rubinius
 
 " Mappings {{{
 
-let mapleader = ","
+let g:mapleader = ","
 
 " ,wr to toggle wrap/no wrap
 map <leader>wr :set nowrap! nowrap?<cr>
