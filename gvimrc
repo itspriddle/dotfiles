@@ -61,7 +61,8 @@ set gcr=a:blinkon0
 
 " Mappings {{{
 
-map <leader>bg :call ToggleBG()<cr>
+" Toggle Background color
+map <leader>bg :let &bg = &bg == "dark" ? "light" : "dark"<cr>
 
 " Format paragraph
 vmap <C-q> gq
@@ -91,14 +92,6 @@ imap <D-/> <C-_><C-_>
 
 " }}}
 
-" Functions {{{
-
-function! ToggleBG()
-  let &background = ( &background == "dark" ? "light" : "dark" )
-endfunction
-
-" }}}
-
 " Include local gvim config {{{
 
 if filereadable(expand("~/.gvimrc.local"))
@@ -107,4 +100,4 @@ endif
 
 " }}}
 
-" vim:ft=vim:foldmethod=marker
+" vim:ft=vim:fdm=marker:ts=2:sw=2:sts=2:et
