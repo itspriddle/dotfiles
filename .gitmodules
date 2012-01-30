@@ -58,9 +58,6 @@
 [submodule "bundle/mustache"]
 	path = bundle/mustache
 	url = https://github.com/itspriddle/vim-mustache.git
-[submodule "bundle/jekyll"]
-	path = bundle/jekyll
-	url = https://github.com/csexton/jekyll.vim.git
 [submodule "bundle/tabular"]
 	path = bundle/tabular
 	url = https://github.com/godlygeek/tabular.git
