@@ -92,12 +92,18 @@ set foldmethod=manual
 
 " }}}
 
-" Omni completion {{{
+" Command line completion {{{
 
-set wildmode=list:longest,list:full
-"set wildmenu
-"set wildmode=list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,coverage/*
+set wildmode=list:longest
+
+" Ignore these patterns
+set wildignore+=.hg,.git,.svn,*.orig             " Version control
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.spl                            " compiled spelling word lists
+set wildignore+=*.sw?,.netrwhist                 " Vim
+set wildignore+=*.DS_Store,Icon\?                " OS X
+set wildignore+=*.rbc                            " Rubinius
 
 " }}}
 
