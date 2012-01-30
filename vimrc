@@ -55,7 +55,6 @@ set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [T:%Y\ F:%{&ff}]\ [L:%l/%L\
 
 " Show (partial) command in statusline
 set showcmd
-set showmatch
 
 " }}}
 
