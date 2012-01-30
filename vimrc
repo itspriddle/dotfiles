@@ -25,6 +25,15 @@ set backspace=indent,eol,start
 " Keep 50 items in command history
 set history=500
 
+" Show this symbol on lines that are wrapped
+set showbreak=↪
+
+" Fast terminal connection, improves redrawing
+set ttyfast
+
+" Set dictionary path
+set dictionary=/usr/share/dict/words
+
 " }}}
 
 " Whitespace {{{
