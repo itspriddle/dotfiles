@@ -97,6 +97,7 @@ set viewdir=~/.vim/.view
 set viewoptions=folds,cursor
 set foldmethod=manual
 set fillchars+=vert:│
+set winminheight=0
 
 " }}}
 
