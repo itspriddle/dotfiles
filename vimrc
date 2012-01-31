@@ -165,6 +165,9 @@ nmap <leader>/ :nohlsearch<cr>
 " and jump to it (same as pressing <esc>o)
 inoremap <M-o> <C-o>o
 
+" Shortcut for typing :help
+nmap <leader>h :help<space>
+
 " }}}
 
 " Fat fingers
