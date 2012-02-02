@@ -31,15 +31,23 @@ alias gs='git status -sb'
 alias grm="git status | grep deleted | cut -f2 -d ':' | sed 's/^ *//; s/ *\$//; s/ /\\\\ /g' | xargs git rm"
 alias gw='git web'
 
-# rails
+# ruby/rails
+alias irb18='/usr/bin/irb'
 alias ss='script/server'
 alias sg='script/generate'
 alias migrate='rake db:migrate'
 alias remigrate='rake db:migrate VERSION=0 && rake db:migrate && rake db:seed'
-alias rg="rails generate"
-alias rc="rails console"
-alias sc="rails console"
-alias be="bundle exec"
+alias rg='rails generate'
+alias rc='rails console'
+alias sc='rails console'
+alias be='bundle exec'
+alias rsm='rake spec:models'
+alias rsc='rake spec:controllers'
+alias rsr='rake spec:requests'
+alias rsrt='rake spec:routes'
+alias rsh='rake spec:helpers'
+alias rsl='rake spec:lib'
+alias rsv='rake spec:views'
 
 # Others
 alias path='echo -e ${PATH//:/\\n}'
