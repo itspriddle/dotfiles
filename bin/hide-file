@@ -1,0 +1,29 @@
+#!/bin/sh
+#/ Usage: [un]hide-file file ...
+#/
+#/ Example:
+#/
+#/  unhide-file ~/Library/
+#/  hide-file ~/Pr0n ~/Library/
+
+usage() {
+  grep '^#/' <"$0" | cut -c4-
+  exit 0
+}
+
+if [[ $# -eq 0 ]]; then
+  usage
+fi
+
+CMD=$(basename $0)
+
+case $CMD in
+  hide-file)
+    echo "hiding $*"
+    chflags hidden $*
+    ;;
+  unhide-file)
+    echo "unhiding $*"
+    chflags nohidden $*
+    ;;
+esac
