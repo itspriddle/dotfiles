@@ -88,6 +88,7 @@ set splitright
 
 set backupdir=~/.vim/.backup//
 set directory=~/.vim/.backup//
+set noswapfile
 
 " }}}
 
