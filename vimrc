@@ -159,9 +159,6 @@ imap <C-k> <C-o>gk
 map <M-u> g~iw
 imap <M-u> <C-o>g~iw
 
-" Clear search highlighting
-nmap <leader>/ :nohlsearch<cr>
-
 " create a new line below the current one
 " and jump to it (same as pressing <esc>o)
 inoremap <M-o> <C-o>o
