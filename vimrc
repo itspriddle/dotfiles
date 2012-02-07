@@ -86,8 +86,8 @@ set splitright
 
 " Backup {{{
 
-set backupdir=~/.vim/.backup
-set directory=~/.vim/.backup
+set backupdir=~/.vim/.backup//
+set directory=~/.vim/.backup//
 
 " }}}
 
