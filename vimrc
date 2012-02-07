@@ -113,6 +113,7 @@ set wildignore+=*.spl                            " compiled spelling word lists
 set wildignore+=*.sw?,.netrwhist                 " Vim
 set wildignore+=*.DS_Store,Icon\?                " OS X
 set wildignore+=*.rbc                            " Rubinius
+set wildignore+=_site                            " Jekyll
 
 " }}}
 
