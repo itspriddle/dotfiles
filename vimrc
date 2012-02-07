@@ -147,7 +147,7 @@ imap <C-l> <space>=><space>
 map <leader>z zi
 
 " Remap space to :
-noremap <space> :
+nnoremap <space> :
 
 " Visually select the text that was last edited/pasted
 nmap gV `[v`]
