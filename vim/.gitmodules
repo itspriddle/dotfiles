@@ -121,3 +121,6 @@
 [submodule "bundle/jekyll"]
 	path = bundle/jekyll
 	url = https://github.com/itspriddle/vim-jekyll.git
+[submodule "bundle/marked"]
+	path = bundle/marked
+	url = https://github.com/itspriddle/vim-marked.git
