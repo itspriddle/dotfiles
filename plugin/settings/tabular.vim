@@ -14,6 +14,7 @@ endfunction
 
 augroup tabular
   autocmd!
+
   autocmd VimEnter * call s:registerTabularPatterns()
 augroup END
 

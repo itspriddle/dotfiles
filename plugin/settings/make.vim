@@ -1,4 +1,6 @@
-if has("autocmd")
+augroup ft_make
+  autocmd!
+
   " make uses real tabs
-  autocmd FileType make setlocal noexpandtab softtabstop=4 tabstop=4 shiftwidth=4
-endif
+  autocmd FileType make setl noexpandtab softtabstop=4 tabstop=4 shiftwidth=4
+augroup END
