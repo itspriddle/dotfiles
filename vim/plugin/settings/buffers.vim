@@ -1,6 +1,9 @@
 " Buffers
 
+" Jump to the next buffer
 nnoremap <Tab> :bnext<cr>
+
+" Jump to the previous buffer
 nnoremap <S-Tab> :bprevious<cr>
 
 " Window Jumping
@@ -9,30 +12,24 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" ,r - :Rename, opens command line with `:Rename /path/to/current/file`
+" :Rename, opens command line with `:Rename /path/to/current/file`
 map <leader>r :Rename <c-r>=expand('%:p')<cr><space>
 
-" ,q - Quit buffer (:quit)
+" (Safe) quit buffer (:quit)
 map <leader>q :quit<cr>
 
-" ,Q - Quit buffer (:quit!)
+" Quit buffer (:quit!)
 map <leader>Q :quit!<cr>
 
-if has("autocmd")
-  " Resize splits when the window is resized
-  autocmd VimResized * exe "normal! \<c-w>="
+" Resize splits when the window is resized
+autocmd VimResized * exe "normal! \<c-w>="
 
-  " Remember last location in file
-  autocmd BufReadPost * call s:restoreLastCursorLocation()
+" Preserve folds and other view settings across sessions
+autocmd BufWinLeave * silent! mkview
+autocmd BufWinEnter * silent! loadview
 
-  " Preserve folds and other view settings across sessions
-  autocmd BufWinLeave * silent! mkview
-  autocmd BufWinEnter * silent! loadview
-endif
-
-" Restores the last cursor position, used when opening a new buffer
-function! s:restoreLastCursorLocation()
-  if line("'\"") > 0 && line ("'\"") <= line("$")
-    exe "normal! g'\""
-  endif
-endfunction
+" Remember last location in file
+autocmd BufReadPost *
+  \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+  \   exe "normal! g'\"" |
+  \ endif

@@ -2,15 +2,12 @@
 let g:ruby_space_errors = 1
 let g:ruby_operators    = 1
 
-function! s:makeMaps()
-  " Open the associated file in a horizontal split
-  map <buffer> <leader>s :AS<cr>
-
-  " Open the associated file in a vertical split
-  map <buffer> <leader>v :AV<cr>
-endfunction
-
-augroup rubymaps
+augroup ft_ruby
   autocmd!
-  autocmd Filetype ruby call s:makeMaps()
+
+  " Open or create the associated file in a horizontal split
+  autocmd FileType ruby map <buffer> <leader>s :AS!<cr>
+
+  " Open or create the associated file in a vertical split
+  autocmd FileType ruby map <buffer> <leader>v :AV!<cr>
 augroup END

@@ -1,14 +1,19 @@
-function! s:makeMaps()
-  nmap <buffer> <leader>cc :CoffeeCompile vert<cr>
-  vmap <buffer> <leader>cc :CoffeeCompile vert<cr>
-  nmap <buffer> <leader>cr :CoffeeRun<cr>
-  nmap <buffer> <leader>cm :CoffeeMake<cr>
-
-  " Intentionally has no <cr> so an option can be added
-  nmap <buffer> <leader>cM :CoffeeMake
-endfunction
-
-augroup coffeemaps
+augroup ft_coffee
   autocmd!
-  autocmd FileType coffee call s:makeMaps()
+
+  " Compile the current buffer in a vertical split
+  autocmd FileType coffee nmap <buffer> <leader>cc :CoffeeCompile vert<cr>
+
+  " Compile the current selection in a vertical split
+  autocmd FileType coffee vmap <buffer> <leader>cc :CoffeeCompile vert<cr>
+
+  " Compile and run the current buffer
+  autocmd FileType coffee nmap <buffer> <leader>cr :CoffeeRun<cr>
+  autocmd FileType coffee vmap <buffer> <leader>cR :CoffeeRun<cr>
+
+  " Compile the current buffer, output the result to a new file.
+  autocmd FileType coffee nmap <buffer> <leader>cm :CoffeeMake<cr>
+
+  " Same as above, Intentionally has no <cr> so an option can be added
+  autocmd FileType coffee nmap <buffer> <leader>cM :CoffeeMake
 augroup END

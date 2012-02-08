@@ -1,7 +1,9 @@
-if has("autocmd")
+augroup ft_markdown
+  autocmd!
+
   " Setup wrapping for text files
-  autocmd BufRead,BufNewFile *.{txt,md,markdown,mdown,mkd,mkdn} setlocal wrap textwidth=78
-endif
+  autocmd BufRead,BufNewFile *.{txt,md,markdown,mdown,mkd,mkdn} setl wrap textwidth=78
+augroup END
 
 " Markded.app view
 map <leader>mv :MarkedOpen<cr>
