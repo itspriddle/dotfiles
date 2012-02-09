@@ -15,7 +15,7 @@ map <leader>gs :Gstatus<cr>
 map <leader>gw :Gwrite<cr>
 
 " Commit current git index
-map <leader>gc :Gcommit -m<space>
+map <leader>gc :Gcommit -m ""<left>
 
 " Push current branch upstream
 map <leader>gp :Gpush<cr>
