@@ -12,14 +12,18 @@ help:
 # 	@ln -s ${PWD}/gvimrc ${HOME}/.gvimrc
 # 	@ln -s ${PWD}/vimrc ${HOME}/.vimrc
 
+# Update plugins then help
 update: update-plugins update-help
 
+# Update helptags for pathogen
 update-help:
-	@vim -e -c 'Helptags|q' 2>&1 /dev/null
+	@vim -e -c 'silent Helptags|q' 2>&1 /dev/null
 
+# Update all git submodules
 update-plugins:
 	@git submodule foreach 'git checkout master; git pull'
 
+# Cleanp backup/view dirs
 clean: clean-backup clean-view
 
 clean-backup:
