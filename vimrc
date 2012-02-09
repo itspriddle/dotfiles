@@ -44,6 +44,7 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 set textwidth=78
+set listchars=tab:▸\ ,eol:¬,trail:·
 
 " }}}
 

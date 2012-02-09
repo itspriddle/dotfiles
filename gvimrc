@@ -39,7 +39,6 @@ set spell
 
 " Highlight tabs and eol
 set list
-set listchars=tab:▸\ ,eol:¬,trail:·
 
 " Enable alt key as meta key
 set macmeta
