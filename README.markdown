@@ -1,9 +1,30 @@
-# Josh's vim config
+# Josh's Vim Config
 
-My (g)vim configurations. It uses Tim Pope's
-[vim-pathogen](http://github.com/tpope/vim-pathogen) and
-[git submodules](http://www.kernel.org/pub/software/scm/git/docs/git-submodule.html)
-to keep things relatively tidy.
+My Vim config, which I think is better than yours.
+
+Maybe it's not. Much of it has come from other developers' settings I've seen
+on the web, so maybe I've stolen something from you.
+
+I work primarily with Ruby, Javascript, Markdown, HTML, and CSS, so my setup
+is somewhat specific to those languages (and libraries/frameworks written with
+them).
+
+This repo changes pretty frequently as my tastes change or I
+install a plugin that scratches a new itch. I've tried to keep things
+commented as much as possible.
+
+Oh, you probably will need Vim 7.3, either console or MacVim.
+
+# Setup and Maintenance
+
+I use [pathogen.vim](https://github.com/tpope/vim-pathogen/) and [git
+submodules](http://www.kernel.org/pub/software/scm/git/docs/git-submodule.html)
+to handle third party plugins. All plugins are kept in the default location
+for pathogen, `vim/bundle/`. A Makefile is included to update plugins and
+their helptags.
+
+Where it makes sense, settings are kept in `vim/plugin/settings/`. I might
+merge these back into `vimrc` at some point.
 
 ## Installation
 
@@ -21,53 +42,30 @@ Clone this repo:
     ln -s .vim/vimrc .vimrc
     ln -s .vim/gvimrc .gvimrc
 
-## Updating
+## Updating Plugins and Helptags
+
+Update all plugins installed as git submodules and runs `:Helptags` to make
+Vim aware of their help documents:
 
     cd ~/.vim
-    git pull origin master
-    rake update_plugins
+    make update-plugins
+    make update-help
+    make update # runs both update-plugins and update-help
+
+## Cleaning Backups and Views
+
+`~/.vim/.backup/` and `~/.vim/.view/` may need to be cleaned up from time to
+time:
+
+    cd ~/.vim
+    make clean-backup
+    make clean-view
+    make clean # runs both clean-backup and clean-view
+
+# Plugins and Customizations
+
+See [vim/plugin/settings/](plugin/settings/) for a list of installed plugins.
 
 ## Included Plugins
 
-The following plugins are installed in `vim/bundle/`
-
-* [ack.vim](https://github.com/mileszs/ack.vim)
-* [Command-T](https://github.com/wincent/Command-T)
-* [gist-vim](https://github.com/mattn/gist-vim)
-* [jekyll.vim](https://github.com/csexton/jekyll.vim)
-* [jslint.vim](https://github.com/hallettj/jslint.vim)
-* [nerdtree](https://github.com/scrooloose/nerdtree)
-* [scss-syntax.vim](https://github.com/cakebaker/scss-syntax.vim)
-* [snipmate-snippets](https://github.com/scrooloose/snipmate-snippets)
-* [snipmate.vim](https://github.com/msanders/snipmate.vim)
-* [supertab](https://github.com/ervandew/supertab)
-* [tabman.vim](https://github.com/kien/tabman.vim)
-* [tabular](https://github.com/godlygeek/tabular)
-* [tagbar](https://github.com/majutsushi/tagbar)
-* [tcomment_vim](https://github.com/tomtom/tcomment_vim)
-* [vim-coffee-script](https://github.com/kchmck/vim-coffee-script)
-* [vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
-* [vim-css-color](https://github.com/ap/vim-css-color)
-* [vim-endwise](https://github.com/tpope/vim-endwise)
-* [vim-eunuch](https://github.com/tpope/vim-eunuch)
-* [vim-fugitive](https://github.com/tpope/vim-fugitive)
-* [vim-git](https://github.com/tpope/vim-git)
-* [vim-haml](https://github.com/tpope/vim-haml)
-* [vim-javascript-indent](https://github.com/itspriddle/vim-javascript-indent)
-* [vim-jquery](https://github.com/itspriddle/vim-jquery)
-* [vim-lesscss](https://github.com/itspriddle/vim-lesscss)
-* [vim-liquid](https://github.com/tpope/vim-liquid)
-* [vim-markdown](https://github.com/tpope/vim-markdown)
-* [vim-mustache](https://github.com/itspriddle/vim-mustache)
-* [vim-nerdtree-tabs](https://github.com/jistr/vim-nerdtree-tabs)
-* [vim-pathogen](https://github.com/tpope/vim-pathogen)
-* [vim-rails](https://github.com/tpope/vim-rails)
-* [vim-rake](https://github.com/tpope/vim-rake)
-* [vim-repeat](https://github.com/tpope/vim-repeat)
-* [vim-rspec](https://github.com/taq/vim-rspec)
-* [vim-ruby](https://github.com/vim-ruby/vim-ruby)
-* [vim-speeddating](https://github.com/tpope/vim-speeddating)
-* [vim-stripper](https://github.com/itspriddle/vim-stripper)
-* [vim-surround](https://github.com/tpope/vim-surround)
-* [vim-themes](https://github.com/itspriddle/vim-themes)
-* [ZoomWin](https://github.com/vim-scripts/ZoomWin)
+See [vim/bundle/](bundle/) for a list of installed plugins.
