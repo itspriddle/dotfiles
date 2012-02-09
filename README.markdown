@@ -64,8 +64,9 @@ time:
 
 # Plugins and Customizations
 
-See [vim/plugin/settings/](plugin/settings/) for a list of installed plugins.
+See [vim/plugin/settings/](http://git.io/bhf9Jg) for a list of installed
+plugins.
 
 ## Included Plugins
 
-See [vim/bundle/](bundle/) for a list of installed plugins.
+See [vim/bundle/](http://git.io/cWGCAQ) for a list of installed plugins.
