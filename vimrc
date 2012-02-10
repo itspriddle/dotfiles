@@ -332,27 +332,41 @@ let g:gist_show_privates           = 1
 
 " Git (git.vim and fugitive.vim) {{{
 
+" Open GitX (requires gitx in $PATH)
+function! s:GitX(...)
+  silent exe '!gitx --git-dir='.b:git_dir.' '.join(a:000)
+  redraw!
+endfunction
+
 augroup ft_git
   autocmd!
 
   " Place the cursor at the top of the buffer
   autocmd VimEnter .git/COMMIT_EDITMSG exe "normal! gg"
+
+  " Alias Gpush
+  autocmd User Fugitive command! Gpush exe 'Git push'
+
+  " Open GitX
+  autocmd User Fugitive command! -nargs=* Gitx call s:GitX(<q-args>)
+  autocmd User Fugitive noremap <leader>gx :Gitx<cr>
+
+  " Alias Gstate (Opens GitX on stage view)
+  autocmd User Fugitive command! Gstage call s:GitX('-c')
+
+  " Show git status for the repo
+  autocmd User Fugitive noremap <leader>gs :Gstatus<cr>
+
+  " Write the current buffer to git index
+  autocmd User Fugitive noremap <leader>gw :Gwrite<cr>
+
+  " Commit current git index
+  autocmd User Fugitive noremap <leader>gc :Gcommit -m ""<left>
+
+  " Push current branch upstream
+  autocmd User Fugitive noremap <leader>gp :Gpush<cr>
+
 augroup END
-
-" Alias Gpush
-command! Gpush exe 'Git push'
-
-" Show git status for the repo
-noremap <leader>gs :Gstatus<cr>
-
-" Write the current buffer to git index
-noremap <leader>gw :Gwrite<cr>
-
-" Commit current git index
-noremap <leader>gc :Gcommit -m ""<left>
-
-" Push current branch upstream
-noremap <leader>gp :Gpush<cr>
 
 " }}}
 
