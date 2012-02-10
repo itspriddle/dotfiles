@@ -7,26 +7,24 @@ set nocompatible
 source ~/.vim/bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect()
 
-" enable syntax highlighting
+" Enable syntax highlighting
 syntax on
 
-" load the plugin and indent settings for the detected filetype
+" Load the plugin and indent settings for the detected filetype
 filetype plugin indent on
 
 " }}}
 
 " General settings {{{
 
+" Allow UTF8 chars
 set encoding=utf-8
 
 " Allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-" Keep 50 items in command history
+" Keep 500 items in command history
 set history=500
-
-" Show this symbol on lines that are wrapped
-set showbreak=↪
 
 " Fast terminal connection, improves redrawing
 set ttyfast
@@ -44,7 +42,16 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 set textwidth=78
+
+" }}}
+
+" Invisibles {{{
+
+" Highlight hard-tabs, eol and trailing white space
 set listchars=tab:▸\ ,eol:¬,trail:·
+
+" Show this symbol on lines that are wrapped
+set showbreak=↪
 
 " }}}
 
@@ -58,7 +65,10 @@ set listchars=tab:▸\ ,eol:¬,trail:·
 
 " Statusline {{{
 
+" Always show the statusline
 set laststatus=2
+
+" Set statusline text
 set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [T:%Y\ F:%{&ff}]\ [L:%l/%L\ C:%v\ (%p%%)]
 
 " Show (partial) command in statusline
@@ -83,6 +93,9 @@ set splitbelow
 " Vertical splits open to the right of the current buffer
 set splitright
 
+" Let the min height 0 (useful with <C-w>_)
+set winminheight=0
+
 " }}}
 
 " Backup {{{
@@ -93,13 +106,12 @@ set noswapfile
 
 " }}}
 
-" Fold/view {{{
+" Window settings (Fold/view) {{{
 
 set viewdir=~/.vim/.view
 set viewoptions=folds,cursor
 set foldmethod=manual
 set fillchars+=vert:│
-set winminheight=0
 
 " }}}
 
@@ -108,14 +120,14 @@ set winminheight=0
 set wildmode=list:longest
 
 " Ignore these patterns
-set wildignore+=.hg,.git,.svn,*.orig             " Version control
-set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-set wildignore+=*.spl                            " compiled spelling word lists
-set wildignore+=*.sw?,.netrwhist                 " Vim
-set wildignore+=*.DS_Store,Icon\?                " OS X
-set wildignore+=*.rbc                            " Rubinius
-set wildignore+=_site                            " Jekyll
+set wildignore+=.hg,.git,.svn,*.orig                  " Version control
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg,*.icns " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest      " compiled object files
+set wildignore+=*.spl                                 " compiled spelling word lists
+set wildignore+=*.sw?,.netrwhist                      " Vim
+set wildignore+=*.DS_Store,Icon\?,*.dfont             " OS X
+set wildignore+=*.rbc                                 " Rubinius
+set wildignore+=_site                                 " Jekyll
 
 " }}}
 
@@ -123,30 +135,23 @@ set wildignore+=_site                            " Jekyll
 
 let g:mapleader = ","
 
-" ,wr to toggle wrap/no wrap
-map <leader>wr :set nowrap! nowrap?<cr>
+" Toggle wrap/no wrap
+nmap <leader>wr :set nowrap! nowrap?<cr>
 
-" ,pa to toggle paste mode
-map <leader>pa :set paste! paste?<cr>
+" Toggle paste mode
+nmap <leader>pa :set paste! paste?<cr>
 
-" ,n to toggle line numbers
-map <leader>n :set number! number?<cr>
+" Toggle line numbers
+nmap <leader>n :set number! number?<cr>
 
-" ,l to toggle list
-map <leader>l :set list! list?<cr>
-
-" Make ctrl+a/ctrl+e work in insert mode
-imap <C-a> <C-o>0
-imap <C-e> <C-o>$
-
-" Make ctrl+a jump to beginning of line in command mode
-cnoremap <C-a> <C-b>
+" Toggle list
+nmap <leader>l :set list! list?<cr>
 
 " bind ctrl-l to hashrocket
 imap <C-l> <space>=><space>
 
-" ,z - Toggle fold visibility
-map <leader>z zi
+" Toggle fold visibility
+map <leader>z za
 
 " Remap space to :
 noremap <space> :
@@ -168,6 +173,34 @@ inoremap <M-o> <C-o>o
 
 " Shortcut for typing :help
 nmap <leader>h :help<space>
+
+" Make ctrl+a/ctrl+e work in insert mode
+imap <C-a> <C-o>0
+imap <C-e> <C-o>$
+
+" Make ctrl+a jump to beginning of line in command mode
+cnoremap <C-a> <C-b>
+
+" Jump to the next buffer
+nnoremap <Tab> :bnext<cr>
+
+" Jump to the previous buffer
+nnoremap <S-Tab> :bprevious<cr>
+
+" Window Jumping
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" :Rename, opens command line with `:Rename /path/to/current/file`
+map <leader>r :Rename <c-r>=expand('%:p')<cr><space>
+
+" (Safe) quit buffer (:quit)
+map <leader>q :quit<cr>
+
+" Quit buffer (:quit!)
+map <leader>Q :quit!<cr>
 
 " }}}
 
