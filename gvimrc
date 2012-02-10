@@ -60,23 +60,15 @@ set gcr=a:blinkon0
 
 " Mappings {{{
 
-" Toggle Background color
-map <leader>bg :let &bg = &bg == "dark" ? "light" : "dark"<cr>
-
-" Format paragraph
-vmap <C-q> gq
-nmap <C-q> gqap
-imap <C-q> <C-o>gqap
-
 " cmd-] to shift right
 nmap <D-]> >>
 vmap <D-]> >gv
-imap <D-]> <C-O>>>
+imap <D-]> <C-t>
 
 " cmd-[ to shift left
 nmap <D-[> <<
 vmap <D-[> <gv
-imap <D-[> <C-O><<
+imap <D-[> <C-d>
 
 " opt-backspace: delete word
 imap <M-BS> <C-w>

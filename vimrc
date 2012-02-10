@@ -135,51 +135,70 @@ set wildignore+=_site                                 " Jekyll
 
 let g:mapleader = ","
 
+" Toggles {{{
+
 " Toggle wrap/no wrap
-nmap <leader>wr :set nowrap! nowrap?<cr>
+nnoremap <leader>wr :set nowrap! nowrap?<cr>
 
 " Toggle paste mode
-nmap <leader>pa :set paste! paste?<cr>
+nnoremap <leader>pa :set paste! paste?<cr>
 
 " Toggle line numbers
-nmap <leader>n :set number! number?<cr>
+nnoremap <leader>n :set number! number?<cr>
 
 " Toggle list
-nmap <leader>l :set list! list?<cr>
+nnoremap <leader>l :set list! list?<cr>
+
+" Toggle Background color
+nnoremap <leader>bg :let &bg = &bg == "dark" ? "light" : "dark"<cr>
+
+" }}}
 
 " bind ctrl-l to hashrocket
-imap <C-l> <space>=><space>
+inoremap <C-l> <space>=><space>
 
 " Toggle fold visibility
-map <leader>z za
+nnoremap <leader>z za
 
 " Remap space to :
 noremap <space> :
 
 " Visually select the text that was last edited/pasted
-nmap gV `[v`]
+nnoremap gV `[v`]
 
 " ctrl+j/ctrl+k to move up/down in insert mode
-imap <C-j> <C-o>gj
-imap <C-k> <C-o>gk
+inoremap <C-j> <C-o>gj
+inoremap <C-k> <C-o>gk
+
+" Formatting text {{{
 
 " opt+U to toggle word case
-map <M-u> g~iw
-imap <M-u> <C-o>g~iw
+nnoremap <M-u> g~iw
+vnoremap <M-u> g~i
+inoremap <M-u> <C-o>g~iw
+
+" Format paragraph
+vnoremap <C-q> gq
+nnoremap <C-q> gqap
+inoremap <C-q> <C-o>gqap
+
+" }}}
 
 " create a new line below the current one
 " and jump to it (same as pressing <esc>o)
 inoremap <M-o> <C-o>o
 
 " Shortcut for typing :help
-nmap <leader>h :help<space>
+nnoremap <leader>h :help<space>
 
 " Make ctrl+a/ctrl+e work in insert mode
-imap <C-a> <C-o>0
-imap <C-e> <C-o>$
+inoremap <C-a> <C-o>0
+inoremap <C-e> <C-o>$
 
 " Make ctrl+a jump to beginning of line in command mode
 cnoremap <C-a> <C-b>
+
+" Window Movement {{{
 
 " Jump to the next buffer
 nnoremap <Tab> :bnext<cr>
@@ -188,19 +207,21 @@ nnoremap <Tab> :bnext<cr>
 nnoremap <S-Tab> :bprevious<cr>
 
 " Window Jumping
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
+
+" }}}
 
 " :Rename, opens command line with `:Rename /path/to/current/file`
-map <leader>r :Rename <c-r>=expand('%:p')<cr><space>
+nnoremap <leader>r :Rename <c-r>=expand('%:p')<cr><space>
 
 " (Safe) quit buffer (:quit)
-map <leader>q :quit<cr>
+nnoremap <leader>q :quit<cr>
 
 " Quit buffer (:quit!)
-map <leader>Q :quit!<cr>
+nnoremap <leader>Q :quit!<cr>
 
 " }}}
 
