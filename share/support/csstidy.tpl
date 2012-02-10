@@ -5,6 +5,5 @@
 |
 <span class="format">}</span>
 
-|  |</span>
-  <span class="format">{</span>
-||
+|  |</span>|
+|
