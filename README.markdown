@@ -13,7 +13,8 @@ This repo changes pretty frequently as my tastes change or I
 install a plugin that scratches a new itch. I've tried to keep things
 commented as much as possible.
 
-Oh, you probably will need Vim 7.3, either console or MacVim.
+Oh, you probably will need Vim 7.3, either console or MacVim. A shell script
+is included at [`share/install-vim.sh`](http://git.io/XnHlNQ).
 
 # Setup and Maintenance
 
