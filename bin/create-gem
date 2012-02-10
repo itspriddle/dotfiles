@@ -20,6 +20,7 @@ class GemTemplate
       create_gemfile
       create_rakefile
       create_license
+      create_travis
     end
   end
 
@@ -100,6 +101,10 @@ class GemTemplate
     File.open("LICENSE", "w+") { |file| file.puts license_template }
   end
 
+  def create_travis
+    File.open(".travis.yml", "w+") { |file| file.puts travis_template }
+  end
+
   def write_module(code = nil)
     out  = []
     segs = name.split('::')
@@ -178,15 +183,14 @@ Gem::Specification.new do |s|
 
   s.files      = %w[ Rakefile README.markdown ]
   s.files     += Dir['bin/**/*'] if File.exists? 'bin'
-  s.files     += Dir['lib/**/*']
-  s.files     += Dir['spec/**/*']
+  s.files     += Dir['lib/**/*', 'spec/**/*']
 
   # s.executables      = ['#{dir}']
 
   # s.add_dependency('gem', '= 0.0.0')
 
-  s.add_development_dependency('rspec', '~> 2.5')
-  s.add_development_dependency('rake', '~> 0.8.7')
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'rake'
 
   s.extra_rdoc_files = ['README.markdown']
   s.rdoc_options     = ["--charset=UTF-8"]
@@ -199,19 +203,11 @@ TEMPLATE
   end
 
   def gemfile_template
-    "source 'http://rubygems.org'\ngemspec\n"
+    "source :rubygems\n\ngemspec"
   end
 
   def rakefile_template; <<-TEMPLATE
 $:.unshift 'lib'
-
-begin
-  require 'bundler'
-  Bundler::GemHelper.install_tasks
-rescue LoadError
-  puts "Please install bundler (gem install bundler)"
-  exit
-end
 
 begin
   require 'rspec/core/rake_task'
@@ -233,9 +229,12 @@ TEMPLATE
   end
 
   def readme_template; <<-TEMPLATE
-# #{name}
+# #{name} [![#{name} Build Status][Build Icon]][Build Status]
 
 Description Here
+
+[Build Icon]: https://secure.travis-ci.org/#{github_name}/#{dir}.png?branch=master
+[Build Status]: https://travis-ci.org/#{github_name}/#{dir}
 
 ## Note on Patches/Pull Requests
 
@@ -253,9 +252,28 @@ Copyright (c) #{Time.now.year} #{author_name}. See LICENSE for details.
 TEMPLATE
   end
 
+  def travis_template; <<-TEMPLATE
+script: "bundle exec rake spec"
+notifications:
+  disabled: true
+rvm:
+  - 1.8.7
+  - 1.9.2
+  - 1.9.3
+  - ree
+  - rbx
+  - rbx-2.0
+  - jruby
+TEMPLATE
+    end
+
   def version_template
     write_module "VERSION = Version = '0.0.0'"
   end
+end
+
+if (Dir['.*', '*'] - %W(. ..)).any?
+  abort "Aborting, there are files in this directory\n#{`find .`}"
 end
 
 new_gem = GemTemplate.create!
