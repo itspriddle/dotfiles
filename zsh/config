@@ -17,6 +17,10 @@ setopt LOCAL_TRAPS
 #setopt CORRECT
 #setopt COMPLETE_IN_WORD
 
+# Disable flow control and allow binding ^q and ^s
+setopt NO_FLOW_CONTROL
+stty -ixon -ixoff
+
 # Leave =/&; out of WORDCHARS so ^W acts more nicely
 # # -- still not ideal
 WORDCHARS='*?_-.[]~\!#$%^(){}<>|`@#$%^*()+:?''`'
