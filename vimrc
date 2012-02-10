@@ -100,15 +100,17 @@ set winminheight=0
 
 " Backup {{{
 
-set backupdir=~/.vim/.backup//
-set directory=~/.vim/.backup//
+set backupdir=~/.vim/.tmp/backup//
+set directory=~/.vim/.tmp/backup//
+set undodir=~/.vim/.tmp/undo//
+set viewdir=~/.vim/.tmp/view//
 set noswapfile
+set undofile
 
 " }}}
 
 " Window settings (Fold/view) {{{
 
-set viewdir=~/.vim/.view
 set viewoptions=folds,cursor
 set foldmethod=manual
 set fillchars+=vert:│
