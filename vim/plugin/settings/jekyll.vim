@@ -1,6 +1,6 @@
 " Commit the current buffer, optionally pushing.
 function! s:Jpublish(push, ...)
-  let msg = a:0 ? a:1 : "'Add post'"
+  let msg = a:0 && ! empty(a:1) ? a:1 : '"Add post"'
   Gwrite
   exe 'Gcommit -m '.msg
   if a:push
