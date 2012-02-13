@@ -26,9 +26,6 @@ to handle third party plugins. All plugins are kept in the default location
 for pathogen, `vim/bundle/`. A Makefile is included to update plugins and
 their helptags.
 
-Where it makes sense, settings are kept in `vim/plugin/settings/`. I might
-merge these back into `vimrc` at some point.
-
 ## Installation
 
 Before installing, backup `~/.vim`, `~/.vimrc` and `~/.gvimrc`
@@ -57,18 +54,10 @@ Vim aware of their help documents:
 
 ## Cleaning Backups and Views
 
-`~/.vim/.backup/` and `~/.vim/.view/` may need to be cleaned up from time to
-time:
+`~/.vim/.tmp/` may need to be cleaned up from time to time:
 
     cd ~/.vim
-    make clean-backup
-    make clean-view
-    make clean # runs both clean-backup and clean-view
-
-# Plugins and Customizations
-
-See [`vim/plugin/settings/`](http://git.io/bhf9Jg) for a list of
-customizations.
+    make clean
 
 ## Included Plugins
 
