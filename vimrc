@@ -135,7 +135,7 @@ set wildignore+=_site                                 " Jekyll
 
 " Mappings {{{
 
-let g:mapleader = ","
+let g:mapleader = ','
 
 " Toggles {{{
 
@@ -152,7 +152,7 @@ nnoremap <leader>n :set number! number?<cr>
 nnoremap <leader>l :set list! list?<cr>
 
 " Toggle Background color
-nnoremap <leader>bg :let &bg = &bg == "dark" ? "light" : "dark"<cr>
+nnoremap <leader>bg :let &bg = &bg == 'dark' ? 'light' : 'dark'<cr>
 
 " Toggle fold visibility
 nnoremap <leader>z za
@@ -262,7 +262,7 @@ augroup all_buffers
   autocmd!
 
   " Resize splits when the window is resized
-  autocmd VimResized * exe "normal! \<c-w>="
+  autocmd VimResized * exe 'normal! \<c-w>='
 
   " Preserve folds and other view settings across sessions
   autocmd BufWinLeave * silent! mkview
@@ -277,7 +277,7 @@ augroup all_buffers
 augroup END
 
 " Make search highlighting readable in console Vim
-if ! has("gui")
+if ! has('gui')
   highlight Search term=reverse ctermfg=235 ctermbg=221
 endif
 
@@ -352,7 +352,7 @@ augroup ft_git
   autocmd!
 
   " Place the cursor at the top of the buffer
-  autocmd VimEnter .git/COMMIT_EDITMSG exe "normal! gg"
+  autocmd VimEnter .git/COMMIT_EDITMSG exe 'normal! gg'
 
   " Alias Gpush
   autocmd User Fugitive command! -buffer Gpush exe 'Git push'
@@ -584,7 +584,7 @@ endfunction
 
 function! s:makeMap(key, pattern)
   for m in ['n', 'v']
-    execute m."noremap <leader>a".a:key." :Tabularize ".a:pattern."<cr>"
+    execute m.'noremap <leader>a'.a:key.' :Tabularize '.a:pattern.'<cr>'
   endfor
 endfunction
 
@@ -594,10 +594,10 @@ augroup tabular
   autocmd VimEnter * call s:registerTabularPatterns()
 augroup END
 
-call s:makeMap("=",       "assignment")
-call s:makeMap(":",       "first_colon")
-call s:makeMap(",",       "first_comma")
-call s:makeMap("<space>", "multiple_spaces")
+call s:makeMap('=',       'assignment')
+call s:makeMap(':',       'first_colon')
+call s:makeMap(',',       'first_comma')
+call s:makeMap('<space>', 'multiple_spaces')
 
 " }}}
 
@@ -634,7 +634,7 @@ noremap <leader><leader> :ZoomWin<cr>
 
 " Include local vim config {{{
 
-if filereadable(expand("~/.vimrc.local"))
+if filereadable(expand('~/.vimrc.local'))
   source ~/.vimrc.local
 endif
 
