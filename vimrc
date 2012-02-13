@@ -359,11 +359,11 @@ augroup ft_git
 
   " Open GitX
   autocmd User Fugitive command! -buffer -nargs=* Gitx call s:GitX(<q-args>)
-  autocmd User Fugitive noremap <buffer> <silent> <leader>gx :Gitx<cr>
+  autocmd User Fugitive noremap <buffer> <leader>gx :Gitx<cr>
 
   " Alias Gstage (Opens GitX on stage view)
   autocmd User Fugitive command! -buffer Gstage call s:GitX('-c')
-  autocmd User Fugitive noremap <buffer> <silent> <leader>gt :Gstage<cr>
+  autocmd User Fugitive noremap <buffer> <leader>gt :Gstage<cr>
 
   " Show git status for the repo
   autocmd User Fugitive noremap <buffer> <leader>gs :Gstatus<cr>
