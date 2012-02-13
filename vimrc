@@ -448,16 +448,16 @@ noremap <leader>mq :MarkedQuit<cr>
 " NERDTree.vim {{{
 
 " ,d to open NERDTree
-noremap <leader>d :NERDTreeToggle<cr>
+noremap <silent> <leader>d :NERDTreeToggle<cr>
 
 augroup ft_nerdtree
   autocmd!
 
   " > to make NERDtree wider
-  autocmd BufCreate NERD_tree_* nnoremap <buffer> > :5wincmd ><cr>
+  autocmd BufCreate NERD_tree_* nnoremap <buffer> <silent> > :5wincmd ><cr>
 
   " < to make NERDtree narrower
-  autocmd BufCreate NERD_tree_* nnoremap <buffer> < :5wincmd <<cr>
+  autocmd BufCreate NERD_tree_* nnoremap <buffer> <silent> < :5wincmd <<cr>
 augroup END
 
 let g:NERDChristmasTree  = 1
