@@ -229,6 +229,9 @@ nnoremap <leader>Q :quit!<cr>
 " Shortcut for typing :help
 nnoremap <leader>h :help<space>
 
+" Open vimrc in a new tab
+nnoremap <leader>v :tabnew $MYVIMRC<cr>
+
 " }}}
 
 " }}}
