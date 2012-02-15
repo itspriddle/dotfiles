@@ -52,8 +52,6 @@
   pending = !git --no-pager log origin/master..master && echo
   browse  = !hub browse  -- $(git symbolic-ref HEAD | sed 's|refs/heads|tree|')
   compare = !hub compare
-  oreilly = commit -m \"Fuck it, well do it live\"
-  shorten = "!sh -c 'curl -s -i http://git.io -F url=$1 | grep Location' -"
+  shorten = !sh -c 'curl -s -i http://git.io -F url=$1 | grep Location | sed s/Location:\\ //g' -
 
-
-# vim:set ft=gitconfig:
+# vim:ft=gitconfig
