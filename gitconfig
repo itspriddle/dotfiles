@@ -40,18 +40,21 @@
   format  = web
 
 [alias]
-  msg     = commit --allow-empty -m
-  man     = help --man
-  lg      = log --graph --abbrev-commit --date=relative
-  up      = !git pull && git lg HEAD@{1}..
-  pa      = add --patch
-  unstage = reset HEAD --
-  last    = !git --no-pager log -1 HEAD && echo
-  web     = instaweb --httpd=webrick -b open
-  count   = shortlog -sn
-  pending = !git --no-pager log origin/master..master && echo
-  browse  = !hub browse  -- $(git symbolic-ref HEAD | sed 's|refs/heads|tree|')
-  compare = !hub compare
-  shorten = !sh -c 'curl -s -i http://git.io -F url=$1 | grep Location | sed s/Location:\\ //g' -
+  msg          = commit --allow-empty -m
+  man          = help --man
+  lg           = log --graph --abbrev-commit --date=relative
+  up           = !git pull && git lg HEAD@{1}..
+  pa           = add --patch
+  unstage      = reset HEAD --
+  last         = !git --no-pager log -1 HEAD && echo
+  web          = instaweb --httpd=webrick -b open
+  count        = shortlog -sn
+  pending      = !git --no-pager log origin/master..master && echo
+  browse       = !hub browse  -- $(git symbolic-ref HEAD | sed 's|refs/heads|tree|')
+  compare      = !hub compare
+  shorten      = !sh -c 'curl -s -i http://git.io -F url=$1 | grep Location | sed s/Location:\\ //' -
+  pull-request = !hub pull-request
+  feature      = !sh -c '[ "$#" = 1 ] && git checkout -B feature/$1 || echo "Usage: git feature NAME" && exit 1' -
+  bugfix       = !sh -c '[ "$#" = 1 ] && git checkout -B bugfix/$1  || echo "Usage: git bugfix NAME" && exit 1' -
 
 # vim:ft=gitconfig
