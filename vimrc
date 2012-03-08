@@ -481,6 +481,16 @@ inoremap <F1> <nop>
 
 " }}}
 
+" OpenURL: Open stuff in your browser (http://git.io/qaDWKg) {{{
+
+command! -nargs=1 OpenURL :exe '!open <q-args>'
+
+nnoremap gb :OpenURL <cfile><cr>
+nnoremap gG :OpenURL http://www.google.com/search?q=<cword><cr>
+nnoremap gW :OpenURL http://en.wikipedia.org/wiki/Special:Search?search=<cword><cr>
+
+" }}}
+
 " Python {{{
 
 augroup ft_python
