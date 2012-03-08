@@ -30,7 +30,7 @@ set history=500
 set ttyfast
 
 " Set dictionary path
-set dictionary=/usr/share/dict/words
+set dictionary+=/usr/share/dict/words
 
 " }}}
 
