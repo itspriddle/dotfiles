@@ -393,26 +393,6 @@ augroup END
 
 " }}}
 
-" vim-jekyll {{{
-
-" Commit the current buffer, optionally pushing.
-function! s:Jpublish(push, ...)
-  let msg = a:0 && ! empty(a:1) ? a:1 : '"Add post"'
-  Gwrite
-  exe 'Gcommit -m '.msg
-  if a:push
-    Gpush
-  endif
-endfunction
-
-" :Jpublish               - Commit with 'Add post' as the commit message
-" :Jpublish "my message"  - Commit with 'my message' as the commit message
-" :Jpublish!              - Same as :Jpublish, but performs a git push
-" :Jpublish! "my message" - Same as :Jpublish!, but performs a git push
-autocmd User Jekyll command! -bang -nargs=? Jpublish call s:Jpublish(<bang>0, <q-args>)
-
-" }}}
-
 " liquid.vim {{{
 
 let g:liquid_highlight_types = ['ruby', 'javascript']
@@ -634,11 +614,13 @@ noremap <leader>T :TagbarToggle<cr>
 augroup ft_vim
   autocmd!
 
-  " Use K to search :help for the word under the cursor
-  autocmd FileType vim setl kp=:help
-
-  " Setup spacing
-  autocmd FileType vim setl tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+  " Use K to search :help for the word under the cursor, and use 2 spaces
+  autocmd FileType vim setlocal
+    \ kp=:help
+    \ tabstop=2
+    \ shiftwidth=2
+    \ softtabstop=2
+    \ expandtab
 augroup END
 
 " }}}
