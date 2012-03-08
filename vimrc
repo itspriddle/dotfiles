@@ -313,7 +313,7 @@ augroup ft_css
   autocmd!
 
   " Fold on @group/@end like CSSEdit
-  autocmd FileType css,scss setl foldmethod=manual foldmarker=@group,@end
+  autocmd FileType css,scss setl tw=0 foldmethod=manual foldmarker=@group,@end
 
   " Format CSS, requires csstidy to be in $PATH
   autocmd FileType css let &l:equalprg='csstidy - --silent=true --preserve_css=true --template=$HOME/.vim/share/support/csstidy.tpl | sed -E "s/,([^ ])/, \1/g"'
@@ -377,6 +377,7 @@ augroup ft_git
   " Push current branch upstream
   autocmd User Fugitive noremap <buffer> <leader>gp :Gpush<cr>
 
+  autocmd VimEnter .git/PULLREQ_EDIT_MSG setl wrap textwidth=0
 augroup END
 
 " }}}
