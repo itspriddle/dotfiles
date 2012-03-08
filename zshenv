@@ -11,6 +11,7 @@ path=(
   $HOME/.dotfiles/bin
   $HOME/.dotfiles/private-bin
   /opt/local/bin
+  /usr/X11/bin
   $path
 )
 
