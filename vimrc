@@ -518,14 +518,22 @@ augroup END
 
 " rails.vim {{{
 
-" Add :Rfactory command
-autocmd User Rails Rnavcommand factory spec/factories test/factories -suffix=.rb -default=model()
+augroup ft_rails
+  " Add :Rfactory command
+  autocmd User Rails Rnavcommand factory spec/factories test/factories -suffix=.rb -default=model()
 
-" Add :Rconfig command
-autocmd User Rails Rnavcommand config config -glob=*.* -suffix= -default=routes.rb
+  " Add :Rconfig command
+  autocmd User Rails Rnavcommand config config -glob=*.* -suffix= -default=routes.rb
 
-" Add :Rseeds command
-autocmd User Rails Rnavcommand seeds db -glob=seeds.rb -suffix= -default=seeds.rb
+  " Add :Rseeds command
+  autocmd User Rails Rnavcommand seeds db -glob=seeds.rb -suffix= -default=seeds.rb
+
+  " Open the associated file in a horizontal split (overrides map in ft_ruby)
+  autocmd User Rails noremap <buffer> <leader>s :AS<cr>
+
+  " Open the associated file in a vertical split (overrides map in ft_ruby)
+  autocmd User Rails noremap <buffer> <leader>v :AV<cr>
+augroup END
 
 " }}}
 
