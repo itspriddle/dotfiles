@@ -2,8 +2,9 @@
 
 if [[ -n "$PS1" ]]; then
   source ~/.zsh/aliases
-  source ~/.bash/completions
+  source ~/.bash/completion
   source ~/.bash/config
+  source ~/.bash/prompt
 fi
 
 # use .localrc for settings specific to one system

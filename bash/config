@@ -1,40 +1,22 @@
 #!/usr/bin/env bash
 
+# Disable new mail check
+shopt -u mailwarn
+unset MAILCHECK
+
 if [ -f /etc/bashrc ]; then
   source /etc/bashrc
 fi
 
-export HISTCONTROL=ignoredups
-export HISTSIZE=5000
-
-set_prompt() {
-  local BLUE="\[\033[1;34m\]"
-  local GREEN="\[\033[1;32m\]"
-  local NOCOLOR="\[\033[0m\]"
-
-  local git_tmp=$(__git_ps1)
-
-  local GIT=
-
-  if [ "$git_tmp" ]; then
-    GIT="${GREEN}${git_tmp}${NOCOLOR}"
-  fi
-
-  PS1="${BLUE}\W${NOCOLOR}${GIT} $ "
-
-  case "$TERM" in
-    xterm*|rxvt*)
-      if [[ -n $SSH_CONNECTION ]]; then
-        PS1="$PS1\e]2;\u@\h:\w\a"
-      else
-        PS1="$PS1\e]2;\h:\w\a"
-      fi
-      ;;
-  esac
-}
-
-export PROMPT_COMMAND=set_prompt
+for plugin in $HOME/.bash/plugins/*
+do
+  source $plugin
+done
 
 # History
+export HISTCONTROL=ignoredups
+export HISTFILESIZE=5000
+export HISTSIZE=5000
+
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'

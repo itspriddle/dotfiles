@@ -3,10 +3,10 @@ alias ..='cd ..'
 alias ...='cd ../..'
 
 # ls
-if [ $ZSH_PLATFORM = "Darwin" ]; then
+if [[ $ZSH_PLATFORM = "Darwin" ]]; then
   alias ls='ls -G'
-else
-  alias ls='ls --color'
+# else
+  # alias ls='ls --color'
 fi
 
 alias l='ls'
@@ -19,18 +19,20 @@ alias lt='ls -ltr'
 alias lm='ls -al | more'
 
 # git
-alias ga='git add'
-alias gl='git pull'
-alias gp='git push'
-alias gd='git diff'
-alias gc='git commit'
-alias gca='git commit -a'
-alias gco='git checkout'
-alias gb='git branch'
-alias gbd='git branch -d'
-alias gs='git status -sb'
-alias grm="git status | grep deleted | cut -f2 -d ':' | sed 's/^ *//; s/ *\$//; s/ /\\\\ /g' | xargs git rm"
-alias gw='git web'
+if [[ $SHELL = "zsh" ]]; then
+  alias ga='git add'
+  alias gl='git pull'
+  alias gp='git push'
+  alias gd='git diff'
+  alias gc='git commit'
+  alias gca='git commit -a'
+  alias gco='git checkout'
+  alias gb='git branch'
+  alias gbd='git branch -d'
+  alias gs='git status -sb'
+  alias grm="git status | grep deleted | cut -f2 -d ':' | sed 's/^ *//; s/ *\$//; s/ /\\\\ /g' | xargs git rm"
+  alias gw='git web'
+fi
 
 # ruby/rails
 alias irb18='/usr/bin/irb'
