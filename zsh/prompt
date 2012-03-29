@@ -12,7 +12,7 @@ zstyle ':vcs_info:git*:*' stagedstr " ⚡"  # %c
 zstyle ':vcs_info:git*'   actionformats " (%b%c|%a)"
 zstyle ':vcs_info:git*'   formats       " (%b%c)"
 
-josh_prompt_precmd() {
+_josh_prompt_precmd() {
   local git_prompt dir_prompt host_prompt branch_color dir_color host_color
 
   case "$TERM" in
@@ -48,4 +48,4 @@ josh_prompt_precmd() {
   PS1="${host_prompt}${dir_prompt}${git_prompt} > "
 }
 
-add-zsh-hook precmd josh_prompt_precmd
+add-zsh-hook precmd _josh_prompt_precmd
