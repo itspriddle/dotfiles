@@ -36,9 +36,6 @@ zstyle ':completion:*:*:git:*' user-commands \
   travis:'Open travis-ci.org page for this repo' \
   repl:'Open a repl'
 
-# Ignore OS X meta files
-zstyle ':completion:*:(all-|)files' ignored-patterns 'Icon$'
-
 # Ignore _function files
 zstyle ':completion:*:functions' ignored-patterns '_*'
 
