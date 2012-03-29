@@ -1,22 +1,8 @@
-#!/usr/bin/env zsh
-unsetopt menu_complete   # do not autoselect the first completion entry
-unsetopt flowcontrol
-setopt auto_menu         # show completion menu on succesive tab press
-#setopt complete_in_word
-setopt complete_aliases
-setopt always_to_end
-# Make aliases complete properly (eg: gco => git checkout)
-setopt no_complete_aliases
-
 autoload -U compinit
 compinit -i
 
 # Case insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-# Ambiguous case insensitive completion
-# Eg: ites[tab] completes to Sites
-#zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 # pasting with tabs doesn't perform completion
 zstyle ':completion:*' insert-tab pending
@@ -24,14 +10,37 @@ zstyle ':completion:*' insert-tab pending
 # Force rehash of commands
 zstyle ":completion:*:commands" rehash 1
 
-# SSH host completion
-_ssh_hosts=(${${${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}//]:[0-9]*}//\[}) || _ssh_hosts=()
-hosts=("${_ssh_hosts[@]}" localhost)
+# ssh/ping host completion
+function {
+  # This function acts like a closure, so we don't expose $_ssh_hosts globally
+  local -a _ssh_hosts
 
-zstyle ':completion:*:hosts' hosts $hosts
+  # Only complete hosts in ~/.ssh/known_hosts, not /etc/hosts.
+  # Parse lines where we connected on a non-standard port
+  # (eg: [example.com]:2222,[192.168.1.1] ssh-rsa AAAAA)
+  if [[ -f $HOME/.ssh/known_hosts ]]; then
+    _ssh_hosts=(${${${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}//]:[0-9]*}//\[})
+  else
+    _ssh_hosts=()
+  fi
+
+  # ssh host completion
+  zstyle ':completion:*:(ssh|scp):*:hosts' hosts $_ssh_hosts
+
+  # ping host completion
+  zstyle ':completion:*:ping:*' hosts google.com 192.168.1.1 ${_ssh_hosts[*]}
+}
 
 # Custom completion for git
 zstyle ':completion:*:*:git:*' user-commands \
   travis:'Open travis-ci.org page for this repo' \
-  flow:'git flow' \
   repl:'Open a repl'
+
+# Ignore OS X meta files
+zstyle ':completion:*:(all-|)files' ignored-patterns 'Icon$'
+
+# Ignore _function files
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
+
+# vim:set ft=zsh:
