@@ -30,7 +30,7 @@ if [[ $SHELL = "zsh" ]]; then
   alias gb='git branch'
   alias gbd='git branch -d'
   alias gs='git status -sb'
-  alias grm="git status | grep deleted | cut -f2 -d ':' | sed 's/^ *//; s/ *\$//; s/ /\\\\ /g' | xargs git rm"
+  alias grm="git status --porcelain | awk '\$1 == \"D\" {print \$2}' | xargs git rm --ignore-unmatch"
   alias gw='git web'
 fi
 
