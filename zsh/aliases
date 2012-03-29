@@ -19,7 +19,7 @@ alias lt='ls -ltr'
 alias lm='ls -al | more'
 
 # git
-if [[ $SHELL = "zsh" ]]; then
+if [[ $ZSH_NAME = "zsh" ]]; then
   alias ga='git add'
   alias gl='git pull'
   alias gp='git push'
@@ -43,7 +43,6 @@ alias remigrate='rake db:migrate VERSION=0 && rake db:migrate && rake db:seed'
 alias rg='rails generate'
 alias rc='rails console'
 alias sc='rails console'
-alias be='bundle exec'
 alias rsm='rake spec:models'
 alias rsc='rake spec:controllers'
 alias rsr='rake spec:requests'

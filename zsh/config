@@ -13,16 +13,9 @@ setopt NO_HUP
 setopt NO_LIST_BEEP
 setopt LOCAL_OPTIONS
 setopt LOCAL_TRAPS
-#setopt PROMPT_SUBST
-#setopt CORRECT
-#setopt COMPLETE_IN_WORD
-
-# Disable flow control and allow binding ^q and ^s
-setopt NO_FLOW_CONTROL
-stty -ixon -ixoff
 
 # Leave =/&; out of WORDCHARS so ^W acts more nicely
-# # -- still not ideal
+# Default: *?_-.[]~=/&;!#$%^(){}<>
 WORDCHARS='*?_-.[]~\!#$%^(){}<>|`@#$%^*()+:?''`'
 
 # emacs style keybindings
