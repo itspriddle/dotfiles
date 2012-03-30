@@ -330,11 +330,36 @@ nnoremap _fjs :set ft=javascript<cr>
 
 " gist.vim {{{
 
+" 2012/03/30: Gist.vim is broken right now :(
+" see https://github.com/mattn/gist-vim/issues/62
+
+let g:loaded_gist_vim              = 1
 let g:gist_open_browser_after_post = 1
 let g:gist_browser_command         = 'echo %URL% | pbcopy'
 let g:gist_clip_command            = 'pbcopy'
 let g:gist_detect_filetype         = 1
 let g:gist_show_privates           = 1
+
+command -range=% Gist call s:Gist(<line1>, <line2>, <f-args>)
+
+" Poor man's gist.vim
+function! s:Gist(line1, line2, ...)
+  let d1 = join(getline(a:line1, a:line2), "\n")
+  let d2 = substitute(d1, '"', '\\"', 'g')
+  let d3 = substitute(d2, '`', "\\\\`", 'g')
+  let d4 = substitute(d3, "\\$", "\\\\$", 'g')
+
+  let ext = expand('%:e')
+
+  if ext =~ 'markdown'
+    let ext = 'md'
+  endif
+
+  let cmd = 'echo "'.d4.'" | gist -p -t '.ext.' -'
+  let r = system(cmd)
+
+  echo substitute(r, "$", "", 'g')
+endfunction
 
 " }}}
 
