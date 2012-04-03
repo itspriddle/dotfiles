@@ -328,12 +328,9 @@ nnoremap _fjs :set ft=javascript<cr>
 
 " }}}
 
-" :<','>Gist [args]
-command -nargs=* -range=% Gist call s:Gist(<line1>, <line2>, <f-args>)
+" :<','>Gist [args] (requires gist in PATH) {{{
 
-function! s:Gist(line1, line2, ...)
-  exe a:line1.','.a:line2.'w !gist '.join(a:000, " ")
-endfunction
+command -nargs=* -range=% Gist exe '<line1>,<line2>w !gist -t %:e <args>'
 
 " }}}
 
