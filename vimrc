@@ -330,7 +330,7 @@ nnoremap _fjs :set ft=javascript<cr>
 
 " :<','>Gist [args] (requires gist in PATH) {{{
 
-command -nargs=* -range=% Gist exe '<line1>,<line2>w !gist -t %:e <args>'
+command -nargs=* -range=% Gist exe '<line1>,<line2>w !gist <args>'
 
 " }}}
 
