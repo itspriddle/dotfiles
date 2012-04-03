@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-loadus = %w[irb/completion wirb pp ap]
+loadus = %w[irb/completion ap]
 loadus.unshift 'rubygems' if RUBY_VERSION.to_f == 1.8
 
 loadus.each do |gem|
@@ -11,21 +11,29 @@ loadus.each do |gem|
   end
 end
 
-Wirb.start if defined?(Wirb)
-
-if defined?(AwesomePrint)
-  IRB::Irb.class_eval do
-    def output_value
-      ap @context.last_value
-    end
+IRB::Irb.class_eval do
+  def output_value
+    ap @context.last_value
   end
-end
+end if defined?(AwesomePrint)
 
-# This stuff is busted
-#IRB.conf[:SAVE_HISTORY] = 2000
-#IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
-#IRB.conf[:PROMPT_MODE] = :SIMPLE
-#IRB.conf[:AUTO_INDENT] = true
+IRB.conf[:SAVE_HISTORY] = 2000
+IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
+IRB.conf[:AUTO_INDENT]  = true
+
+prompt  = "#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL} "
+project = `git rev-parse --show-toplevel 2> /dev/null`.strip
+prompt  = "#{File.basename(project)} (#{prompt.strip}) " if project != ""
+
+IRB.conf[:PROMPT] ||= {}
+IRB.conf[:PROMPT][:JOSH] = {
+  :PROMPT_I => "#{prompt}> ",
+  :PROMPT_S => "#{prompt}* ",
+  :PROMPT_C => "#{prompt}? ",
+  :RETURN   => "=> %s\n"
+}
+
+IRB.conf[:PROMPT_MODE] = :JOSH
 
 alias q exit
 
@@ -80,20 +88,6 @@ class Object
   def local_methods(obj = self)
     (obj.methods - obj.class.superclass.instance_methods).sort
   end
-
-  # print documentation
-  #
-  #   ri 'Array#pop'
-  #   Array.ri
-  #   Array.ri :pop
-  #   arr.ri :pop
-  def ri(method = nil)
-    unless method && method =~ /^[A-Z]/ # if class isn't specified
-      klass  = self.kind_of?(Class) ? name : self.class.name
-      method = [klass, method].compact.join('#')
-    end
-    puts `ri '#{method}'`
-  end
 end
 
 module Kernel
@@ -114,4 +108,23 @@ module Kernel
   end
 end
 
-load File.dirname(__FILE__) + '/.railsrc' if ENV['RAILS_ENV'] || defined?(::Rails)
+# Toys
+# https://gist.github.com/807492
+class Array
+  def self.toy(n = 10, &block)
+    block ||= :next
+    Array.new(n, &block)
+  end
+end
+
+class Hash
+  def self.toy(n = 10)
+    Hash[Array.toy(n).zip(Array.toy(n) { |c| (96 + c.next).chr })]
+  end
+end
+
+begin
+  load File.expand_path("../.railsrc", __FILE__) if defined?(Rails::Railtie)
+rescue
+  warn "Error loading ~/.railsrc!"
+end
