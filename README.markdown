@@ -10,9 +10,6 @@ My dot files, randomly collected over the years.
 
 ### Details
 
-**caprc**  
-Loads the `capistrano_colors` gem so you see colors on `cap deploy`
-
 **gemrc**  
 Sets options for `gem`, disables docs for faster installs
 
@@ -40,8 +37,8 @@ Shell configurations local to this machine, kept out of the git repo
 **my.cnf**  
 Set options for `mysql`
 
+**powconfig**  
+Set options for `pow`
+
 **railsrc**  
 Extra `irb` settings/helpers loaded only for a rails app
-
-**rvmrc**  
-Settings for `rvm`

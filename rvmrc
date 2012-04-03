@@ -1,5 +1,0 @@
-export rvm_make_flags="-j 3"
-export rvm_archflags="-arch x86_64"
-export rvm_project_rvmrc=1
-export rvm_project_rvmrc_default=1
-export rvm_trust_rvmrcs_flag=1
