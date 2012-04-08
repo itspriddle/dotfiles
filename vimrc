@@ -437,7 +437,7 @@ augroup ft_nerdtree
 augroup END
 
 let g:NERDChristmasTree  = 1
-let g:NERDTreeIgnore     = ['\.pyc$', '\.rbc$', '\~$', 'coverage/*$']
+let g:NERDTreeIgnore     = ['\.pyc$', '\.rbc$', '\~$', 'coverage/*$', '\.gem$']
 let g:NERDTreeDirArrows  = 1
 let g:NERDTreeStatusline = ' '
 let g:NERDTreeWinSize    = 25
