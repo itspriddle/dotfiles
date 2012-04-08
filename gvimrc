@@ -31,9 +31,6 @@ set number
 " Highlight the current line
 set cursorline
 
-" Show fold column
-set foldcolumn=2
-
 " Highlight spelling errors
 set spell
 
