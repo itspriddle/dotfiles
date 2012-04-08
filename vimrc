@@ -565,7 +565,7 @@ ia eslf     self
 function! s:registerTabularPatterns()
   AddTabularPattern! assignment  /^[^=]*\zs=>\?/
   AddTabularPattern! first_colon /^[^:]*:\zs/l0l1
-  AddTabularPattern! first_comma /^[^,]*\zs,/l1r0
+  AddTabularPattern! first_comma /^[^,]*,\zs/l0r1
 endfunction
 
 function! s:TabularMap(key, pattern)
