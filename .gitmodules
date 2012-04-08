@@ -19,9 +19,6 @@
 [submodule "bundle/git"]
 	path = bundle/git
 	url = https://github.com/tpope/vim-git.git
-[submodule "bundle/themes"]
-	path = bundle/themes
-	url = https://github.com/itspriddle/vim-themes.git
 [submodule "bundle/ruby"]
 	path = bundle/ruby
 	url = https://github.com/vim-ruby/vim-ruby.git
