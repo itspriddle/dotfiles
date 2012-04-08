@@ -49,7 +49,5 @@
   compare      = !hub compare
   shorten      = !sh -c 'curl -s -i http://git.io -F url=$1 | grep Location | sed s/Location:\\ //' -
   pull-request = !hub pull-request
-  feature      = !sh -c '[ "$#" = 1 ] && git checkout -b feature/$1 || echo "Usage: git feature NAME" && exit 1' -
-  bugfix       = !sh -c '[ "$#" = 1 ] && git checkout -b bugfix/$1  || echo "Usage: git bugfix NAME" && exit 1' -
 
 # vim:ft=gitconfig
