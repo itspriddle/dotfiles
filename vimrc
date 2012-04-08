@@ -511,12 +511,6 @@ augroup END
 
 " }}}
 
-" rspec.vim {{{
-
-let g:RspecBin = 'rspec'
-
-" }}}
-
 " Ruby {{{
 
 let g:ruby_space_errors = 1
