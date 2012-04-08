@@ -371,7 +371,7 @@ augroup ft_git
   " Push current branch upstream
   autocmd User Fugitive noremap <buffer> <leader>gp :Gpush<cr>
 
-  autocmd VimEnter .git/PULLREQ_EDIT_MSG setl wrap textwidth=0
+  autocmd VimEnter .git/PULLREQ_EDITMSG setl wrap textwidth=0
 augroup END
 
 " }}}
