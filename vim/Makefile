@@ -19,7 +19,7 @@ update-help:
 
 # Update all git submodules
 update-plugins:
-	@git submodule foreach 'git checkout master; git pull'
+	@git submodule foreach 'git checkout master 2> /dev/null; git pull  --stat'
 
 # Cleanp backup/view dirs
 clean:
