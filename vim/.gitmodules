@@ -100,9 +100,6 @@
 [submodule "bundle/marked"]
 	path = bundle/marked
 	url = https://github.com/itspriddle/vim-marked.git
-[submodule "bundle/buffergator"]
-	path = bundle/buffergator
-	url = https://github.com/jeetsukumaran/vim-buffergator
 [submodule "bundle/html5"]
 	path = bundle/html5
 	url = https://github.com/othree/html5.vim
