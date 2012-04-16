@@ -198,10 +198,10 @@ cnoremap <C-a> <C-b>
 " Window Movement {{{
 
 " Jump to the next buffer
-nnoremap <Tab> :bnext<cr>
+nnoremap + :bnext <cr>
 
 " Jump to the previous buffer
-nnoremap <S-Tab> :bprevious<cr>
+nnoremap - :bprev<cr>
 
 " Window Jumping
 nnoremap <C-j> <C-W>j
