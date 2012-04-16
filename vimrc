@@ -508,6 +508,9 @@ let g:ruby_operators    = 1
 augroup ft_ruby
   autocmd!
 
+  " Disable K (ri lookup)
+  autocmd FileType ruby noremap <buffer> K <nop>
+
   " Open or create the associated file in a horizontal split
   autocmd FileType ruby noremap <buffer> <leader>s :AS!<cr>
 
