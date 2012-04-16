@@ -243,17 +243,6 @@ noremap <leader>F :AckFromSearch!<cr>
 
 " }}}
 
-" buffergator.vim {{{
-
-let g:buffergator_suppress_keymaps      = 1
-let g:buffergator_autoexpand_on_split   = 0
-let g:buffergator_viewport_split_policy = 'B'
-let g:buffergator_split_size            = 5
-
-noremap <leader>bt :BuffergatorToggle<cr>
-
-" }}}
-
 " Buffers (performed on every buffer) {{{
 
 augroup all_buffers
