@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+
+# Copies rage faces to your clipboard.
+
+class Rage
+
+  FACES = {
+    :cry      => "http://alltheragefaces.com/img/faces/png/happy-cuteness-overload.png",
+    :fuckyea  => "http://alltheragefaces.com/img/faces/png/fuck-yeah.png",
+    :hmmm     => "http://alltheragefaces.com/img/faces/png/determined-questioning-pondering.png",
+    :rage     => "http://alltheragefaces.com/img/faces/png/sad-crying.png",
+    :troll    => "http://alltheragefaces.com/img/faces/png/troll-troll-face.png",
+    :trolldad => "http://alltheragefaces.com/img/faces/png/troll-troll-dad-full.png",
+    :why      => "http://alltheragefaces.com/img/faces/png/neutral-whyyyyy.png"
+  }
+
+  def self.usage(exit_code = 1)
+    puts "Usage: rage [FACE] - Copies face to clipboard\n\n"
+    longest = FACES.keys.group_by(&:length).max.first
+    FACES.each { |name, face| puts "  %-#{longest}s : %s" % [name, face] }
+    puts
+  end
+
+  def self.parse(argv)
+    if argv.empty?
+      usage
+    elsif argv.size == 1
+      if face = FACES[argv.first.to_sym]
+        copy face
+        puts "Copied #{face}"
+      else
+        puts "Invalid face, #{argv.first}"
+        usage -1
+      end
+    else
+      puts "Error"
+      usage -1
+    end
+  end
+
+  def self.copy(string)
+    IO.popen('pbcopy', 'w') { |f| f << string }
+  end
+end
+
+Rage.parse(ARGV.dup)
