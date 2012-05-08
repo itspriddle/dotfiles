@@ -108,4 +108,4 @@
 	url = https://github.com/juvenn/mustache.vim.git
 [submodule "bundle/abolish"]
 	path = bundle/abolish
-	url = git@github.com:tpope/vim-abolish.git
+	url = https://github.com/tpope/vim-abolish.git
