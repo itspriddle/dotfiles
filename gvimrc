@@ -16,7 +16,7 @@ set guitablabel=%t
 set title titlestring=%f
 
 " Default window size
-set lines=48 columns=150
+set lines=70 columns=220
 
 " }}}
 
