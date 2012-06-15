@@ -589,6 +589,8 @@ augroup ft_vim
     \ shiftwidth=2
     \ softtabstop=2
     \ expandtab
+
+  autocmd FileType help nnoremap <silent> <buffer> q :q<cr>
 augroup END
 
 " }}}
