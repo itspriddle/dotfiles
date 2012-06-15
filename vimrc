@@ -219,8 +219,12 @@ noremap <space> :
 
 " Visually select the text that was last edited/pasted
 nnoremap gV `[v`]
+
 " :Rename, opens command line with `:Rename /path/to/current/file`
 nnoremap <leader>r :Rename <c-r>=expand('%:p')<cr><space>
+
+" :Remove, deletes current buffer/file.
+nnoremap <leader>R :Remove<cr>
 
 " (Safe) quit buffer (:quit)
 nnoremap <leader>q :quit<cr>
@@ -230,6 +234,9 @@ nnoremap <leader>Q :quit!<cr>
 
 " Shortcut for typing :help
 nnoremap <leader>h :help<space>
+
+" Mkdir => !mkdir
+cabbrev mkdir <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "!mkdir" : "mkdir"<CR>
 
 " }}}
 
