@@ -69,7 +69,7 @@ set showbreak=↪
 set laststatus=2
 
 " Set statusline text
-set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [T:%Y\ F:%{&ff}]\ [L:%l/%L\ C:%v\ (%p%%)]
+set statusline=%F%{&mod\ ?\ '\ [✘]'\ :\ ''}%r%h%w\ %{fugitive#statusline()}\ [FT:%{&ft\ ?\ '%Y'\ :\ 'UNKOWN'}%Y\ FF:%{&ff}]\ [L:%l/%L\ C:%v\ (%p%%)]
 
 " Show (partial) command in statusline
 set showcmd
