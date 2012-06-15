@@ -120,7 +120,8 @@ set fillchars+=vert:│
 
 " Command line completion {{{
 
-set wildmode=list:longest
+set wildmenu
+set wildmode=longest:full,full
 
 " Ignore these patterns
 set wildignore+=.hg,.git,.svn,*.orig                  " Version control
