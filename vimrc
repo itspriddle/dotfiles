@@ -541,6 +541,13 @@ ia eslf     self
 
 " }}}
 
+" supertab.vim {{{
+
+let g:SuperTabNoCompleteBefore = []
+let g:SuperTabNoCompleteAfter  = ['\s']
+
+" }}}
+
 " tabular.vim {{{
 
 function! s:registerTabularPatterns()
