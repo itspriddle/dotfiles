@@ -544,7 +544,7 @@ ia eslf     self
 " supertab.vim {{{
 
 let g:SuperTabNoCompleteBefore = []
-let g:SuperTabNoCompleteAfter  = ['\s']
+let g:SuperTabNoCompleteAfter  = ['^', '\s']
 
 " }}}
 
