@@ -597,6 +597,7 @@ augroup ft_vim
     \ softtabstop=2
     \ expandtab
 
+  " Usq q to :quit help buffer
   autocmd FileType help nnoremap <silent> <buffer> q :q<cr>
 augroup END
 
