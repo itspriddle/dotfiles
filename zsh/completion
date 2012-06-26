@@ -44,9 +44,9 @@ zstyle ':completion:*:*:git:*' user-commands \
 # Ignore _function files
 zstyle ':completion:*:functions' ignored-patterns '_*'
 
-# Complete $PWD/bin if it exists. Good for bundler with binstubs
+# Complete $PWD/bin and $PWD/.bundle/bin
 zstyle -e ':completion:*' command-path \
-  '[[ -d $PWD/bin ]] && reply=($PWD/bin $path)'
+  'reply=($PWD/bin $PWD/.bundle/bin $path)'
 
 
 # vim:set ft=zsh:
