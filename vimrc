@@ -43,6 +43,9 @@ set softtabstop=2
 set expandtab
 set textwidth=78
 
+" Only one space after punctuation
+set nojoinspaces
+
 " }}}
 
 " Invisibles {{{
@@ -185,7 +188,7 @@ inoremap <C-l> <space>=><space>
 
 " }}}
 
-" OS X Movements {{{
+" Text Movement {{{
 
 " Make ctrl+a/ctrl+e work in insert mode
 inoremap <C-a> <C-o>0
@@ -193,6 +196,10 @@ inoremap <C-e> <C-o>$
 
 " Make ctrl+a jump to beginning of line in command mode
 cnoremap <C-a> <C-b>
+
+" Enable extended matching
+runtime macros/matchit.vim
+map <tab> %
 
 " }}}
 
@@ -332,6 +339,9 @@ command -nargs=* -range=% Gist exe '<line1>,<line2>w !gist <args>'
 " }}}
 
 " Git (git.vim and fugitive.vim) {{{
+
+" Highlight VCS conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Open GitX (requires gitx in $PATH)
 function! s:GitX(...)
@@ -599,6 +609,10 @@ augroup ft_vim
 
   " Usq q to :quit help buffer
   autocmd FileType help nnoremap <silent> <buffer> q :q<cr>
+
+  " Source
+  autocmd FileType vim vnoremap <leader>S y:execute @@<cr>:echo 'Sourced selection.'<cr>
+  autocmd FileType vim nnoremap <leader>S ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
 augroup END
 
 " }}}
