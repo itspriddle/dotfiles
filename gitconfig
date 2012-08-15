@@ -35,7 +35,6 @@
   format  = web
 
 [alias]
-  sexytime     = !git push -u && git pull-request
   msg          = commit --allow-empty -m
   man          = help --man
   lg           = log --graph --abbrev-commit --date=relative

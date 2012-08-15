@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -e
+
+git push -u
+git pull-request $* | pbcopy
+echo "Created pull request - $(pbpaste)"
