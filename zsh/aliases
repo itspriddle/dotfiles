@@ -51,6 +51,7 @@ alias rsrt='rake spec:routes'
 alias rsh='rake spec:helpers'
 alias rsl='rake spec:lib'
 alias rsv='rake spec:views'
+alias be='bundle exec'
 
 # Others
 alias path='echo -e ${PATH//:/\\n}'
@@ -59,6 +60,7 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias grep='grep --color'
 alias dush='du -shc'
+alias what-is-my-ip="curl -s checkip.dyndns.org | grep --color=never -Eo '[0-9\\.]+'"
 
 # OS X
 if [[ $ZSH_PLATFORM = "Darwin" ]]; then
