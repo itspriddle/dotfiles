@@ -39,7 +39,8 @@ function {
 # Custom completion for git
 zstyle ':completion:*:*:git:*' user-commands \
   travis:'Open travis-ci.org page for this repo' \
-  repl:'Open a repl'
+  repl:'Open a repl' \
+  sexytime:'Push branch to github and open a pull request'
 
 # Ignore _function files
 zstyle ':completion:*:functions' ignored-patterns '_*'
