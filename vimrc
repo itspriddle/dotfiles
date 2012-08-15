@@ -383,6 +383,15 @@ augroup END
 
 " }}}
 
+" HTML {{{
+
+augroup ft_html
+  autocmd!
+  autocmd FileType html nnoremap <buffer> <leader>o :!open %<cr>
+augroup END
+
+" }}}
+
 " Javascript {{{
 
 augroup ft_javascript
