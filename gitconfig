@@ -46,6 +46,7 @@
   msg          = commit --allow-empty -m
   man          = help --man
   lg           = log --graph --abbrev-commit --date=relative
+  full-log     = log --format=fuller
   pa           = add --patch
   unstage      = reset HEAD --
   last         = log -1 HEAD
