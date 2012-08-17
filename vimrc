@@ -32,6 +32,9 @@ set ttyfast
 " Set dictionary path
 set dictionary+=/usr/share/dict/words
 
+" Enable modelines
+set modelines=1
+
 " }}}
 
 " Whitespace {{{
