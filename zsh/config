@@ -4,9 +4,9 @@
 autoload -U colors
 colors
 
-fpath=(~/.zsh/functions $fpath)
+fpath=(~/.dotfiles/zsh/functions $fpath)
 
-autoload -U ~/.zsh/functions/*(:t)
+autoload -U ~/.dotfiles/zsh/functions/*(:t)
 
 setopt NO_BG_NICE
 setopt NO_HUP

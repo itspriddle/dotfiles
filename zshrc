@@ -1,8 +1,10 @@
 # Load base config files
-for config (config aliases history completion prompt) source ~/.zsh/$config
+for config (config aliases history completion prompt)
+  source ~/.dotfiles/zsh/$config
 
 # Load plugin files
-for plugin ($HOME/.zsh/plugins/*) source $plugin
+for plugin ($HOME/.dotfiles/zsh/plugins/*)
+  source $plugin
 
 # Load settings specific to this machine
 [[ -f ~/.localrc ]] && source ~/.localrc
