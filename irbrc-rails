@@ -1,13 +1,20 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 exit unless rails_env = (ENV['RAILS_ENV'] || Rails.env)
 
 # Called after the irb session is initialized and Rails has been loaded
 
 IRB.conf[:IRB_RC] = Proc.new do
-  puts 'HEY'
   ActiveRecord::Base.logger = Logger.new(STDOUT)
 end if defined?(ActiveRecord)
+
+# Rails3
+if defined?(::Rails) && Rails.version.split('.').first.to_i >= 3
+  include Rails.application.routes.url_helpers
+  default_url_options[:host] = Rails.application.class.parent_name.downcase
+end
+
+private
 
 def sql(query)
   if query =~ /^select/
@@ -28,10 +35,4 @@ end
 
 def hide_log
   change_log(nil)
-end
-
-# Rails3
-if defined?(::Rails) && Rails.version.split('.').first.to_i >= 3
-  include Rails.application.routes.url_helpers
-  default_url_options[:host] = Rails.application.class.parent_name.downcase
 end

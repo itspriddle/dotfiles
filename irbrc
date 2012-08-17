@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-loadus = %w[irb/completion ap]
+loadus = %w[irb/completion]
 loadus.unshift 'rubygems' if RUBY_VERSION.to_f == 1.8
 
 loadus.each do |gem|
@@ -124,7 +124,7 @@ class Hash
 end
 
 begin
-  load File.expand_path("../.railsrc", __FILE__) if defined?(Rails::Railtie)
+  load File.expand_path("../.irbrc-rails", __FILE__) if defined?(Rails::Railtie)
 rescue
-  warn "Error loading ~/.railsrc!"
+  warn "Error loading ~/.irbrc-rails!"
 end
