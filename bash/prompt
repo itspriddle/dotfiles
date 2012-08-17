@@ -21,7 +21,6 @@ set_prompt() {
   local NOCOLOR="\[\033[0m\]"
 
   local git_tmp=$(__git_ps1)
-  #local git_tmp=$(__git_ps1 "%s-JOSH")
 
   local GIT=
 
