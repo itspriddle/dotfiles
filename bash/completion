@@ -4,7 +4,7 @@ if [ -f /opt/local/etc/bash_completion ]; then
   source /opt/local/etc/bash_completion
 fi
 
-for script in $HOME/.bash/completion.d/*
+for script in $HOME/.dotfiles/bash/completion.d/*
 do
   source $script
 done

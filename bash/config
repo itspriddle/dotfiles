@@ -8,7 +8,7 @@ if [ -f /etc/bashrc ]; then
   source /etc/bashrc
 fi
 
-for plugin in $HOME/.bash/plugins/*
+for plugin in $HOME/.dotfiles/bash/plugins/*
 do
   source $plugin
 done

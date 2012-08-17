@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 if [[ -n "$PS1" ]]; then
-  source ~/.zsh/aliases
-  source ~/.bash/completion
-  source ~/.bash/config
-  source ~/.bash/prompt
+  source ~/.dotfiles/zsh/aliases
+  source ~/.dotfiles/bash/completion
+  source ~/.dotfiles/bash/config
+  source ~/.dotfiles/bash/prompt
 fi
 
 # use .localrc for settings specific to one system
