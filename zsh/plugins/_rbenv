@@ -1,7 +1,5 @@
 # rbenv
 
-PATH="$HOME/.rbenv/bin:$PATH"
-
 [[ -n $(command -v rbenv) ]] && eval "$(rbenv init -)"
 
-export PATH="./.bundle/bin:./bin:$PATH"
+export PATH="./bin:$PATH"
