@@ -1,3 +1,0 @@
-#!/bin/sh
-
-open -a Adobe\ Fireworks\ CS5 $*

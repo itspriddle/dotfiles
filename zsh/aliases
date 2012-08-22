@@ -69,6 +69,9 @@ if [[ $ZSH_PLATFORM = "Darwin" ]]; then
   alias crontab='EDITOR=vim crontab'
   alias mute="osascript -e 'set volume output muted true'"
   alias unmute="osascript -e 'set volume output muted false'"
+  alias addr="ifconfig | awk '/broadcast/ { print \$2 }'"
+  alias fireworks='open -a Adobe\ Fireworks\ CS6'
+  alias flush-dns='sudo dscacheutil -flushcache'
 fi
 
 # vim:set ft=zsh:
