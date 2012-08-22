@@ -11,8 +11,7 @@ zstyle ':completion:*' insert-tab pending
 zstyle ":completion:*:commands" rehash 1
 
 # ssh/ping host completion
-function {
-  # This function acts like a closure, so we don't expose variables globally
+{
   local -a _ssh_hosts _ssh_users
 
   # Only complete hosts in ~/.ssh/known_hosts, not /etc/hosts.
@@ -23,7 +22,6 @@ function {
   else
     _ssh_hosts=()
   fi
-
 
   # ssh host completion
   zstyle ':completion:*:(ssh|scp):*:hosts' hosts $_ssh_hosts
@@ -48,6 +46,5 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 # Complete $PWD/bin and $PWD/.bundle/bin
 zstyle -e ':completion:*' command-path \
   'reply=($PWD/bin $PWD/.bundle/bin $path)'
-
 
 # vim:set ft=zsh:

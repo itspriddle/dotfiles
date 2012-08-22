@@ -3,7 +3,7 @@ for config (config aliases history completion prompt)
   source ~/.dotfiles/zsh/$config
 
 # Load plugin files
-for plugin ($HOME/.dotfiles/zsh/plugins/*)
+for plugin (~/.dotfiles/zsh/plugins/*)
   source $plugin
 
 # Load settings specific to this machine

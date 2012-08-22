@@ -1,18 +1,17 @@
-# enable colored output from ls, etc
-
+export CLICOLOR=1
 export TERM='xterm-color'
 export GITIGNORE='[^.]*'
-export TIMEFMT=$'\n\`%J\`\nexecution time:\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P\n'
-export ZSH_PLATFORM=$(uname)
+export UNAME=$(uname)
+export MAKEFLAGS='-j3'
+
+# export TIMEFMT=$'\n\`%J\`\nexecution time:\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P\n'
 
 typeset -U path
 
 path=(
   $HOME/.dotfiles/bin
-  $HOME/.dotfiles/private-bin
-  /opt/local/bin
-  /opt/local/sbin
-  /usr/X11/bin
+  /opt/local/{bin,sbin}
+  /opt/X11/bin
   $path
 )
 
