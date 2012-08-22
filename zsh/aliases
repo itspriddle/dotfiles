@@ -3,10 +3,10 @@ alias ..='cd ..'
 alias ...='cd ../..'
 
 # ls
-if [[ $ZSH_PLATFORM = "Darwin" ]]; then
+if [[ $UNAME = "Darwin" ]]; then
   alias ls='ls -G'
-# else
-  # alias ls='ls --color'
+elif [[ $UNAME = 'Linux' ]]; then
+  alias ls='ls --color'
 fi
 
 alias l='ls'
@@ -36,21 +36,9 @@ if [[ $ZSH_NAME = "zsh" ]]; then
 fi
 
 # ruby/rails
-alias irb18='/usr/bin/irb'
-alias ss='script/server'
-alias sg='script/generate'
-alias migrate='rake db:migrate'
-alias remigrate='rake db:migrate VERSION=0 && rake db:migrate && rake db:seed'
 alias rg='rails generate'
 alias rc='rails console'
 alias sc='rails console'
-alias rsm='rake spec:models'
-alias rsc='rake spec:controllers'
-alias rsr='rake spec:requests'
-alias rsrt='rake spec:routes'
-alias rsh='rake spec:helpers'
-alias rsl='rake spec:lib'
-alias rsv='rake spec:views'
 alias be='bundle exec'
 
 # Others
@@ -64,11 +52,10 @@ alias opendns='echo "208.67.222.222 208.67.220.220"'
 alias what-is-my-ip="curl -s checkip.dyndns.org | grep --color=never -Eo '[0-9\\.]+'"
 
 # OS X
-if [[ $ZSH_PLATFORM = "Darwin" ]]; then
+if [[ $UNAME = "Darwin" ]]; then
   alias apachectl='sudo apachectl'
   alias crontab='EDITOR=vim crontab'
-  alias mute="osascript -e 'set volume output muted true'"
-  alias unmute="osascript -e 'set volume output muted false'"
+  alias irb18='/usr/bin/irb'
   alias addr="ifconfig | awk '/broadcast/ { print \$2 }'"
   alias fireworks='open -a Adobe\ Fireworks\ CS6'
   alias flush-dns='sudo dscacheutil -flushcache'
