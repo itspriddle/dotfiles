@@ -56,8 +56,9 @@
   web          = instaweb --httpd=webrick -b open
   count        = shortlog -sn
   pending      = !git --no-pager log origin/master..master && echo
-  browse       = !hub browse  -- $(git symbolic-ref HEAD | sed 's|refs/heads|tree|')
-  compare      = !hub compare $(git symbolic-ref HEAD | sed 's|refs/heads/||g')
+  browse       = !hub browse  -- tree/$(git branch-name)
+  compare      = !hub compare $(git branch-name)
   pull-request = !hub pull-request
+  branch-name  = !git symbolic-ref HEAD | sed 's|refs/heads/||g'
 
 # vim:ft=gitconfig
