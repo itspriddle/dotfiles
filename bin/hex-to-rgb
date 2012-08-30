@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ $# -ne 3 ]; then
+  echo "Usage: $(basename $0) 0xR 0xG 0xB"
+  exit 1
+fi
+
+printf "%d, %d, %d" $*
