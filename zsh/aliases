@@ -40,6 +40,7 @@ alias rg='rails generate'
 alias rc='rails console'
 alias sc='rails console'
 alias be='bundle exec'
+alias bu='bundle update'
 
 # Others
 alias path='echo -e ${PATH//:/\\n}'
@@ -59,6 +60,7 @@ if [[ $UNAME = "Darwin" ]]; then
   alias addr="ifconfig | awk '/broadcast/ { print \$2 }'"
   alias fireworks='open -a Adobe\ Fireworks\ CS6'
   alias flush-dns='sudo dscacheutil -flushcache'
+  alias top-cpu='top -o cpu'
 fi
 
 # vim:set ft=zsh:
