@@ -1,44 +1,13 @@
 # My dotfiles
 
-My dot files, randomly collected over the years.
+My dotfiles, randomly collected over the years. I use this repo on OS X and
+Linux, primarily for developing Ruby on Rails applications.
 
-## Contents
+## Installation
 
-* ZSH configs
-* Git configs
-* irb configs
+I keep this repo in `~/.dotfiles` and symlink the files and directories
+inside.
 
-### Details
-
-**gemrc**  
-Sets options for `gem`, disables docs for faster installs
-
-**gitconfig**  
-My base gitconfig
-
-**gitignore**  
-Systemwide git ignore file
-
-**hushlogin**  
-Silences any messages from being printed when opening a shell (such as `/etc/motd`)
-
-**inputrc**  
-Terminal behavior
-
-**irbrc**  
-Configure `irb` defaults, and add some helper methods
-
-**localrc**  
-Shell configurations local to this machine
-
-**localrc-private**  
-Shell configurations local to this machine, kept out of the git repo
-
-**my.cnf**  
-Set options for `mysql`
-
-**powconfig**  
-Set options for `pow`
-
-**railsrc**  
-Extra `irb` settings/helpers loaded only for a rails app
+    git clone git://github.com/itspriddle/dotfiles.git ~/.dotfiles
+    cd ~/.dotfiles
+    make install
