@@ -1,5 +1,5 @@
 export CLICOLOR=1
-export TERM='xterm-color'
+export TERM='xterm-256color'
 export GITIGNORE='[^.]*'
 export UNAME=$(uname)
 export MAKEFLAGS='-j3'
@@ -8,11 +8,14 @@ export MAKEFLAGS='-j3'
 
 typeset -U path
 
-path=(
-  $HOME/.dotfiles/bin
-  /opt/local/{bin,sbin}
-  /opt/X11/bin
-  $path
-)
+path=($HOME/.dotfiles/bin /opt/local/{bin,sbin} /opt/X11/bin $path)
+
+if [ $UNAME = 'Darwin' ] && [ -z "$SSH_CONNECTION" ]; then
+  export EDITOR='mvim -f'
+else
+  export EDITOR='vim -f'
+fi
+
+export GIT_EDITOR="$EDITOR "
 
 # vim:set ft=zsh:
