@@ -18,7 +18,8 @@ zstyle ":completion:*:commands" rehash 1
   # Parse lines where we connected on a non-standard port
   # (eg: [example.com]:2222,[192.168.1.1] ssh-rsa AAAAA)
   if [[ -f $HOME/.ssh/known_hosts ]]; then
-    _ssh_hosts=(${${${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}//]:[0-9]*}//\[})
+    _ssh_hosts="$(<$HOME/.ssh/known_hosts)"
+    _ssh_hosts=(${${${${${(f)${_ssh_hosts}}%%\ *}%,*}/]:[0-9]*}/\[})
   else
     _ssh_hosts=()
   fi
