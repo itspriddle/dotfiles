@@ -391,6 +391,7 @@ augroup END
 augroup ft_html
   autocmd!
   autocmd FileType html nnoremap <buffer> <leader>o :!open %<cr>
+  autocmd FileType html setl nowrap textwidth=0
 augroup END
 
 " }}}
