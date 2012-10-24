@@ -51,7 +51,7 @@
   lg           = log --graph --abbrev-commit --date=relative
   full-log     = log --format=fuller
   pa           = add --patch
-  unstage      = reset HEAD --
+  unstage      = reset HEAD
   last         = log -1 HEAD
   web          = instaweb --httpd=webrick -b open
   count        = shortlog -sn
