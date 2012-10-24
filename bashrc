@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ -n "$PS1" ]]; then
+if [ -n "$PS1" ]; then
   source ~/.dotfiles/zsh/aliases
   source ~/.dotfiles/bash/completion
   source ~/.dotfiles/bash/config
