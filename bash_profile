@@ -2,8 +2,6 @@ new_paths=(
   $HOME/.dotfiles/bin
   $HOME/.dotfiles/private-bin
   /opt/local/bin
-  ./bin
-  /usr/X11/bin
 )
 
 for p in "${new_paths[@]}"
