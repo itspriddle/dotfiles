@@ -61,5 +61,6 @@
   compare       = !hub compare $(git branch-name)
   pull-request  = !hub pull-request
   branch-name   = !git symbolic-ref HEAD | sed 's|refs/heads/||g'
+  amend         = commit --amend -C HEAD
 
 # vim:ft=gitconfig
