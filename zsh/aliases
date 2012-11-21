@@ -1,6 +1,7 @@
 # cd
 alias ..='cd ..'
 alias ...='cd ../..'
+alias ....='cd ../../..'
 
 # ls
 if [[ $UNAME = "Darwin" ]]; then
