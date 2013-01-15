@@ -288,6 +288,18 @@ endif
 
 " }}}
 
+" AppleScript {{{
+
+augroup ft_applescript
+  autocmd!
+
+  autocmd BufNewFile,BufRead *.scpt set ft=applescript
+  autocmd BufNewFile,BufRead *
+   \ if getline(1) =~ '^#!.*\<osascript\>' | set ft=applescript | endif
+augroup END
+
+" }}}
+
 " CoffeeScript {{{
 
 augroup ft_coffee

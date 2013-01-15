@@ -115,3 +115,6 @@
 [submodule "bundle/sensible"]
 	path = bundle/sensible
 	url = https://github.com/tpope/vim-sensible
+[submodule "bundle/applescript"]
+	path = bundle/applescript
+	url = https://github.com/vim-scripts/applescript.vim
