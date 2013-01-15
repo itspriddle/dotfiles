@@ -53,9 +53,6 @@ set nojoinspaces
 
 " Invisibles {{{
 
-" Highlight hard-tabs, eol and trailing white space
-set listchars=tab:▸\ ,eol:¬,trail:·
-
 " Show this symbol on lines that are wrapped
 set showbreak=↪
 
