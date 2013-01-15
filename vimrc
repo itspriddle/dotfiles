@@ -35,6 +35,9 @@ set dictionary+=/usr/share/dict/words
 " Enable modelines
 set modelines=1
 
+" Don't give the intro message when starting Vim
+set shortmess+=I
+
 " }}}
 
 " Whitespace {{{
