@@ -107,10 +107,7 @@ set winminheight=0
 " Backup {{{
 
 set backupskip+=*.tmp,crontab.*
-set backupdir=~/.vim/.tmp/backup//
-set directory=~/.vim/.tmp/backup//
-set undodir=~/.vim/.tmp/undo//
-set viewdir=~/.vim/.tmp/view//
+set viewdir=~/.cache/vim/view//
 set noswapfile
 set undofile
 
