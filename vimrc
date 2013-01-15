@@ -209,7 +209,7 @@ map <tab> %
 " Window Movement {{{
 
 " Jump to the next buffer
-nnoremap + :bnext <cr>
+nnoremap + :bnext<cr>
 
 " Jump to the previous buffer
 nnoremap - :bprev<cr>
