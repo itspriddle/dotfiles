@@ -34,11 +34,16 @@
 [browser "gitscm"]
   cmd = sh -c 'open http://git-scm.com/docs/$(basename $1 .html)' --
 
-[help]
-  format  = web
+; [help]
+;   format  = web
 
 [merge]
   tool = mvim
+  stat = true
+
+[merge "gemfilelock"]
+  name = updates Gemfile.lock
+  driver = bundle install
 
 [mergetool "mvim"]
   cmd        = mvim -d -g $LOCAL $MERGED $REMOTE
@@ -47,7 +52,7 @@
 [alias]
   amend         = commit --amend -C HEAD
   branch-name   = !git symbolic-ref HEAD | sed 's|refs/heads/||g'
-  browse        = !hub browse  -- tree/$(git branch-name)
+  browse        = !hub browse -- tree/$(git branch-name)
   compare       = !hub compare $(git branch-name)
   copy-last-sha = !git last-sha | tr -d '\n' | pbcopy
   count         = shortlog -sn
@@ -62,5 +67,9 @@
   undo          = reset --soft HEAD^
   unstage       = reset HEAD
   web           = instaweb --httpd=webrick -b open
+
+[advice]
+  statusHints = false
+  pushNonFastForward = false
 
 # vim:ft=gitconfig
