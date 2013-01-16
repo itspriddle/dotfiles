@@ -23,4 +23,4 @@ update-plugins:
 
 # Cleanp backup/view dirs
 clean:
-	@rm -f ~/.vim/.tmp/*/*
+	@rm -f ~/.cache/vim/*/*
