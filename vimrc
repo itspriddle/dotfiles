@@ -227,8 +227,8 @@ noremap <space> :
 " Visually select the text that was last edited/pasted
 nnoremap gV `[v`]
 
-" :Rename, opens command line with `:Rename /path/to/current/file`
-nnoremap <leader>r :Rename <c-r>=expand('%:p')<cr><space>
+" :Rename, opens command line with `:Rename current_file`
+nnoremap <leader>r :Rename <c-r>=expand('%:t')<cr><space>
 
 " :Remove, deletes current buffer/file.
 nnoremap <leader>R :Remove<cr>
