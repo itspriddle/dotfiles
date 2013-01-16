@@ -2,6 +2,13 @@
 
 set -e
 
+branch=$(git symbolic-ref HEAD | sed 's|refs/heads/||g')
+
+if [ "$branch" = "master" ]; then
+  echo "Error: You are on \`master', checkout a new branch first!"
+  exit 1
+fi
+
 git push -u
 git pull-request $* | pbcopy
 echo "Created pull request - $(pbpaste)"
