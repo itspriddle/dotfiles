@@ -14,3 +14,6 @@
 
 # only search with case sensitivity if there is mixed case
 --smart-case
+
+# Ignore these file types
+--no-sql
