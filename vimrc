@@ -7,24 +7,12 @@ set nocompatible
 source ~/.vim/bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect()
 
-" Enable syntax highlighting
-syntax on
-
-" Load the plugin and indent settings for the detected filetype
-filetype plugin indent on
-
 " }}}
 
 " General settings {{{
 
 " Allow UTF8 chars
 set encoding=utf-8
-
-" Allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-
-" Keep 500 items in command history
-set history=500
 
 " Fast terminal connection, improves redrawing
 set ttyfast
@@ -63,7 +51,6 @@ set showbreak=↪
 
 " Indentation {{{
 
-" set autoindent
 " set nosmartindent
 " set nocindent
 
@@ -71,14 +58,8 @@ set showbreak=↪
 
 " Statusline {{{
 
-" Always show the statusline
-set laststatus=2
-
 " Set statusline text
 set statusline=%F%{&mod\ ?\ '\ [✘]'\ :\ ''}%r%h%w\ %{fugitive#statusline()}\ [FT:%{&ft\ ?\ '%Y'\ :\ 'UNKOWN'}%Y\ FF:%{&ff}]\ [L:%l/%L\ C:%v\ (%p%%)]
-
-" Show (partial) command in statusline
-set showcmd
 
 " }}}
 
@@ -87,7 +68,6 @@ set showcmd
 set hlsearch
 set ignorecase
 set smartcase
-set incsearch
 
 " }}}
 
@@ -109,7 +89,6 @@ set winminheight=0
 set backupskip+=*.tmp,crontab.*
 set viewdir=~/.cache/vim/view//
 set noswapfile
-set undofile
 
 " }}}
 
@@ -123,7 +102,6 @@ set fillchars+=vert:│
 
 " Command line completion {{{
 
-set wildmenu
 set wildmode=longest:full,full
 
 " Ignore these patterns
@@ -196,10 +174,6 @@ inoremap <C-e> <C-o>$
 
 " Make ctrl+a jump to beginning of line in command mode
 cnoremap <C-a> <C-b>
-
-" Enable extended matching
-runtime macros/matchit.vim
-map <tab> %
 
 " }}}
 
