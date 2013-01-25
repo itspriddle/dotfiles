@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+# Usage:
+#   gfm <files>
+#
+# Examples:
+#
+#   $ gfm README.markdown
+#   $ echo "# Test" | gfm
+#   $ echo "# Test" | gfm - README.markdown
+#   $ gfm
+#   # Test
+#   ^d
+
+require 'net/http'
+require 'json'
+
+url = URI.parse("https://api.github.com/markdown")
+
+request = Net::HTTP::Post.new(url.path)
+request.body = { "mode" => "gfm", "text" => ARGF.read }.to_json
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+
+response = http.start { |http| http.request(request) }
+
+puts response.body
