@@ -43,7 +43,7 @@
 
 [merge "gemfilelock"]
   name = updates Gemfile.lock
-  driver = bundle install
+  driver = bundle install --quiet
 
 [mergetool "mvim"]
   cmd        = mvim -d -g $LOCAL $MERGED $REMOTE
