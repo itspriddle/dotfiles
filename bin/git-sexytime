@@ -9,6 +9,6 @@ if [ "$branch" = "master" ]; then
   exit 1
 fi
 
-git push -u
-git pull-request $* | pbcopy
+git push -u origin $branch
+hub pull-request $* | pbcopy
 echo "Created pull request - $(pbpaste)"
