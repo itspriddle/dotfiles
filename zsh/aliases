@@ -12,27 +12,19 @@ fi
 
 alias l='ls'
 alias ll='ls -lh'
-alias lla='ls -alh'
-alias lk='ls -lSr'
 alias la='ls -A'
-alias lr='ls -lR'
-alias lt='ls -ltr'
-alias lm='ls -al | more'
 
 # git
 if [[ $ZSH_NAME = "zsh" ]]; then
   alias ga='git add'
   alias gd='git diff'
   alias gdc='git diff --cached'
-  alias gc='git commit'
-  alias gca='git commit -a'
   alias gco='git checkout'
   alias gb='git branch'
   alias gbd='git branch -d'
   alias gbm='git branch -m'
   alias gs='git status -sb'
   alias grm="git status --porcelain | awk '\$1 == \"D\" {print \$2}' | xargs git rm --ignore-unmatch"
-  alias gw='git web'
 fi
 
 # ruby/rails
