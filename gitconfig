@@ -73,6 +73,9 @@
   statusHints = false
   pushNonFastForward = false
 
+[rebase]
+	autosquash = true
+
 [init]
   templatedir = ~/.git-template
 
