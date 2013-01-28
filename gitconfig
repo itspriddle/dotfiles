@@ -73,4 +73,7 @@
   statusHints = false
   pushNonFastForward = false
 
+[init]
+  templatedir = ~/.git-template
+
 # vim:ft=gitconfig
