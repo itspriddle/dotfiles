@@ -339,12 +339,12 @@ augroup ft_git
 
   " Rebase shortcuts, press P, R, E, S, F to change the current line to the
   " given command. Press C to cycle through available commands.
-  autocmd VimEnter .git/rebase-merge/git-rebase-todo nnoremap <buffer> <silent> P :Pick<cr>
-  autocmd VimEnter .git/rebase-merge/git-rebase-todo nnoremap <buffer> <silent> R :Reword<cr>
-  autocmd VimEnter .git/rebase-merge/git-rebase-todo nnoremap <buffer> <silent> E :Edit<cr>
-  autocmd VimEnter .git/rebase-merge/git-rebase-todo nnoremap <buffer> <silent> S :Squash<cr>
-  autocmd VimEnter .git/rebase-merge/git-rebase-todo nnoremap <buffer> <silent> F :Fixup<cr>
-  autocmd VimEnter .git/rebase-merge/git-rebase-todo nnoremap <buffer> <silent> C :Cycle<cr>
+  autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> P :Pick<cr>
+  autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> R :Reword<cr>
+  autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> E :Edit<cr>
+  autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> S :Squash<cr>
+  autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> F :Fixup<cr>
+  autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> C :Cycle<cr>
 
   " Alias Gpush
   autocmd User Fugitive command! -buffer Gpush exe 'Git push'
