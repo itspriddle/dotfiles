@@ -514,8 +514,9 @@ noremap <leader>/ :nohlsearch<cr>
 
 " supertab.vim {{{
 
-let g:SuperTabNoCompleteBefore = []
-let g:SuperTabNoCompleteAfter  = ['^', '\s']
+let g:SuperTabNoCompleteBefore      = []
+let g:SuperTabNoCompleteAfter       = ['^', '\s']
+let g:SuperTabDefaultCompletionType = '<C-n>' " Reverse order
 
 " }}}
 
