@@ -313,6 +313,9 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 augroup ft_git
   autocmd!
 
+  " Hard-tabs on gitconfig files
+  autocmd FileType gitconfig setl noexpandtab
+
   " Place the cursor at the top of the buffer
   autocmd VimEnter .git/COMMIT_EDITMSG exe 'normal! gg'
 
