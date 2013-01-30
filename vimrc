@@ -305,15 +305,6 @@ augroup END
 
 " }}}
 
-" FileType maps {{{
-
-" Change filetype of the current buffer, useful for unnamed buffers.
-nnoremap _ftr :set ft=ruby<cr>
-nnoremap _ftv :set ft=vim<cr>
-nnoremap _fjs :set ft=javascript<cr>
-
-" }}}
-
 " :<','>Gist [args] (requires gist in PATH) {{{
 
 command -nargs=* -range=% Gist exe '<line1>,<line2>w !gist <args>'
