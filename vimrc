@@ -317,7 +317,7 @@ augroup ft_git
   autocmd FileType gitconfig setl noexpandtab
 
   " Place the cursor at the top of the buffer
-  autocmd VimEnter .git/COMMIT_EDITMSG exe 'normal! gg'
+  autocmd FileType gitcommit exe 'normal! gg'
 
   " Rebase shortcuts, press P, R, E, S, F to change the current line to the
   " given command. Press C to cycle through available commands.
