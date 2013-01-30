@@ -1,82 +1,82 @@
 [include]
-  path = .gitconfig-private
+	path = .gitconfig-private
 
 [color]
-  ui = auto
+	ui = auto
 
 [color "status"]
-  header    = yellow bold
-  added     = green bold
-  updated   = green reverse
-  changed   = magenta bold
-  untracked = red
+	header    = yellow bold
+	added     = green bold
+	updated   = green reverse
+	changed   = magenta bold
+	untracked = red
 
 [color "diff"]
-  meta       = yellow bold
-  frag       = magenta bold
-  old        = red bold
-  new        = green bold
-  whitespace = red reverse
+	meta       = yellow bold
+	frag       = magenta bold
+	old        = red bold
+	new        = green bold
+	whitespace = red reverse
 
 [push]
-  default = current
+	default = current
 
 [core]
-  whitespace   = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-  excludesfile = ~/.gitignore
+	whitespace   = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	excludesfile = ~/.gitignore
 
 [format]
-  pretty = format:[%Cred%h%Creset] %C(yellow)%d%Creset %Cred%an%Creset: %s %Cgreen(%ar)%Creset
+	pretty = format:[%Cred%h%Creset] %C(yellow)%d%Creset %Cred%an%Creset: %s %Cgreen(%ar)%Creset
 
 [web]
-  browser = gitscm
+	browser = gitscm
 
 [browser "gitscm"]
-  cmd = sh -c 'open http://git-scm.com/docs/$(basename $1 .html)' --
+	cmd = sh -c 'open http://git-scm.com/docs/$(basename $1 .html)' --
 
 ; [help]
 ;   format  = web
 
 [merge]
-  tool = mvim
-  stat = true
+	tool = mvim
+	stat = true
 
 [merge "gemfilelock"]
-  name = updates Gemfile.lock
-  driver = echo "Gemfile.lock merge conflict, running bundle install" && bundle install --quiet
+	name = updates Gemfile.lock
+	driver = echo "Gemfile.lock merge conflict, running bundle install" && bundle install --quiet
 
 [mergetool "mvim"]
-  cmd        = mvim -d -g $LOCAL $MERGED $REMOTE
-  keepbackup = false
+	cmd        = mvim -d -g $LOCAL $MERGED $REMOTE
+	keepbackup = false
 
 [alias]
-  amend         = commit --amend -C HEAD
-  branch-name   = !git symbolic-ref HEAD | sed 's|refs/heads/||g'
-  browse        = !hub browse -- tree/$(git branch-name)
-  compare       = !hub compare $(git branch-name)
-  copy-last-sha = !git last-sha | tr -d '\n' | pbcopy
-  count         = shortlog -sn
-  full-log      = log --format=fuller
-  last-sha      = rev-parse --short HEAD
-  lg            = log --graph --abbrev-commit --date=relative
-  man           = help --man
-  msg           = commit --allow-empty -m
-  pa            = add --patch
-  pending       = !git --no-pager log origin/master..master && echo
-  pull-request  = !hub pull-request
-  undo          = reset --soft HEAD^
-  unstage       = reset HEAD
-  web           = instaweb --httpd=webrick -b open
-  prune-branches = !git branch --merged | grep -v "\\\\*" | xargs -P 2 -n 1 git branch -d
+	amend         = commit --amend -C HEAD
+	branch-name   = !git symbolic-ref HEAD | sed 's|refs/heads/||g'
+	browse        = !hub browse -- tree/$(git branch-name)
+	compare       = !hub compare $(git branch-name)
+	copy-last-sha = !git last-sha | tr -d '\n' | pbcopy
+	count         = shortlog -sn
+	full-log      = log --format=fuller
+	last-sha      = rev-parse --short HEAD
+	lg            = log --graph --abbrev-commit --date=relative
+	man           = help --man
+	msg           = commit --allow-empty -m
+	pa            = add --patch
+	pending       = !git --no-pager log origin/master..master && echo
+	pull-request  = !hub pull-request
+	undo          = reset --soft HEAD^
+	unstage       = reset HEAD
+	web           = instaweb --httpd=webrick -b open
+	prune-branches = !git branch --merged | grep -v "\\\\*" | xargs -P 2 -n 1 git branch -d
 
 [advice]
-  statusHints = false
-  pushNonFastForward = false
+	statusHints = false
+	pushNonFastForward = false
 
 [rebase]
 	autosquash = true
 
 [init]
-  templatedir = ~/.git-template
+	templatedir = ~/.git-template
 
 # vim:ft=gitconfig
