@@ -1,11 +1,10 @@
-.PHONY: help update update-help update-plugins clean
+.PHONY: help update update-help update-plugins
 
 help:
 # @echo "make install        - Install everything"
 	@echo "make update         - Update everything"
 	@echo "make update-plugins - Update bundled plugins"
 	@echo "make update-help    - Update help for bundled plugins"
-	@echo "make clean          - Cleanup everything"
 
 # install:
 # 	@ln -s ${PWD}/vim ${HOME}/.vim
@@ -22,7 +21,3 @@ update-help:
 # Update all git submodules
 update-plugins:
 	@git submodule foreach 'git checkout $(git symbolic-ref HEAD | sed 's|refs/heads/||g') 2> /dev/null; git pull  --stat'
-
-# Cleanp backup/view dirs
-clean:
-	@rm -f ~/.cache/vim/*/*
