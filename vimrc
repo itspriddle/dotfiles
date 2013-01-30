@@ -207,12 +207,6 @@ nnoremap <leader>r :Rename <c-r>=expand('%:t')<cr><space>
 " :Remove, deletes current buffer/file.
 nnoremap <leader>R :Remove<cr>
 
-" (Safe) quit buffer (:quit)
-nnoremap <leader>q :quit<cr>
-
-" Quit buffer (:quit!)
-nnoremap <leader>Q :quit!<cr>
-
 " Shortcut for typing :help
 nnoremap <leader>h :help<space>
 
