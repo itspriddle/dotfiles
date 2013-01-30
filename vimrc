@@ -513,6 +513,9 @@ noremap <leader>/ :nohlsearch<cr>
 
 let g:SuperTabNoCompleteBefore = []
 let g:SuperTabNoCompleteAfter  = ['^', '\s']
+" Swap default order
+let g:SuperTabMappingForward  = '<s-tab>'
+let g:SuperTabMappingBackward = '<tab>'
 
 " }}}
 
