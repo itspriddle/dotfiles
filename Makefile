@@ -1,3 +1,5 @@
+.PHONY: help update update-help update-plugins clean
+
 help:
 # @echo "make install        - Install everything"
 	@echo "make update         - Update everything"
@@ -19,7 +21,7 @@ update-help:
 
 # Update all git submodules
 update-plugins:
-	@git submodule foreach 'git checkout master 2> /dev/null; git pull  --stat'
+	@git submodule foreach 'git checkout $(git symbolic-ref HEAD | sed 's|refs/heads/||g') 2> /dev/null; git pull  --stat'
 
 # Cleanp backup/view dirs
 clean:
