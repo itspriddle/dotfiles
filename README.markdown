@@ -52,13 +52,6 @@ Vim aware of their help documents:
     make update-help
     make update # runs both update-plugins and update-help
 
-## Cleaning Backups and Views
-
-`~/.vim/.tmp/` may need to be cleaned up from time to time:
-
-    cd ~/.vim
-    make clean
-
 ## Included Plugins
 
 See [`vim/bundle/`](http://git.io/cWGCAQ) for a list of installed plugins.
