@@ -332,7 +332,7 @@ augroup ft_git
   autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> C :Cycle<cr>
 
   " Alias Gpush
-  autocmd User Fugitive command! -buffer Gpush exe 'Git push'
+  autocmd User Fugitive command! -buffer -nargs=* Gpush exe 'Git push <args>'
 
   " Show git status for the repo
   autocmd User Fugitive noremap <buffer> <leader>gs :Gstatus<cr>
