@@ -23,7 +23,7 @@ console Vim. For MacVim, try [b4winkler/macvim](http://git.io/2d9SNA) or
 I use [pathogen.vim](https://github.com/tpope/vim-pathogen/) and [git
 submodules](http://www.kernel.org/pub/software/scm/git/docs/git-submodule.html)
 to handle third party plugins. All plugins are kept in the default location
-for pathogen, `vim/bundle/`. A Makefile is included to update plugins and
+for pathogen, `~/.vim/bundle/`. A Makefile is included to update plugins and
 their helptags.
 
 ## Installation
