@@ -192,6 +192,9 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 
+" Show open buffers prep `:buffer ` on command line
+nnoremap <leader>b :buffers<cr>:buffer<space>
+
 " }}}
 
 " Convenience {{{
