@@ -92,7 +92,7 @@ set noswapfile
 
 " }}}
 
-" Window settings (Fold/view) {{{
+" Window settings {{{
 
 set viewoptions=folds,cursor
 set foldmethod=manual
