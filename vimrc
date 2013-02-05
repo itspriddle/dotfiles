@@ -405,7 +405,7 @@ noremap <leader>mv :MarkedOpen<cr>
 " Marked.app quit
 noremap <leader>mq :MarkedQuit<cr>
 
-let g:markdown_fenced_languages = ['ruby', 'erb=eruby']
+let g:markdown_fenced_languages = ['ruby', 'erb=eruby', 'php']
 
 " }}}
 
