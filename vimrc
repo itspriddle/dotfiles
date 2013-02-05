@@ -135,7 +135,8 @@ nnoremap <leader>n :set number! number?<cr>
 nnoremap <leader>l :set list! list?<cr>
 
 " Toggle Background color
-nnoremap <leader>bg :let &bg = &bg == 'dark' ? 'light' : 'dark'<cr>
+command ToggleBG let &bg = &bg == 'dark' ? 'light' : 'dark'
+" nnoremap <leader>bg :ToggleBG<cr>
 
 " Toggle fold visibility
 nnoremap <leader>z za
