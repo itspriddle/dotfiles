@@ -292,6 +292,12 @@ augroup END
 
 " }}}
 
+" CommandT {{{
+
+let g:CommandTMaxHeight = '15'
+
+" }}}
+
 " CSS {{{
 
 augroup ft_css
