@@ -586,12 +586,6 @@ augroup END
 
 " }}}
 
-" zoomwin.vim {{{
-
-noremap <leader><leader> :ZoomWin<cr>
-
-" }}}
-
 " }}}
 
 " Include local vim config {{{
