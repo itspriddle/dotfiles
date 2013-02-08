@@ -87,7 +87,6 @@ set winminheight=0
 " Backup {{{
 
 set backupskip+=*.tmp,crontab.*
-set viewdir=~/.cache/vim/view//
 set noswapfile
 
 " }}}
