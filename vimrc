@@ -144,11 +144,6 @@ nnoremap <leader>z za
 
 " Formatting/editing text {{{
 
-" opt+U to toggle word case
-nnoremap <M-u> g~iw
-vnoremap <M-u> g~i
-inoremap <M-u> <C-o>g~iw
-
 " Format paragraph
 vnoremap <C-q> gq
 nnoremap <C-q> gqap
