@@ -153,9 +153,6 @@ inoremap <C-q> <C-o>gqap
 inoremap <C-j> <C-o>gj
 inoremap <C-k> <C-o>gk
 
-" create a new line below the current one and jump to it
-inoremap <M-o> <C-o>o
-
 " bind ctrl-l to hashrocket
 inoremap <C-l> <space>=><space>
 
