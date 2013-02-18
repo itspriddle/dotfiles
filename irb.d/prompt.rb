@@ -5,8 +5,11 @@ IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
 IRB.conf[:AUTO_INDENT]  = true
 
 prompt  = "#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL} "
-project = `git rev-parse --show-toplevel 2> /dev/null`.strip
-prompt  = "#{File.basename(project)} (#{prompt.strip}) " if project != ""
+
+if defined? Rails
+  project = `git rev-parse --show-toplevel 2> /dev/null`.strip
+  prompt  = "#{File.basename(project)} (#{prompt.strip}) " if project != ""
+end
 
 IRB.conf[:PROMPT] ||= {}
 IRB.conf[:PROMPT][:JOSH] = {
