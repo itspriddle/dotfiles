@@ -45,4 +45,10 @@ module Kernel
   def paste
     `pbpaste`
   end
+
+  def history(pattern)
+    File.read(IRB.conf[:HISTORY_FILE]).lines.grep(/#{pattern}/).map do |line|
+      line.chomp
+    end
+  end
 end
