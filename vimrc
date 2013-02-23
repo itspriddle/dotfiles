@@ -58,8 +58,35 @@ set showbreak=↪
 
 " Statusline {{{
 
-" Set statusline text
-set statusline=%F%{&mod\ ?\ '\ [✘]'\ :\ ''}%r%h%w\ %{fugitive#statusline()}\ [FT:%{&ft\ ?\ '%Y'\ :\ 'UNKOWN'}%Y\ FF:%{&ff}]\ [L:%l/%L\ C:%v\ (%p%%)]
+function! s:draw_statusline()
+  " [filename]
+  let status  = "%F "
+
+  " [✘]
+  let status .= "%{&mod ? '[✘]' : ''}"
+
+  " [RO]
+  let status .= "%r"
+
+  " [Help]
+  let status .= "%h"
+
+  " [Preview]
+  let status .= "%w"
+
+  " [Git(branchname)]
+  let status .= "%{fugitive#statusline()}"
+
+  " [FT:TYPE FF:FORMAT]
+  let status .= "[FT:%{&ft} FF:%{&ff}]"
+
+  " [L:#/# C:# (#%)]
+  let status .= "[L:%l/%L C:%v (%p%%)]"
+
+  return status
+endfunction
+
+let &statusline = s:draw_statusline()
 
 " }}}
 
