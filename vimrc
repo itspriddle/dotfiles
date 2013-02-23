@@ -492,10 +492,10 @@ augroup ft_ruby
   autocmd FileType ruby noremap <buffer> K <nop>
 
   " Open or create the associated file in a horizontal split
-  autocmd FileType ruby noremap <buffer> <leader>s :AS!<cr>
+  autocmd FileType ruby noremap <buffer> <leader>s :AS<cr>
 
   " Open or create the associated file in a vertical split
-  autocmd FileType ruby noremap <buffer> <leader>v :AV!<cr>
+  autocmd FileType ruby noremap <buffer> <leader>v :AV<cr>
 
   " Setup `:make`:
   "   * run `rspec` for `_spec.rb` files
