@@ -435,7 +435,6 @@ let g:markdown_fenced_languages = ['ruby', 'erb=eruby', 'php']
 " ,d to open NERDTree
 noremap <silent> <leader>d :NERDTreeToggle<cr>
 
-let g:NERDChristmasTree  = 1
 let g:NERDTreeIgnore     = ['\.pyc$', '\.rbc$', '\~$', 'coverage/*$', '\.gem$']
 let g:NERDTreeDirArrows  = 1
 let g:NERDTreeStatusline = ' '
