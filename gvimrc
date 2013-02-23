@@ -18,6 +18,9 @@ set title titlestring=%f
 " Default window size
 set lines=70 columns=220
 
+" Always show tab bar
+set showtabline=2
+
 " }}}
 
 " Other settings  {{{
