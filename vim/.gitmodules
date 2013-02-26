@@ -121,3 +121,6 @@
 [submodule "bundle/unimpaired"]
 	path = bundle/unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
+[submodule "bundle/rbenv"]
+	path = bundle/rbenv
+	url = https://github.com/tpope/vim-rbenv
