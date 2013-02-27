@@ -242,7 +242,10 @@ cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
 noremap <leader>f :Ack!<space>
 noremap <leader>F :AckFromSearch!<cr>
-let g:ackprg = 'ag --nogroup --nocolor --column'
+
+if executable("ag")
+  let g:ackprg = 'ag --nogroup --nocolor --column'
+endif
 
 " }}}
 
