@@ -31,7 +31,7 @@
 	excludesfile = ~/.gitignore
 
 [format]
-	pretty = format:[%Cred%h%Creset] %C(yellow)%d%Creset %Cred%an%Creset: %s %Cgreen(%ar)%Creset
+	pretty = format:[%C(red)%h%Creset]%C(yellow)%d%Creset %C(magenta)%an%Creset: %s %C(green)(%ar)%Creset
 
 [web]
 	browser = gitscm
