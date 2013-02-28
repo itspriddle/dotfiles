@@ -1,5 +1,10 @@
-[include]
-	path = .gitconfig-private
+[user]
+	name = Joshua Priddle
+	email = jpriddle@me.com
+
+[github]
+	user = itspriddle
+	password = !security find-internet-password -gs github.com -w | tr -d '\n'
 
 [color]
 	ui = auto
@@ -78,5 +83,8 @@
 
 [init]
 	templatedir = ~/.git-template
+
+[credential]
+	helper = osxkeychain
 
 # vim:ft=gitconfig
