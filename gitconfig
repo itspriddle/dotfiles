@@ -82,7 +82,7 @@
 	autosquash = true
 
 [init]
-	templatedir = ~/.git-template
+	templatedir = ~/.dotfiles/git-template
 
 [credential]
 	helper = osxkeychain
