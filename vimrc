@@ -241,7 +241,7 @@ cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 " ack.vim {{{
 
 noremap <leader>f :Ack!<space>
-noremap <leader>F :AckFromSearch!<cr>
+noremap <leader>F :Ack! <c-r><c-w>
 
 if executable("ag")
   let g:ackprg = 'ag --nogroup --nocolor --column'
