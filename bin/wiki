@@ -1,9 +1,0 @@
-#!/bin/sh
-
-if [ $# -ne 1 ]; then
-  echo "Usage: $0 [search]"
-  exit
-fi
-
-# Queries wikipedia for DNS TXT record
-dig +short txt $1.wp.dg.cx
