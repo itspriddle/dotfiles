@@ -2,7 +2,7 @@ export CLICOLOR=1
 export TERM='xterm-256color'
 export GITIGNORE='[^.]*'
 export UNAME=$(uname)
-export MAKEFLAGS='-j3'
+export MAKEFLAGS='-j5'
 
 # export TIMEFMT=$'\n\`%J\`\nexecution time:\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P\n'
 
