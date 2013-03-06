@@ -1,3 +1,4 @@
 export PATH="$HOME/.rbenv/shims:$PATH"
 export POW_TIMEOUT=300
 export POW_WORKERS=1
+export POW_DOMAINS=dev,test
