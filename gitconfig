@@ -33,15 +33,6 @@
 [format]
 	pretty = format:[%C(red)%h%Creset]%C(yellow)%d%Creset %C(magenta)%an%Creset: %s %C(green)(%ar)%Creset
 
-[web]
-	browser = gitscm
-
-[browser "gitscm"]
-	cmd = sh -c 'open http://git-scm.com/docs/$(basename $1 .html)' --
-
-; [help]
-;   format  = web
-
 [merge]
 	tool = mvim
 	stat = true
