@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# Usage: changelog >> CHANGELOG.markdown
+
+unless `git rev-parse --show-toplevel &> /dev/null` and $?.success?
+  abort "fatal: Not a git repository (or any of the parent directories): .git"
+end
+
+cmd = 'git log --pretty="* %s [%cn]" --no-merges'
+
+if File.exists? "CHANGELOG.markdown"
+  since = File.mtime("CHANGELOG.markdown")
+  cmd << " --since='#{since}'"
+else
+  since = Time.now
+end
+
+puts ["# #{since.strftime("%Y-%m-%d")}\n\n"] + `#{cmd}`.chomp.lines.to_a.join
