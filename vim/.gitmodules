@@ -96,7 +96,7 @@
 	url = https://github.com/itspriddle/vim-marked.git
 [submodule "bundle/html5"]
 	path = bundle/html5
-	url = https://github.com/othree/html5.vim
+	url = https://github.com/othree/html5.vim.git
 [submodule "bundle/mustache"]
 	path = bundle/mustache
 	url = https://github.com/juvenn/mustache.vim.git
@@ -114,16 +114,16 @@
 	url = https://github.com/itspriddle/ZoomWin.git
 [submodule "bundle/sensible"]
 	path = bundle/sensible
-	url = https://github.com/tpope/vim-sensible
+	url = https://github.com/tpope/vim-sensible.git
 [submodule "bundle/applescript"]
 	path = bundle/applescript
-	url = https://github.com/vim-scripts/applescript.vim
+	url = https://github.com/vim-scripts/applescript.vim.git
 [submodule "bundle/unimpaired"]
 	path = bundle/unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
 [submodule "bundle/rbenv"]
 	path = bundle/rbenv
-	url = https://github.com/tpope/vim-rbenv
+	url = https://github.com/tpope/vim-rbenv.git
 [submodule "bundle/bundler"]
 	path = bundle/bundler
 	url = https://github.com/tpope/vim-bundler.git
