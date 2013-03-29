@@ -235,9 +235,6 @@ nnoremap <leader>h :help<space>
 " Mkdir => !mkdir
 cabbrev mkdir <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "!mkdir" : "mkdir"<CR>
 
-" Insert the directory of the current buffer in command line mode
-cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
-
 " }}}
 
 " }}}
