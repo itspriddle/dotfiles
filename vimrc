@@ -4,11 +4,11 @@
 set nocompatible
 
 " Load pathogen.vim
-source ~/.vim/bundle/pathogen/autoload/pathogen.vim
+runtime bundle/pathogen/autoload/pathogen.vim
 
 " Manually load sensible.vim, to enable syntax, etc before pathogen loads
 " other plugins
-source ~/.vim/bundle/sensible/plugin/sensible.vim
+runtime bundle/sensible/plugin/sensible.vim
 
 " Load plugins
 call pathogen#infect()
