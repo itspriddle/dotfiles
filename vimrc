@@ -121,6 +121,9 @@ set winminheight=0
 
 set backupskip+=*.tmp,crontab.*
 set noswapfile
+set directory^=~/Library/Vim/swap//
+set backupdir^=~/Library/Vim/backup//
+set undodir^=~/Library/Vim/undo//
 
 " }}}
 
