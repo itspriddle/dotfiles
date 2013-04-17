@@ -320,6 +320,17 @@ let g:CommandTMaxHeight = '15'
 
 " }}}
 
+" Crontab {{{
+
+augroup ft_crontab
+  autocmd!
+
+  " Don't wrap long lines
+  autocmd FileType crontab setl textwidth=0
+augroup END
+
+" }}}
+
 " CSS {{{
 
 augroup ft_css
