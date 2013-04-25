@@ -78,4 +78,4 @@
 [credential]
 	helper = osxkeychain
 
-# vim:ft=gitconfig
+; vim:ft=gitconfig
