@@ -451,6 +451,16 @@ let g:markdown_fenced_languages = ['ruby', 'erb=eruby', 'php']
 
 " }}}
 
+" MySQL {{
+
+augroup ft_mysql_config
+  autocmd!
+
+  autocmd BufRead,BufNewFile my.cnf,.my.cnf set ft=dosini
+augroup END
+
+" }}}
+
 " NERDTree.vim {{{
 
 " ,d to open NERDTree
