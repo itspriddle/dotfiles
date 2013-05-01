@@ -8,7 +8,7 @@ export MAKEFLAGS='-j5'
 
 typeset -U path
 
-path=($HOME/.dotfiles/bin /usr/local/{bin,sbin,share/npm/bin} /opt/X11/bin $path)
+path=($HOME/.dotfiles/bin /usr/local/{bin,sbin,share/npm/bin} $path)
 
 if [ $UNAME = 'Darwin' ] && [ -z "$SSH_CONNECTION" ]; then
   export EDITOR='mvim -f'
