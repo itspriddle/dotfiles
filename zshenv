@@ -1,7 +1,6 @@
 export CLICOLOR=1
 export TERM='xterm-256color'
 export GITIGNORE='[^.]*'
-export UNAME=$(uname)
 export MAKEFLAGS='-j5'
 
 # export TIMEFMT=$'\n\`%J\`\nexecution time:\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P\n'
@@ -10,7 +9,7 @@ typeset -U path
 
 path=($HOME/.dotfiles/bin /usr/local/{bin,sbin,share/npm/bin} $path)
 
-if [ $UNAME = 'Darwin' ] && [ -z "$SSH_CONNECTION" ]; then
+if [[ $OSTYPE == darwin* ]] && [[ -z "$SSH_CONNECTION" ]]; then
   export EDITOR='mvim -f'
 else
   export EDITOR='vim -f'
