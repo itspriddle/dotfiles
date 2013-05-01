@@ -5,34 +5,67 @@ HISTSIZE=5000
 SAVEHIST=5000
 REPORTTIME=10
 
-setopt SHARE_HISTORY
-setopt INC_APPEND_HISTORY
+# Treat the '!' character specially during expansion.
+setopt BANG_HIST
+
+# Write the history file in the ':start:elapsed;command' format.
 setopt EXTENDED_HISTORY
+
+# Expire a duplicate event first when trimming history.
+setopt HIST_EXPIRE_DUPS_FIRST
+
+# Do not display a previously found event.
 setopt HIST_FIND_NO_DUPS
-#setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_REDUCE_BLANKS
+
+# Delete an old recorded event if a new event is a duplicate.
+# setopt HIST_IGNORE_ALL_DUPS
+
+# Do not record an event that was just recorded again.
+setopt HIST_IGNORE_DUPS
+
+# Do not record an event starting with a space.
 setopt HIST_IGNORE_SPACE
-setopt HIST_NO_STORE
+
+# Do not store function definitions in the history list.
 setopt HIST_NO_FUNCTIONS
-setopt NO_HIST_BEEP
+
+# Remove the `history` command from the history list when invoked.
+setopt HIST_NO_STORE
+
+# Remove superfluous blanks from each command line being added to the history list.
+setopt HIST_REDUCE_BLANKS
+
+# Do not write a duplicate event to the history file.
 setopt HIST_SAVE_NO_DUPS
+
+# Do not execute immediately upon history expansion.
+setopt HIST_VERIFY
+
+# Write to the history file immediately, not when the shell exits.
+setopt INC_APPEND_HISTORY
+
+# Do not beep when accessing non-existent history.
+setopt NO_HIST_BEEP
+
+# Share history between all sessions.
+setopt SHARE_HISTORY
 
 autoload -U history-search-end
 
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 
-bindkey '\e[A'   history-beginning-search-backward-end
-bindkey '\e[B'   history-beginning-search-forward-end
-
-bindkey '^k'   history-beginning-search-backward-end
-bindkey '^j'   history-beginning-search-forward-end
+# Tweak behavior of up/down to search through history. If text is entered on
+# the command line press up to cycle through commands that start with that
+# text. Eg: `ls[up]` would cycle through commands beginning with `ls`.
+bindkey '\e[A' history-beginning-search-backward-end
+bindkey '\e[B' history-beginning-search-forward-end
 
 # Make `history` behave more like bash
 history() {
-  if [[ $# -eq 0 ]]; then
-    builtin history 1
-  else
+  if (( $# )); then
     builtin history $*
+  else
+    builtin history 1
   fi
 }
