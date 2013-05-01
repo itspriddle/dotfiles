@@ -1,40 +1,39 @@
-# Requires a gem outside of Bundler.
+# Internal: Requires a gem outside of Bundler. This can be used to globally
+# require gems in `~/.irbrc`, regardless of if they are present in an
+# application's bundle.
 #
-# gem - the gem name
-# const - only requires the gem if const is not yet defined
+# name  - The name of the gem to require
+# block - An optional block that will be called after the gem is required.
 #
 # Reference: https://gist.github.com/3894925
-def unbundled_require(*gems)
+def unbundled_require(name)
   if defined?(::Bundler)
-    gems.each do |gem|
-      spec_path = Dir.glob("#{Gem.dir}/specifications/#{gem}-*.gemspec").last
-
-      if spec_path.nil?
-        warn "Couldn't find #{gem}. Install it with 'gem install #{gem}'"
-        return
-      end
-
-      begin
-        spec = Gem::Specification.load spec_path
-        spec.activate
-      rescue Gem::LoadError
-        # everything is fine, if we get here it means the gem was already activated
-        # somewhere else
-      end
+    unless spec_path = Dir["#{Gem.dir}/specifications/#{name}-*.gemspec"].last
+      warn "Couldn't find #{name}. Install it with 'name install #{name}'"
+      return
     end
-  end
 
-  loaded = gems.all? do |gem|
     begin
-      require gem
-    rescue Exception => err
-      warn "Couldn't load #{gem}: #{err}"
+      Gem::Specification.load(spec_path).activate
+    rescue Gem::LoadError
+      # everything is fine, if we get here it means the gem was already
+      # activated somewhere else
     end
   end
 
-  yield if loaded && block_given?
+  begin
+    require name
+  rescue Exception => err
+    warn "Couldn't load #{name}: #{err}"
+  end
+
+  yield if block_given?
 end
+private :unbundled_require
 
 unbundled_require 'awesome_print' do
   AwesomePrint.irb!
 end
+
+# Cleanup your mess.
+undef :unbundled_require
