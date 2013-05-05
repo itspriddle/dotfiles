@@ -1,6 +1,10 @@
 autoload -U compinit
 compinit -i
 
+# Cache completions
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$HOME/.zcompcache"
+
 # Case insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
