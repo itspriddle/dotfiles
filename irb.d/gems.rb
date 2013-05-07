@@ -23,11 +23,10 @@ def unbundled_require(name)
 
   begin
     require name
+    yield if block_given?
   rescue Exception => err
     warn "Couldn't load #{name}: #{err}"
   end
-
-  yield if block_given?
 end
 private :unbundled_require
 
