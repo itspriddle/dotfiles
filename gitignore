@@ -17,3 +17,7 @@
 # ctags
 tags
 TAGS
+
+# Rbenv
+.rbenv-version
+.ruby-version
