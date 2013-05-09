@@ -398,7 +398,12 @@ augroup END
 
 augroup ft_html
   autocmd!
-  autocmd FileType html nnoremap <buffer> <leader>o :!open %<cr>
+
+  " Map <leader>o to `open %` on Mac
+  if has("mac")
+    autocmd FileType html nnoremap <buffer> <leader>o :!open %<cr>
+  endif
+
   autocmd FileType html setl nowrap textwidth=0
 augroup END
 
