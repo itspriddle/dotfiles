@@ -25,8 +25,8 @@ set showtabline=2
 
 " Other settings  {{{
 
-" Highlight column 80
-set colorcolumn=80
+" Highlight column 80 and 100
+set colorcolumn=80,100
 
 " Line numbers
 set number
