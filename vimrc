@@ -529,6 +529,14 @@ augroup ft_rails
 
   " Open the associated file in a vertical split (overrides map in ft_ruby)
   autocmd User Rails noremap <buffer> <leader>v :AV<cr>
+
+  " Setup compiler for Rails apps using rspec
+  autocmd User Rails
+    \ if isdirectory(b:rails_root."/spec") |
+    \   compiler rspec |
+    \ elseif isdirectory(b:rails_root."/test") |
+    \   compiler rubyunit |
+    \ endif
 augroup END
 
 " }}}
@@ -646,5 +654,7 @@ if filereadable(expand('~/.vimrc.local'))
 endif
 
 " }}}
+
+set number
 
 " vim:ft=vim:fdm=marker:ts=2:sw=2:sts=2:et
