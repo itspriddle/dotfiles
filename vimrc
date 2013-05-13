@@ -565,7 +565,7 @@ augroup ft_ruby
     \ if expand("%") =~# '_spec\.rb$' |
     \   compiler rspec | setl makeprg=rspec\ $*|
     \ else |
-    \   compiler ruby | setl makeprg=ruby\ -wc\ \"%:p\" |
+    \   compiler ruby | setl makeprg=ruby\ -wc\ $*|
     \ endif
 augroup END
 
