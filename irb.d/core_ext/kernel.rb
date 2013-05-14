@@ -22,7 +22,18 @@ module Kernel
     ret
   end
 
-  # Private: Copies string to the clipboard.
+  # Private: Searches through IRB history for the given pattern.
+  #
+  # pattern - A String/Regular expression to search for
+  #
+  # Returns an Array containing each line that matches.
+  def history(pattern)
+    File.read(IRB.conf[:HISTORY_FILE]).lines.grep(/#{pattern}/).map do |line|
+      line.chomp
+    end
+  end
+
+  # Private: Copies string to the clipboard. OS X only.
   #
   # str - A String
   #
@@ -33,9 +44,9 @@ module Kernel
   # Returns an IO::Object
   def copy(str)
     IO.popen('pbcopy', 'w') { |f| f << str.to_s }
-  end
+  end if RUBY_PLATFORM =~ /darwin/
 
-  # Private: Pastes the contents of the clipboard.
+  # Private: Pastes the contents of the clipboard. OS X only.
   #
   # Example
   #
@@ -44,11 +55,5 @@ module Kernel
   # Returns a String.
   def paste
     `pbpaste`
-  end
-
-  def history(pattern)
-    File.read(IRB.conf[:HISTORY_FILE]).lines.grep(/#{pattern}/).map do |line|
-      line.chomp
-    end
-  end
+  end if RUBY_PLATFORM =~ /darwin/
 end
