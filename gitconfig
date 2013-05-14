@@ -37,10 +37,6 @@
 	tool = mvim
 	stat = true
 
-[merge "gemfilelock"]
-	name = updates Gemfile.lock
-	driver = echo "Gemfile.lock merge conflict, running bundle install" && bundle install --quiet
-
 [mergetool "mvim"]
 	cmd        = mvim -d -g $LOCAL $MERGED $REMOTE
 	keepbackup = false
@@ -72,9 +68,6 @@
 
 [rebase]
 	autosquash = true
-
-[init]
-	templatedir = ~/.dotfiles/git-template
 
 [credential]
 	helper = osxkeychain
