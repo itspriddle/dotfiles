@@ -46,25 +46,25 @@
 	keepbackup = false
 
 [alias]
-	amend         = commit --amend -C HEAD
-	branch-name   = !git symbolic-ref HEAD | sed 's|refs/heads/||g'
-	browse        = !hub browse -- tree/$(git branch-name)
-	compare       = !hub compare $(git branch-name)
-	copy-last-sha = !git last-sha | tr -d '\n' | pbcopy
-	count         = shortlog -sn
-	full-log      = log --format=fuller
-	last-sha      = rev-parse --short HEAD
-	lg            = log --graph --abbrev-commit --date=relative
-	man           = help --man
-	msg           = commit --allow-empty -m
-	pa            = add --patch
-	pending       = !git --no-pager log origin/master..master && echo
-	pull-request  = !hub pull-request
-	undo          = reset --soft HEAD^
-	unstage       = reset HEAD
-	web           = instaweb --httpd=webrick -b open
+	amend          = commit --amend -C HEAD
+	branch-name    = !git symbolic-ref HEAD | sed 's|refs/heads/||g'
+	browse         = !hub browse -- tree/$(git branch-name)
+	compare        = !hub compare $(git branch-name)
+	copy-last-sha  = !git last-sha | tr -d '\n' | pbcopy
+	count          = shortlog -sn
+	full-log       = log --format=fuller
+	last-sha       = rev-parse --short HEAD
+	lg             = log --graph --abbrev-commit --date=relative
+	man            = help --man
+	msg            = commit --allow-empty -m
+	pa             = add --patch
+	pending        = !git --no-pager log origin/master..master && echo
+	pull-request   = !hub pull-request
+	undo           = reset --soft HEAD^
+	unstage        = reset HEAD
+	web            = instaweb --httpd=webrick -b open
 	prune-branches = !git branch --merged | grep -v "\\\\*" | xargs -n 1 git branch -d
-	fetch-pr = "!f() { git fetch origin refs/pull/$1/head:pr/$1; } ; f"
+	fetch-pr       = "!f() { git fetch origin refs/pull/$1/head:pr/$1; } ; f"
 
 [advice]
 	statusHints = false
