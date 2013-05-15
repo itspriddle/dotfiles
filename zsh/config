@@ -51,3 +51,7 @@ bindkey '\em' copy-prev-shell-word
 
 # alt+w
 bindkey '\ew' kill-region
+
+# Enable `ztodo`
+autoload -Uz ztodo
+chpwd() { ztodo }
