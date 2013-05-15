@@ -1,6 +1,9 @@
 autoload -U compinit
 compinit -i
 
+# Automatically list choices on ambiguous completion.
+setopt AUTO_LIST
+
 # Cache completions
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$HOME/.zcompcache"
