@@ -16,7 +16,7 @@ _josh_prompt_precmd() {
   local git_prompt="" host_prompt="" dir_prompt
 
   if [[ $TERM == xterm* ]]; then
-    print -Pn "\e]0;%n${SSH_CONNECTION:+@%M}:%~\a"
+    print -Pn "\e]0;${SSH_CONNECTION:+%n@%M:}%~\a"
   fi
 
   vcs_info
@@ -31,7 +31,7 @@ _josh_prompt_precmd() {
     host_prompt="%{$fg_bold[yellow]%}%n@%M%{$reset_color%} "
   fi
 
-  PS1="${host_prompt}${dir_prompt}${git_prompt} > "
+  PS1="${host_prompt}${dir_prompt}${git_prompt} %# "
 }
 
 add-zsh-hook precmd _josh_prompt_precmd
