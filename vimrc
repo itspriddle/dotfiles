@@ -157,18 +157,6 @@ let g:mapleader = ','
 
 " Toggles {{{
 
-" Toggle wrap/no wrap
-nnoremap <leader>wr :set nowrap! nowrap?<cr>
-
-" Toggle paste mode
-nnoremap <leader>pa :set paste! paste?<cr>
-
-" Toggle line numbers
-nnoremap <leader>n :set number! number?<cr>
-
-" Toggle list
-nnoremap <leader>l :set list! list?<cr>
-
 " Toggle Background color
 command ToggleBG let &bg = &bg == 'dark' ? 'light' : 'dark'
 " nnoremap <leader>bg :ToggleBG<cr>
