@@ -3,3 +3,6 @@ defscrollback 5000
 
 # Allow scrolling with the mouse
 termcapinfo xterm* ti@:te@
+
+# Turn off start message
+startup_message off
