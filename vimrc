@@ -259,7 +259,7 @@ augroup all_buffers
 augroup END
 
 " Make search highlighting readable in console Vim
-if ! has('gui')
+if ! has('gui_running')
   highlight Search term=reverse ctermfg=235 ctermbg=221
 endif
 
