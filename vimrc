@@ -235,7 +235,6 @@ cabbrev mkdir <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "!mkdir" : "mkdir"
 " ack.vim {{{
 
 noremap <leader>f :Ack!<space>
-noremap <leader>F :Ack! <c-r><c-w>
 
 if executable("ag")
   let g:ackprg = 'ag --nogroup --nocolor --column'
