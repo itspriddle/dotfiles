@@ -590,7 +590,7 @@ function! s:registerTabularPatterns()
   AddTabularPattern! assignment  /^[^=]*\zs=>\?/
   AddTabularPattern! first_colon /^[^:]*:\zs/l0l1
   AddTabularPattern! first_comma /^[^,]*,\zs/l0r1
-  AddTabularPattern! first_dash /-/
+  AddTabularPattern! first_dash  /-/
 endfunction
 
 function! s:TabularMap(key, pattern)
