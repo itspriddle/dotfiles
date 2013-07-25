@@ -133,6 +133,10 @@ set viewoptions=folds,cursor
 set foldmethod=manual
 set fillchars+=vert:│
 
+" Disable scrolloff that is set in sensible.vim
+set scrolloff=0
+set sidescrolloff=0
+
 " }}}
 
 " Command line completion {{{
