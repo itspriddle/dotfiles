@@ -132,6 +132,7 @@ set undodir^=~/Library/Vim/undo//
 set viewoptions=folds,cursor
 set foldmethod=manual
 set fillchars+=vert:│
+set number
 
 " Disable scrolloff that is set in sensible.vim
 set scrolloff=0
@@ -653,7 +654,5 @@ if filereadable(expand('~/.vimrc.local'))
 endif
 
 " }}}
-
-set number
 
 " vim:ft=vim:fdm=marker:ts=2:sw=2:sts=2:et
