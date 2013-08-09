@@ -196,6 +196,9 @@ inoremap <C-e> <C-o>$
 " Make ctrl+a jump to beginning of line in command mode
 cnoremap <C-a> <C-b>
 
+" Make Y consistent with C and D. See :help Y.
+nnoremap Y y$
+
 " }}}
 
 " Window Movement {{{
