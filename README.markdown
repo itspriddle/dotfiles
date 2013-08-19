@@ -13,7 +13,7 @@ This repo changes pretty frequently as my tastes change or I
 install a plugin that scratches a new itch. I've tried to keep things
 commented as much as possible.
 
-Oh, you will need Vim 7.3, either console or MacVim. A shell script is
+Oh, you will need Vim 7.4, either console or MacVim. A shell script is
 included at [`share/install-vim.sh`](share/install-vim.sh) to help install
 console Vim. For MacVim, try [b4winkler/macvim](http://git.io/2d9SNA) or
 [Homebrew](http://git.io/homebrew).
