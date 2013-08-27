@@ -133,3 +133,6 @@
 [submodule "bundle/lightline"]
 	path = bundle/lightline
 	url = https://github.com/itchyny/lightline.vim
+[submodule "bundle/characterize"]
+	path = bundle/characterize
+	url = https://github.com/tpope/vim-characterize.git
