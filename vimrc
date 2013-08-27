@@ -124,6 +124,7 @@ set noswapfile
 set directory^=~/Library/Vim/swap//
 set backupdir^=~/Library/Vim/backup//
 set undodir^=~/Library/Vim/undo//
+set undofile
 
 " }}}
 
