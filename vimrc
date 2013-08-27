@@ -467,6 +467,14 @@ augroup END
 
 " }}}
 
+" Lightline.vim {{{
+
+let g:lightline = {
+  \ 'colorscheme': 'solarized'
+  \ }
+
+" }}}
+
 " NERDTree.vim {{{
 
 " ,d to open NERDTree
