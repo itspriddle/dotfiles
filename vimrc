@@ -165,7 +165,7 @@ let g:mapleader = ','
 
 " Toggle Background color
 command ToggleBG let &bg = &bg == 'dark' ? 'light' : 'dark'
-" nnoremap <leader>bg :ToggleBG<cr>
+nnoremap cob :ToggleBG<cr>
 
 " Toggle fold visibility
 nnoremap <leader>z za
