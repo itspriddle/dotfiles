@@ -469,9 +469,12 @@ augroup END
 
 " Lightline.vim {{{
 
-let g:lightline = {
-  \ 'colorscheme': 'solarized'
-  \ }
+let g:lightline = { 'colorscheme': 'solarized' }
+
+if has('gui_running')
+  let g:lightline.separator    = { 'left': '⮀', 'right': '⮂' }
+  let g:lightline.subseparator = { 'left': '⮁', 'right': '⮃' }
+endif
 
 " }}}
 
