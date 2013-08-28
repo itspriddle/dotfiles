@@ -436,11 +436,13 @@ augroup END
 
 " Lightline.vim {{{
 
-let g:lightline = { 'colorscheme': 'solarized' }
 
 if has('gui_running')
-  let g:lightline.separator    = { 'left': '⮀', 'right': '⮂' }
-  let g:lightline.subseparator = { 'left': '⮁', 'right': '⮃' }
+  let g:lightline = {
+    \ 'colorscheme':  'solarized',
+    \ 'separator':    { 'left': "\U2B80", 'right': "\U2B82" },
+    \ 'subseparator': { 'left': "\U2b81", 'right': "\U2B83" },
+    \ }
 endif
 
 " }}}
