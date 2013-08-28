@@ -605,6 +605,15 @@ noremap <leader>T :TagbarToggle<cr>
 
 " }}}
 
+" tmux.vim {{{
+
+augroup ft_tmux
+  autocmd!
+  autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
+augroup END
+
+" }}}
+
 " Vim/Vim help {{{
 
 augroup ft_vim
