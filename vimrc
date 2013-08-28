@@ -306,9 +306,6 @@ augroup ft_css
 
   " Fold on @group/@end like CSSEdit
   autocmd FileType css,scss setl tw=0 foldmethod=manual foldmarker=@group,@end
-
-  " Format CSS, requires csstidy to be in $PATH
-  autocmd FileType css let &l:equalprg='csstidy - --silent=true --preserve_css=true --template=$HOME/.vim/share/support/csstidy.tpl | sed -E "s/,([^ ])/, \1/g"'
 augroup END
 
 " }}}
