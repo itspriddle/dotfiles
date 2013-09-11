@@ -46,12 +46,23 @@ bindkey '^[[1;5C'  end-of-line
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
 
-# alt+m
-bindkey '\em' copy-prev-shell-word
-
-# alt+w
-bindkey '\ew' kill-region
+# Not sure I ever use these
+# # alt+m
+# bindkey '\em' copy-prev-shell-word
+#
+# # alt+w
+# bindkey '\ew' kill-region
 
 # Enable `ztodo`
 autoload -Uz ztodo
 chpwd() { ztodo }
+#
+# rationalise-dot() {
+#   if [[ $LBUFFER = *.. ]]; then
+#     LBUFFER+=/..
+#   else
+#     LBUFFER+=.
+#   fi
+# }
+# zle -N rationalise-dot
+# bindkey . rationalise-dot

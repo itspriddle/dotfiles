@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
 HISTFILE=~/.zsh_history
-HISTSIZE=5000
-SAVEHIST=5000
+HISTSIZE=10000
+SAVEHIST=10000
 REPORTTIME=10
 
 # Treat the '!' character specially during expansion.

@@ -2,7 +2,31 @@
 defscrollback 5000
 
 # Allow scrolling with the mouse
-termcapinfo xterm* ti@:te@
+# termcapinfo xterm* ti@:te@
 
 # Turn off start message
 startup_message off
+#
+# caption always "%{wk}%?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{wk}%?%+Lw %=%{mk}@%H %{yk}%D %{ck}%M%{wk} %{ck}%d %{gk}%c"
+# hardstatus alwayslastline
+# hardstatus string "[screen %n%?: %t%?] %h"
+# Statusbar
+# hardstatus alwayslastline "%{= KW} Screen(s): %-w%{= wk} %50>%n %t%{-}%+w%<
+# %=%{KW}[%c %M %d %Y ]"
+
+
+autodetach    on
+crlf      off
+startup_message   off
+shell     -zsh
+defmonitor    on
+activity    "<%n>"
+# caption always "%{= dd}%{+b ky}%{+ .b} $LOGNAME@%H %{-} %{.y}%-w%50>%{+ Kg} %n %t %{-}%+w%<%{-}"
+hardstatus alwayslastline "%{rk}%H %{gk}%c %{yk}%M%d %{wk}%?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{wk}%?%+Lw%?"
+
+
+# 256 color support
+attrcolor   b ".I"
+termcapinfo   xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+defbce      on
+term      xterm

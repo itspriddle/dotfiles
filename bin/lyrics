@@ -7,8 +7,13 @@
 
 artist=`osascript -e'tell application "iTunes"' -e'get artist of current track' -e'end tell'`
 title=`osascript -e'tell application "iTunes"' -e'get name of current track' -e'end tell'`
+lyrics=`osascript -e'tell application "iTunes"' -e'get lyrics of current track' -e'end tell'`
 
-song=`curl -G --data-urlencode "artist=$artist" \
-  --data-urlencode "title=$title" -s http://makeitpersonal.co/lyrics`
+if [[ -z "$lyrics" ]]; then
+  lyrics=`curl -G --data-urlencode "artist=$artist" \
+    --data-urlencode "title=$title" -s http://makeitpersonal.co/lyrics`
+else
+  lyrics="\n$lyrics"
+fi
 
-echo -e "$artist - $title\n$song"
+echo -e "$artist - $title\n$lyrics"

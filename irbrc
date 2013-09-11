@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-
 path = File.join(File.readlink(__FILE__), '..', 'irb.d')
 path = File.expand_path(path, File.dirname(__FILE__))
 

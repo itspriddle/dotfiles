@@ -7,11 +7,16 @@ end
 
 cmd = 'git log --pretty="* %s [%cn]" --no-merges'
 
-if File.exists? "CHANGELOG.markdown"
-  since = File.mtime("CHANGELOG.markdown")
-  cmd << " --since='#{since}'"
+if current_tag = `git describe 2> /dev/null`.chomp and $?.success?
+  title = "#{current_tag} (#{Time.now.strftime("%Y-%m-%d")})"
+  cmd << " #{current_tag}..HEAD"
 else
-  since = Time.now
+  if File.exists? "CHANGELOG.markdown"
+    since = File.mtime("CHANGELOG.markdown")
+    cmd << " --since='#{since}'"
+  end
+
+  title = (since || Time.now).strftime("%Y-%m-%d")
 end
 
-puts ["# #{since.strftime("%Y-%m-%d")}\n\n"] + `#{cmd}`.chomp.lines.to_a.join
+puts (["# #{title}\n\n"] + `#{cmd}`.chomp.lines.to_a).join
