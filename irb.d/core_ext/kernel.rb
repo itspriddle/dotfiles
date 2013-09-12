@@ -9,12 +9,12 @@ module Kernel
   #
   # Example
   #
-  # benchmarks: time { do something }
-  #
   #     time { puts :hi }
   #           user     system      total        real
   #     hi
   #       0.000000   0.000000   0.000000 (  0.000029)
+  #
+  # Returns the result of the block.
   def time(times = 1)
     require 'benchmark'
     ret = nil
