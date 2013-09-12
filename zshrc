@@ -7,6 +7,6 @@ for plugin (~/.dotfiles/zsh/plugins/*)
   source $plugin
 
 # Load settings specific to this machine
-[[ -f ~/.localrc ]] && source ~/.localrc
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 # vim:set ft=zsh:
