@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+# Usage: ddwrt [YYYY-MM]
+# Setup:
+# - gem install terminal-table
+# - Create `~/.ddwrt.yml`:
+#   username: blah
+#   password: secret
+#   host: 192.168.1.1
+
+require 'rubygems'
+require 'yaml'
+require 'net/telnet'
+require 'terminal-table'
+
+if File.exists?(config_file = File.expand_path("~/.ddwrt.yml"))
+  config = YAML.load_file(config_file)
+else
+  abort "Couldn't find #{config_file.inspect}!"
+end
+
+year, month = ARGV.fetch(0, Time.now.strftime('%Y-%m')).split('-')
+
+router = Net::Telnet.new('Host' => config.fetch('host'))
+router.login(config.fetch('username'), config.fetch('password'))
+
+key   = "traff-#{month}-#{year}"
+out   = router.cmd("nvram show | grep #{key}")
+lines = out.each_line.find { |l| l =~ /\A#{key}=/ }
+
+table = Terminal::Table.new headings: %W(Date Incoming Outgoing) do |t|
+  total_incoming = total_outgoing = 0
+
+  lines.split('=').last.split(' ').each_with_index do |data, i|
+    incoming, outgoing = data.split(':')
+    day = "%02d" % (i + 1)
+    total_incoming += incoming.to_i
+    total_outgoing += outgoing.to_i
+
+    t.add_row ["#{year}-#{month}-#{day}", "#{incoming} MB", "#{outgoing} MB"]
+  end
+
+  t.add_separator
+
+  t.add_row ["TOTAL", "#{total_incoming} MB",  "#{total_outgoing} MB"]
+end
+
+puts table
