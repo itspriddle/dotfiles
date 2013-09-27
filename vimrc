@@ -355,6 +355,12 @@ augroup ft_git
   autocmd User Fugitive noremap <buffer> <leader>gp :Gpush<cr>
 
   autocmd VimEnter .git/PULLREQ_EDITMSG setl wrap textwidth=0
+
+  " Replace GitHub issue/pull URLS with Markdown shorthand syntax
+  " Eg: https://github.com/itspriddle/vim-config/issues/1 becomes
+  "     itspriddle/vim-config#1
+  autocmd BufWritePre .git/PULLREQ_EDITMSG
+    \ execute "%s,https://github.com/\\(.*\\)/\\(.*\\)/\\(pull\\|issues\\)/\\([0-9]\\+\\),\\1/\\2#\\4,ge"
 augroup END
 
 " }}}
