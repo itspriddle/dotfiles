@@ -609,6 +609,13 @@ augroup END
 
 " }}}
 
+" togglelist.vim
+
+let g:toggle_list_no_mappings = 1
+nnoremap <silent> coq :call ToggleQuickfixList()<cr>
+
+" }}}
+
 " Vim/Vim help {{{
 
 augroup ft_vim
