@@ -136,3 +136,6 @@
 [submodule "bundle/characterize"]
 	path = bundle/characterize
 	url = https://github.com/tpope/vim-characterize.git
+[submodule "bundle/togglelist"]
+	path = bundle/togglelist
+	url = https://github.com/milkypostman/vim-togglelist.git
