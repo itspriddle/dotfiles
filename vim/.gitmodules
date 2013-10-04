@@ -139,3 +139,6 @@
 [submodule "bundle/togglelist"]
 	path = bundle/togglelist
 	url = https://github.com/milkypostman/vim-togglelist.git
+[submodule "bundle/nginx"]
+	path = bundle/nginx
+	url = https://github.com/evanmiller/nginx-vim-syntax.git
