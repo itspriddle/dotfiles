@@ -364,7 +364,7 @@ augroup ft_git
   " Eg: https://github.com/itspriddle/vim-config/issues/1 becomes
   "     itspriddle/vim-config#1
   autocmd BufWritePre .git/PULLREQ_EDITMSG
-    \ execute '%s,\vhttps?://github.com/(.*)/(pull|issues)/([0-9]+),\1#\3,ge'
+    \ execute ':%s,\vhttps?://github.com/([^/]+)/([^/]+)/(pull|issues)/([0-9]+),\1/\2#\4,gei'
 augroup END
 
 " }}}
