@@ -3,6 +3,8 @@
 path=(
   $HOME/.dotfiles/bin
   /usr/local/{bin,sbin,share/npm/bin}
+  /usr/sbin
+  /sbin
   $path
 )
 
