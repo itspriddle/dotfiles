@@ -2,7 +2,7 @@
 
 path=(
   $HOME/.dotfiles/bin
-  /usr/local/{bin,sbin,share/npm/bin}
+  /usr/local/{bin,sbin,share/npm/bin,share/python}
   /usr/sbin
   /sbin
   $path
