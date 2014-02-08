@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+# Renames MP3 files based on track number and track title found in ID3 tags.
+
+begin
+  gem 'id3tag'
+  require 'id3tag'
+rescue Gem::LoadError
+  abort "Can't find ID3Tag. Run `gem install id3tag` to install it."
+end
+
+dry_run = ARGV.shift if %W(-n --dry-run).include? ARGV.first
+
+abort "Usage: #{File.basename($0)} [-n|--dry-run] <file> ..." if ARGV.empty?
+
+ARGV.each do |filename|
+  path = File.expand_path(filename)
+  ext  = File.extname(path)
+
+  if Dir.exist? path
+    puts "Error: #{path.inspect} is a directory, skipping!"
+    next
+  elsif !File.exist? path
+    puts "Error: #{path.inspect} doesn't exist, skipping!"
+    next
+  end
+
+  File.open(path) do |file|
+    tag      = ID3Tag.read(file)
+    new_path = "#{'%02d' % tag.track_nr.to_s.split('/').first} #{tag.title}#{ext}"
+
+    if File.exist? new_path
+      puts "Error: #{new_path} already exists, can't rename, skipping!"
+      next
+    end
+
+    if dry_run
+      print "Would rename: "
+    else
+      File.rename(path, new_path)
+      print "Renamed: "
+    end
+
+    puts "#{path.inspect} to #{new_path.inspect}"
+  end
+end
