@@ -26,7 +26,7 @@ ARGV.each do |filename|
 
   File.open(path) do |file|
     tag      = ID3Tag.read(file)
-    new_path = "#{'%02d' % tag.track_nr.to_s.split('/').first} #{tag.title}#{ext}"
+    new_path = "#{'%02d' % tag.track_nr.to_s.split('/').first.to_i} #{tag.title}#{ext}"
 
     if File.exist? new_path
       puts "Error: #{new_path} already exists, can't rename, skipping!"
