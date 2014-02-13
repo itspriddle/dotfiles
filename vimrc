@@ -358,7 +358,8 @@ augroup ft_git
   " Push current branch upstream
   autocmd User Fugitive noremap <buffer> <leader>gp :Gpush<cr>
 
-  autocmd VimEnter .git/PULLREQ_EDITMSG setl wrap textwidth=0
+  autocmd VimEnter .git/PULLREQ_EDITMSG
+    \ setl wrap textwidth=0 filetype=gitcommit linebreak
 
   " Replace GitHub issue/pull URLS with Markdown shorthand syntax
   " Eg: https://github.com/itspriddle/vim-config/issues/1 becomes
