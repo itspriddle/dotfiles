@@ -359,7 +359,7 @@ augroup ft_git
   autocmd User Fugitive noremap <buffer> <leader>gp :Gpush<cr>
 
   autocmd VimEnter .git/PULLREQ_EDITMSG
-    \ setl wrap textwidth=0 filetype=gitcommit linebreak
+    \ setl wrap filetype=gitcommit textwidth=0 linebreak
 
   " Replace GitHub issue/pull URLS with Markdown shorthand syntax
   " Eg: https://github.com/itspriddle/vim-config/issues/1 becomes
