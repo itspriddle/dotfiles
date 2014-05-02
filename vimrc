@@ -53,6 +53,11 @@ set nojoinspaces
 " Show this symbol on lines that are wrapped
 set showbreak=↪
 
+" Set listchars
+if !has('win32') && (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8')
+  let &listchars = "tab:\u21e5 ,trail:\u2423,extends:\u21c9,precedes:\u21c7,nbsp:\u00b7"
+endif
+
 " }}}
 
 " Indentation {{{
