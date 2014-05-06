@@ -10,5 +10,8 @@ if [ "$branch" = "master" ]; then
 fi
 
 git push -u origin $branch
-gh pull-request $* | tr -d '\n' | pbcopy
+
+# gh pull-request $* | tr -d '\n' | pbcopy
+gh pull-request $* < `tty` > `tty` | tr -d '\n' | pbcopy
+
 echo "Created pull request - $(pbpaste)"
