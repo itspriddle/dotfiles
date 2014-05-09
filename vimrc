@@ -632,6 +632,13 @@ nnoremap <silent> coq :call ToggleQuickfixList()<cr>
 
 " }}}
 
+" unimpaired.vim {{{
+
+" Open insert mode with 'paste' set
+nmap yp yo<BS>
+
+" }}}
+
 " Vim/Vim help {{{
 
 augroup ft_vim
