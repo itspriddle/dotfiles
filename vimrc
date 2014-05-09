@@ -238,9 +238,13 @@ augroup all_buffers
 
 augroup END
 
-" Make search highlighting readable in console Vim
+" Make search/pmenu highlighting readable in console Vim
 if ! has('gui_running')
   highlight Search term=reverse ctermfg=235 ctermbg=221
+  highlight Pmenu ctermfg=0 ctermbg=225 guibg=LightMagenta
+  highlight PmenuSel ctermfg=0 ctermbg=7 guibg=Grey
+  highlight PmenuSbar ctermbg=248 guibg=Grey
+  highlight PmenuThumb ctermbg=0 guibg=Black
 endif
 
 " }}}
