@@ -1,0 +1,8 @@
+eval "$(gh alias -s)"
+
+# Custom completion for git
+zstyle ':completion:*:*:gh:*' user-commands \
+  repl:'Open a repl' \
+  sexytime:'Push branch to github and open a pull request'
+
+# vim:set ft=zsh:

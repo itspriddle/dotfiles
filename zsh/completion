@@ -45,11 +45,6 @@ zstyle ":completion:*:commands" rehash 1
   zstyle ':completion:*:ping:*' hosts google.com 192.168.1.1 ${_ssh_hosts[*]}
 }
 
-# Custom completion for git
-zstyle ':completion:*:*:git:*' user-commands \
-  repl:'Open a repl' \
-  sexytime:'Push branch to github and open a pull request'
-
 # Ignore _function files
 zstyle ':completion:*:functions' ignored-patterns '_*'
 
