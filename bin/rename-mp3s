@@ -14,13 +14,16 @@ abort "Usage: #{File.basename($0)} [-n|--dry-run] <file> ..." if ARGV.empty?
 
 ARGV.each do |filename|
   path = File.expand_path(filename)
-  ext  = File.extname(path)
+  ext  = File.extname(path).downcase
 
   if Dir.exist? path
     puts "Error: #{path.inspect} is a directory, skipping!"
     next
   elsif !File.exist? path
     puts "Error: #{path.inspect} doesn't exist, skipping!"
+    next
+  elsif ext != ".mp3"
+    puts "Error: #{path.inspect} doesn't look like an MP3 file, skipping!"
     next
   end
 
