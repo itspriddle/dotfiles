@@ -198,7 +198,7 @@ nnoremap gV `[v`]
 nnoremap <leader>r :Rename <c-r>=expand('%:t')<cr><space>
 
 " :Remove, deletes current buffer/file.
-nnoremap <leader>R :Remove<cr>
+nnoremap <leader>R :Remove
 
 " Shortcut for typing :help
 nnoremap <leader>h :help<space>
