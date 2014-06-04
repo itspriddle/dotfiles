@@ -553,16 +553,6 @@ augroup ft_ruby
 
   " Open or create the associated file in a vertical split
   autocmd FileType ruby noremap <buffer> <leader>v :AV<cr>
-
-  " Setup `:make`:
-  "   * run `rspec` for `_spec.rb` files
-  "   * run `ruby -wc` for other `.rb`
-  autocmd FileType ruby
-    \ if expand("%") =~# '_spec\.rb$' |
-    \   compiler rspec | setl makeprg=rspec\ $*|
-    \ else |
-    \   compiler ruby | setl makeprg=ruby\ -wc\ $*|
-    \ endif
 augroup END
 
 " }}}
