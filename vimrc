@@ -203,9 +203,6 @@ nnoremap <leader>R :Remove
 " Shortcut for typing :help
 nnoremap <leader>h :help<space>
 
-" Mkdir => !mkdir
-cabbrev mkdir <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "!mkdir" : "mkdir"<CR>
-
 " }}}
 
 " }}}
