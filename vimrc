@@ -175,12 +175,6 @@ nnoremap Y y$
 
 " Window Movement {{{
 
-" Jump to the next buffer
-nnoremap + :echo 'Use ]b instead'<cr>
-
-" Jump to the previous buffer
-nnoremap - :echo 'Use [b instead'<cr>
-
 " Show open buffers prep `:buffer ` on command line
 nnoremap <leader>b :buffers<cr>:buffer<space>
 
