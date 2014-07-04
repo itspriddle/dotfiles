@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+begin
+  gem 'activesupport'
+  require 'active_support/time'
+rescue Gem::LoadError
+  abort "Can't find ActiveSupport. Run `gem install activesupport` to install it."
+end
+
+unless ARGV.size == 1
+  abort "Usage: #{File.basename($0)} [time]"
+end
+
+time = ARGV.first
+
+regex = /[\d\.]+(seconds|mins|hours|days|weeks|months|years)\.(ago|from_now)/
+
+if time.match(regex)
+  puts eval(time)
+else
+  abort "Invalid time: #{time.inspect}"
+end
