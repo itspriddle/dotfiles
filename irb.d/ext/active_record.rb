@@ -18,6 +18,7 @@ module Kernel
     end
 
     # Private: Show ActiveRecord logs on STDOUT.
+    #
     # Returns nothing.
     def show_log
       change_log STDOUT
@@ -31,6 +32,8 @@ module Kernel
     end
 
     # Private: Changes the ActiveRecord logger to the given stream.
+    #
+    # stream - An IO stream or filename (e.g. `STDOUT`, `/tmp/file.log`)
     #
     # Returns nothing.
     def change_log(stream)
