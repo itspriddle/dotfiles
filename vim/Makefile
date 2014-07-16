@@ -16,7 +16,7 @@ update: update-plugins update-help
 
 # Update helptags for pathogen
 update-help:
-	@vim -e -c 'silent Helptags|q' 2>&1 /dev/null
+	@vim +Helptags +qa 2>&1 /dev/null
 
 # Update all git submodules
 update-plugins:
