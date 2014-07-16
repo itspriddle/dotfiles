@@ -1,6 +1,18 @@
 module Kernel
   private
 
+  # Private: Prints the time it takes to run the given block.
+  #
+  # description - Optional description
+  # block       - A block of code
+  #
+  # Example
+  #
+  #     time { puts :hi }
+  #     hi
+  #     0.0
+  #
+  # Returns nothing
   def time(description = nil, &block)
     require 'benchmark'
     print "#{description}: " if description
@@ -15,7 +27,7 @@ module Kernel
   #
   # Example
   #
-  #     time { puts :hi }
+  #     bm { puts :hi }
   #           user     system      total        real
   #     hi
   #       0.000000   0.000000   0.000000 (  0.000029)
