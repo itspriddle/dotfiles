@@ -1,6 +1,12 @@
 module Kernel
   private
 
+  def time(description = nil, &block)
+    require 'benchmark'
+    print "#{description}: " if description
+    puts Benchmark.measure(&block).total
+  end
+
   # Private: Benchmarks code one or more times.
   #
   # times - The number of times to run the code
@@ -15,7 +21,7 @@ module Kernel
   #       0.000000   0.000000   0.000000 (  0.000029)
   #
   # Returns the result of the block.
-  def time(times = 1)
+  def bm(times = 1)
     require 'benchmark'
     ret = nil
     Benchmark.bm { |x| x.report { times.times { ret = yield } } }

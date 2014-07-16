@@ -10,6 +10,15 @@
 #     IRB.on_load do
 #       SomeProject.init!
 #     end
+#
+# To run code on `bundle console` but not `irb`:
+#
+#     # some_project/.irbrc
+#     if File.basename($0) == 'bundle'
+#       IRB.on_load do
+#         SomeProject.init!
+#       end
+#     end
 module IRB
   # Public: List of hooks to run when IRB is fully initialized.
   #

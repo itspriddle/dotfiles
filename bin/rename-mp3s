@@ -40,7 +40,8 @@ ARGV.each do |filename|
     if dry_run
       print "Would rename: "
     else
-      File.rename(path, new_path)
+      File.rename(path, "#{new_path}.tmp")
+      File.rename("#{new_path}.tmp", new_path)
       print "Renamed: "
     end
 

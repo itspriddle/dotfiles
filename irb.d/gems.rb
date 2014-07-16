@@ -31,6 +31,23 @@ end
 private :unbundled_require
 
 unbundled_require 'awesome_print' do
+  # Work around for https://github.com/michaeldv/awesome_print/pull/147
+  # if defined? ActiveRecord
+  #   AwesomePrint::ActiveRecord.send :include, Module.new {
+  #     def awesome_active_record_class_with_fix(object)
+  #       return awesome_class(object) if object.respond_to?(:abstract_class?) && object.abstract_class?
+  #       awesome_active_record_class_without_fix object
+  #     end
+  #
+  #     def self.included(base)
+  #       base.class_eval do
+  #         alias_method :awesome_active_record_class_without_fix, :awesome_active_record_class
+  #         alias_method :awesome_active_record_class, :awesome_active_record_class_with_fix
+  #       end
+  #     end
+  #   }
+  # end
+
   AwesomePrint.irb!
 end
 
