@@ -42,13 +42,17 @@ module Kernel
 
   # Private: Searches through IRB history for the given pattern.
   #
-  # pattern - A String/Regular expression to search for
+  # pattern - Optional String/Regular expression to search for
+  #
+  # Note: The output of this command will be difficult to read unless you have
+  # the awesome_print gem installed.
   #
   # Returns an Array containing each line that matches.
-  def history(pattern)
-    File.read(IRB.conf[:HISTORY_FILE]).lines.grep(/#{pattern}/).map do |line|
-      line.chomp
-    end
+  def history(pattern = nil)
+    lines = Readline::HISTORY.to_a
+    lines = lines.grep(/#{pattern}/) if pattern
+
+    lines.map { |line| line.chomp }
   end
 
   # Private: Copies string to the clipboard. OS X only.
