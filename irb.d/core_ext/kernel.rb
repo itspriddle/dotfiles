@@ -4,7 +4,6 @@ module Kernel
   # Private: Prints the time it takes to run the given block.
   #
   # description - Optional description
-  # block       - A block of code
   #
   # Example
   #
@@ -13,10 +12,17 @@ module Kernel
   #     0.0
   #
   # Returns nothing
-  def time(description = nil, &block)
+  def time(options = {})
     require 'benchmark'
+
+    times       = options.fetch(:times, 1)
+    description = options[:description]
+    output      = nil
+    measure     = Benchmark.measure { times.times { output = yield } }
+
     print "#{description}: " if description
-    puts Benchmark.measure(&block).total
+    puts "#{measure.total}"
+    output
   end
 
   # Private: Benchmarks code one or more times.
