@@ -55,6 +55,28 @@ module Kernel
     lines.map { |line| line.chomp }
   end
 
+  # Private: Replays the given command number from IRB command history.
+  #
+  # number - The command number to run
+  #
+  # Example
+  #
+  #     history
+  #     [
+  #       [0] "puts :hi",
+  #       [1] "a = :test"
+  #     ]
+  #
+  #     replay 1 #=> runs `a = :test`
+  #
+  # Raises IndexError if the given command number is not in IRB command
+  # history.
+  #
+  # Returns the value of the given command
+  def replay(number)
+    eval history.fetch(number)
+  end
+
   # Private: Copies string to the clipboard. OS X only.
   #
   # str - A String
