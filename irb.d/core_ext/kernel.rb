@@ -41,9 +41,9 @@ module Kernel
   # Returns the result of the block.
   def bm(times = 1)
     require 'benchmark'
-    ret = nil
-    Benchmark.bm { |x| x.report { times.times { ret = yield } } }
-    ret
+    output = nil
+    Benchmark.bm { |x| x.report { times.times { output = yield } } }
+    output
   end
 
   # Private: Searches through IRB history for the given pattern.
