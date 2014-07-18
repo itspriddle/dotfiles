@@ -148,3 +148,6 @@
 [submodule "bundle/splitjoin"]
 	path = bundle/splitjoin
 	url = https://github.com/AndrewRadev/splitjoin.vim.git
+[submodule "bundle/rsi"]
+	path = bundle/rsi
+	url = https://github.com/tpope/vim-rsi.git

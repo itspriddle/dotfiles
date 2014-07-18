@@ -70,9 +70,6 @@ nmap <D-[> <<
 vmap <D-[> <gv
 imap <D-[> <C-d>
 
-" opt-backspace: delete word
-imap <M-BS> <C-w>
-
 " cmd-backspace: delete line
 imap <D-BS> <C-u>
 
