@@ -322,7 +322,7 @@ augroup ft_git
   autocmd!
 
   " Hard-tabs on gitconfig files
-  autocmd FileType gitconfig setl noexpandtab
+  autocmd FileType gitconfig setl noexpandtab spell
 
   " Place the cursor at the top of the buffer
   autocmd FileType gitcommit exe 'normal! gg'
@@ -352,7 +352,7 @@ augroup ft_git
   autocmd User Fugitive noremap <buffer> <leader>gp :Gpush<cr>
 
   autocmd VimEnter .git/PULLREQ_EDITMSG
-    \ setl wrap filetype=gitcommit textwidth=0 linebreak
+    \ setl wrap filetype=gitcommit textwidth=0 linebreak spell
 
   " Replace GitHub issue/pull URLS with Markdown shorthand syntax
   " Eg: https://github.com/itspriddle/vim-config/issues/1 becomes
