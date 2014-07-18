@@ -3,6 +3,20 @@
 " See `:help rails-projections` for details
 let g:rails_projections = {}
 
+" Opens the given file under config/:
+"
+"   :[ERSTV]config <filename>
+let g:rails_projections["config/*"] = {
+  \   "command": "config"
+  \ }
+
+" Opens db/seeds.rb:
+"
+"   :[ERSTV]seed
+let g:rails_projections["db/seeds.rb"] = {
+  \   "command": "seed"
+  \ }
+
 " Opens the given file under db/seeds:
 "
 "   :[ERSTV]seed <filename>
