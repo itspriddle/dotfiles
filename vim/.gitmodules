@@ -145,3 +145,6 @@
 [submodule "bundle/projectionist"]
 	path = bundle/projectionist
 	url = https://github.com/tpope/vim-projectionist.git
+[submodule "bundle/splitjoin"]
+	path = bundle/splitjoin
+	url = https://github.com/AndrewRadev/splitjoin.vim.git

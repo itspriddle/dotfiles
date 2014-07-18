@@ -555,6 +555,13 @@ nnoremap <leader>? :execute 'vimgrep /'.@/.'/g %'<cr>:copen<cr>
 
 " }}}
 
+" splitjoin.vim {{{
+
+" No trailing comma when splitting Ruby hashes
+let g:splitjoin_ruby_trailing_comma = 0
+
+" }}}
+
 " supertab.vim {{{
 
 let g:SuperTabNoCompleteBefore      = []
