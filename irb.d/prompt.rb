@@ -16,8 +16,9 @@ end
 IRB.conf[:PROMPT] ||= {}
 IRB.conf[:PROMPT][:JOSH] = {
   :PROMPT_I => "#{prompt}> ",
-  :PROMPT_S => "#{prompt}* ",
-  :PROMPT_C => "#{prompt}? ",
+  :PROMPT_N => nil,
+  :PROMPT_S => nil,
+  :PROMPT_C => nil,
   :RETURN   => "=> %s\n"
 }
 
