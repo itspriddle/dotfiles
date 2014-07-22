@@ -5,4 +5,7 @@ zstyle ':completion:*:*:gh:*' user-commands \
   repl:'Open a repl' \
   sexytime:'Push branch to github and open a pull request'
 
+# Completion `gh` and `git`
+compdef _gh git gh
+
 # vim:set ft=zsh:
