@@ -1,3 +1,0 @@
-#compdef rage
-
-compadd `rage | awk -F: '/http/ { gsub(/^  /, ""); print $1 }'`
