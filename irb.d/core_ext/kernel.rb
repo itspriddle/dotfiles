@@ -83,6 +83,23 @@ module Kernel
     eval history.fetch(number)
   end
 
+  # Private: Enable/disable IRB printing values. By default IRB prints the
+  # value of the last line evaluated. This can be disabled, for example, if
+  # you are working with a large dataset and don't want it printed to the
+  # console.
+  #
+  # Example
+  #
+  #     > :one
+  #     > #=> :one
+  #     > toggle_verbosity!
+  #     > :one
+  #
+  # Returns a Boolean.
+  def toggle_echo!
+    irb_context.echo ^= 1
+  end
+
   # Private: Copies string to the clipboard. OS X only.
   #
   # str - A String
