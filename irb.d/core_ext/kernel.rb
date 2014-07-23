@@ -92,7 +92,7 @@ module Kernel
   #
   #     > :one
   #     > #=> :one
-  #     > toggle_verbosity!
+  #     > toggle_echo!
   #     > :one
   #
   # Returns a Boolean.
