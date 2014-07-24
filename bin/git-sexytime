@@ -1,14 +1,35 @@
 #!/bin/sh
+# Usage: git sexytime [options]
+#
+# Help: Pushes the current branch upstream and opens a Pull Request. On OS X,
+# the PR URL is copied to the clipboard. Requires a repo with github.com as
+# the remote named origin and the `gh` CLI tool https://github.com/jingweno/gh
+#
+# Examples:
+#     git sexytime
+#     git sexytime -b base-branch
+#     git sexytime -m "This is my PR"
+#     echo "This is my PR" | git sexytime -F -
 
 set -e
 
+if ! git remote show origin | grep Push | grep github &> /dev/null; then
+  echo "Error: Remote does not seem to be on GitHub."
+  exit 1
+fi
+
 branch=$(git symbolic-ref HEAD | sed 's|refs/heads/||g')
 
-if [ "$branch" = "master" ]; then
+if [[ "$branch" = "master" ]]; then
   echo "Error: You are on \`master', checkout a new branch first!"
   exit 1
 fi
 
 git push -u origin $branch
-gh pull-request $* | tr -d '\n' | pbcopy
-echo "Created pull request - $(pbpaste)"
+
+if [[ "$OSTYPE" = darwin* ]]; then
+  gh pull-request "$@" | tr -d '\n' | pbcopy
+  echo "Created pull request - $(pbpaste)"
+else
+  gh pull-request "$@"
+fi
