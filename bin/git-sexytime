@@ -13,6 +13,11 @@
 
 set -e
 
+if ! type gh &> /dev/null; then
+  echo "Error: \`gh\` not found. Install from https://github.com/jingweno/gh"
+  exit 1
+fi
+
 if ! git remote show origin | grep Push | grep github &> /dev/null; then
   echo "Error: Remote does not seem to be on GitHub."
   exit 1
