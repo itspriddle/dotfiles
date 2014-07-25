@@ -190,6 +190,10 @@ nnoremap <leader>R :Remove
 " Shortcut for typing :help
 nnoremap <leader>h :help<space>
 
+" Insert space before selection, useful with ^v
+" Doesn't work well with <space> as leader :(
+" vnoremap <space> I<space><esc>gv
+
 " }}}
 
 " }}}
