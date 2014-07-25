@@ -151,3 +151,6 @@
 [submodule "bundle/rsi"]
 	path = bundle/rsi
 	url = https://github.com/tpope/vim-rsi.git
+[submodule "bundle/scriptease"]
+	path = bundle/scriptease
+	url = https://github.com/tpope/vim-scriptease.git
