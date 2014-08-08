@@ -326,10 +326,10 @@ augroup ft_git
   autocmd!
 
   " Hard-tabs on gitconfig files
-  autocmd FileType gitconfig setl noexpandtab spell
+  autocmd FileType gitconfig setl noexpandtab
 
   " Place the cursor at the top of the buffer
-  autocmd FileType gitcommit exe 'normal! gg'
+  autocmd FileType gitcommit exe 'normal! gg' | setl spell
 
   " Rebase shortcuts, press P, R, E, S, F to change the current line to the
   " given command. Press C to cycle through available commands.
