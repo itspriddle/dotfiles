@@ -44,7 +44,7 @@
 
 [alias]
 	amend          = commit --amend -C HEAD
-	branch-name    = !git symbolic-ref HEAD | sed 's|refs/heads/||g'
+	branch-name    = rev-parse --abbrev-ref HEAD
 	copy-last-sha  = !git last-sha | tr -d '\n' | pbcopy
 	count          = shortlog -sn
 	full-log       = log --format=fuller
