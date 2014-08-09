@@ -432,6 +432,9 @@ noremap <leader>mv :MarkedOpen<cr>
 " Marked.app quit
 noremap <leader>mq :MarkedQuit<cr>
 
+" Make marked.vim use Marked.app (v1)
+let g:marked_app = "Marked"
+
 let g:markdown_fenced_languages = ['ruby', 'erb=eruby', 'php']
 
 " }}}
