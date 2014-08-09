@@ -34,6 +34,10 @@ alias sc='rails console'
 alias be='bundle exec'
 alias bu='bundle update'
 
+# GPG
+alias encrypt="gpg --armor --encrypt --recipient "
+alias decrypt="gpg --decrypt "
+
 # Others
 alias path='echo -e ${PATH//:/\\n}'
 alias rm='rm -iv'
