@@ -10,7 +10,7 @@ module Kernel
     #
     # Returns a result object (eg: PG::Result).
     def sql(query, connection = ActiveRecord::Base.connection)
-      if query =~ /^select/
+      if query =~ /\Aselect/i
         connection.select_all query
       else
         connection.execute query
