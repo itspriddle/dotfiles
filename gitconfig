@@ -1,11 +1,6 @@
 [user]
-	name             = Joshua Priddle
-	email            = jpriddle@me.com
-	logallrefupdates = true
-
-[github]
-	user = itspriddle
-	password = !security find-internet-password -gs github.com -w | tr -d '\n'
+	name  = Joshua Priddle
+	email = jpriddle@me.com
 
 [color]
 	ui = auto
@@ -67,7 +62,7 @@
 [rebase]
 	autosquash = true
 
-[credential]
-	helper = osxkeychain
+[include]
+	path = .gitconfig.local
 
 ; vim:ft=gitconfig
