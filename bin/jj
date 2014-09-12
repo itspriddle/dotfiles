@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+# Usage: jj <file1> [<file2>...]
+#        jj 1.json 2.json
+#        cat file.json | jj
+
+require 'json'
+
+ARGF.each nil do |file|
+  puts ARGF.filename
+  puts JSON.pretty_generate(JSON.parse(file))
+  puts unless ARGV.empty?
+end
