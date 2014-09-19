@@ -622,8 +622,8 @@ nnoremap <silent> coq :call ToggleQuickfixList()<cr>
 
 " unimpaired.vim {{{
 
-" Open insert mode with 'paste' set
-nmap yp m`yo<BS><C-o>``
+" Open insert mode with 'paste'
+nmap yp <Plug>unimpairedPastei
 
 " }}}
 
