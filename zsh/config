@@ -31,38 +31,17 @@ bindkey '\e\e[C' forward-word
 bindkey '\e[3~'  delete-char
 
 # End key
-bindkey '\e[4~'  end-of-line
+bindkey '\e[4~' end-of-line
 
 # home key
-bindkey '\e[1~'  beginning-of-line
+bindkey '\e[1~' beginning-of-line
 
 # ctrl+left
-bindkey '^[[1;5D'  beginning-of-line
+bindkey '^[[1;5D' beginning-of-line
 
 # ctrl+right
-bindkey '^[[1;5C'  end-of-line
+bindkey '^[[1;5C' end-of-line
 
 # Escape special characters in URLs when pasting to the terminal
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
-
-# Not sure I ever use these
-# # alt+m
-# bindkey '\em' copy-prev-shell-word
-#
-# # alt+w
-# bindkey '\ew' kill-region
-
-# Enable `ztodo`
-autoload -Uz ztodo
-chpwd() { ztodo }
-#
-# rationalise-dot() {
-#   if [[ $LBUFFER = *.. ]]; then
-#     LBUFFER+=/..
-#   else
-#     LBUFFER+=.
-#   fi
-# }
-# zle -N rationalise-dot
-# bindkey . rationalise-dot
