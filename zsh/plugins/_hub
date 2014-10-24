@@ -1,11 +1,11 @@
-eval "$(gh alias -s)"
+eval "$(hub alias -s)"
 
 # Custom completion for git
-zstyle ':completion:*:*:gh:*' user-commands \
+zstyle ':completion:*:*:hub:*' user-commands \
   repl:'Open a repl' \
   sexytime:'Push branch to github and open a pull request'
 
-# Completion `gh` and `git`
-compdef _gh git gh
+# Completion `hub` and `git`
+compdef _hub git hub
 
 # vim:set ft=zsh:

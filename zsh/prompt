@@ -12,7 +12,7 @@ zstyle ':vcs_info:git*:*' stagedstr " ⚡"  # %c
 zstyle ':vcs_info:git*'   actionformats " (%b%c|%a)"
 zstyle ':vcs_info:git*'   formats       " (%b%c)"
 
-# Skip `gh` wrapper around git
+# Skip `hub` wrapper around git
 zstyle ':vcs_info:git:*:-all-' command \git
 
 _josh_prompt_precmd() {

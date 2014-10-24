@@ -3,7 +3,7 @@
 #
 # Help: Pushes the current branch upstream and opens a Pull Request. On OS X,
 # the PR URL is copied to the clipboard. Requires a repo with github.com as
-# the remote named origin and the `gh` CLI tool https://github.com/jingweno/gh
+# the remote named origin and the `hub` CLI tool https://github.com/github/hub
 #
 # Examples:
 #     git sexytime
@@ -13,8 +13,8 @@
 
 set -e
 
-if ! type gh &> /dev/null; then
-  echo "Error: \`gh\` not found. Install from https://github.com/jingweno/gh"
+if ! type hub &> /dev/null; then
+  echo "Error: \`hub\` not found. Install from https://github.com/github/hub"
   exit 1
 fi
 
@@ -33,8 +33,8 @@ fi
 git push -u origin $branch
 
 if [[ "$OSTYPE" = darwin* ]]; then
-  gh pull-request "$@" | tr -d '\n' | pbcopy
+  hub pull-request "$@" | tr -d '\n' | pbcopy
   echo "Created pull request - $(pbpaste)"
 else
-  gh pull-request "$@"
+  hub pull-request "$@"
 fi
