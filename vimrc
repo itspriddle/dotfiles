@@ -635,9 +635,7 @@ nmap yp <Plug>unimpairedPastei
 augroup ft_vim
   autocmd!
 
-  " Use K to search :help for the word under the cursor, and use 2 spaces
   autocmd FileType vim setlocal
-    \ kp=:help
     \ tabstop=2
     \ shiftwidth=2
     \ softtabstop=2
@@ -645,10 +643,6 @@ augroup ft_vim
 
   " Usq q to :quit help buffer
   autocmd FileType help nnoremap <silent> <buffer> q :q<cr>
-
-  " Source
-  autocmd FileType vim vnoremap <leader>S y:execute @@<cr>:echo 'Sourced selection.'<cr>
-  autocmd FileType vim nnoremap <leader>S ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
 augroup END
 
 " }}}
