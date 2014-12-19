@@ -47,7 +47,7 @@
 	amend          = commit --amend -C HEAD
 	branch-name    = rev-parse --abbrev-ref HEAD
 	copy-last-sha  = !git last-sha | tr -d '\n' | pbcopy
-	count          = shortlog -sn
+	count          = "!git shortlog -sn | awk '{sum += $1; print } END { print \"\\n \", sum, \" Total Commits\" }'"
 	full-log       = log --format=fuller
 	last-sha       = rev-parse --short HEAD
 	lg             = log --graph --abbrev-commit --date=relative
