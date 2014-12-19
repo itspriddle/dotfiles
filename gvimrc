@@ -78,6 +78,9 @@ nmap <D-/> <C-_><C-_>
 vmap <D-/> <C-_><C-_>gv
 imap <D-/> <C-_><C-_>
 
+" Set colorcolumn for gitcommit
+autocmd FileType gitcommit setl colorcolumn=72
+
 " }}}
 
 " Include local gvim config {{{
