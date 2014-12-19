@@ -485,6 +485,9 @@ inoremap <F1> <nop>
 
 nmap gb :echo "Use gx instead"<cr>
 
+nmap <unique> gx <Plug>NetrwBrowseX
+nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)<cr>
+
 " }}}
 
 " Python {{{
