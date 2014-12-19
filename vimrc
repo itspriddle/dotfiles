@@ -132,6 +132,9 @@ set wildignore+=_site                                 " Jekyll
 
 let g:mapleader = ','
 
+" Repeat latest f, t, F or T in opposite direction
+nnoremap \ ,
+
 " Toggles {{{
 
 " Toggle Background color
