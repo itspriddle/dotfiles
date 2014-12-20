@@ -20,4 +20,5 @@ update-help:
 
 # Update all git submodules
 update-plugins:
-	@git submodule foreach 'git checkout $(git symbolic-ref HEAD | sed 's|refs/heads/||g') 2> /dev/null; git pull  --stat'
+	@git submodule foreach 'git checkout $(git rev-parse --abbrev-ref HEAD) 2> /dev/null; git pull --stat'
+	@git status -sb | awk '/M bundle/ {print $$2}' | xargs git add
