@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'date'
+
+date = ARGV.first
+
+if ARGV.size == 1 && !%W(-h --help).include?(date)
+  begin
+    puts (Date.parse(date) - Date.today).to_i
+    exit 0
+  rescue
+    warn "Invalid date: #{date}\n\n"
+  end
+end
+
+name = File.basename($0)
+abort "Usage: #{name} [date]\nExample: #{name} 2014-10-29"
