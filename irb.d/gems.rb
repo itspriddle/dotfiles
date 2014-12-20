@@ -9,7 +9,7 @@
 def unbundled_require(name)
   if defined? Bundler
     unless spec_path = Dir["#{Gem.dir}/specifications/#{name}-*.gemspec"].last
-      warn "Couldn't find #{name}. Install it with 'name install #{name}'"
+      warn "Couldn't find #{name}. Install it with 'gem install #{name}'"
       return
     end
 
