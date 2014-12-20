@@ -29,3 +29,6 @@ defaults write com.apple.Safari 'IncludeDevelopMenu' -bool true
 
 # MacVim: Zoom both ways when clicking + (maximize) icon
 defaults write org.vim.MacVim MMZoomBoth 1
+
+# Make apps (eg: TextEdit) open blank file
+defaults write -g NSShowAppCentricOpenPanelInsteadOfUntitledFile -bool false
