@@ -343,6 +343,9 @@ augroup ft_git
   autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> F :Fixup<cr>
   autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> C :Cycle<cr>
 
+  " Alias Gco
+  autocmd User Fugitive command! -buffer -nargs=* Gco exe 'Git checkout <args>'
+
   " Alias Gpush
   autocmd User Fugitive command! -buffer -nargs=* Gpush exe 'Git push <args>'
 
