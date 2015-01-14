@@ -479,7 +479,7 @@ inoremap <F1> <nop>
 
 " }}}
 
-" OpenURL: Open stuff in your browser (http://git.io/qaDWKg) {{{
+" Open stuff in your browser {{{
 
 nmap gb :echo "Use gx instead"<cr>
 
