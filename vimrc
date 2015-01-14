@@ -3,15 +3,12 @@
 " We don't want vi compatibility.
 set nocompatible
 
-" Load pathogen.vim
-runtime bundle/pathogen/autoload/pathogen.vim
+" Load plugins
+source ~/.vim/plug-setup.vim
 
 " Manually load sensible.vim, to enable syntax, etc before pathogen loads
 " other plugins
-runtime bundle/sensible/plugin/sensible.vim
-
-" Load plugins
-call pathogen#infect()
+runtime plugged/sensible/plugin/sensible.vim
 
 " }}}
 

@@ -1,2 +1,4 @@
 .netrwhist
 doc/tags
+!/plugged/supplemental/*
+/plugged
