@@ -1,7 +1,5 @@
 " Initialization {{{
 
-" We don't want vi compatibility.
-set nocompatible
 
 " Load plugins
 source ~/.vim/plug-setup.vim
