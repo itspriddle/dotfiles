@@ -570,16 +570,20 @@ let g:SuperTabDefaultCompletionType = '<C-n>' " Reverse order
 " tabular.vim {{{
 
 function! s:registerTabularPatterns()
-  AddTabularPattern! assignment  /^[^=]*\zs=[>=]\?/
-  AddTabularPattern! first_colon /^[^:]*:\zs/l0l1
-  AddTabularPattern! first_comma /^[^,]*,\zs/l0r1
-  AddTabularPattern! first_dash  /^[^-]*\zs-/
+  if exists(':AddTabularPattern')
+    AddTabularPattern! assignment  /^[^=]*\zs=[>=]\?/
+    AddTabularPattern! first_colon /^[^:]*:\zs/l0l1
+    AddTabularPattern! first_comma /^[^,]*,\zs/l0r1
+    AddTabularPattern! first_dash  /^[^-]*\zs-/
+  endif
 endfunction
 
 function! s:TabularMap(key, pattern)
-  for m in ['n', 'v']
-    execute m.'noremap <leader>a'.a:key.' :Tabularize '.a:pattern.'<cr>'
-  endfor
+  if exists(':Tabularize')
+    for m in ['n', 'v']
+      execute m.'noremap <leader>a'.a:key.' :Tabularize '.a:pattern.'<cr>'
+    endfor
+  endif
 endfunction
 
 augroup tabular
