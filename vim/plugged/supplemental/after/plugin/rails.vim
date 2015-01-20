@@ -27,10 +27,10 @@ let g:rails_projections["db/seeds/*.rb"] = {
 " Opens/creates the given file under app/forms:
 "
 " :[ERSTV]form <filename>[!]
-let g:rails_projections["app/forms/*.rb"] = {
+let g:rails_projections["app/forms/*_form.rb"] = {
   \   "command": "form",
   \   "test": "spec/forms/%i_spec.rb",
-  \   "template": "class %SForm\n  extend  ActiveModel::Naming\n  include ActiveModel::Conversion\n  include ActiveModel::Validations\nend"
+  \   "template": "class %SForm\n  include ActiveModel::Model\nend"
   \ }
 
 " Opens the given file under app/inputs:
