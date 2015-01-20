@@ -576,12 +576,6 @@ function! s:registerTabularPatterns()
     AddTabularPattern! first_comma /^[^,]*,\zs/l0r1
     AddTabularPattern! first_dash  /^[^-]*\zs-/
 
-    call s:TabularMap('=',       'assignment')
-    call s:TabularMap(':',       'first_colon')
-    call s:TabularMap(',',       'first_comma')
-    call s:TabularMap('-',       'first_dash')
-    call s:TabularMap('<space>', 'multiple_spaces')
-
     let l:map = {
       \ '=':       'assignment',
       \ ':':       'first_colon',
