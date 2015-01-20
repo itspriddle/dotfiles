@@ -575,13 +575,24 @@ function! s:registerTabularPatterns()
     AddTabularPattern! first_colon /^[^:]*:\zs/l0l1
     AddTabularPattern! first_comma /^[^,]*,\zs/l0r1
     AddTabularPattern! first_dash  /^[^-]*\zs-/
-  endif
-endfunction
 
-function! s:TabularMap(key, pattern)
-  if exists(':Tabularize')
-    for m in ['n', 'v']
-      execute m.'noremap <leader>a'.a:key.' :Tabularize '.a:pattern.'<cr>'
+    call s:TabularMap('=',       'assignment')
+    call s:TabularMap(':',       'first_colon')
+    call s:TabularMap(',',       'first_comma')
+    call s:TabularMap('-',       'first_dash')
+    call s:TabularMap('<space>', 'multiple_spaces')
+
+    let l:map = {
+      \ '=':       'assignment',
+      \ ':':       'first_colon',
+      \ ',':       'first_comma',
+      \ '-':       'first_dash',
+      \ '<space>': 'multiple_spaces'
+      \ }
+
+    for key in keys(l:map)
+      execute 'nnoremap <leader>a'.key.' :Tabularize '.l:map[key].'<cr>'
+      execute 'vnoremap <leader>a'.key.' :Tabularize '.l:map[key].'<cr>'
     endfor
   endif
 endfunction
@@ -591,12 +602,6 @@ augroup tabular
 
   autocmd VimEnter * call s:registerTabularPatterns()
 augroup END
-
-call s:TabularMap('=',       'assignment')
-call s:TabularMap(':',       'first_colon')
-call s:TabularMap(',',       'first_comma')
-call s:TabularMap('-',       'first_dash')
-call s:TabularMap('<space>', 'multiple_spaces')
 
 " }}}
 
