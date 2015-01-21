@@ -46,7 +46,7 @@ Plug 'tpope/vim-scriptease'
 Plug 'gregsexton/gitv'
 
 " My stuff
-Plug '~/.vim/plugged/supplemental'
+Plug '~/.vim/supplemental'
 
 let g:plug_url_format = 'git@github.com:%s.git'
 

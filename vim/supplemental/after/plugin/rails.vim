@@ -36,9 +36,10 @@ let g:rails_projections["app/forms/*_form.rb"] = {
 " Opens the given file under app/inputs:
 "
 " :[ERSTV]input <filename>
-let g:rails_projections["app/inputs/*.rb"] = {
+let g:rails_projections["app/inputs/*_input.rb"] = {
   \   "command": "input",
-  \   "test": "spec/inputs/%i_spec.rb"
+  \   "test": "spec/inputs/%i_spec.rb",
+  \   "template": "class %SInput\nend"
   \ }
 
 " Opens/creates the given file under app/validators:
