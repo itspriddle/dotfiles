@@ -567,14 +567,6 @@ let g:splitjoin_ruby_trailing_comma = 0
 
 " }}}
 
-" supertab.vim {{{
-
-let g:SuperTabNoCompleteBefore      = []
-let g:SuperTabNoCompleteAfter       = ['^', '\s']
-let g:SuperTabDefaultCompletionType = '<C-n>' " Reverse order
-
-" }}}
-
 " tabular.vim {{{
 
 function! s:registerTabularPatterns()
