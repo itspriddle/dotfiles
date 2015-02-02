@@ -1,6 +1,5 @@
 " Initialization {{{
 
-
 " Load plugins
 source ~/.vim/plug-setup.vim
 
@@ -121,6 +120,9 @@ set wildignore+=*.DS_Store,Icon\?,*.dfont             " OS X
 set wildignore+=*.rbc                                 " Rubinius
 set wildignore+=_site                                 " Jekyll
 
+" Allow <c-z> in maps to open completion menu
+set wildcharm=<c-z>
+
 " }}}
 
 " Mappings {{{
@@ -166,8 +168,8 @@ nnoremap Y y$
 
 " Window Movement {{{
 
-" Show open buffers prep `:buffer ` on command line
-nnoremap <leader>b :buffers<cr>:buffer<space>
+" Cycle through open buffers
+nnoremap <Leader>b :buffer <C-z>
 
 " }}}
 
