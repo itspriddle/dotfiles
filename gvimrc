@@ -91,4 +91,4 @@ endif
 
 " }}}
 
-" vim:ft=vim:fdm=marker:ts=2:sw=2:sts=2:et
+" vim:ft=vim:ts=2:sw=2:sts=2:et
