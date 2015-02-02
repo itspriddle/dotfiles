@@ -291,10 +291,13 @@ augroup END
 
 " ctrlp {{{
 
-" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+" CtrlP: Use `git ls-files` in git projects, otherwise fall back to `ag`
+let g:ctrlp_user_command = [
+  \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
+  \ 'ag %s --files-with-matches --nocolor -g ""'
+  \ ]
 
-" ag is fast enough that CtrlP doesn't need to cache
+" ag/git ls-files are fast enough that CtrlP doesn't need to cache
 let g:ctrlp_use_caching = 0
 let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:10,results:30'
 
