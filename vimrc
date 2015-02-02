@@ -457,11 +457,8 @@ augroup END
 " Lightline.vim {{{
 
 if has('gui_running')
-  let g:lightline = {
-    \ 'colorscheme':  'solarized_dark',
-    \ 'separator':    { 'left': "\U2B80", 'right': "\U2B82" },
-    \ 'subseparator': { 'left': "\U2B81", 'right': "\U2B83" },
-    \ }
+  autocmd ColorScheme * let g:lightline = { 'colorscheme':  'solarized_'.&bg } |
+    \ call lightline#update()
 endif
 
 " }}}
