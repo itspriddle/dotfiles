@@ -337,6 +337,7 @@ augroup ft_git
 
   " Place the cursor at the top of the buffer
   autocmd FileType gitcommit exe 'normal! gg' | setl spell
+  autocmd VimEnter git-rebase-todo exe 'normal! gg'
 
   " Rebase shortcuts, press P, R, E, S, F to change the current line to the
   " given command. Press C to cycle through available commands.
@@ -346,6 +347,15 @@ augroup ft_git
   autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> S :Squash<cr>
   autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> F :Fixup<cr>
   autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> C :Cycle<cr>
+
+  " Same as above, but in visual mode. Highlight the previously selected text
+  " after changes.
+  autocmd VimEnter git-rebase-todo vnoremap <buffer> <silent> P :s/^\w\+/pick/e<cr>`[v`]
+  autocmd VimEnter git-rebase-todo vnoremap <buffer> <silent> R :s/^\w\+/reword/e<cr>`[v`]
+  autocmd VimEnter git-rebase-todo vnoremap <buffer> <silent> E :s/^\w\+/edit/e<cr>`[v`]
+  autocmd VimEnter git-rebase-todo vnoremap <buffer> <silent> S :s/^\w\+/squash/e<cr>`[v`]
+  autocmd VimEnter git-rebase-todo vnoremap <buffer> <silent> F :s/^\w\+/fixup/e<cr>`[v`]
+  autocmd VimEnter git-rebase-todo vnoremap <buffer> <silent> C :s/^\w\+/cycle/e<cr>`[v`]
 
   " Alias Gco
   autocmd User Fugitive command! -buffer -nargs=* Gco exe 'Git checkout <args>'
