@@ -135,7 +135,9 @@ nnoremap \ ,
 " Toggles {{{
 
 " Toggle Background color
-command ToggleBG let &bg = &bg == 'dark' ? 'light' : 'dark'
+command ToggleBG let &bg = &bg == 'dark' ? 'light' : 'dark' |
+  \ call s:set_lightline()
+
 nnoremap cob :ToggleBG<cr>
 
 " Toggle fold visibility
@@ -456,10 +458,19 @@ augroup END
 
 " Lightline.vim {{{
 
-if has('gui_running')
-  autocmd ColorScheme * let g:lightline = { 'colorscheme':  'solarized_'.&bg } |
-    \ call lightline#update()
-endif
+function s:set_lightline()
+  if has('gui_running')
+    let g:lightline = { 'colorscheme':  'solarized_'.&bg }
+    call lightline#init()
+    call lightline#update()
+  endif
+endfunction
+
+augroup lightline_setup
+  autocmd!
+
+  autocmd ColorScheme * call s:set_lightline()
+augroup END
 
 " }}}
 
