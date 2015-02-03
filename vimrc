@@ -568,6 +568,9 @@ augroup ft_ruby
 
   " Open or create the associated file in a vertical split
   autocmd FileType ruby noremap <buffer> <leader>v :AV<cr>
+
+  " Setup Dispatch's `:Start` to open the given file in IRB
+  autocmd FileType ruby let b:start = 'irb -r "%:p"'
 augroup END
 
 " }}}
