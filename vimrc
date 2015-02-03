@@ -434,13 +434,16 @@ augroup ft_markdown
 
   " Setup wrapping for text files
   autocmd BufRead,BufNewFile *.{txt,md,markdown,mdown,mkd,mkdn} setl wrap textwidth=78
+
+  " Marked.app view
+  autocmd FileType markdown noremap <buffer> <leader>mv :MarkedOpen<cr>
+
+  " Marked.app quit
+  autocmd FileType markdown noremap <buffer> <leader>mq :MarkedQuit<cr>
 augroup END
 
-" Markded.app view
-noremap <leader>mv :MarkedOpen<cr>
-
-" Marked.app quit
-noremap <leader>mq :MarkedQuit<cr>
+" Use Marked.app (v1)
+let g:marked_app = "Marked"
 
 let g:markdown_fenced_languages = ['ruby', 'erb=eruby', 'php']
 
