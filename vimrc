@@ -250,8 +250,8 @@ augroup ft_applescript
   autocmd BufNewFile,BufRead *
    \ if getline(1) =~ '^#!.*\<osascript\>' | set ft=applescript | endif
 
-  " Teach Tcomment about AppleScript comments
-  autocmd FileType applescript :call tcomment#DefineType('applescript', '-- %s')
+  " Setup AppleScript commentstring
+  autocmd FileType applescript set commentstring=--\ %s
 augroup END
 
 " }}}
@@ -689,5 +689,9 @@ if filereadable(expand('~/.vimrc.local'))
 endif
 
 " }}}
+
+" Deprecated Tcomment maps
+nmap <c-_><c-_> gcc:echomsg 'Deprecated: Use gcc instead'<cr>
+vmap <c-_><c-_> gc:echomsg 'Deprecated: Use gc instead'<cr>
 
 " vim:ft=vim:ts=2:sw=2:sts=2:et
