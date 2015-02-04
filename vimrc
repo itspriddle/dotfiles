@@ -665,6 +665,9 @@ nmap yp <Plug>unimpairedPastei
 
 " Vim/Vim help {{{
 
+" Only indent once when starting a line with \
+let g:vim_indent_cont = 2
+
 augroup ft_vim
   autocmd!
 
