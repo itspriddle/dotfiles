@@ -207,7 +207,7 @@ nnoremap <leader>h :help<space>
 noremap <leader>f :Ack!<space>
 
 if executable("ag")
-  let g:ackprg = 'ag --nogroup --nocolor --column'
+  let g:ackprg = 'ag --vimgrep'
 endif
 
 " }}}
