@@ -35,14 +35,6 @@
 [format]
 	pretty = format:[%C(red)%h%Creset]%C(yellow)%d%Creset %C(magenta)%an%Creset: %s %C(green)(%ar)%Creset
 
-[merge]
-	tool = mvim
-	stat = true
-
-[mergetool "mvim"]
-	cmd        = mvim -d -g $LOCAL $MERGED $REMOTE
-	keepbackup = false
-
 [alias]
 	amend           = commit --amend -C HEAD
 	branch-name     = rev-parse --abbrev-ref HEAD
