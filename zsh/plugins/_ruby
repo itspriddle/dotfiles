@@ -1,15 +1,24 @@
 ruby_version="ruby-2.1.5"
+lib_version="${${ruby_version/ruby-/}/%[0-9]/0}"
 
+if [ -d "$HOME/.rubies/$ruby_version" ]; then
+  path=(
+    # mkdir .git/safe in the root of repositories you trust
+    .git/safe/../../{,.bundle/}bin
+    $HOME/.gem/ruby/$lib_version/bin
+    $HOME/.rubies/$ruby_version/bin
+    $path
+  )
+
+  export GEM_HOME=$HOME/.gem/ruby/$lib_version
+  export GEM_PATH=$HOME/.gem/ruby/$lib_version:$HOME/.rubies/$ruby_version/lib/ruby/gems/$lib_version
+fi
+
+alias trust-binstubs="mkdir .git/safe"
+
+# Setup binstubs
 path=(
-  # mkdir .git/safe in the root of repositories you trust
-  .git/safe/../../bin
-  .git/safe/../../.bundle/bin
-  $HOME/.gem/ruby/2.1.0/bin
-  $HOME/.rubies/$ruby_version/bin
+  # Run `trust-binstubs` in the root of repositories you trust
+  .git/safe/../../{,.bundle/}bin
   $path
 )
-
-export GEM_HOME=$HOME/.gem/ruby/2.1.0
-export GEM_PATH=$HOME/.gem/ruby/2.1.0:$HOME/.rubies/$ruby_version/lib/ruby/gems/2.1.0
-
-# vim:ft=zsh:
