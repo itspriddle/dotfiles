@@ -423,31 +423,9 @@ augroup END
 
 " }}}
 
-" Javascript {{{
-
-augroup ft_javascript
-  autocmd!
-
-  " add json syntax highlighting
-  autocmd BufNewFile,BufRead *.json set ft=javascript
-augroup END
-
-" }}}
-
 " liquid.vim {{{
 
 let g:liquid_highlight_types = ['ruby', 'javascript']
-
-" }}}
-
-" Make {{{
-
-augroup ft_make
-  autocmd!
-
-  " make uses real tabs
-  autocmd FileType make setl noexpandtab softtabstop=4 tabstop=4 shiftwidth=4
-augroup END
 
 " }}}
 
@@ -455,9 +433,6 @@ augroup END
 
 augroup ft_markdown
   autocmd!
-
-  " Setup wrapping for text files
-  autocmd BufRead,BufNewFile *.{txt,md,markdown,mdown,mkd,mkdn} setl wrap textwidth=78
 
   " Marked.app view
   autocmd FileType markdown noremap <buffer> <leader>mv :MarkedOpen<cr>
@@ -471,16 +446,6 @@ let g:marked_app = "Marked"
 
 " Setup ``` style syntax highlighting
 let g:markdown_fenced_languages = ['ruby', 'erb=eruby', 'php', 'sh']
-
-" }}}
-
-" MySQL {{
-
-augroup ft_mysql_config
-  autocmd!
-
-  autocmd BufRead,BufNewFile my.cnf,.my.cnf set ft=dosini
-augroup END
 
 " }}}
 
@@ -619,15 +584,6 @@ let g:tagbar_autofocus = 1
 let g:tagbar_compact   = 1
 
 noremap <leader>T :TagbarToggle<cr>
-
-" }}}
-
-" tmux.vim {{{
-
-augroup ft_tmux
-  autocmd!
-  autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
-augroup END
 
 " }}}
 
