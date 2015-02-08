@@ -318,6 +318,26 @@ augroup END
 
 " }}}
 
+" EasyAlign {{{
+
+" Setup custom alignments
+let g:easy_align_delimiters = {
+  \ '-':  {
+  \   'pattern': '-',
+  \   'left_margin': 1,
+  \   'right_margin': 1,
+  \   'stick_to_left': 0
+  \   }
+  \ }
+
+vmap <leader>a= :EasyAlign=<cr>
+vmap <leader>a: :EasyAlign:<cr>
+vmap <leader>a, :EasyAlign,<cr>
+vmap <leader>a- :EasyAlign-<cr>
+vmap <leader>a<space> :EasyAlign\<cr>
+
+" }}}
+
 " :<','>Gist [args] (requires gist in PATH) {{{
 
 command -nargs=* -range=% Gist exe '<line1>,<line2>w !gist <args>'
@@ -596,38 +616,6 @@ nnoremap <leader>? :execute 'vimgrep /'.@/.'/g %'<cr>:copen<cr>
 
 " No trailing comma when splitting Ruby hashes
 let g:splitjoin_ruby_trailing_comma = 0
-
-" }}}
-
-" tabular.vim {{{
-
-function! s:registerTabularPatterns()
-  if exists(':AddTabularPattern')
-    AddTabularPattern! assignment  /^[^=]*\zs=[>=]\?/
-    AddTabularPattern! first_colon /^[^:]*:\zs/l0l1
-    AddTabularPattern! first_comma /^[^,]*,\zs/l0r1
-    AddTabularPattern! first_dash  /^[^-]*\zs-/
-
-    let l:map = {
-      \ '=':       'assignment',
-      \ ':':       'first_colon',
-      \ ',':       'first_comma',
-      \ '-':       'first_dash',
-      \ '<space>': 'multiple_spaces'
-      \ }
-
-    for key in keys(l:map)
-      execute 'nnoremap <leader>a'.key.' :Tabularize '.l:map[key].'<cr>'
-      execute 'vnoremap <leader>a'.key.' :Tabularize '.l:map[key].'<cr>'
-    endfor
-  endif
-endfunction
-
-augroup tabular
-  autocmd!
-
-  autocmd VimEnter * call s:registerTabularPatterns()
-augroup END
 
 " }}}
 
