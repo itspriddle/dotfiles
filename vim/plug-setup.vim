@@ -43,6 +43,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-scriptease'
 Plug 'gregsexton/gitv'
+Plug 'stefandtw/quickfix-reflector.vim'
 Plug 'junegunn/vim-easy-align'
 
 " My stuff
