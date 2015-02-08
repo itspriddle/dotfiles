@@ -239,23 +239,6 @@ endif
 
 " }}}
 
-" AppleScript {{{
-
-augroup ft_applescript
-  autocmd!
-
-  " Enable syntax highlighting for .scpt files or files with an AppleScript
-  " shebang
-  autocmd BufNewFile,BufRead *.scpt set ft=applescript
-  autocmd BufNewFile,BufRead *
-   \ if getline(1) =~ '^#!.*\<osascript\>' | set ft=applescript | endif
-
-  " Setup AppleScript commentstring
-  autocmd FileType applescript set commentstring=--\ %s
-augroup END
-
-" }}}
-
 " CoffeeScript {{{
 
 augroup ft_coffee

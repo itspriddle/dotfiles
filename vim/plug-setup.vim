@@ -30,7 +30,6 @@ Plug 'groenewege/vim-less'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'itspriddle/ZoomWin'
 Plug 'tpope/vim-sensible'
-Plug 'vim-scripts/applescript.vim'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-dispatch'
 Plug 'itchyny/lightline.vim'
@@ -54,6 +53,7 @@ let g:plug_url_format = 'git@github.com:%s.git'
 Plug 'itspriddle/vim-stripper'
 Plug 'itspriddle/vim-jekyll'
 Plug 'itspriddle/vim-marked'
+Plug 'itspriddle/applescript.vim'
 
 unlet g:plug_url_format
 
