@@ -318,6 +318,18 @@ augroup END
 
 " }}}
 
+" Dispatch {{{
+
+augroup setup_dispatch
+  autocmd BufReadPost *
+    \ if getline(1) =~# '^#!' |
+    \   let b:dispatch = getline(1)[2:-1] . ' %' |
+    \   let b:start = b:dispatch |
+    \ endif
+augroup END
+
+" }}}
+
 " EasyAlign {{{
 
 " Setup custom alignments
