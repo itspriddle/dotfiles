@@ -355,27 +355,26 @@ augroup ft_git
   " Hard-tabs on gitconfig files
   autocmd FileType gitconfig setl noexpandtab
 
-  " Place the cursor at the top of the buffer
-  autocmd FileType gitcommit exe 'normal! gg' | setl spell
-  autocmd VimEnter git-rebase-todo exe 'normal! gg'
+  " Place the cursor at the top of the buffer, enable spell check
+  autocmd FileType gitcommit,gitrebase exe 'normal! gg' | setl spell
 
   " Rebase shortcuts, press P, R, E, S, F to change the current line to the
   " given command. Press C to cycle through available commands.
-  autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> P :Pick<cr>
-  autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> R :Reword<cr>
-  autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> E :Edit<cr>
-  autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> S :Squash<cr>
-  autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> F :Fixup<cr>
-  autocmd VimEnter git-rebase-todo nnoremap <buffer> <silent> C :Cycle<cr>
+  autocmd FileType gitrebase nnoremap <buffer> <silent> P :Pick<cr>
+  autocmd FileType gitrebase nnoremap <buffer> <silent> R :Reword<cr>
+  autocmd FileType gitrebase nnoremap <buffer> <silent> E :Edit<cr>
+  autocmd FileType gitrebase nnoremap <buffer> <silent> S :Squash<cr>
+  autocmd FileType gitrebase nnoremap <buffer> <silent> F :Fixup<cr>
+  autocmd FileType gitrebase nnoremap <buffer> <silent> C :Cycle<cr>
 
   " Same as above, but in visual mode. Highlight the previously selected text
   " after changes.
-  autocmd VimEnter git-rebase-todo vnoremap <buffer> <silent> P :s/^\w\+/pick/e<cr>`[v`]
-  autocmd VimEnter git-rebase-todo vnoremap <buffer> <silent> R :s/^\w\+/reword/e<cr>`[v`]
-  autocmd VimEnter git-rebase-todo vnoremap <buffer> <silent> E :s/^\w\+/edit/e<cr>`[v`]
-  autocmd VimEnter git-rebase-todo vnoremap <buffer> <silent> S :s/^\w\+/squash/e<cr>`[v`]
-  autocmd VimEnter git-rebase-todo vnoremap <buffer> <silent> F :s/^\w\+/fixup/e<cr>`[v`]
-  autocmd VimEnter git-rebase-todo vnoremap <buffer> <silent> C :s/^\w\+/cycle/e<cr>`[v`]
+  autocmd FileType gitrebase vnoremap <buffer> <silent> P :s/^\w\+/pick/e<cr>`[v`]
+  autocmd FileType gitrebase vnoremap <buffer> <silent> R :s/^\w\+/reword/e<cr>`[v`]
+  autocmd FileType gitrebase vnoremap <buffer> <silent> E :s/^\w\+/edit/e<cr>`[v`]
+  autocmd FileType gitrebase vnoremap <buffer> <silent> S :s/^\w\+/squash/e<cr>`[v`]
+  autocmd FileType gitrebase vnoremap <buffer> <silent> F :s/^\w\+/fixup/e<cr>`[v`]
+  autocmd FileType gitrebase vnoremap <buffer> <silent> C :s/^\w\+/cycle/e<cr>`[v`]
 
   " Alias Gco
   autocmd User Fugitive command! -buffer -nargs=* Gco exe 'Git checkout <args>'
@@ -396,7 +395,7 @@ augroup ft_git
   autocmd User Fugitive noremap <buffer> <leader>gp :Gpush<cr>
 
   autocmd VimEnter .git/PULLREQ_EDITMSG
-    \ setl wrap filetype=gitcommit textwidth=0 linebreak spell
+    \ setl wrap filetype=gitcommit textwidth=0 linebreak
 
   " Replace GitHub issue/pull URLS with Markdown shorthand syntax
   " Eg: https://github.com/itspriddle/vim-config/issues/1 becomes
