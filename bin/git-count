@@ -1,0 +1,21 @@
+#!/usr/bin/ruby
+# Usage: git count [options]
+#
+# Options are passed to `git shortlog`.
+#
+# Examples:
+#
+#     git count
+#     git count --no-merges --email
+
+authors = `git shortlog -sn #{ARGV.join(' ')}`.chomp
+
+puts authors
+
+if authors.lines.size > 1
+  total = authors.lines.inject(0) do |count, author|
+    count += author.strip.split("\t").first.to_i
+  end
+
+  puts "  #{total}\tTotal Commits"
+end
