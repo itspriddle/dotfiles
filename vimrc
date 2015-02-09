@@ -315,6 +315,9 @@ augroup END
 
 " EasyAlign {{{
 
+" Allow aligning stuff that is commented out
+let g:easy_align_ignore_groups = []
+
 " Setup custom alignments
 let g:easy_align_delimiters = {
   \ '-':  {
