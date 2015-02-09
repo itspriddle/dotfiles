@@ -22,3 +22,5 @@ path=(
   .git/safe/../../{,.bundle/}bin
   $path
 )
+
+# vim:set ft=sh:
