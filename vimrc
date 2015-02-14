@@ -420,6 +420,9 @@ augroup ft_markdown
 
   " Marked.app quit
   autocmd FileType markdown noremap <buffer> <leader>mq :MarkedQuit<cr>
+
+  " Show spelling errors
+  autocmd FileType markdown setlocal spell
 augroup END
 
 " Use Marked.app (v1)
