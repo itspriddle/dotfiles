@@ -255,7 +255,7 @@ augroup END
 " CtrlP: Use `git ls-files` in git projects, otherwise fall back to `ag`
 let g:ctrlp_user_command = [
   \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
-  \ 'ag %s --files-with-matches --nocolor -g ""'
+  \ 'ag %s --files-with-matches --nocolor --follow -g ""'
   \ ]
 
 " ag/git ls-files are fast enough that CtrlP doesn't need to cache
