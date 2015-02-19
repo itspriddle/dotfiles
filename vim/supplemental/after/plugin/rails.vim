@@ -68,7 +68,7 @@ let g:rails_projections["spec/factories/*.rb"] = {
   \   "affinity": "collection",
   \   "alternate": "app/models/%i.rb",
   \   "test": "spec/models/%i_spec.rb",
-  \   "template": "FactoryGirl.define do\n  factory :%i do\n  end\nend",
+  \   "template": "FactoryGirl.define do\n  factory :{underscore|singular} do\n  end\nend",
   \   "keywords": "factory sequence"
   \ }
 
