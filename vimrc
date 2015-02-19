@@ -310,6 +310,7 @@ vmap <leader>a= :EasyAlign=<cr>
 vmap <leader>a: :EasyAlign:<cr>
 vmap <leader>a, :EasyAlign,<cr>
 vmap <leader>a- :EasyAlign-<cr>
+vmap <leader>a{ :EasyAlign{<cr>
 vmap <leader>a<space> :EasyAlign\<cr>
 
 " }}}
