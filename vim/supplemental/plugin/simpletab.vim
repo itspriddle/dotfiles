@@ -10,15 +10,15 @@ endif
 
 let g:simpletab_loaded = 1
 
-function! s:SimpleTab()
+function! s:SimpleTab(completion, trigger)
   let l:col = col('.') - 1
 
   if !l:col || getline('.')[l:col - 1] !~ '\k'
-    return "\<tab>"
+    return a:trigger
   else
-    return "\<c-n>"
+    return a:completion
   endif
 endfunction
 
-inoremap <Tab> <c-r>=<SID>SimpleTab()<cr>
-inoremap <S-Tab> <c-n>
+inoremap <expr> <tab>   <SID>SimpleTab("\<c-n>", '<tab>')
+inoremap <expr> <s-tab> <SID>SimpleTab("\<c-p>", '<s-tab>')
