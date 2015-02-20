@@ -481,6 +481,19 @@ nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),
 
 " }}}
 
+" plug.vim {{{
+
+" :PU  - Reload plugin setup and run PlugUpdate
+" :PU! - Reload plugin setup, run PlugUpdate and PlugClean
+command! -bang PU
+  \ source ~/.vim/plug-setup.vim |
+  \ :PlugUpdate |
+  \ if <bang>0 |
+  \   :PlugClean |
+  \ endif
+
+" }}}
+
 " Python {{{
 
 augroup ft_python
