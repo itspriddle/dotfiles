@@ -484,13 +484,13 @@ nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),
 " plug.vim {{{
 
 " :PU  - Reload plugin setup and run PlugUpdate
-" :PU! - Reload plugin setup, run PlugUpdate and PlugClean
+" :PU! - Reload plugin setup, run PlugClean and PlugUpdate
 command! -bang PU
   \ source ~/.vim/plug-setup.vim |
-  \ :PlugUpdate |
   \ if <bang>0 |
   \   :PlugClean |
-  \ endif
+  \ endif |
+  \ :PlugUpdate
 
 " }}}
 
