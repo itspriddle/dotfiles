@@ -315,6 +315,13 @@ vmap <leader>a<space> :EasyAlign\<cr>
 
 " }}}
 
+" filebeagle.vim {{{
+
+let g:filebeagle_suppress_keymaps = 1
+map <silent> - <Plug>FileBeagleOpenCurrentBufferDir
+
+" }}}
+
 " :<','>Gist [args] (requires gist in PATH) {{{
 
 command -nargs=* -range=% Gist exe '<line1>,<line2>w !gist <args>'
@@ -449,18 +456,6 @@ augroup lightline_setup
 
   autocmd ColorScheme * call s:set_lightline()
 augroup END
-
-" }}}
-
-" NERDTree.vim {{{
-
-" ,d to open NERDTree
-noremap <silent> <leader>d :NERDTreeToggle<cr>
-
-let g:NERDTreeIgnore     = ['\.pyc$', '\.rbc$', '\~$', 'coverage/*$', '\.gem$']
-let g:NERDTreeDirArrows  = 1
-let g:NERDTreeStatusline = ' '
-let g:NERDTreeMinimalUI  = 1
 
 " }}}
 
