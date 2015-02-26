@@ -630,7 +630,7 @@ endif
 " }}}
 
 " Deprecated Tcomment maps
-nmap <c-_><c-_> gcc:echomsg 'Deprecated: Use gcc instead'<cr>
-vmap <c-_><c-_> gc:echomsg 'Deprecated: Use gc instead'<cr>
+nmap <c-_><c-_> :echomsg 'Deprecated: Use gcc instead'<cr>
+vmap <c-_><c-_> :echomsg 'Deprecated: Use gc instead'<cr>
 
 " vim:ft=vim:ts=2:sw=2:sts=2:et
