@@ -13,6 +13,14 @@
 
 set -e
 
+# Internal, used with the $BROWSER variable to copy the pull request URL to
+# the clipboard.
+if [[ "$1" = "--pbcopy" ]]; then
+  shift
+  echo $1 | pbcopy
+  exit
+fi
+
 if ! type hub &> /dev/null; then
   echo "Error: \`hub\` not found. Install from https://github.com/github/hub"
   exit 1
@@ -33,7 +41,8 @@ fi
 git push -u origin $branch
 
 if [[ "$OSTYPE" = darwin* ]]; then
-  hub pull-request "$@" | tr -d '\n' | pbcopy
+  # Hack to copy the pull request URL to the clipboard automatically
+  BROWSER="$0 --pbcopy" hub pull-request -o "$@"
   echo "Created pull request - $(pbpaste)"
 else
   hub pull-request "$@"
