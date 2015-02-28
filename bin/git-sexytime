@@ -26,8 +26,8 @@ if ! type hub &> /dev/null; then
   exit 1
 fi
 
-if ! git remote show origin | grep Push | grep github &> /dev/null; then
-  echo "Error: Remote does not seem to be on GitHub."
+if ! git config --get remote.origin.url 2> /dev/null | grep github &> /dev/null; then
+  echo "Error: Remote \`origin' is not on GitHub, or is not setup."
   exit 1
 fi
 
