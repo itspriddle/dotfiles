@@ -553,6 +553,13 @@ augroup ft_ruby
 
   " Setup Dispatch's `:Start` to open the given file in IRB
   autocmd FileType ruby let b:start = 'irb -r "%:p"'
+
+  " Set compiler
+  autocmd FileType ruby
+    \ if expand('%') =~# '_spec\.rb$' |
+    \   let b:dispatch = 'rspec %' |
+    \   compiler rspec |
+    \ endif
 augroup END
 
 " }}}
