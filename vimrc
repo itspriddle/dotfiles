@@ -241,17 +241,6 @@ endif
 
 " }}}
 
-" Crontab {{{
-
-augroup ft_crontab
-  autocmd!
-
-  " Don't wrap long lines, setup comments
-  autocmd FileType crontab setl textwidth=0 comments=:# commentstring=#\ %s
-augroup END
-
-" }}}
-
 " ctrlp {{{
 
 " CtrlP: Use `git ls-files` in git projects, otherwise fall back to `ag`
@@ -407,21 +396,6 @@ augroup END
 
 " }}}
 
-" HTML {{{
-
-augroup ft_html
-  autocmd!
-
-  " Map <leader>o to `open %` on Mac
-  if has("mac")
-    autocmd FileType html nnoremap <buffer> <leader>o :!open %<cr>
-  endif
-
-  autocmd FileType html setl nowrap textwidth=0
-augroup END
-
-" }}}
-
 " liquid.vim {{{
 
 let g:liquid_highlight_types = ['ruby', 'javascript']
@@ -429,19 +403,6 @@ let g:liquid_highlight_types = ['ruby', 'javascript']
 " }}}
 
 " Markdown {{{
-
-augroup ft_markdown
-  autocmd!
-
-  " Marked.app view
-  autocmd FileType markdown noremap <buffer> <leader>mv :MarkedOpen<cr>
-
-  " Marked.app quit
-  autocmd FileType markdown noremap <buffer> <leader>mq :MarkedQuit<cr>
-
-  " Show spelling errors
-  autocmd FileType markdown setlocal spell
-augroup END
 
 " Use Marked.app (v1)
 let g:marked_app = "Marked"
@@ -499,17 +460,6 @@ command! -bang PU
 
 " }}}
 
-" Python {{{
-
-augroup ft_python
-  autocmd!
-
-  " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
-  autocmd FileType python setl softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
-augroup END
-
-" }}}
-
 " Quickfix windows {{{
 
 augroup ft_quickfix
@@ -548,29 +498,6 @@ let g:rsi_no_meta = 1
 
 let g:ruby_space_errors = 1
 let g:ruby_operators    = 1
-
-augroup ft_ruby
-  autocmd!
-
-  " Disable K (ri lookup)
-  autocmd FileType ruby noremap <buffer> K <nop>
-
-  " Open or create the associated file in a horizontal split
-  autocmd FileType ruby noremap <buffer> <leader>s :AS<cr>
-
-  " Open or create the associated file in a vertical split
-  autocmd FileType ruby noremap <buffer> <leader>v :AV<cr>
-
-  " Setup Dispatch's `:Start` to open the given file in IRB
-  autocmd FileType ruby let b:start = 'irb -r "%:p"'
-
-  " Set compiler
-  autocmd FileType ruby
-    \ if expand('%') =~# '_spec\.rb$' |
-    \   let b:dispatch = 'rspec %' |
-    \   compiler rspec |
-    \ endif
-augroup END
 
 " }}}
 
@@ -615,19 +542,6 @@ nmap yp <Plug>unimpairedPastei
 
 " Only indent once when starting a line with \
 let g:vim_indent_cont = 2
-
-augroup ft_vim
-  autocmd!
-
-  autocmd FileType vim setlocal
-    \ tabstop=2
-    \ shiftwidth=2
-    \ softtabstop=2
-    \ expandtab
-
-  " Usq q to :quit help buffer
-  autocmd FileType help nnoremap <silent> <buffer> q :q<cr>
-augroup END
 
 " }}}
 
