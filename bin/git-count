@@ -10,12 +10,14 @@
 
 authors = `git shortlog -sn #{ARGV.join(' ')}`.chomp
 
-puts authors
-
 if authors.lines.size > 1
-  total = authors.lines.inject(0) do |count, author|
-    count += author.strip.split("\t").first.to_i
+  total = 0
+  authors.lines.each do |line|
+    count, author = line.strip.split("\t")
+    total += count.to_i
+    puts "%6d  %s" % [count, author]
   end
-
-  puts "  #{total}\tTotal Commits"
+  puts "\n%6d  total" % total
+else
+  puts authors
 end
