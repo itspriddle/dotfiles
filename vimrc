@@ -246,8 +246,8 @@ endif
 augroup ft_crontab
   autocmd!
 
-  " Don't wrap long lines
-  autocmd FileType crontab setl textwidth=0
+  " Don't wrap long lines, setup comments
+  autocmd FileType crontab setl textwidth=0 comments=:# commentstring=#\ %s
 augroup END
 
 " }}}
