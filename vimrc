@@ -339,8 +339,11 @@ augroup ft_git
   " Hard-tabs on gitconfig files
   autocmd FileType gitconfig setl noexpandtab
 
-  " Place the cursor at the top of the buffer, enable spell check
-  autocmd FileType gitcommit,gitrebase exe 'normal! gg' | setl spell
+  " Place the cursor at the top of the buffer
+  autocmd FileType gitcommit,gitrebase exe 'normal! gg'
+
+  " Enable spell checking
+  autocmd FileType gitcommit setl spell
 
   " Rebase shortcuts, press P, R, E, S, F to change the current line to the
   " given command. Press C to cycle through available commands.
