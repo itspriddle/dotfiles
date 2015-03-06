@@ -43,7 +43,7 @@ Plug 'tpope/vim-scriptease'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 
 " My stuff
-Plug '~/.vim/supplemental'
+Plug '~/.vim/plugged/supplemental'
 
 let g:plug_url_format = 'git@github.com:%s.git'
 
