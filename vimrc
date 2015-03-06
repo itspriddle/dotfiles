@@ -301,7 +301,6 @@ let g:easy_align_delimiters = {
   \   }
   \ }
 
-" vmap <leader>a :echo 'EasyAlign'.nr2char(getchar())<cr>
 vmap <leader>a= :EasyAlign=<cr>
 vmap <leader>a: :EasyAlign:<cr>
 vmap <leader>a, :EasyAlign,<cr>
@@ -558,7 +557,5 @@ endif
 " Deprecated Tcomment maps
 nmap <c-_><c-_> :echomsg 'Deprecated: Use gcc instead'<cr>
 vmap <c-_><c-_> :echomsg 'Deprecated: Use gc instead'<cr>
-
-command! PE edit ~/.vim/plug-setup.vim
 
 " vim:ft=vim:ts=2:sw=2:sts=2:et
