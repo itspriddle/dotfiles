@@ -54,7 +54,7 @@ let g:rails_projections["app/validators/*.rb"] = {
 " Opens/creates the given file under app/workers:
 "
 " :[ERSTV]worker <filename>[!]
-let g:rails_projections["app/workers/*.rb"] = {
+let g:rails_projections["app/workers/*_worker.rb"] = {
   \   "command": "worker",
   \   "test": "spec/workers/%i_spec.rb",
   \   "template": "class %SWorker\nend"
