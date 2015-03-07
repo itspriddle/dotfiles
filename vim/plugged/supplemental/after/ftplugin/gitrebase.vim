@@ -1,9 +1,3 @@
-if exists("b:did_ftplugin")
-  finish
-endif
-
-let b:did_ftplugin = 1
-
 " Rebase shortcuts, press P, R, E, S, F to change the current line to the
 " given command. Press C to cycle through available commands.
 nnoremap <buffer> <silent> P :Pick<cr>
