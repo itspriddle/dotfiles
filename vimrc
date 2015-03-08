@@ -241,6 +241,17 @@ endif
 
 " }}}
 
+" Crontab {{{
+
+augroup ft_crontab
+  autocmd!
+
+  " Don't wrap long lines, setup comments
+  autocmd FileType crontab setl textwidth=0 comments=:# commentstring=#\ %s
+augroup END
+
+" }}}
+
 " ctrlp {{{
 
 " CtrlP: Use `git ls-files` in git projects, otherwise fall back to `ag`
@@ -340,6 +351,24 @@ augroup ft_git
   " Enable spell checking
   autocmd FileType gitcommit setl spell
 
+  " Rebase shortcuts, press P, R, E, S, F to change the current line to the
+  " given command. Press C to cycle through available commands.
+  autocmd FileType gitrebase nnoremap <buffer> <silent> P :Pick<cr>
+  autocmd FileType gitrebase nnoremap <buffer> <silent> R :Reword<cr>
+  autocmd FileType gitrebase nnoremap <buffer> <silent> E :Edit<cr>
+  autocmd FileType gitrebase nnoremap <buffer> <silent> S :Squash<cr>
+  autocmd FileType gitrebase nnoremap <buffer> <silent> F :Fixup<cr>
+  autocmd FileType gitrebase nnoremap <buffer> <silent> C :Cycle<cr>
+
+  " Same as above, but in visual mode. Highlight the previously selected text
+  " after changes.
+  autocmd FileType gitrebase vnoremap <buffer> <silent> P :s/^\w\+/pick/e<cr>`[v`]
+  autocmd FileType gitrebase vnoremap <buffer> <silent> R :s/^\w\+/reword/e<cr>`[v`]
+  autocmd FileType gitrebase vnoremap <buffer> <silent> E :s/^\w\+/edit/e<cr>`[v`]
+  autocmd FileType gitrebase vnoremap <buffer> <silent> S :s/^\w\+/squash/e<cr>`[v`]
+  autocmd FileType gitrebase vnoremap <buffer> <silent> F :s/^\w\+/fixup/e<cr>`[v`]
+  autocmd FileType gitrebase vnoremap <buffer> <silent> C :s/^\w\+/cycle/e<cr>`[v`]
+
   " Alias Gco
   autocmd User Fugitive command! -buffer -nargs=* Gco exe 'Git checkout <args>'
 
@@ -357,6 +386,37 @@ augroup ft_git
 
   " Push current branch upstream
   autocmd User Fugitive noremap <buffer> <leader>gp :Gpush<cr>
+
+  autocmd VimEnter .git/PULLREQ_EDITMSG
+    \ setl wrap filetype=gitcommit textwidth=0 linebreak spell
+
+  " Replace GitHub issue/pull URLS with Markdown shorthand syntax
+  " Eg: https://github.com/itspriddle/vim-config/issues/1 becomes
+  "     itspriddle/vim-config#1
+  autocmd BufWritePre .git/PULLREQ_EDITMSG
+    \ execute '%s,\vhttps?://github.com/([^/]+)/([^/]+)/(pull|issues)/([0-9]+),\1/\2#\4,gei'
+
+  " Replace public Dropbox URLs with download URLs when used for Markdown
+  " images.
+  " Eg: ![My cat is great](https://www.dropbox.com/s/123/MyCat.jpg) becomes
+  "     ![My cat is great](https://dl.dropboxusercontent.com/s/123/MyCat.jpg)
+  autocmd BufWritePre .git/PULLREQ_EDITMSG
+    \ execute '%s,\v!\[(.*)\]\(https://www.dropbox.com,![\1](https://dl.dropboxusercontent.com,gei'
+augroup END
+
+" }}}
+
+" HTML {{{
+
+augroup ft_html
+  autocmd!
+
+  " Map <leader>o to `open %` on Mac
+  if has("mac")
+    autocmd FileType html nnoremap <buffer> <leader>o :!open %<cr>
+  endif
+
+  autocmd FileType html setl nowrap textwidth=0
 augroup END
 
 " }}}
@@ -368,6 +428,19 @@ let g:liquid_highlight_types = ['ruby', 'javascript']
 " }}}
 
 " Markdown {{{
+
+augroup ft_markdown
+  autocmd!
+
+  " Marked.app view
+  autocmd FileType markdown noremap <buffer> <leader>mv :MarkedOpen<cr>
+
+  " Marked.app quit
+  autocmd FileType markdown noremap <buffer> <leader>mq :MarkedQuit<cr>
+
+  " Show spelling errors
+  autocmd FileType markdown setlocal spell
+augroup END
 
 " Use Marked.app (v1)
 let g:marked_app = "Marked"
@@ -425,6 +498,17 @@ command! -bang PU
 
 " }}}
 
+" Python {{{
+
+augroup ft_python
+  autocmd!
+
+  " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
+  autocmd FileType python setl softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+augroup END
+
+" }}}
+
 " Quickfix windows {{{
 
 augroup ft_quickfix
@@ -463,6 +547,29 @@ let g:rsi_no_meta = 1
 
 let g:ruby_space_errors = 1
 let g:ruby_operators    = 1
+
+augroup ft_ruby
+  autocmd!
+
+  " Disable K (ri lookup)
+  autocmd FileType ruby noremap <buffer> K <nop>
+
+  " Open or create the associated file in a horizontal split
+  autocmd FileType ruby noremap <buffer> <leader>s :AS<cr>
+
+  " Open or create the associated file in a vertical split
+  autocmd FileType ruby noremap <buffer> <leader>v :AV<cr>
+
+  " Setup Dispatch's `:Start` to open the given file in IRB
+  autocmd FileType ruby let b:start = 'irb -r "%:p"'
+
+  " Set compiler
+  autocmd FileType ruby
+    \ if expand('%') =~# '_spec\.rb$' |
+    \   let b:dispatch = 'rspec %' |
+    \   compiler rspec |
+    \ endif
+augroup END
 
 " }}}
 
@@ -507,6 +614,19 @@ nmap yp <Plug>unimpairedPastei
 
 " Only indent once when starting a line with \
 let g:vim_indent_cont = 2
+
+augroup ft_vim
+  autocmd!
+
+  autocmd FileType vim setlocal
+    \ tabstop=2
+    \ shiftwidth=2
+    \ softtabstop=2
+    \ expandtab
+
+  " Usq q to :quit help buffer
+  autocmd FileType help nnoremap <silent> <buffer> q :q<cr>
+augroup END
 
 " }}}
 
