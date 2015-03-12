@@ -1,15 +1,20 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # Usage: git sexytime [options]
 #
-# Help: Pushes the current branch upstream and opens a Pull Request. On OS X,
-# the PR URL is copied to the clipboard. Requires a repo with github.com as
-# the remote named origin and the `hub` CLI tool https://github.com/github/hub
+# Pushes the current branch upstream and opens a Pull Request. On OS X, the PR
+# URL is copied to the clipboard. Requires a repo with github.com as the
+# remote named origin and the `hub` CLI tool (https://github.com/github/hub).
+# Options are passed to the `hub pull-request` command.
 #
-# Examples:
-#     git sexytime
-#     git sexytime -b base-branch
-#     git sexytime -m "This is my PR"
-#     echo "This is my PR" | git sexytime -F -
+# Examples, see also `hub pull-request --help`:
+#
+#     $ git sexytime
+#     $ git sexytime -b base-branch
+#     $ git sexytime -m "This is my PR"
+#     $ git sexytime -m "This is my PR subject
+#
+#       And this is the body"
+#     $ echo "This is my PR" | git sexytime -F -
 
 set -e
 
@@ -18,6 +23,12 @@ set -e
 if [[ "$1" = "--pbcopy" ]]; then
   shift
   printf "%s" $1 | pbcopy
+  exit
+fi
+
+# Print help text and exit.
+if [[ "$1" = "-h" ]]; then
+  sed -ne '/^#/!q;s/.\{1,2\}//;1d;p' < "$0"
   exit
 fi
 
