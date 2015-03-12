@@ -1,23 +1,27 @@
-#!/usr/bin/ruby
+#!/bin/sh
 # Usage: git count [options]
 #
-# Options are passed to `git shortlog`.
+# Prints an overview of the number of commits per author and total commits in
+# a repo. Options are passed to `git shortlog`.
 #
 # Examples:
 #
 #     git count
 #     git count --no-merges --email
 
-authors = `git shortlog -sn #{ARGV.join(' ')}`.chomp
+# Print help text and exit.
+if [[ "$1" = "-h" ]]; then
+  sed -ne '/^#/!q;s/.\{1,2\}//;1d;p' < "$0"
+  exit
+fi
 
-if authors.lines.size > 1
-  total = 0
-  authors.lines.each do |line|
-    count, author = line.strip.split("\t")
-    total += count.to_i
-    puts "%6d  %s" % [count, author]
-  end
-  puts "\n%6d  total" % total
-else
-  puts authors
-end
+git shortlog -sn "$@" | sort -r | awk '
+  {
+    lines += 1;
+    total += $1;
+    printf "%6d  %s\n", $1, substr($0, 8)
+  }
+  END {
+    if (lines > 1) printf "\n%6d  total\n", total
+  }
+'
