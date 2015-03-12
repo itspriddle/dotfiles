@@ -50,13 +50,10 @@ alias copy-new-uuid="uuidgen | tr -d '\\n' | pbcopy"
 
 # OS X
 if [[ $OSTYPE == darwin* ]]; then
-  alias apachectl='sudo apachectl'
-  alias crontab='EDITOR=vim crontab'
-  alias irb18='/usr/bin/irb'
   alias addr="ifconfig | awk '/broadcast/ { print \$2 }'"
-  alias fireworks='open -a Adobe\ Fireworks\ CS6'
   alias flush-dns='sudo dscacheutil -flushcache'
   alias top-cpu='top -o cpu'
+  alias force-vnstat-update="ps aux | awk '/[v]nstatd/ {print \$2}' | xargs kill -HUP"
 fi
 
 # vim:set ft=zsh:
