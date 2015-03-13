@@ -15,7 +15,7 @@ if [[ "$1" = "-h" ]]; then
   exit
 fi
 
-git shortlog -sn "$@" | sort -r | awk '
+git shortlog -sn "$@" | awk '
   {
     lines += 1;
     total += $1;
