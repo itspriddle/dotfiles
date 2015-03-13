@@ -1,0 +1,71 @@
+#!/bin/sh
+# Usage: git loc [paths]
+#
+# Counts the lines of code in the given directories/files, or $PWD if paths
+# are not supplied. Blank lines and Ruby style comments (eg: `#`) are skipped.
+# Non-text files (eg: .pdf, .gif, etc) are skipped. Untracked files are
+# skipped.
+#
+# Examples:
+#
+# Print the total number of lines of code in the current repository:
+#
+#     $ git loc
+#     200
+#
+# Print the total number of lines of code in app/:
+#
+#     $ git loc app/
+#     100
+#
+# Print the total number of lines of code for each directory in app/:
+#
+#     $ git loc app/*/
+#     app/assets: 25
+#     app/controllers: 50
+#     app/models: 25
+#
+# Print the total number of lines of code for each file in app/models/:
+#
+#     $ git loc app/models/*.*
+#     app/models/author.rb: 10
+#     app/models/post.rb: 25
+#
+# Print the total number of lines of code for the given files:
+#
+#     $ git loc app/models/{author.rb,post.rb}
+#     app/models/author.rb: 10
+#     app/models/post.rb: 25
+#
+# Print the total number of lines of code for every file in the repository:
+#
+#     $ git loc $(git ls-files)
+#     app/assets/hello.coffee: 25
+#     app/controllers/posts_controller.rb: 50
+#     app/models/post.rb: 25
+
+if [ "$1" = "-h" ]; then
+  sed -ne '/^#/!q;s/.\{1,2\}//;1d;p' < "$0"
+  exit
+fi
+
+args=("${@-$PWD}")
+
+for arg in "${args[@]}"; do
+  if [ "$arg" = "$PWD" ]; then
+    name=""
+  else
+    name="${arg%%/}: "
+  fi
+
+  printf "${name}%d\n" $(
+    git grep --cached -Ile "" -- "${arg}" |
+      xargs -I{} cat {} |
+      sed -E '
+        /^[[:space:]]*$/d
+        /^[[:space:]]*#/d
+        /^__END__/q
+      ' |
+      wc -l
+  )
+done
