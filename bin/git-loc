@@ -2,9 +2,9 @@
 # Usage: git loc [paths]
 #
 # Counts the lines of code in the given directories/files, or $PWD if paths
-# are not supplied. Blank lines and Ruby style comments (eg: `#`) are skipped.
-# Non-text files (eg: .pdf, .gif, etc) are skipped. Untracked files are
-# skipped.
+# are not supplied. Blank lines, Ruby style comments (eg: `#`), and inline C
+# style comments (eg: `//`) are skipped. Non-text files (eg: .pdf, .gif, etc)
+# are skipped. Untracked files are skipped.
 #
 # Examples:
 #
@@ -64,6 +64,7 @@ for arg in "${args[@]}"; do
       sed -E '
         /^[[:space:]]*$/d
         /^[[:space:]]*#/d
+        /^[[:space:]]*\/\//d
         /^__END__/q
       ' |
       wc -l
