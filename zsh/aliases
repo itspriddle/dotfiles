@@ -20,6 +20,7 @@ if [[ $ZSH_NAME = "zsh" ]]; then
   alias gd='git diff'
   alias gdc='git diff --cached'
   alias gco='git checkout'
+  alias gcomp='git checkout master; git pull'
   alias gb='git branch'
   alias gbd='git branch -d'
   alias gs='git status -sb'
