@@ -125,6 +125,15 @@ set wildcharm=<c-z>
 
 " }}}
 
+" Printing (paper) with :hardcopy {{{
+
+if has("printer")
+  set printoptions=left:30pt,right:30pt,top:30pt,bottom:30pt,duplex:off,paper:letter,syntax:n
+  set printfont=:h9
+endif
+
+" }}}
+
 " Mappings {{{
 
 let g:mapleader = ','
