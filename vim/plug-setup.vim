@@ -54,10 +54,6 @@ Plug 'itspriddle/applescript.vim'
 
 unlet g:plug_url_format
 
-" Plug 'tpope/vim-bundler'
-" Plug 'ervandew/supertab'
-" Plug 'hallettj/jslint.vim'
-
 call plug#end()
 
 " vim:ft=vim:ts=2:sw=2:sts=2:et
