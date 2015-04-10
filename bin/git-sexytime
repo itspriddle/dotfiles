@@ -51,7 +51,7 @@ fi
 
 git push -u origin $branch
 
-if [[ "$OSTYPE" = darwin* ]]; then
+if [[ -z "$SSH_CONNECTION" ]] && [[ "$OSTYPE" = darwin* ]]; then
   # Hack to copy the pull request URL to the clipboard automatically
   BROWSER="$0 --pbcopy" hub pull-request -o "$@"
   echo "Created pull request - $(pbpaste)"
