@@ -33,7 +33,7 @@
 	excludesfile = ~/.gitignore
 
 [format]
-	pretty = format:[%C(red)%h%Creset]%C(yellow)%d%Creset %C(magenta)%an%Creset: %s %C(green)(%ar)%Creset
+	pretty = format:%C(red)%h%Creset%C(yellow)%d%Creset %C(magenta)%an%Creset: %s %C(green)(%ar)%Creset
 
 [alias]
 	amend           = commit --amend -C HEAD
@@ -52,6 +52,8 @@
 	prune-branches  = !git branch --merged | grep -v "\\\\*" | xargs -n 1 git branch -d
 	fetch-pr        = "!f() { git fetch origin refs/pull/$1/head:pr/$1; } ; f"
 	recent-branches = for-each-ref --count=5 --sort=-committerdate --format=\"%(refname:short)\" refs/heads/
+	fixup           = "!f() { git commit $* --fixup HEAD; }; f"
+	pulls           = browse -- pulls
 
 [advice]
 	statusHints        = false
