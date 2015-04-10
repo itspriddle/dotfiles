@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Usage: s5 install-default-gems
+# Summary: Installs default gems
+
+gems=(
+  awesome_print
+  bundler
+  id3tag
+  lunchy
+)
+
+gem install ${gems[@]}
