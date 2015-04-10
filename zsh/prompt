@@ -7,16 +7,16 @@ autoload -Uz add-zsh-hook
 zstyle ':vcs_info:*'      enable git
 zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
-#zstyle ':vcs_info:git*:*' unstagedstr '' # %u
-zstyle ':vcs_info:git*:*' stagedstr " ⚡"  # %c
-zstyle ':vcs_info:git*'   actionformats " (%b%c|%a)"
-zstyle ':vcs_info:git*'   formats       " (%b%c)"
+zstyle ':vcs_info:git*:*' unstagedstr "+" # %u
+zstyle ':vcs_info:git*:*' stagedstr "⚡"  # %c
+zstyle ':vcs_info:git*'   actionformats "%b %c%u|%a"
+zstyle ':vcs_info:git*'   formats       "%b %c%u"
 
 # Skip `hub` wrapper around git
 zstyle ':vcs_info:git:*:-all-' command \git
 
 _josh_prompt_precmd() {
-  local git_prompt="" host_prompt="" dir_prompt
+  local git_prompt="" host_prompt="" dir_prompt git_info
 
   if [[ $TERM == xterm* ]]; then
     print -Pn "\e]0;${SSH_CONNECTION:+%n@%M:}%~\a"
@@ -25,7 +25,13 @@ _josh_prompt_precmd() {
   vcs_info
 
   if [[ -n $vcs_info_msg_0_ ]]; then
-    git_prompt="%{$fg_bold[green]%}$vcs_info_msg_0_%{$reset_color%}"
+    # Strip space from " |"
+    git_info="${vcs_info_msg_0_%\ \|}"
+
+    # Strip trailing space
+    git_info="${git_info%\ }"
+
+    git_prompt="%{$fg_bold[green]%} (${git_info})%{$reset_color%}"
   fi
 
   dir_prompt="%{$fg_bold[blue]%}%3~%{$reset_color%}"
