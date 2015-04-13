@@ -2,3 +2,5 @@ log
 tags
 tmp
 sql
+*.pdf
+.gitkeep
