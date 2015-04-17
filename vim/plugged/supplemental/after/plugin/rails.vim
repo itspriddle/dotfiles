@@ -71,10 +71,3 @@ let g:rails_projections["spec/factories/*.rb"] = {
   \   "template": "FactoryGirl.define do\n  factory :{underscore|singular} do\n  end\nend",
   \   "keywords": "factory sequence"
   \ }
-
-" Opens/creates the given file under app/assets/stylesheets
-"
-" :[ERSTV]stylesheet <filename>[!]
-let g:rails_projections["app/assets/stylesheets/*"] = {
-  \   "command": "stylesheet"
-  \ }
