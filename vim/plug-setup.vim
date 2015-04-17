@@ -1,6 +1,6 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'jeetsukumaran/vim-filebeagle', { 'on': '<Plug>FileBeagleOpenCurrentBufferDir' }
+Plug 'jeetsukumaran/vim-filebeagle', { 'on': ['<Plug>FileBeagleOpenCurrentBufferDir', 'FileBeagleBufferDir'] }
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-liquid'
