@@ -425,6 +425,13 @@ augroup END
 
 " }}}
 
+" Gutentags {{{
+
+" Keep tags files under .git
+let g:gutentags_tagfile = ".git/tags"
+
+" }}}
+
 " HTML {{{
 
 augroup ft_html

@@ -41,6 +41,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-scriptease'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'ludovicchabant/vim-gutentags'
 
 " My stuff
 Plug '~/.vim/plugged/supplemental'
