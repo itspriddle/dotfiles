@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Usage: bubo
+#
+# Runs `brew update` and `brew outdated`
+
+if ! type brew &> /dev/null; then
+  echo "Error: \`brew\` not found."
+  exit 1
+fi
+
+brew update
+
+outdated=$(brew outdated --verbose)
+
+echo -e "\033[34m==>\033[0m \033[01mOutdated brews\033[0m"
+
+if [[ -n $outdated ]]; then
+  echo "$outdated"
+else
+  echo "none - all up to date!"
+fi
