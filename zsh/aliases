@@ -56,6 +56,7 @@ if [[ $OSTYPE == darwin* ]]; then
   alias flush-dns='sudo dscacheutil -flushcache'
   alias top-cpu='top -o cpu'
   alias force-vnstat-update="ps aux | awk '/[v]nstatd/ {print \$2}' | xargs kill -HUP"
+  alias speedtest="speedtest-cli --simple"
 fi
 
 # vim:set ft=zsh:
