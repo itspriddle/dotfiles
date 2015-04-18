@@ -26,7 +26,7 @@ _josh_prompt_precmd() {
 
   if [[ -n $vcs_info_msg_0_ ]]; then
     # Strip space from " |"
-    git_info="${vcs_info_msg_0_%\ \|}"
+    git_info="${vcs_info_msg_0_// |/|}"
 
     # Strip trailing space
     git_info="${git_info%\ }"
