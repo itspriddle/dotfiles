@@ -1,0 +1,5 @@
+.netrwhist
+doc/tags
+/plugged/*
+!/plugged/supplemental
+!/plugged/supplemental/*
