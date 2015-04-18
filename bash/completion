@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [ -f /opt/local/etc/bash_completion ]; then
-  source /opt/local/etc/bash_completion
+if [ -f /usr/local/etc/bash_completion ]; then
+  source /usr/local/etc/bash_completion
 fi
 
 for script in $HOME/.dotfiles/bash/completion.d/*
