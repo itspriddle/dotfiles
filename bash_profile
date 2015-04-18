@@ -1,7 +1,10 @@
+export CLICOLOR=1
+export TERM='xterm-256color'
+export EDITOR=vim
+export GIT_EDITOR="$EDITOR "
+
 new_paths=(
   $HOME/.dotfiles/bin
-  $HOME/.dotfiles/private-bin
-  /opt/local/bin
 )
 
 for p in "${new_paths[@]}"
