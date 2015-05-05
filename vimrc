@@ -540,9 +540,9 @@ augroup END
 augroup ft_quickfix
   autocmd!
 
-  " Cleanup quickfix and help windows so they're not so ugly
+  " Cleanup quickfix windows so they're not so ugly
   autocmd BufNewFile,BufRead *
-    \ if &bt =~# '^\%(quickfix\|nofile\|help\)$' |
+    \ if &bt =~# '^\%(quickfix\|nofile\)$' |
     \   setlocal colorcolumn=0 nolist nocursorline nowrap foldcolumn=0 |
     \ endif
 augroup END
@@ -633,26 +633,6 @@ nnoremap <silent> coq :call ToggleQuickfixList()<cr>
 
 " Open insert mode with 'paste'
 nmap yp <Plug>unimpairedPastei
-
-" }}}
-
-" Vim/Vim help {{{
-
-" Only indent once when starting a line with \
-let g:vim_indent_cont = 2
-
-augroup ft_vim
-  autocmd!
-
-  autocmd FileType vim setlocal
-    \ tabstop=2
-    \ shiftwidth=2
-    \ softtabstop=2
-    \ expandtab
-
-  " Usq q to :quit help buffer
-  autocmd FileType help nnoremap <silent> <buffer> q :q<cr>
-augroup END
 
 " }}}
 
