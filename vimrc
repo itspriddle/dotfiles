@@ -453,29 +453,6 @@ let g:liquid_highlight_types = ['ruby', 'javascript']
 
 " }}}
 
-" Markdown {{{
-
-augroup ft_markdown
-  autocmd!
-
-  " Marked.app view
-  autocmd FileType markdown noremap <buffer> <leader>mv :MarkedOpen<cr>
-
-  " Marked.app quit
-  autocmd FileType markdown noremap <buffer> <leader>mq :MarkedQuit<cr>
-
-  " Show spelling errors
-  autocmd FileType markdown setlocal spell
-augroup END
-
-" Use Marked.app (v1)
-let g:marked_app = "Marked"
-
-" Setup ``` style syntax highlighting
-let g:markdown_fenced_languages = ['ruby', 'erb=eruby', 'php', 'sh']
-
-" }}}
-
 " Lightline.vim {{{
 
 function s:set_lightline()
