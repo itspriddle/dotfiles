@@ -20,12 +20,13 @@ if [[ $ZSH_NAME = "zsh" ]]; then
   alias gd='git diff'
   alias gdc='git diff --cached'
   alias gco='git checkout'
+  alias gco.='git checkout -- .'
   alias gcomp='git checkout master; git pull'
   alias gcomp-='git checkout master; git pull; git checkout -'
   alias gb='git branch'
   alias gbd='git branch -d'
   alias gs='git status -sb'
-  alias grm="git status --porcelain | awk '\$1 == \"D\" {print \$2}' | xargs git rm --ignore-unmatch"
+  alias grm="git status --porcelain | awk '\$1 == \"D\" {print \$2}' | xargs git --git-dir=\$(git rev-parse --git-dir) rm --ignore-unmatch"
   alias gc='git commit'
 fi
 
@@ -57,6 +58,7 @@ if [[ $OSTYPE == darwin* ]]; then
   alias top-cpu='top -o cpu'
   alias force-vnstat-update="ps aux | awk '/[v]nstatd/ {print \$2}' | xargs kill -HUP"
   alias speedtest="speedtest-cli --simple"
+  alias df="df -Plh"
 fi
 
 # vim:set ft=zsh:
