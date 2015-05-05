@@ -569,36 +569,6 @@ let g:rsi_no_meta = 1
 
 " }}}
 
-" Ruby {{{
-
-let g:ruby_space_errors = 1
-let g:ruby_operators    = 1
-
-augroup ft_ruby
-  autocmd!
-
-  " Disable K (ri lookup)
-  autocmd FileType ruby noremap <buffer> K <nop>
-
-  " Open or create the associated file in a horizontal split
-  autocmd FileType ruby noremap <buffer> <leader>s :AS<cr>
-
-  " Open or create the associated file in a vertical split
-  autocmd FileType ruby noremap <buffer> <leader>v :AV<cr>
-
-  " Setup Dispatch's `:Start` to open the given file in IRB
-  autocmd FileType ruby let b:start = 'irb -r "%:p"'
-
-  " Set compiler
-  autocmd FileType ruby
-    \ if expand('%') =~# '_spec\.rb$' |
-    \   let b:dispatch = 'rspec %' |
-    \   compiler rspec |
-    \ endif
-augroup END
-
-" }}}
-
 " Searching {{{
 
 " Open a Quickfix window for the last search.
