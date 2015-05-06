@@ -36,24 +36,25 @@
 	pretty = format:%C(red)%h%Creset%C(yellow)%d%Creset %C(magenta)%an%Creset: %s %C(green)(%ar)%Creset
 
 [alias]
-	amend           = commit --amend -C HEAD
-	branch-name     = rev-parse --abbrev-ref HEAD
-	copy-last-sha   = !git last-sha | tr -d '\n' | pbcopy
-	full-log        = log --format=fuller
-	last-sha        = rev-parse --short HEAD
-	lg              = log --graph --abbrev-commit --date=relative
-	man             = help --man
-	msg             = commit --allow-empty -m
-	pa              = add --patch
-	pending         = !git --no-pager log origin/master..master && echo
-	undo            = reset --soft HEAD^
-	unstage         = reset HEAD -- ...
-	web             = instaweb --httpd=webrick -b open
-	prune-branches  = !git branch --merged | grep -v "\\\\*" | xargs -n 1 git branch -d
-	fetch-pr        = "!f() { git fetch origin refs/pull/$1/head:pr/$1; } ; f"
-	recent-branches = for-each-ref --count=5 --sort=-committerdate --format=\"%(refname:short)\" refs/heads/
-	fixup           = "!f() { git commit $* --fixup HEAD; }; f"
-	pulls           = browse -- pulls
+	amend            = commit --amend -C HEAD
+	branch-name      = rev-parse --abbrev-ref HEAD
+	copy-last-sha    = !git last-sha | tr -d '\n' | pbcopy
+	full-log         = log --format=fuller
+	last-sha         = rev-parse --short HEAD
+	lg               = log --graph --abbrev-commit --date=relative
+	man              = help --man
+	msg              = commit --allow-empty -m
+	pa               = add --patch
+	pending          = !git --no-pager log origin/master..master && echo
+	undo             = reset --soft HEAD^
+	unstage          = reset HEAD -- ...
+	web              = instaweb --httpd=webrick -b open
+	prune-branches   = !git branch --merged | grep -v "\\\\*" | xargs -n 1 git branch -d
+	fetch-pr         = "!f() { git fetch origin refs/pull/$1/head:pr/$1; } ; f"
+	recent-branches  = for-each-ref --count=5 --sort=-committerdate --format=\"%(refname:short)\" refs/heads/
+	fixup            = "!f() { git commit $* --fixup HEAD; }; f"
+	pulls            = browse -- pulls
+	strip-whitepsace = !git ls-files | xargs perl -i -pe 's/[\\t ]+$//g'
 
 [advice]
 	statusHints        = false
