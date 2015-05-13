@@ -50,6 +50,7 @@ alias dush='du -shc'
 alias opendns='echo "208.67.222.222 208.67.220.220"'
 alias what-is-my-ip="curl -s checkip.dyndns.org | grep --color=never -Eo '[0-9\\.]+'"
 alias copy-new-uuid="uuidgen | tr -d '\\n' | pbcopy"
+alias gist="gist -p"
 
 # OS X
 if [[ $OSTYPE == darwin* ]]; then
@@ -59,6 +60,7 @@ if [[ $OSTYPE == darwin* ]]; then
   alias force-vnstat-update="ps aux | awk '/[v]nstatd/ {print \$2}' | xargs kill -HUP"
   alias speedtest="speedtest-cli --simple"
   alias df="df -Plh"
+  alias gist="gist -c -p"
 fi
 
 # vim:set ft=zsh:
