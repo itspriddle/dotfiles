@@ -149,9 +149,6 @@ command ToggleBG let &bg = &bg == 'dark' ? 'light' : 'dark' |
 
 nnoremap cob :ToggleBG<cr>
 
-" Toggle fold visibility
-nnoremap <leader>z za
-
 " }}}
 
 " Formatting/editing text {{{
