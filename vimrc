@@ -7,6 +7,9 @@ source ~/.vim/plug-setup.vim
 " loaded
 runtime plugged/sensible/plugin/sensible.vim
 
+" Set colorscheme
+colorscheme default-josh
+
 " }}}
 
 " General settings {{{
@@ -233,17 +236,6 @@ augroup all_buffers
     \ endif
 
 augroup END
-
-" Make search/pmenu highlighting readable in console Vim
-if ! has('gui_running')
-  highlight SpellCap   ctermbg=81  ctermfg=0   term=reverse
-  highlight SpellBad   ctermbg=224 ctermfg=0   term=reverse
-  highlight Search     ctermbg=221 ctermfg=235 term=reverse
-  highlight Pmenu      ctermbg=225 ctermfg=0
-  highlight PmenuSel   ctermbg=7   ctermfg=0
-  highlight PmenuSbar  ctermbg=248
-  highlight PmenuThumb ctermbg=0
-endif
 
 " }}}
 
