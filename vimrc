@@ -409,21 +409,6 @@ let g:gutentags_tagfile = ".git/tags"
 
 " }}}
 
-" HTML {{{
-
-augroup ft_html
-  autocmd!
-
-  " Map <leader>o to `open %` on Mac
-  if has("mac")
-    autocmd FileType html nnoremap <buffer> <leader>o :!open %<cr>
-  endif
-
-  autocmd FileType html setl nowrap textwidth=0
-augroup END
-
-" }}}
-
 " liquid.vim {{{
 
 let g:liquid_highlight_types = ['ruby', 'javascript']
