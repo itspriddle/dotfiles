@@ -379,14 +379,13 @@ augroup ft_git
   autocmd FileType gitrebase nnoremap <buffer> <silent> F :Fixup<cr>
   autocmd FileType gitrebase nnoremap <buffer> <silent> C :Cycle<cr>
 
-  " Same as above, but in visual mode. Highlight the previously selected text
-  " after changes.
-  autocmd FileType gitrebase vnoremap <buffer> <silent> P :s/^\w\+/pick/e<cr>`[v`]
-  autocmd FileType gitrebase vnoremap <buffer> <silent> R :s/^\w\+/reword/e<cr>`[v`]
-  autocmd FileType gitrebase vnoremap <buffer> <silent> E :s/^\w\+/edit/e<cr>`[v`]
-  autocmd FileType gitrebase vnoremap <buffer> <silent> S :s/^\w\+/squash/e<cr>`[v`]
-  autocmd FileType gitrebase vnoremap <buffer> <silent> F :s/^\w\+/fixup/e<cr>`[v`]
-  autocmd FileType gitrebase vnoremap <buffer> <silent> C :s/^\w\+/cycle/e<cr>`[v`]
+  " Same as above, but in visual mode.
+  autocmd FileType gitrebase vnoremap <buffer> <silent> P :s/^\w\+/pick/e<cr>
+  autocmd FileType gitrebase vnoremap <buffer> <silent> R :s/^\w\+/reword/e<cr>
+  autocmd FileType gitrebase vnoremap <buffer> <silent> E :s/^\w\+/edit/e<cr>
+  autocmd FileType gitrebase vnoremap <buffer> <silent> S :s/^\w\+/squash/e<cr>
+  autocmd FileType gitrebase vnoremap <buffer> <silent> F :s/^\w\+/fixup/e<cr>
+  autocmd FileType gitrebase vnoremap <buffer> <silent> C :s/^\w\+/cycle/e<cr>
 
   " Alias Gco
   autocmd User Fugitive command! -buffer -nargs=* Gco exe 'Git checkout <args>'
