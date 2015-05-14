@@ -433,20 +433,18 @@ augroup END
 
 " }}}
 
+" netrw.vim {{{
+
+" Use <cWORD> instead of <cfile> for URLs (allows GET params)
+let g:netrw_gx = '<cWORD>'
+
+" }}}
+
 " noops - stuff that is purposely disabled {{{
 
 " Disable F1 help menu
 nnoremap <F1> <nop>
 inoremap <F1> <nop>
-
-" }}}
-
-" Open stuff in your browser {{{
-
-nmap gb :echo "Use gx instead"<cr>
-
-nmap <unique> gx <Plug>NetrwBrowseX
-nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)<cr>
 
 " }}}
 
