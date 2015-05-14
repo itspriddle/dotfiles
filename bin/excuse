@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+require "nokogiri"
+require "open-uri"
+
+puts Nokogiri::HTML(open("http://programmingexcuses.com/")).css("a").text.rstrip
