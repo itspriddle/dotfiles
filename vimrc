@@ -384,6 +384,9 @@ augroup ft_git
   " Alias Gpush
   autocmd User Fugitive command! -buffer -nargs=* Gpush exe 'Git push <args>'
 
+  " :Gfixup => :Gcommit -m 'fixup'
+  autocmd User Fugitive command! -buffer Gfixup exe 'Gcommit -m "fixup"'
+
   " Show git status for the repo
   autocmd User Fugitive noremap <buffer> <leader>gs :Gstatus<cr>
 
