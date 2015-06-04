@@ -57,7 +57,7 @@ if [[ $OSTYPE == darwin* ]]; then
   alias addr="ifconfig | awk '/broadcast/ { print \$2 }'"
   alias flush-dns='sudo dscacheutil -flushcache'
   alias top-cpu='top -o cpu'
-  alias force-vnstat-update="ps aux | awk '/[v]nstatd/ {print \$2}' | xargs kill -HUP"
+  alias force-vnstat-update="pkill -HUP vnstatd"
   alias speedtest="speedtest-cli --simple"
   alias df="df -Plh"
   alias gist="gist -c -p"
