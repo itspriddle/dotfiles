@@ -3,7 +3,7 @@ eval "$(hub alias -s)"
 # Custom completion for git
 zstyle ':completion:*:*:hub:*' user-commands \
   repl:'Open a repl' \
-  sexytime:'Push branch to github and open a pull request' \
+  pr:'Push branch to GitHub and open a Pull request' \
   count:'Show commit count by author'
 
 # Completion `hub` and `git`

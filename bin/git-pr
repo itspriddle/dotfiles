@@ -1,20 +1,21 @@
 #!/usr/bin/env bash
-# Usage: git sexytime [options]
+# Usage: git pr [options]
 #
-# Pushes the current branch upstream and opens a Pull Request. On OS X, the PR
-# URL is copied to the clipboard. Requires a repo with github.com as the
-# remote named origin and the `hub` CLI tool (https://github.com/github/hub).
-# Options are passed to the `hub pull-request` command.
+# Pushes the current branch upstream to GitHub and opens a pull request. On OS
+# X, the pull request URL is copied to the clipboard. Requires a repo with
+# github.com as the remote named origin and the `hub` CLI tool
+# (https://github.com/github/hub). Options are passed to the `hub
+# pull-request` command.
 #
 # Examples, see also `hub pull-request --help`:
 #
-#     $ git sexytime
-#     $ git sexytime -b base-branch
-#     $ git sexytime -m "This is my PR"
-#     $ git sexytime -m "This is my PR subject
+#     $ git pr
+#     $ git pr -b base-branch
+#     $ git pr -m "This is my PR"
+#     $ git pr -m "This is my PR subject
 #
 #       And this is the body"
-#     $ echo "This is my PR" | git sexytime -F -
+#     $ echo "This is my PR" | git pr -F -
 
 set -e
 
