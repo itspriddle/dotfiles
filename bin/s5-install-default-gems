@@ -7,6 +7,7 @@ gems=(
   bundler
   id3tag
   lunchy
+  powder
 )
 
 gem install ${gems[@]}
