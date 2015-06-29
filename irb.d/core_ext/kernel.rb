@@ -12,16 +12,13 @@ module Kernel
   #     0.0
   #
   # Returns nothing
-  def time(options = {})
-    require 'benchmark'
-
-    times       = options.fetch(:times, 1)
-    description = options[:description]
-    output      = nil
-    measure     = Benchmark.measure { times.times { output = yield } }
+  def time(description = nil)
+    start       = Time.now
+    output      = yield
+    elapsed     = Time.now - start
 
     print "#{description}: " if description
-    puts "#{measure.total}"
+    puts "%.2f" % elapsed
     output
   end
 
