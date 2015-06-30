@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 
-if [ -n "$PS1" ]; then
-  source ~/.dotfiles/zsh/aliases
-  source ~/.dotfiles/bash/completion
-  source ~/.dotfiles/bash/config
-  source ~/.dotfiles/bash/prompt
-fi
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
 
-# use .localrc for settings specific to one system
-if [ -f ~/.localrc ]; then
-  source ~/.localrc
-fi
+source ~/.dotfiles/bash/config
+source ~/.dotfiles/bash/completion
+source ~/.dotfiles/bash/prompt
+source ~/.dotfiles/zsh/aliases
