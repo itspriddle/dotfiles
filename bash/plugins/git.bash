@@ -14,15 +14,25 @@ eval "
 }
 
 __git_shortcut () {
-  type _git_$2_shortcut &>/dev/null || __define_git_completion $1 $2
-  alias $1="git $2 $3"
-  complete -o default -o nospace -F _git_$2_shortcut $1
+  local alias_name git_cmd
+  alias_name="$1"; shift;
+  git_cmd="$1"; shift
+
+  type _git_${git_cmd}_shortcut &>/dev/null || __define_git_completion $alias_name $git_cmd
+  alias $alias_name="git $git_cmd $@"
+  complete -o default -o nospace -F _git_${git_cmd}_shortcut $alias_name
 }
 
-__git_shortcut gs  status -sb
-__git_shortcut ga  add
-__git_shortcut gb  branch
+__git_shortcut ga add
+__git_shortcut gb branch
 __git_shortcut gbd branch -d
+__git_shortcut gc commit
 __git_shortcut gco checkout
-__git_shortcut gd  diff
+__git_shortcut gd diff
 __git_shortcut gdc diff --cached
+
+alias gco.='git checkout -- .'
+alias gcomp-='git checkout master; git pull; git checkout -'
+alias gcomp='git checkout master; git pull'
+alias grm="git status --porcelain | awk '\$1 == \"D\" {print \$2}' | xargs git --git-dir=\$(git rev-parse --git-dir) rm --ignore-unmatch"
+alias gs='git status -sb'
