@@ -1,45 +1,43 @@
 #!/usr/bin/env bash
 
-prompt_pwd() {
-  local pat=$(printf '/*%.0s' {1..3})
-  local cwd=${PWD/$HOME/\~}
-  local tmp=${cwd%$pat}
-
-  if [ ${#tmp} -gt 0 -a "$tmp" != "$cwd" ]; then
-    printf "${cwd:${#tmp}+1}"
-  else
-    printf "$cwd"
-  fi
-}
-
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWDIRTYSTATE=1
 
-set_prompt() {
-  local BLUE="\[\033[1;34m\]"
-  local GREEN="\[\033[1;32m\]"
-  local YELLOW="\[\033[1;33m\]"
-  local NOCOLOR="\[\033[0m\]"
+_josh_prompt_command() {
+  local blue="\[\e[1;34m\]"
+  local green="\[\e[1;32m\]"
+  local yellow="\[\e[1;33m\]"
+  local reset="\[\e[0;m\]"
 
   local git_tmp=$(__git_ps1 2> /dev/null)
 
   local GIT= HOST=
 
   if [ "$SSH_CONNECTION" ]; then
-    HOST="${YELLOW}\u@\H${NOCOLOR} "
+    host="${yellow}\u@\H${reset} "
   fi
 
   if [ "$git_tmp" ]; then
-    GIT="${GREEN}${git_tmp}${NOCOLOR}"
+    git="${green}${git_tmp}${reset}"
   fi
 
-  PS1="${HOST}${BLUE}$(prompt_pwd)${NOCOLOR}${GIT} $ "
+  local pat=$(printf '/*%.0s' {1..3})
+  local cwd=${PWD/$HOME/\~}
+  local tmp=${cwd%$pat}
+
+  if [ ${#tmp} -gt 0 -a "$tmp" != "$cwd" ]; then
+    prompt_cwd=$(printf "${cwd:${#tmp}+1}")
+  else
+    prompt_cwd=$(printf "$cwd")
+  fi
+
+  PS1="${host}${blue}${prompt_cwd}${reset}${git} $ "
 
   case "$TERM" in
     xterm*|rxvt*)
-      PS1="$PS1\e]0;${SSH_CONNECTION:+\u@\h:}\w\a"
+      PS1="${PS1}\e]0;${SSH_CONNECTION:+\u@\M:}\w\a"
       ;;
   esac
 }
 
-export PROMPT_COMMAND=set_prompt
+export PROMPT_COMMAND=_josh_prompt_command
