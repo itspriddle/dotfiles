@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 
-export GIT_PS1_SHOWUNTRACKEDFILES=1
+# "%": untracked files in repo
+# export GIT_PS1_SHOWUNTRACKEDFILES=""
+
+# "+": staged
+# "#": ???
+# "*": changed, not staged
 export GIT_PS1_SHOWDIRTYSTATE=1
+
+# "$": something stashed
+export GIT_PS1_SHOWSTASHSTATE=1
 
 _josh_prompt_command() {
   local blue="\[\e[1;34m\]"
@@ -11,14 +19,15 @@ _josh_prompt_command() {
 
   local git_tmp=$(__git_ps1 2> /dev/null)
 
-  local GIT= HOST=
+  local git= host=
 
   if [ "$SSH_CONNECTION" ]; then
     host="${yellow}\u@\H${reset} "
   fi
 
   if [ "$git_tmp" ]; then
-    git="${green}${git_tmp}${reset}"
+    # Hide untracked marker
+    git="${green}${git_tmp// $/}${reset}"
   fi
 
   local pat=$(printf '/*%.0s' {1..3})
