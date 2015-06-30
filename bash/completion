@@ -8,3 +8,9 @@ for script in $HOME/.dotfiles/bash/completion.d/*
 do
   source $script
 done
+
+# Case insensitive completion
+bind 'set completion-ignore-case on'
+
+# Show matches on ambiguous completion
+bind 'set show-all-if-ambiguous on'
