@@ -24,7 +24,7 @@ function! s:open_url(url)
 endfunction
 
 function! s:plug_list(A, L, P)
-  return keys(filter(g:plugs, 'has_key(v:val, "uri") && v:val["uri"] =~ "github" && v:key =~ a:A'))
+  return keys(filter(copy(g:plugs), 'has_key(v:val, "uri") && v:val["uri"] =~ "github" && v:key =~ a:A'))
 endfunction
 
 function! s:plug_home(name)
@@ -32,7 +32,7 @@ function! s:plug_home(name)
     return s:open_url('https://github.com/junegunn/vim-plug')
   endif
 
-  let plugs = filter(g:plugs, 'has_key(v:val, "uri") && v:val["uri"] =~ "github"')
+  let plugs = filter(copy(g:plugs), 'has_key(v:val, "uri") && v:val["uri"] =~ "github"')
 
   if has_key(plugs, a:name)
     let plug = plugs[a:name]
