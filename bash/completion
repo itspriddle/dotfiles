@@ -9,6 +9,7 @@ for script in \
 do
   [ -f "${script}" ] && source "${script}"
 done
+unset script
 
 # Case insensitive completion
 bind 'set completion-ignore-case on'
