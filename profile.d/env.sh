@@ -15,6 +15,9 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   export MAKEFLAGS="-j9"
 
   PATH="/Applications/Postgres.app/Contents/Versions/9.4/bin:${PATH}"
+
+  # Double the amount of open files OS X allows
+  ulimit -n 1024
 fi
 
 export PATH
