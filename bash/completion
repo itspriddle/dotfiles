@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-if [ -f /usr/local/etc/bash_completion ]; then
-  source /usr/local/etc/bash_completion
-fi
-
-for script in $HOME/.dotfiles/bash/completion.d/*
+for script in \
+  /usr/local/etc/bash_completion \
+  /usr/local/etc/bash_completion.d/git-completion.bash \
+  /usr/local/etc/bash_completion.d/git-prompt.sh \
+  /usr/local/etc/bash_completion.d/hub.bash_completion.sh \
+  $HOME/.dotfiles/bash/completion.d/*
 do
-  source $script
+  [ -f "${script}" ] && source "${script}"
 done
 
 # Case insensitive completion
