@@ -1,21 +1,20 @@
 #!/usr/bin/env bash
 
 # "%": untracked files in repo
-# export GIT_PS1_SHOWUNTRACKEDFILES=""
+# export GIT_PS1_SHOWUNTRACKEDFILES=1
 
 # "+": staged
-# "#": ???
-# "*": changed, not staged
+# "*": unstaged
 export GIT_PS1_SHOWDIRTYSTATE=1
 
 # "$": something stashed
 export GIT_PS1_SHOWSTASHSTATE=1
 
 _josh_prompt_command() {
-  local blue="\[\e[1;34m\]"
-  local green="\[\e[1;32m\]"
-  local yellow="\[\e[1;33m\]"
-  local reset="\[\e[0;m\]"
+  local blue="\[\e[34m\]"
+  local green="\[\e[32m\]"
+  local yellow="\[\e[33m\]"
+  local reset="\[\e[0m\]"
 
   local git_tmp=$(__git_ps1 " (%s)" 2> /dev/null)
 
@@ -26,8 +25,7 @@ _josh_prompt_command() {
   fi
 
   if [ "$git_tmp" ]; then
-    # Hide untracked marker
-    git="${green}${git_tmp// $/}${reset}"
+    git="${green}${git_tmp}${reset}"
   fi
 
   local pat=$(printf '/*%.0s' {1..3})
