@@ -23,9 +23,6 @@ fi
 
 export PATH
 
-# Clear PROMPT_COMMAND, avoids "command not found" errors when using `sh`.
-unset PROMPT_COMMAND
-
 # Disable flow control and allow binding ^q and ^s
 stty -ixon -ixoff
 
