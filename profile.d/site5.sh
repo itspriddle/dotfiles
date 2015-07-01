@@ -8,5 +8,5 @@ alias eventhorizon-console="~/work/event_horizon/bin/rails console"
 
 alias hcc=helix-core-console
 
-# s5
-source "/usr/local/opt/s5/completions/s5.zsh"
+# Setup s5
+eval "$(s5 init -)"
