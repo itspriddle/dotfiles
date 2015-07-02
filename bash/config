@@ -26,6 +26,7 @@ shopt -s checkwinsize
 # append to the history file, don't overwrite it
 shopt -s histappend
 
+# search history with up/down, filters by command line contents
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
 
