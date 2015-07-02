@@ -8,7 +8,7 @@
 export GIT_PS1_SHOWDIRTYSTATE=1
 
 # "$": something stashed
-export GIT_PS1_SHOWSTASHSTATE=1
+# export GIT_PS1_SHOWSTASHSTATE=1
 
 _josh_prompt_command() {
   local blue="\[\e[1;34m\]"
