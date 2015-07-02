@@ -28,3 +28,6 @@ shopt -s histappend
 
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
+
+# Write history immediately
+export PROMPT_COMMAND="history -a"
