@@ -47,4 +47,4 @@ _josh_prompt_command() {
   esac
 }
 
-export PROMPT_COMMAND=_josh_prompt_command
+export PROMPT_COMMAND="$PROMPT_COMMAND; _josh_prompt_command"
