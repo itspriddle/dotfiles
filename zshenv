@@ -1,7 +1,4 @@
-export CLICOLOR=1
-export TERM='xterm-256color'
-export EDITOR=vim
-export GIT_EDITOR="$EDITOR "
+source ~/.profile.d/env.sh
 
 # Setup $path as a unique array
 typeset -aU path
