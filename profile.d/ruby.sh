@@ -12,6 +12,8 @@ fi
 
 alias trust-binstubs="mkdir .git/safe"
 
+alias ruby-install-default="ruby-install --src-dir $HOME/work/src --cleanup ruby ${ruby_version##ruby-} -- --disable-install-rdoc"
+
 # Run `trust-binstubs` in the root of repositories you trust
 export PATH=".git/safe/../../bin:.git/safe/../../.bundle/bin:$PATH"
 
