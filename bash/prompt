@@ -16,16 +16,12 @@ _josh_prompt_command() {
   local yellow="\[\e[1;33m\]"
   local reset="\[\e[0m\]"
 
-  local git_tmp=$(__git_ps1 " (%s)" 2> /dev/null)
+  local git=$(__git_ps1 " ${green}(%s)${reset}" 2> /dev/null)
 
-  local git= host=
+  local host=
 
   if [ "$SSH_CONNECTION" ]; then
     host="${yellow}\u@\H${reset} "
-  fi
-
-  if [ "$git_tmp" ]; then
-    git="${green}${git_tmp}${reset}"
   fi
 
   local pat=$(printf '/*%.0s' {1..3})
@@ -42,7 +38,11 @@ _josh_prompt_command() {
 
   case "$TERM" in
     xterm*|rxvt*)
-      PS1="${PS1}\e]0;${SSH_CONNECTION:+\u@\M:}\w\a"
+      if [ "$SSH_CONNECTION" ]; then
+        printf '\e]0;%s@%s:%s\a' "$USER" "$HOSTNAME" "${prompt_cwd}"
+      else
+        printf '\e]0;%s\a' "${prompt_cwd}"
+      fi
       ;;
   esac
 }
