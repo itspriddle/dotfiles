@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# Usage: viscosity [command] [vpn]
+#
+# Connect/disconnect from a VPN using Viscosity.app on OS X. Specify a default
+# VPN with `export VISCOSITY_DEFAULT_VPN="My VPN".
+#
+# Help:
+#   viscosity                       Disconnect/connect to the default VPN
+#   viscosity connect               Connect to the default VPN
+#   viscosity disconnect            Disconnect from the default VPN
+#   viscosity status                Show connection status of the default VPN
+#   viscosity connect "VPN 2"       Connect to the VPN named "VPN 2"
+#   viscosity disconnect "VPN 2"    Disconnect from the VPN named "VPN 2"
+#   viscosity status "VPN 2"        Show connection status of the VPN named "VPN 2"
+#   viscosity -h                    Show this help message
+
+[[ $DEBUG ]] && set -x
+
+# Print help text and exit.
+if [[ "$1" = "-h" ]]; then
+  sed -ne '/^#/!q;s/.\{1,2\}//;1d;p' < "$0"
+  exit
+fi
+
+vpn="${2-${VISCOSITY_DEFAULT_VPN}}"
+
+if [[ -z "${vpn}" ]]; then
+  echo "No VPN specified"
+  exit 1
+fi
+
+case "${1}" in
+  connect|disconnect)
+    osascript -e "tell application \"Viscosity\" to ${1} \"${vpn}\"" &&
+      echo "${1}ed" || echo "couldn't ${1}"
+    ;;
+  status)
+    osascript -e "tell application \"Viscosity\" to return state of (connections where name is \"${vpn}\")"
+    ;;
+  "")
+    connection=$($0 status "${vpn}")
+    if [[ "${connection}" = "Disconnected" ]]; then
+      $0 connect "${vpn}"
+    elif [[ "${connection}" = "Connected" ]]; then
+      $0 disconnect "${vpn}"
+    else
+      echo "Couldn't determine status of ${vpn}"
+      exit 1
+    fi
+    ;;
+  *)
+    echo "Invalid command ${1}"
+    exit 1
+    ;;
+esac
