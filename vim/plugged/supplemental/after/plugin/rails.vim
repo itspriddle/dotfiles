@@ -30,7 +30,7 @@ let g:rails_projections["db/seeds/*.rb"] = {
 let g:rails_projections["app/forms/*_form.rb"] = {
   \   "command": "form",
   \   "test": "spec/forms/%i_spec.rb",
-  \   "template": "class %SForm\n  include ActiveModel::Model\nend"
+  \   "template": ["class %SForm", "  include ActiveModel::Model", "end"]
   \ }
 
 " Opens the given file under app/inputs:
@@ -39,7 +39,7 @@ let g:rails_projections["app/forms/*_form.rb"] = {
 let g:rails_projections["app/inputs/*_input.rb"] = {
   \   "command": "input",
   \   "test": "spec/inputs/%i_spec.rb",
-  \   "template": "class %SInput\nend"
+  \   "template": ["class %SInput", "end"]
   \ }
 
 " Opens/creates the given file under app/validators:
@@ -48,7 +48,7 @@ let g:rails_projections["app/inputs/*_input.rb"] = {
 let g:rails_projections["app/validators/*.rb"] = {
   \   "command": "validator",
   \   "test": "spec/validators/%i_spec.rb",
-  \   "template": "class %SValidator < ActiveModel::EachValidator\nend"
+  \   "template": ["class %SValidator < ActiveModel::EachValidator", "end"]
   \ }
 
 " Opens/creates the given file under app/workers:
@@ -57,7 +57,7 @@ let g:rails_projections["app/validators/*.rb"] = {
 let g:rails_projections["app/workers/*_worker.rb"] = {
   \   "command": "worker",
   \   "test": "spec/workers/%i_spec.rb",
-  \   "template": "class %SWorker\nend"
+  \   "template": ["class %SWorker", "end"]
   \ }
 
 " Opens/creates the given file under spec/factories:
@@ -68,6 +68,6 @@ let g:rails_projections["spec/factories/*.rb"] = {
   \   "affinity": "collection",
   \   "alternate": "app/models/%i.rb",
   \   "test": "spec/models/%i_spec.rb",
-  \   "template": "FactoryGirl.define do\n  factory :{underscore|singular} do\n  end\nend",
+  \   "template": ["FactoryGirl.define do", "  factory :{underscore|singular} do", "  end", "end"],
   \   "keywords": "factory sequence"
   \ }
