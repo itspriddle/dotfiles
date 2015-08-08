@@ -305,18 +305,17 @@ let g:easy_align_ignore_groups = []
 " Setup custom alignments
 let g:easy_align_delimiters = {
   \ '-':  {
-  \   'pattern': '-',
-  \   'left_margin': 1,
-  \   'right_margin': 1,
+  \   'pattern':       '-',
+  \   'left_margin':   1,
+  \   'right_margin':  1,
   \   'stick_to_left': 0
   \   }
   \ }
 
-vmap <leader>a= :EasyAlign=<cr>
-vmap <leader>a: :EasyAlign:<cr>
-vmap <leader>a, :EasyAlign,<cr>
-vmap <leader>a- :EasyAlign-<cr>
-vmap <leader>a{ :EasyAlign{<cr>
+" Map <leader>a[char] => :EasyAlign[char]<cr>
+vmap <expr> <leader>a ':EasyAlign'.nr2char(getchar()).'<cr>'
+
+" Space doesn't work with the above map, so define it explicitly.
 vmap <leader>a<space> :EasyAlign\<cr>
 
 " }}}
