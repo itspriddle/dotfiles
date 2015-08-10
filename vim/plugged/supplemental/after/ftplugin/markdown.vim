@@ -12,3 +12,6 @@ noremap <buffer> <leader>mq :MarkedQuit<cr>
 
 " Show spelling errors
 setlocal spell
+
+" Set textwidth
+setlocal textwidth=78
