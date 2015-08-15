@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 
-for script in \
-  /usr/local/etc/bash_completion \
-  /usr/local/etc/bash_completion.d/git-completion.bash \
-  /usr/local/etc/bash_completion.d/git-prompt.sh \
-  /usr/local/etc/bash_completion.d/hub.bash_completion.sh \
-  $HOME/.dotfiles/bash/completion.d/*
+for script in $HOME/.dotfiles/bash/completion.d/*
 do
   [ -f "${script}" ] && source "${script}"
 done
