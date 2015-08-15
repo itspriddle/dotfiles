@@ -135,16 +135,6 @@ let g:mapleader = ','
 " Repeat latest f, t, F or T in opposite direction
 nnoremap \ ,
 
-" Toggles {{{
-
-" Toggle Background color
-command ToggleBG let &bg = &bg == 'dark' ? 'light' : 'dark' |
-  \ call s:set_lightline()
-
-nnoremap cob :ToggleBG<cr>
-
-" }}}
-
 " Formatting/editing text {{{
 
 " Format paragraph
