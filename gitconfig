@@ -27,6 +27,7 @@
 
 [merge]
 	ff = only
+	tool = fugitive
 
 [core]
 	whitespace   = fix,-indent-with-non-tab,trailing-space,cr-at-eol
@@ -65,5 +66,8 @@
 
 [include]
 	path = .gitconfig.local
+
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
 
 ; vim:ft=gitconfig
