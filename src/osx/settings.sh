@@ -101,3 +101,7 @@ defaults write com.apple.dock wvous-bl-modifier -int 0
 
 # Time Machine: Prevent  from prompting to use new hard drives as backup volume
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+
+# Screenshots: disable border
+defaults write com.apple.screencapture disable-shadow -bool true
+killall SystemUIServer
