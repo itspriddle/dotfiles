@@ -29,7 +29,7 @@ let g:rails_projections["db/seeds/*.rb"] = {
 " :[ERSTV]form <filename>[!]
 let g:rails_projections["app/forms/*_form.rb"] = {
   \   "command": "form",
-  \   "test": "spec/forms/%i_spec.rb",
+  \   "test": "spec/forms/{singular}_spec.rb",
   \   "template": ["class %SForm", "  include ActiveModel::Model", "end"]
   \ }
 
@@ -38,7 +38,7 @@ let g:rails_projections["app/forms/*_form.rb"] = {
 " :[ERSTV]input <filename>
 let g:rails_projections["app/inputs/*_input.rb"] = {
   \   "command": "input",
-  \   "test": "spec/inputs/%i_spec.rb",
+  \   "test": "spec/inputs/{singular}_spec.rb",
   \   "template": ["class %SInput", "end"]
   \ }
 
@@ -47,7 +47,7 @@ let g:rails_projections["app/inputs/*_input.rb"] = {
 " :[ERSTV]validator <filename>[!]
 let g:rails_projections["app/validators/*.rb"] = {
   \   "command": "validator",
-  \   "test": "spec/validators/%i_spec.rb",
+  \   "test": "spec/validators/{singular}_spec.rb",
   \   "template": ["class %SValidator < ActiveModel::EachValidator", "end"]
   \ }
 
@@ -56,7 +56,7 @@ let g:rails_projections["app/validators/*.rb"] = {
 " :[ERSTV]worker <filename>[!]
 let g:rails_projections["app/workers/*_worker.rb"] = {
   \   "command": "worker",
-  \   "test": "spec/workers/%i_spec.rb",
+  \   "test": "spec/workers/{singular}_spec.rb",
   \   "template": ["class %SWorker", "end"]
   \ }
 
@@ -66,8 +66,21 @@ let g:rails_projections["app/workers/*_worker.rb"] = {
 let g:rails_projections["spec/factories/*.rb"] = {
   \   "command": "factory",
   \   "affinity": "collection",
-  \   "alternate": "app/models/%i.rb",
-  \   "test": "spec/models/%i_spec.rb",
+  \   "alternate": "app/models/{singular}.rb",
+  \   "test": "spec/models/{singular}_spec.rb",
   \   "template": ["FactoryGirl.define do", "  factory :{underscore|singular} do", "  end", "end"],
   \   "keywords": "factory sequence"
+  \ }
+
+" Patch usage of `:A[SV]` to work in a Rails engine where lib specs are in
+" `spec/` rather than `spec/lib`.
+let g:rails_projections["lib/*.rb"] = {
+  \   "type": "lib",
+  \   "test": "spec/{}_spec.rb"
+  \ }
+
+" Patch usage of `:A[SV]` to work in a Rails engine where lib specs are in
+" `spec/` rather than `spec/lib`.
+let g:rails_projections["spec/*_spec.rb"] = {
+  \   "alternate": "lib/{}.rb"
   \ }
