@@ -1,4 +1,4 @@
-ruby_version="ruby-2.1.6"
+ruby_version="ruby-2.1.7"
 # ruby_version="ruby-2.2.2"
 lib_version=${ruby_version##ruby-}
 lib_version="${lib_version%%?}0"
