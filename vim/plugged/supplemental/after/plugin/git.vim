@@ -18,18 +18,6 @@ augroup ft_git
   " :Gfixup => :Gcommit -m 'fixup'
   autocmd User Fugitive command! -buffer Gfixup exe 'Gcommit -m "fixup"'
 
-  " Show git status for the repo
-  autocmd User Fugitive noremap <buffer> <leader>gs :Gstatus<cr>
-
-  " Write the current buffer to git index
-  autocmd User Fugitive noremap <buffer> <leader>gw :Gwrite<cr>
-
-  " Commit current git index
-  autocmd User Fugitive noremap <buffer> <leader>gc :Gcommit -m ""<left>
-
-  " Push current branch upstream
-  autocmd User Fugitive noremap <buffer> <leader>gp :Gpush<cr>
-
   autocmd VimEnter .git/PULLREQ_EDITMSG
     \ setl wrap filetype=gitcommit textwidth=0 linebreak spell
 
