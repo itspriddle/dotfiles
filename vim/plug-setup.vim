@@ -1,47 +1,68 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'jeetsukumaran/vim-filebeagle', { 'on': ['<Plug>FileBeagleOpenCurrentBufferDir', 'FileBeagleBufferDir'] }
+
+" Core
+Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-liquid'
-Plug 'tpope/vim-markdown'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-git'
-Plug 'vim-ruby/vim-ruby'
-Plug 'mileszs/ack.vim'
-Plug 'itspriddle/vim-javascript-indent'
-Plug 'kchmck/vim-coffee-script'
-Plug 'tpope/vim-rake'
-Plug 'tpope/vim-haml'
-Plug 'altercation/vim-colors-solarized'
-Plug 'itspriddle/vim-jquery'
-Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-commentary'
-Plug 'cakebaker/scss-syntax.vim'
-Plug 'ap/vim-css-color'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-repeat'
-Plug 'othree/html5.vim'
 Plug 'tpope/vim-abolish'
-Plug 'groenewege/vim-less'
-Plug 'hail2u/vim-css3-syntax'
-Plug 'itspriddle/ZoomWin'
-Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-dispatch'
-Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-characterize'
-Plug 'milkypostman/vim-togglelist'
-Plug 'evanmiller/nginx-vim-syntax'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-projectionist'
-Plug 'AndrewRadev/splitjoin.vim'
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-scriptease'
+Plug 'tpope/vim-characterize'
+Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-" Plug 'ludovicchabant/vim-gutentags'
+Plug 'itchyny/lightline.vim'
+Plug 'itspriddle/ZoomWin'
+Plug 'milkypostman/vim-togglelist'
+
+" Colors
+Plug 'altercation/vim-colors-solarized'
+
+" File browsing/search
+Plug 'jeetsukumaran/vim-filebeagle', { 'on': ['<Plug>FileBeagleOpenCurrentBufferDir', 'FileBeagleBufferDir'] }
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'mileszs/ack.vim'
+
+" Ruby
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-haml'
+Plug 'vim-ruby/vim-ruby'
+
+" Markdown/Jekyll
+Plug 'tpope/vim-liquid'
+Plug 'tpope/vim-markdown'
+
+" Javascript
+Plug 'itspriddle/vim-javascript-indent'
+Plug 'itspriddle/vim-jquery'
+Plug 'kchmck/vim-coffee-script'
+
+Plug 'othree/html5.vim'
+
+" CSS/SCSS/LESS
+Plug 'groenewege/vim-less'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'ap/vim-css-color'
+
+" Other syntax
+Plug 'evanmiller/nginx-vim-syntax'
+
+" Git integration
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-fugitive'
+
+" ctags integration
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar'
 
 " My stuff
 Plug '~/.vim/plugged/supplemental'
