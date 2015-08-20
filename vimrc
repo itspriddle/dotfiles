@@ -236,17 +236,6 @@ map <c-b> :CtrlPBuffer<cr>
 
 " }}}
 
-" CSS {{{
-
-augroup ft_css
-  autocmd!
-
-  " Fold on @group/@end like CSSEdit
-  autocmd FileType css,scss setl tw=0 foldmethod=manual foldmarker=@group,@end
-augroup END
-
-" }}}
-
 " Dispatch {{{
 
 " Run Dispatch for the current file
