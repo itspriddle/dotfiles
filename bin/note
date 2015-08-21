@@ -1,0 +1,62 @@
+#!/usr/bin/env ruby
+# Usage: note [-h|--help] <note>
+#
+# Adds the given note to Notes.app.
+#
+# Examples:
+#
+#   $ note "This is a note"
+#   $ note "This is the subject
+#
+#   And this is the body"
+#   $ note < notes.txt
+#   $ echo "This is a note" | note
+
+def print_help
+  File.read(__FILE__).lines[1..-1].each do |line|
+    if line =~ /\A#/
+      puts line[2..-1]
+    else
+      break
+    end
+  end
+end
+
+if %w(-h --help).include? ARGV.first
+  print_help
+  exit
+end
+
+if STDIN.tty?
+  unless ARGV.size == 1
+    puts "Invalid arguments\n"
+    print_help
+    exit 1
+  end
+
+  body = ARGV.first.dup
+else
+  body = STDIN.read
+end
+
+name = body.lines.first.chomp
+
+[name, body].each { |str| str.gsub! '"', '\"' }
+
+body.slice! 0, name.size
+body.gsub! "\n", "<br>"
+
+account = ENV.fetch("NOTES_ACCOUNT", "iCloud")
+folder  = ENV.fetch("NOTES_FOLDER", "Notes")
+
+IO.popen "osascript", "w" do |io|
+  io << %{
+    tell application "Notes"
+      activate
+      tell account "#{account}"
+        make new note in folder "#{folder}" with properties { name: "#{name}", body: "#{body}" }
+      end tell
+      return
+    end tell
+  }
+end
