@@ -11,6 +11,16 @@
 #   # Test
 #   ^d
 
+if %w(-h --help).include? ARGV.first
+  File.read(__FILE__).lines[1..-1].each do |line|
+    if line =~ /\A#/
+      puts line[2..-1]
+    else
+      exit
+    end
+  end
+end
+
 require 'net/http'
 require 'json'
 
