@@ -26,7 +26,7 @@ Plug 'milkypostman/vim-togglelist'
 Plug 'altercation/vim-colors-solarized'
 
 " File browsing/search
-Plug 'jeetsukumaran/vim-filebeagle', { 'on': ['<Plug>FileBeagleOpenCurrentBufferDir', 'FileBeagleBufferDir'] }
+Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mileszs/ack.vim'
 
