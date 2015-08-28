@@ -64,6 +64,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 
+" Man viewer
+Plug 'lambdalisue/vim-manpager', { 'on': 'MANPAGER' }
+
 " My stuff
 Plug '~/.vim/plugged/supplemental'
 
