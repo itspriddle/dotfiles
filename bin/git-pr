@@ -24,6 +24,7 @@ set -e
 if [[ "$1" = "--pbcopy" ]]; then
   shift
   printf "%s" $1 | pbcopy
+  open "$(pbpaste)"
   exit
 fi
 
