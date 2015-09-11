@@ -3,10 +3,6 @@
 " Load plugins
 source ~/.vim/plug-setup.vim
 
-" Manually load sensible.vim, to enable syntax, etc before other plugins are
-" loaded
-runtime plugged/sensible/plugin/sensible.vim
-
 " Set colorscheme
 colorscheme default-josh
 
