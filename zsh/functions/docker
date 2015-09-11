@@ -1,0 +1,5 @@
+# Initializes shell for use with docker/docker-machine
+
+[ -z "$DOCKER_HOST" ] && eval "$(docker-machine env dev)"
+
+command docker $@
