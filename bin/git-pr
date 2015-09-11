@@ -51,7 +51,9 @@ if [[ "$branch" = "master" ]]; then
   exit 1
 fi
 
-git push -u origin $branch
+if [[ $(git rev-parse HEAD) != $(git rev-parse @{u} 2> /dev/null) ]]; then
+  git push -u origin $branch
+fi
 
 if [[ -z "$SSH_CONNECTION" ]] && [[ "$OSTYPE" = darwin* ]]; then
   # Hack to copy the pull request URL to the clipboard automatically
