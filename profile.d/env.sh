@@ -21,14 +21,18 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   # Add Postgres.app bin to PATH
   PATH="/Applications/Postgres.app/Contents/Versions/9.4/bin:${PATH}"
 
-  # Double the amount of open files OS X allows
-  ulimit -n 1024
+  if [ "$PS1" ]; then
+    # Double the amount of open files OS X allows
+    ulimit -n 1024
+  fi
 fi
 
 export PATH
 
-# Disable flow control and allow binding ^q and ^s
-stty -ixon -ixoff
+if [ "$PS1" ]; then
+  # Disable flow control and allow binding ^q and ^s
+  stty -ixon -ixoff
+fi
 
 # `ls` colors
 if [ "${OSTYPE:0:6}" = "darwin" ]; then
