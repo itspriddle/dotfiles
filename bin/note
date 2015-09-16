@@ -11,6 +11,11 @@
 #   And this is the body"
 #   $ note < notes.txt
 #   $ echo "This is a note" | note
+#   $ note
+#   This is the subject
+#
+#   And this is the body
+#   ^d
 
 def print_help
   File.read(__FILE__).lines[1..-1].each do |line|
@@ -27,23 +32,28 @@ if %w(-h --help).include? ARGV.first
   exit
 end
 
-if STDIN.tty?
-  unless ARGV.size == 1
-    puts "Invalid arguments\n"
-    print_help
-    exit 1
-  end
-
+if ARGV.size > 1
+  puts "Invalid arguments\n"
+  print_help
+  exit 1
+elsif ARGV.size == 1
   body = ARGV.first.dup
 else
   body = STDIN.read
 end
 
-name = body.lines.first.chomp
+name = body.lines.first.rstrip
+
+if name.empty?
+  puts "Invalid note\n"
+  print_help
+  exit 1
+end
 
 [name, body].each { |str| str.gsub! '"', '\"' }
 
 body.slice! 0, name.size
+body.strip!
 body.gsub! "\n", "<br>"
 
 account = ENV.fetch("NOTES_ACCOUNT", "iCloud")
