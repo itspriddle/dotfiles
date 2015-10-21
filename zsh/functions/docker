@@ -1,5 +1,12 @@
-# Initializes shell for use with docker/docker-machine
+if [ -z "$DOCKER_HOST" ]; then
+  # Start docker-machine if it is not running
+  [ "$(docker-machine status dev)" != "Running" ] && docker-machine start dev
 
-[ -z "$DOCKER_HOST" ] && eval "$(docker-machine env dev)"
+  # Initializes shell for use with docker/docker-machine
+  eval "$(docker-machine env dev)"
+fi
 
+# Run `docker`
 command docker $@
+
+# vim:ft=zsh
