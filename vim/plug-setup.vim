@@ -1,6 +1,5 @@
 call plug#begin('~/.vim/plugged')
 
-
 " Core
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-endwise'
@@ -65,7 +64,7 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 
 " Man viewer
-Plug 'lambdalisue/vim-manpager', { 'on': 'MANPAGER' }
+Plug 'lambdalisue/vim-manpager'
 
 " My stuff
 Plug '~/.vim/plugged/supplemental'
