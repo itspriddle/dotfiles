@@ -21,6 +21,9 @@ augroup ft_git
   autocmd VimEnter .git/PULLREQ_EDITMSG
     \ setl wrap filetype=gitcommit textwidth=0 linebreak spell
 
+  autocmd BufReadPost .git/PULLREQ_EDITMSG
+    \ execute "normal! gg"
+
   " Replace GitHub issue/pull URLS with Markdown shorthand syntax
   " Eg: https://github.com/itspriddle/vim-config/issues/1 becomes
   "     itspriddle/vim-config#1
