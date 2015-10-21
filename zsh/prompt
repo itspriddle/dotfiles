@@ -22,7 +22,7 @@ _josh_prompt_precmd() {
     print -Pn "\e]0;${SSH_CONNECTION:+%n@%M:}%~\a"
   fi
 
-  vcs_info
+  vcs_info 2> /dev/null
 
   if [[ -n $vcs_info_msg_0_ ]]; then
     # Strip space from " |"
