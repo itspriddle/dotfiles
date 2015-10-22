@@ -37,7 +37,7 @@
 	pretty = format:%C(red)%h%Creset%C(yellow)%d%Creset %C(magenta)%an%Creset: %s %C(green)(%ar)%Creset
 
 [alias]
-	amend            = commit --amend -C HEAD
+	amend            = !git commit --amend --date=\"$(date)\" -C HEAD
 	branch-name      = rev-parse --abbrev-ref HEAD
 	copy-last-sha    = !git last-sha | tr -d '\n' | pbcopy
 	full-log         = log --format=fuller
