@@ -1,6 +1,3 @@
-" Use Marked.app (v1)
-let g:marked_app = "Marked"
-
 " Setup ``` style syntax highlighting
 let g:markdown_fenced_languages = ['ruby', 'erb=eruby', 'php', 'sh']
 
