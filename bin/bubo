@@ -12,7 +12,7 @@ brew update
 
 outdated=$(brew outdated --verbose)
 
-echo -e "\033[34m==>\033[0m \033[01mOutdated brews\033[0m"
+echo -e "\n\033[34m==>\033[0m \033[01mOutdated brews\033[0m"
 
 if [[ -n $outdated ]]; then
   echo "$outdated"
