@@ -30,7 +30,11 @@ let g:rails_projections["db/seeds/*.rb"] = {
 let g:rails_projections["app/forms/*_form.rb"] = {
   \   "command": "form",
   \   "test": "spec/forms/{singular}_spec.rb",
-  \   "template": ["class %SForm", "  include ActiveModel::Model", "end"]
+  \   "template": [
+  \     "class {camelcase|capitalize|colons}Form",
+  \     "  include ActiveModel::Model",
+  \     "end"
+  \   ]
   \ }
 
 " Opens the given file under app/inputs:
@@ -39,7 +43,10 @@ let g:rails_projections["app/forms/*_form.rb"] = {
 let g:rails_projections["app/inputs/*_input.rb"] = {
   \   "command": "input",
   \   "test": "spec/inputs/{singular}_spec.rb",
-  \   "template": ["class %SInput", "end"]
+  \   "template": [
+  \     "class {camelcase|capitalize|colons}Input",
+  \     "end"
+  \   ]
   \ }
 
 " Opens/creates the given file under app/validators:
@@ -48,7 +55,10 @@ let g:rails_projections["app/inputs/*_input.rb"] = {
 let g:rails_projections["app/validators/*.rb"] = {
   \   "command": "validator",
   \   "test": "spec/validators/{singular}_spec.rb",
-  \   "template": ["class %SValidator < ActiveModel::EachValidator", "end"]
+  \   "template": [
+  \     "class {camelcase|capitalize|colons}Validator < ActiveModel::EachValidator",
+  \     "end"
+  \   ]
   \ }
 
 " Opens/creates the given file under app/workers:
@@ -57,7 +67,10 @@ let g:rails_projections["app/validators/*.rb"] = {
 let g:rails_projections["app/workers/*_worker.rb"] = {
   \   "command": "worker",
   \   "test": "spec/workers/{singular}_spec.rb",
-  \   "template": ["class %SWorker", "end"]
+  \   "template": [
+  \     "class {camelcase|capitalize|colons}Worker",
+  \     "end"
+  \   ]
   \ }
 
 " Opens/creates the given file under spec/factories:
@@ -68,7 +81,12 @@ let g:rails_projections["spec/factories/*.rb"] = {
   \   "affinity": "collection",
   \   "alternate": "app/models/{singular}.rb",
   \   "test": "spec/models/{singular}_spec.rb",
-  \   "template": ["FactoryGirl.define do", "  factory :{underscore|singular} do", "  end", "end"],
+  \   "template": [
+  \     "FactoryGirl.define do",
+  \     "  factory :{underscore|singular} do",
+  \     "  end",
+  \     "end"
+  \   ],
   \   "keywords": "factory sequence"
   \ }
 
