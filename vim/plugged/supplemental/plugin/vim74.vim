@@ -10,4 +10,4 @@ endif
 " one from Vim 7.3. (see http://stackoverflow.com/a/16920294).
 if exists("&regexpengine")
   set regexpengine=1
-end
+endif
