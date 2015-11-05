@@ -191,12 +191,12 @@ nnoremap <leader>h :help<space>
 
 " Plugin Settings/Filetype maps {{{
 
-" ack.vim {{{
+" ag.vim {{{
 
-noremap <leader>f :Ack!<space>
+noremap <leader>f :Ag!<space>
 
 if executable("ag")
-  let g:ackprg = 'ag --vimgrep'
+  let g:ag_prg = "ag --vimgrep"
 endif
 
 " }}}

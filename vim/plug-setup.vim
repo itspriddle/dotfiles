@@ -28,7 +28,7 @@ Plug 'altercation/vim-colors-solarized'
 " File browsing/search
 Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'mileszs/ack.vim'
+Plug 'rking/ag.vim'
 
 " Ruby
 Plug 'tpope/vim-rails'
