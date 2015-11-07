@@ -62,7 +62,6 @@ Plug 'tpope/vim-fugitive'
 
 " ctags integration
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'majutsushi/tagbar'
 
 " Man viewer
 Plug 'lambdalisue/vim-manpager'
