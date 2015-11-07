@@ -389,15 +389,6 @@ let g:splitjoin_ruby_trailing_comma = 0
 
 " }}}
 
-" tagbar.vim {{{
-
-let g:tagbar_autofocus = 1
-let g:tagbar_compact   = 1
-
-noremap <leader>T :TagbarToggle<cr>
-
-" }}}
-
 " togglelist.vim
 
 let g:toggle_list_no_mappings = 1
