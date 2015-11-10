@@ -112,16 +112,6 @@ set sidescrolloff=0
 
 set wildmode=longest:full,full
 
-" Ignore these patterns
-set wildignore+=.hg,.git,.svn,*.orig                  " Version control
-set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg,*.icns " binary images
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest      " compiled object files
-set wildignore+=*.spl                                 " compiled spelling word lists
-set wildignore+=*.sw?,.netrwhist                      " Vim
-set wildignore+=*.DS_Store,Icon\?,*.dfont             " OS X
-set wildignore+=*.rbc                                 " Rubinius
-set wildignore+=_site                                 " Jekyll
-
 " Allow <c-z> in maps to open completion menu
 set wildcharm=<c-z>
 
