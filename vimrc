@@ -25,6 +25,9 @@ set modelines=1
 " Don't give the intro message when starting Vim
 set shortmess+=I
 
+" Hide ins-completion-menu messages
+set shortmess+=c
+
 " Hide "-- INSERT --" etc on last line (lightline does this already)
 set noshowmode
 
