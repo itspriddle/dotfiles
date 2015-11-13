@@ -99,14 +99,18 @@ module Kernel
 
   # Private: Copies string to the clipboard. OS X only.
   #
-  # str - A String
+  # str - A String, default is the last item evaluated by IRB
   #
   # Example
   #
   #     copy "Some text"
   #
+  #     foo = :bar
+  #
+  #     copy #=> Copies "bar" to clipboard
+  #
   # Returns an IO::Object
-  def copy(str)
+  def copy(str = irb_context.last_value)
     IO.popen('pbcopy', 'w') { |f| f << str.to_s }
   end if RUBY_PLATFORM =~ /darwin/
 
