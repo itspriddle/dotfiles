@@ -138,9 +138,6 @@ inoremap <C-q> <C-o>gqap
 inoremap <C-j> <C-o>gj
 inoremap <C-k> <C-o>gk
 
-" bind ctrl-l to hashrocket
-inoremap <C-l> <space>=><space>
-
 " }}}
 
 " Text Movement {{{
@@ -405,6 +402,5 @@ if filereadable(expand('~/.vimrc.local'))
 endif
 
 " }}}
-
 
 " vim:ft=vim:ts=2:sw=2:sts=2:et
