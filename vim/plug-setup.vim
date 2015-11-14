@@ -59,6 +59,7 @@ Plug 'ap/vim-css-color'
 
 " Other syntax
 Plug 'evanmiller/nginx-vim-syntax'
+Plug 'pearofducks/ansible-vim'
 
 " Git integration
 Plug 'tpope/vim-git'
