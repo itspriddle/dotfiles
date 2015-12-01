@@ -24,11 +24,19 @@ augroup ft_git
   autocmd BufReadPost .git/PULLREQ_EDITMSG
     \ execute "normal! gg"
 
-  " Replace GitHub issue/pull URLS with Markdown shorthand syntax
-  " Eg: https://github.com/itspriddle/vim-config/issues/1 becomes
-  "     itspriddle/vim-config#1
+  " Replace GitHub issue/pull/commit URLS with Markdown shorthand syntax
+  "
+  " Eg:
+  "   https://github.com/itspriddle/vim-config/issues/1 becomes
+  "   itspriddle/vim-config#1
+  "
+  "   https://github.com/itspriddle/vim-config/pull/1 becomes
+  "   itspriddle/vim-config#1
+  "
+  "   https://github.com/itspriddle/vim-config/commit/deadbeef becomes
+  "   itspriddle/vim-config@deadbeef
   autocmd BufWritePre .git/PULLREQ_EDITMSG
-    \ execute 'keeppatterns %s,\vhttps?://github.com/([^/]+)/([^/]+)/(pull|issues)/([0-9]+),\1/\2#\4,gei'
+    \ execute 'keeppatterns %s,\vhttps?://github.com/([^/]+)/([^/]+)/(pull|issues|commit)/(\x+),\=submatch(1)."/".submatch(2).(submatch(3) == "commit" ? "@" : "#").(submatch(3) == "commit" ? submatch(4)[0:7] : submatch(3)),gei'
 
   " Replace public Dropbox URLs with download URLs when used for Markdown
   " images.
