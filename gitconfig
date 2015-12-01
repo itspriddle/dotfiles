@@ -50,7 +50,7 @@
 	undo             = reset --soft HEAD^
 	unstage          = reset HEAD -- ...
 	web              = instaweb --httpd=webrick -b open
-	prune-branches   = !git branch --merged | grep -v "\\\\*" | xargs -n 1 git branch -d
+	prune-branches   = !git branch --merged | grep -v '^master$' | grep -v "\\\\*" | xargs -n 1 git branch -d
 	fetch-pr         = "!f() { git fetch origin refs/pull/$1/head:pr/$1; } ; f"
 	recent-branches  = for-each-ref --count=10 --sort=-committerdate --format=\"%(refname:short)\" refs/heads/
 	fixup            = "!f() { git commit $* --fixup HEAD; }; f"
