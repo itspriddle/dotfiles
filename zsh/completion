@@ -48,8 +48,7 @@ zstyle ":completion:*" list-colors ""
   zstyle ':completion:*:(ssh|scp):*:hosts' hosts $_ssh_hosts
 
   # Disable completion on users with ssh/scp
-  _ssh_users=()
-  zstyle ':completion:*:(ssh|scp)*:users' users $_ssh_users
+  zstyle ':completion:*:(ssh|scp)*:users' users
 
   # ping host completion
   zstyle ':completion:*:ping:*' hosts google.com 192.168.1.1 ${_ssh_hosts[*]}
