@@ -51,7 +51,7 @@ zstyle ":completion:*" list-colors ""
   zstyle ':completion:*:(ssh|scp)*:users' users
 
   # ping host completion
-  zstyle ':completion:*:ping:*' hosts google.com 192.168.1.1 ${_ssh_hosts[*]}
+  zstyle ':completion:*:ping:*' hosts google.com 10.0.1.1 ${_ssh_hosts[*]}
 }
 
 # Ignore _function files
