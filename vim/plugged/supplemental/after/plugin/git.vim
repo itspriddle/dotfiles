@@ -36,7 +36,7 @@ augroup ft_git
   "   https://github.com/itspriddle/vim-config/commit/deadbeef becomes
   "   itspriddle/vim-config@deadbeef
   autocmd BufWritePre .git/PULLREQ_EDITMSG
-    \ execute 'keeppatterns %s,\vhttps?://github.com/([^/]+)/([^/]+)/(pull|issues|commit)/(\x+),\=submatch(1)."/".submatch(2).(submatch(3) == "commit" ? "@" : "#").(submatch(3) == "commit" ? submatch(4)[0:7] : submatch(3)),gei'
+    \ execute 'keeppatterns %s,\vhttps?://github.com/([^/]+)/([^/]+)/(pull|issues|commit)/(\x+),\=submatch(1)."/".submatch(2).(submatch(3) == "commit" ? "@" : "#").(submatch(3) == "commit" ? submatch(4)[0:7] : submatch(4)),gei'
 
   " Replace public Dropbox URLs with download URLs when used for Markdown
   " images.
