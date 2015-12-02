@@ -1,51 +1,54 @@
 #!/usr/bin/env bash
 # Usage: viscosity [command] [vpn]
 #
-# Connect/disconnect from a VPN using Viscosity.app on OS X. Specify a default
-# VPN with `export VISCOSITY_DEFAULT_VPN="My VPN".
+# Connect/disconnect from a VPN using Viscosity.app on OS X.
 #
 # Help:
-#   viscosity                       Disconnect/connect to the default VPN
-#   viscosity connect               Connect to the default VPN
-#   viscosity disconnect            Disconnect from the default VPN
-#   viscosity status                Show connection status of the default VPN
-#   viscosity connect "VPN 2"       Connect to the VPN named "VPN 2"
-#   viscosity disconnect "VPN 2"    Disconnect from the VPN named "VPN 2"
-#   viscosity status "VPN 2"        Show connection status of the VPN named "VPN 2"
-#   viscosity -h                    Show this help message
+#   viscosity connect-all           Connect to all VPNs
+#   viscosity disconnect-all        Disconnect from all VPNs
+#   viscosity connect "My VPN"      Connect to the VPN named "My VPN"
+#   viscosity disconnect "My VPN"   Disconnect from the VPN named "My VPN"
+#   viscosity status                Show connection status for all VPNs
+#   viscosity status "My VPN"       Show connection status of the VPN named "My VPN"
+#   viscosity help                  Show this help message
 
-[[ $DEBUG ]] && set -x
-
-# Print help text and exit.
-if [[ "$1" = "-h" ]]; then
-  sed -ne '/^#/!q;s/.\{1,2\}//;1d;p' < "$0"
-  exit
-fi
-
-vpn="${2-${VISCOSITY_DEFAULT_VPN}}"
-
-if [[ -z "${vpn}" ]]; then
-  echo "No VPN specified"
-  exit 1
-fi
+[[ "${DEBUG}" ]] && set -x
 
 case "${1}" in
+  -h|--help|help)
+    sed -ne '/^#/!q;s/.\{1,2\}//;1d;p' < "${0}"
+    exit
+    ;;
+  connect-all|disconnect-all)
+    osascript -e "tell application \"Viscosity\" to ${1//-/}"
+    ;;
   connect|disconnect)
-    osascript -e "tell application \"Viscosity\" to ${1} \"${vpn}\"" &&
-      echo "${1}ed" || echo "couldn't ${1}"
+    if [[ -z "${2}" ]]; then
+      echo "No VPN specified"
+      exit 1
+    fi
+    osascript -e "tell application \"Viscosity\" to ${1} \"${2}\""
     ;;
   status)
-    osascript -e "tell application \"Viscosity\" to return state of (connections where name is \"${vpn}\")"
-    ;;
-  "")
-    connection=$($0 status "${vpn}")
-    if [[ "${connection}" = "Disconnected" ]]; then
-      $0 connect "${vpn}"
-    elif [[ "${connection}" = "Connected" ]]; then
-      $0 disconnect "${vpn}"
+    if [[ "${2}" ]]; then
+      osascript -e "tell application \"Viscosity\" to return state of (connections where name is \"${2}\")"
     else
-      echo "Couldn't determine status of ${vpn}"
-      exit 1
+      osascript -e '
+        tell application "Viscosity"
+          set output to ""
+          set i to 0
+          repeat with _conn in connections
+            set i to i + 1
+            set _vpn to name of _conn
+            set _state to state of _conn
+            set output to output & _vpn & ": " & _state
+            if i < count of connections
+              set output to output & "\n"
+            end if
+          end repeat
+          output
+        end tell
+      '
     fi
     ;;
   *)
