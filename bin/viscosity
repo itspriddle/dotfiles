@@ -4,8 +4,8 @@
 # Connect/disconnect from a VPN using Viscosity.app on OS X.
 #
 # Help:
-#   viscosity connect-all           Connect to all VPNs
-#   viscosity disconnect-all        Disconnect from all VPNs
+#   viscosity connect               Connect to all VPNs
+#   viscosity disconnect            Disconnect from all VPNs
 #   viscosity connect "My VPN"      Connect to the VPN named "My VPN"
 #   viscosity disconnect "My VPN"   Disconnect from the VPN named "My VPN"
 #   viscosity status                Show connection status for all VPNs
@@ -15,19 +15,16 @@
 [[ "${DEBUG}" ]] && set -x
 
 case "${1}" in
-  -h|--help|help)
+  ""|-h|--help|help)
     sed -ne '/^#/!q;s/.\{1,2\}//;1d;p' < "${0}"
     exit
     ;;
-  connect-all|disconnect-all)
-    osascript -e "tell application \"Viscosity\" to ${1//-/}"
-    ;;
   connect|disconnect)
     if [[ -z "${2}" ]]; then
-      echo "No VPN specified"
-      exit 1
+      osascript -e "tell application \"Viscosity\" to ${1}all"
+    else
+      osascript -e "tell application \"Viscosity\" to ${1} \"${2}\""
     fi
-    osascript -e "tell application \"Viscosity\" to ${1} \"${2}\""
     ;;
   status)
     if [[ "${2}" ]]; then
