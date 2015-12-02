@@ -9,7 +9,7 @@ if [ -r "${HOME}/.vim/plugged/vim-manpager" ]; then
   export MANPAGER="vim -c MANPAGER -"
 fi
 
-PATH="${HOME}/.dotfiles/bin:/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/sbin:/sbin:/usr/bin:/bin"
+PATH="${HOME}/.dotfiles/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin:/bin"
 
 if [ "${OSTYPE:0:6}" = darwin ]; then
   # Disable emoji when installing packages with Homebrew
