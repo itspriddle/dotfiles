@@ -5,8 +5,8 @@
 #
 # Help:
 #   viscosity connect               Connect to all VPNs
-#   viscosity disconnect            Disconnect from all VPNs
 #   viscosity connect "My VPN"      Connect to the VPN named "My VPN"
+#   viscosity disconnect            Disconnect from all VPNs
 #   viscosity disconnect "My VPN"   Disconnect from the VPN named "My VPN"
 #   viscosity status                Show connection status for all VPNs
 #   viscosity status "My VPN"       Show connection status of the VPN named "My VPN"
