@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+require "base64"
+require "open-uri"
+
+unless file = ARGV.first
+  abort "Specify a file"
+end
+
+if m = file.match(/\Adata:image\/(?<content_type>.+);base64,(?<data>.+)\z/)
+  filename = "image.#{m[:content_type]}"
+
+  if File.exist? filename
+    abort "#{filename} already exists!"
+  else
+    File.open(filename, "w") do |f|
+      f.puts Base64.strict_decode64(m[:data])
+    end
+  end
+else
+  data = Base64.strict_encode64(open(file).read).chomp
+
+  if ext = File.extname(file)
+    content_type = "image/#{ext[1..-1]}"
+  end
+
+  puts "data:#{content_type};base64,#{data}"
+end
