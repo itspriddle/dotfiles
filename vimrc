@@ -49,25 +49,15 @@ set nojoinspaces
 
 " Invisibles {{{
 
-" Show this symbol on lines that are wrapped
-set showbreak=↪
-
-" Set listchars
 if !has('win32') && (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8')
   let &listchars = "tab:\u21e5 ,trail:\u2423,extends:\u21c9,precedes:\u21c7,nbsp:\u00b7"
+  let &showbreak = "\u21aa"
 endif
 
 " }}}
 
-" Indentation {{{
-
-" set nosmartindent
-" set nocindent
-
-" }}}
-
 " Searching {{{
-"
+
 set hlsearch
 set ignorecase
 set smartcase
@@ -289,7 +279,7 @@ let g:liquid_highlight_types = ['ruby', 'javascript']
 
 function s:set_lightline()
   if has('gui_running') || (exists('g:colors_name') && g:colors_name == 'solarized')
-    let g:lightline = { 'colorscheme':  'solarized_'.&bg }
+    let g:lightline = { 'colorscheme': 'solarized_'.&bg }
     call lightline#init()
     call lightline#update()
   endif
