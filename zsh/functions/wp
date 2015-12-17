@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+# WP-CLI pages output via `less -r` automatically. This script pipes all `wp`
+# output through `cat` to disable paging.
+#
+# NOTE: Once https://github.com/wp-cli/wp-cli/commit/17e2877 has shipped, this
+# can probably be just `alias wp='PAGER=cat wp'`
+
+local args
+args=("$@")
+
+# Assume we want colors if `wp` is being called with output to a terminal,
+# e.g. not piped or redirected to a file. Note that colors can still be
+# disabled with `wp --no-color`.
+[ -t 1 ] && args=("--color" "$@")
+
+# Run the actual `wp` command.
+command wp "${args[@]}" | cat
+
+# Return the exit status from `wp`, not `cat`.
+return "${pipestatus[1]}"
