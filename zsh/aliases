@@ -52,6 +52,7 @@ alias opendns='echo "208.67.222.222 208.67.220.220"'
 alias what-is-my-ip="curl -s checkip.dyndns.org | grep --color=never -Eo '[0-9\\.]+'"
 alias copy-new-uuid="uuidgen | tr -d '\\n' | pbcopy"
 alias gist="gist -p"
+alias wp="PAGER=cat wp"
 
 # OS X
 if [[ $OSTYPE == darwin* ]]; then
