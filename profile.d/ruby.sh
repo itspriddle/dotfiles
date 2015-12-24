@@ -1,5 +1,4 @@
-ruby_version="ruby-2.1.8"
-# ruby_version="ruby-2.2.2"
+ruby_version="ruby-2.2.4"
 lib_version=${ruby_version##ruby-}
 lib_version="${lib_version%%?}0"
 
@@ -16,6 +15,9 @@ alias ruby-install-default="ruby-install --src-dir $HOME/work/src --cleanup ruby
 
 # Run `trust-binstubs` in the root of repositories you trust
 export PATH=".git/safe/../../bin:.git/safe/../../.bundle/bin:$PATH"
+
+# Hide Rails 4.1.x warnings for now
+export RUBYOPT=-W0
 
 unset ruby_version lib_version
 
