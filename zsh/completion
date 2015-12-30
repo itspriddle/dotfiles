@@ -5,6 +5,7 @@ compinit -i
 setopt AUTO_LIST
 
 # Insert the first match immediately on an ambiguous completion.
+# Holy shit this is obnoxious
 # setopt MENU_COMPLETE
 
 # Cache completions
