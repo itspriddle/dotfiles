@@ -4,10 +4,6 @@ compinit -i
 # Automatically list choices on ambiguous completion.
 setopt AUTO_LIST
 
-# Insert the first match immediately on an ambiguous completion.
-# Holy shit this is obnoxious
-# setopt MENU_COMPLETE
-
 # Cache completions
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$HOME/.zcompcache"
