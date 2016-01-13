@@ -19,7 +19,7 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   export MAKEFLAGS="-j9"
 
   # Add Postgres.app bin to PATH
-  PATH="/Applications/Postgres.app/Contents/Versions/9.4/bin:${PATH}"
+  PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:${PATH}"
 
   if [ "$PS1" ]; then
     # Double the amount of open files OS X allows
