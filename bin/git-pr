@@ -1,21 +1,55 @@
 #!/usr/bin/env bash
 # Usage: git pr [options]
 #
-# Pushes the current branch upstream to GitHub and opens a pull request. On OS
-# X, the pull request URL is copied to the clipboard. Requires a repo with
-# github.com as the remote named origin and the `hub` CLI tool
-# (https://github.com/github/hub). Options are passed to the `hub
-# pull-request` command.
+# This is a wrapper for the `hub` CI tool (https://github.com/github/hub) that
+# makes it easier to open and browse GitHub pull requests.
 #
-# Examples, see also `hub pull-request --help`:
+# OPENING A NEW PULL REQUEST
 #
-#     $ git pr
-#     $ git pr -b base-branch
-#     $ git pr -m "This is my PR"
-#     $ git pr -m "This is my PR subject
+#   The default behavior of `git pr` is to pushes the current branch upstream
+#   to GitHub and open a new pull request with the `hub pull-request` command.
+#   On OS X, the pull request URL is copied to the clipboard and opened in the
+#   browser. On other systems the pull request URL is printed. Options (other
+#   than `--browse` and `--pbcopy`) are passed to `hub pull-request`.
 #
-#       And this is the body"
-#     $ echo "This is my PR" | git pr -F -
+#   Examples, see also `hub pull-request --help`:
+#
+#   Open a new pull request for HEAD to be merged into `master`. $EDITOR is
+#   launched to compose the pull request message.
+#   $ git pr
+#
+#   Same as above, but the pull request will be merged into `base-branch`.
+#   $ git pr -b base-branch
+#
+#   Open a new pull request for HEAD to be merged into `master` with the
+#   subject "This is my PR" and an empty body.
+#   $ git pr -m "This is my PR"
+#
+#   Open a new pull request for HEAD to be merged into `master` with the
+#   subject "This is my PR" and the body "And this is the body".
+#   $ git pr -m "This is my PR subject
+#
+#     And this is the body"
+#   $ echo "This is my PR" | git pr -F -
+#
+#   Open a new pull request for head to be merged into master with the
+#   contents of the last commit message as the subject/body.
+#   $ git pr -F <(git show -s --format='%B')
+#
+# VIEWING AN EXISTING PULL REQUESTS ON GITHUB.COM
+#
+#   The `--browse` flag can be used to open an existing pull request on
+#   GitHub.com in your browser using the `hub browse` command. This is done by
+#   comparing the SHA for HEAD against remote refs on GitHub. Options other
+#   than `--browse` itself are passed to `hub browse`.
+#
+#   Examples, see also `hub browse --help`:
+#
+#   Open the pull request for HEAD.
+#   $ git pr --browse
+#
+#   Just print the URL, don't open it in the browser.
+#   $ git pr --browse -u
 
 set -e
 
@@ -34,11 +68,13 @@ if [[ "$1" = "-h" ]]; then
   exit
 fi
 
+# Ensure `hub` is available
 if ! type hub &> /dev/null; then
   echo "Error: \`hub\` not found. Install from https://github.com/github/hub"
   exit 1
 fi
 
+# Ensure this is a GitHub repo
 if ! git config --get remote.origin.url 2> /dev/null | grep github &> /dev/null; then
   echo "Error: Remote \`origin' is not on GitHub, or is not setup."
   exit 1
@@ -46,11 +82,34 @@ fi
 
 branch=$(git symbolic-ref HEAD | sed 's|refs/heads/||g')
 
+# Bail if master is checked out. You can't open a PR on master.
 if [[ "$branch" = "master" ]]; then
   echo "Error: You are on \`master', checkout a new branch first!"
   exit 1
 fi
 
+# Open the PR for HEAD in a browser if it exists
+if [[ "$1" = "--browse" ]]; then
+  shift
+
+  sha="$(git rev-parse HEAD)"
+
+  pull="$(
+    git ls-remote origin |
+      grep "${sha}.*pull.*" |
+      head -1 |
+      awk '{ gsub(/[^[:digit:]]/, "", $2); print $2 }'
+  )"
+
+  if [[ "$pull" ]]; then
+    exec hub browse "${@}" -- "pull/${pull}"
+  else
+    echo "Couldn't find a pull request for ${sha:0:7}"
+    exit 1
+  fi
+fi
+
+# Push the current branch upstream if it isn't up to date
 if [[ $(git rev-parse HEAD) != $(git rev-parse @{u} 2> /dev/null) ]]; then
   git push -u origin $branch
 fi
