@@ -67,4 +67,8 @@ zstyle ':completion:*:*:kill:*' insert-ids single
 
 zstyle ':completion:*:killall:*' command 'ps -u $USER -o comm'
 
+# Ignore completion on some files when there's an ambiguous match
+zstyle ':completion:*:*:*:*:*files' ignored-patterns 'appspec.yml'
+
+
 # vim:set ft=zsh:
