@@ -82,7 +82,7 @@ if [[ "$(git ls-remote --get-url 2> /dev/null)" != *"github"* ]]; then
 fi
 
 # Get the current branch name.
-branch=$(git symbolic-ref HEAD | sed 's|^refs/heads/||')
+branch="$(git symbolic-ref HEAD | sed 's|^refs/heads/||')"
 
 # Bail if master is checked out. You can't open a PR on master.
 if [[ "$branch" = "master" ]]; then
