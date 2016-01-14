@@ -96,10 +96,11 @@ if [[ "$1" = "--browse" ]]; then
   sha="$(git rev-parse HEAD)"
 
   pull="$(
-    git ls-remote origin |
-      grep "${sha}.*pull.*" |
-      head -1 |
-      awk '{ gsub(/[^[:digit:]]/, "", $2); print $2 }'
+    git ls-remote origin | awk -v line="^${sha}.*pull.*" ' $0 ~ line {
+      gsub(/[^[:digit:]]/, "", $2)
+      print $2
+      exit
+    }'
   )"
 
   if [[ "$pull" ]]; then
