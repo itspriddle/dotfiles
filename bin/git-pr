@@ -6,9 +6,9 @@
 #
 # OPENING A NEW PULL REQUEST
 #
-#   The default behavior of `git pr` is to pushes the current branch upstream
-#   to GitHub and open a new pull request with the `hub pull-request` command.
-#   On OS X, the pull request URL is copied to the clipboard and opened in the
+#   The default behavior of `git pr` is to push the current branch upstream to
+#   GitHub and open a new pull request with the `hub pull-request` command. On
+#   OS X, the pull request URL is copied to the clipboard and opened in the
 #   browser. On other systems the pull request URL is printed. Options (other
 #   than `--browse` and `--pbcopy`) are passed to `hub pull-request`.
 #
@@ -30,11 +30,10 @@
 #   $ git pr -m "This is my PR subject
 #
 #     And this is the body"
-#   $ echo "This is my PR" | git pr -F -
 #
-#   Open a new pull request for head to be merged into master with the
-#   contents of the last commit message as the subject/body.
-#   $ git pr -F <(git show -s --format='%B')
+#   Open a new pull using STDIN as the commit message. In this case the
+#   contents of the last commit message are used as the subject/body.
+#   $ git show -s --format="%B" | git pr -F -
 #
 # VIEWING AN EXISTING PULL REQUESTS ON GITHUB.COM
 #
