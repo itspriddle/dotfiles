@@ -79,7 +79,7 @@ if [[ "$(git ls-remote --get-url 2> /dev/null)" != *"github"* ]]; then
   exit 1
 fi
 
-branch=$(git symbolic-ref HEAD | sed 's|refs/heads/||g')
+branch=$(git symbolic-ref HEAD | sed 's|^refs/heads/||')
 
 # Bail if master is checked out. You can't open a PR on master.
 if [[ "$branch" = "master" ]]; then
