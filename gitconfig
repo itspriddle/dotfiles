@@ -56,6 +56,7 @@
 	fixup            = "!f() { git commit $* --fixup HEAD; }; f"
 	pulls            = browse -- pulls
 	strip-whitepsace = !git ls-files | xargs perl -i -pe 's/[\\t ]+$//g'
+	prb              = pr --browse
 
 [advice]
 	statusHints        = false
