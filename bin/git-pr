@@ -74,7 +74,7 @@ if ! type hub &> /dev/null; then
 fi
 
 # Ensure this is a GitHub repo
-if ! git config --get remote.origin.url 2> /dev/null | grep github &> /dev/null; then
+if [[ "$(git ls-remote --get-url 2> /dev/null)" != *"github"* ]]; then
   echo "Error: Remote \`origin' is not on GitHub, or is not setup."
   exit 1
 fi
