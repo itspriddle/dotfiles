@@ -52,6 +52,8 @@
 
 set -e
 
+[[ "$DEBUG" ]] && set -x
+
 # Internal, used with the $BROWSER variable to copy the pull request URL to
 # the clipboard.
 if [[ "$1" = "--pbcopy" ]]; then
