@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Usage: git pr [options]
 #
-# This is a wrapper for the `hub` CI tool (https://github.com/github/hub) that
-# makes it easier to open and browse GitHub pull requests.
+# This is a wrapper for the `hub` CLI tool (https://github.com/github/hub)
+# that makes it easier to open and browse GitHub pull requests.
 #
 # OPENING A NEW PULL REQUEST
 #
@@ -29,7 +29,7 @@
 #   subject "This is my PR" and the body "And this is the body".
 #   $ git pr -m "This is my PR subject
 #
-#     And this is the body"
+#   And this is the body"
 #
 #   Open a new pull using STDIN as the commit message. In this case the
 #   contents of the last commit message are used as the subject/body.
@@ -69,18 +69,19 @@ if [[ "$1" = "-h" ]]; then
   exit
 fi
 
-# Ensure `hub` is available
+# Ensure `hub` is available.
 if ! type hub &> /dev/null; then
   echo "Error: \`hub\` not found. Install from https://github.com/github/hub"
   exit 1
 fi
 
-# Ensure this is a GitHub repo
+# Ensure this is a GitHub repo.
 if [[ "$(git ls-remote --get-url 2> /dev/null)" != *"github"* ]]; then
   echo "Error: Remote \`origin' is not on GitHub, or is not setup."
   exit 1
 fi
 
+# Get the current branch name.
 branch=$(git symbolic-ref HEAD | sed 's|^refs/heads/||')
 
 # Bail if master is checked out. You can't open a PR on master.
@@ -89,12 +90,15 @@ if [[ "$branch" = "master" ]]; then
   exit 1
 fi
 
-# Open the PR for HEAD in a browser if it exists
+# Open the PR for HEAD in a browser if it exists.
 if [[ "$1" = "--browse" ]]; then
   shift
 
+  # Get the current revision
   sha="$(git rev-parse HEAD)"
 
+  # GitHub stores remotes for each PR as `refs/pull/#/head`. Find the first
+  # one that matches the current revision.
   pull="$(
     git ls-remote origin | awk -v line="^${sha}.*pull.*" ' $0 ~ line {
       gsub(/[^[:digit:]]/, "", $2)
@@ -103,6 +107,8 @@ if [[ "$1" = "--browse" ]]; then
     }'
   )"
 
+  # If a pull request was found open it, otherwise print an error. In either
+  # case execution of this script stops here.
   if [[ "$pull" ]]; then
     exec hub browse "${@}" -- "pull/${pull}"
   else
@@ -111,13 +117,15 @@ if [[ "$1" = "--browse" ]]; then
   fi
 fi
 
-# Push the current branch upstream if it isn't up to date
+# Push the current branch upstream if it isn't up to date.
 if [[ $(git rev-parse HEAD) != $(git rev-parse @{u} 2> /dev/null) ]]; then
   git push -u origin $branch
 fi
 
+# Submit the pull request. On OS X, when not connected via SSH, copy the pull
+# request URL to the clipboard and open it in the browser.
 if [[ -z "$SSH_CONNECTION" ]] && [[ "$OSTYPE" = darwin* ]]; then
-  # Hack to copy the pull request URL to the clipboard automatically
+  # Hack to copy the pull request URL to the clipboard automatically.
   BROWSER="$0 --pbcopy" hub pull-request -o "$@"
   echo "Created pull request - $(pbpaste)"
 else
