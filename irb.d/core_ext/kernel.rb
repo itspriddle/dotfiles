@@ -97,6 +97,22 @@ module Kernel
     irb_context.echo ^= 1
   end
 
+  # Private: Evaluates the given file in the current IRB context. This is
+  # essentially `load` in the context of the current IRB session:
+  #
+  #     File.write("name = :josh", "name.rb")
+  #
+  #     eval_file "name.rb"
+  #
+  #     name #=> :josh
+  #
+  # file - A String filename
+  #
+  # Returns the last value evaluated in file.
+  def eval_file(file)
+    irb_context.workspace.binding.eval File.read(file)
+  end
+
   # Private: Copies string to the clipboard. OS X only.
   #
   # str - A String, default is the last item evaluated by IRB
