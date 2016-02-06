@@ -1,5 +1,13 @@
 #!/usr/bin/env zsh
 
+if ! type -p docker &> /dev/null; then
+  >&2 echo "Error: \`docker\` not found."
+  return 1
+elif ! type -p docker-machine &> /dev/null; then
+  >&2 echo "Error: \`docker-machine\` not found."
+  return 1
+fi
+
 if [ -z "$DOCKER_HOST" ]; then
   # Start docker-machine if it is not running
   [ "$(docker-machine status dev)" != "Running" ] && docker-machine start dev
