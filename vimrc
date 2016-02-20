@@ -3,8 +3,9 @@
 " Load plugins
 source ~/.vim/plug-setup.vim
 
-" Set colorscheme
-colorscheme default-josh
+" Set background and colorscheme
+set background=dark
+colorscheme solarized
 
 " }}}
 
@@ -277,18 +278,23 @@ let g:liquid_highlight_types = ['ruby', 'javascript']
 
 " Lightline.vim {{{
 
-function s:set_lightline()
+function s:set_lightline(init)
   if has('gui_running') || (exists('g:colors_name') && g:colors_name == 'solarized')
     let g:lightline = { 'colorscheme': 'solarized_'.&bg }
-    call lightline#init()
-    call lightline#update()
+
+    if a:init
+      call lightline#init()
+      call lightline#update()
+    endif
   endif
 endfunction
+
+call s:set_lightline(0)
 
 augroup lightline_setup
   autocmd!
 
-  autocmd ColorScheme * call s:set_lightline()
+  autocmd ColorScheme * call s:set_lightline(1)
 augroup END
 
 " }}}
