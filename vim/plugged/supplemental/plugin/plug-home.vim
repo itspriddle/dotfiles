@@ -35,12 +35,7 @@ function! s:plug_home(name)
   let plugs = filter(copy(g:plugs), 'has_key(v:val, "uri") && v:val["uri"] =~ "github"')
 
   if has_key(plugs, a:name)
-    let plug = plugs[a:name]
-    let uri  = plug['uri']
-    let uri  = substitute(uri, '\v\C.git$', '', '')
-    let uri  = substitute(uri, '\v\Cgit::\@github\.com', 'github.com', '')
-    let uri  = substitute(uri, '\v\Cgit\@github\.com:', 'https://github.com/', '')
-    call s:open_url(uri)
+    call s:open_url('https://github.com/'.matchstr(plugs[a:name].uri, '[^:/]*/'.a:name))
   else
     echomsg 'Unknown plugin '.a:name
   endif
