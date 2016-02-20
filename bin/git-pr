@@ -35,7 +35,7 @@
 #   contents of the last commit message are used as the subject/body.
 #   $ git show -s --format="%B" | git pr -F -
 #
-# VIEWING AN EXISTING PULL REQUESTS ON GITHUB.COM
+# VIEWING AN EXISTING PULL REQUEST ON GITHUB.COM
 #
 #   The `--browse` flag can be used to open an existing pull request on
 #   GitHub.com in your browser using the `hub browse` command. This is done by
