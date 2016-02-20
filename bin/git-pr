@@ -71,13 +71,13 @@ fi
 
 # Ensure `hub` is available.
 if ! type hub &> /dev/null; then
-  echo "Error: \`hub\` not found. Install from https://github.com/github/hub"
+  >&2 echo "Error: \`hub\` not found. Install from https://github.com/github/hub"
   exit 1
 fi
 
 # Ensure this is a GitHub repo.
 if [[ "$(git ls-remote --get-url 2> /dev/null)" != *"github"* ]]; then
-  echo "Error: Remote \`origin' is not on GitHub, or is not setup."
+  >&2 echo "Error: Remote \`origin' is not on GitHub, or is not setup."
   exit 1
 fi
 
@@ -86,7 +86,7 @@ branch="$(git symbolic-ref HEAD | sed 's|^refs/heads/||')"
 
 # Bail if master is checked out. You can't open a PR on master.
 if [[ "$branch" = "master" ]]; then
-  echo "Error: You are on \`master', checkout a new branch first!"
+  >&2 echo "Error: You are on \`master', checkout a new branch first!"
   exit 1
 fi
 
@@ -112,7 +112,7 @@ if [[ "$1" = "--browse" ]]; then
   if [[ "$pull" ]]; then
     exec hub browse "${@}" -- "pull/${pull}"
   else
-    echo "Couldn't find a pull request for ${sha:0:7}"
+    >&2 echo "Couldn't find a pull request for ${sha:0:7}"
     exit 1
   fi
 fi
