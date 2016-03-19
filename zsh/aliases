@@ -67,4 +67,4 @@ if [[ $OSTYPE == darwin* ]]; then
   alias mail-uuids='defaults find UUID | grep -E "MessageCompatibility|MailCompatibility"'
 fi
 
-# vim:set ft=zsh:
+# vim: ft=zsh

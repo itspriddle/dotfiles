@@ -71,4 +71,4 @@ zstyle ':completion:*:killall:*' command 'ps -u $USER -o comm'
 zstyle ':completion:*:*:*:*:*files' ignored-patterns 'appspec.yml'
 
 
-# vim:set ft=zsh:
+# vim: ft=zsh

@@ -9,4 +9,4 @@ for plugin (~/.dotfiles/zsh/plugins/*(N))
 # Load settings specific to this machine
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
-# vim:set ft=zsh:
+# vim: ft=zsh

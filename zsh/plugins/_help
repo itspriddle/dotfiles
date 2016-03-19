@@ -6,3 +6,5 @@ autoload run-help
 HELPDIR="/usr/share/zsh/$ZSH_VERSION/help"
 
 help() { run-help "$@" }
+
+# vim: ft=zsh

@@ -13,4 +13,4 @@ path=(
 
 # [[ -f ~/.dotfiles/profile.d/init.sh ]] && source ~/.dotfiles/profile.d/init.sh
 
-# vim:set ft=zsh:
+# vim: ft=zsh

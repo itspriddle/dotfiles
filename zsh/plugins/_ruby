@@ -1,1 +1,3 @@
 source ~/.dotfiles/profile.d/ruby.sh
+
+# vim: ft=zsh

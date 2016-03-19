@@ -1,5 +1,3 @@
-#!/usr/bin/env zsh
-
 # Use vcs_info to get git prompt
 autoload -Uz vcs_info
 autoload -Uz add-zsh-hook
@@ -44,3 +42,5 @@ _josh_prompt_precmd() {
 }
 
 add-zsh-hook precmd _josh_prompt_precmd
+
+# vim: ft=zsh

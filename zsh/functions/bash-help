@@ -1,1 +1,3 @@
 /bin/bash -c "help $@"
+
+# vim: ft=zsh
