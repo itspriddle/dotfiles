@@ -5,8 +5,16 @@
 # name  - The name of the gem to require
 # block - An optional block that will be called after the gem is required.
 #
+# Set NO_UNBUNDLED_REQUIRE=1 when starting a console to skip requiring these
+# gems, eg:
+#
+#   NO_UNBUNDLED_REQUIRE=1 irb
+#   NO_UNBUNDLED_REQUIRE=1 rails console
+#
 # Reference: https://gist.github.com/3894925
 def unbundled_require(name)
+  return if ENV["NO_UNBUNDLED_REQUIRE"]
+
   if defined? Bundler
     unless spec_path = Dir["#{Gem.dir}/specifications/#{name}-*.gemspec"].last
       warn "Couldn't find #{name}. Install it with 'gem install #{name}'"
