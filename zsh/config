@@ -14,6 +14,8 @@ setopt NO_HUP
 setopt NO_LIST_BEEP
 setopt LOCAL_OPTIONS
 setopt LOCAL_TRAPS
+setopt AUTO_PUSHD
+setopt PUSHD_MINUS
 
 # Leave =/&; out of WORDCHARS so ^W acts more nicely
 # Default: *?_-.[]~=/&;!#$%^(){}<>
