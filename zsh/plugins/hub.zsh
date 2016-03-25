@@ -8,5 +8,3 @@ zstyle ':completion:*:*:hub:*' user-commands \
 
 # Completion `hub` and `git`
 compdef _hub git hub
-
-# vim: ft=zsh

@@ -1,3 +1,1 @@
 source ~/.dotfiles/profile.d/site5.sh
-
-# vim: ft=zsh
