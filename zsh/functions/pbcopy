@@ -1,0 +1,9 @@
+if type pbcopy &> /dev/null; then
+  # Strip trailing new lines when copying text to clipboard with `pbcopy`
+  printf "%s" "$(cat)" | command pbcopy
+else
+  >&2 echo "zsh: command not found: /usr/bin/pbcopy"
+  return 127
+fi
+
+# vim: ft=zsh
