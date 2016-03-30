@@ -65,6 +65,7 @@ if [[ $OSTYPE == darwin* ]]; then
   alias gist="gist -c -p"
   alias eject-all="diskutil list | awk '/external/ { print \$1 }' | xargs -tn1 diskutil unmountDisk"
   alias mail-uuids='defaults find UUID | grep -E "MessageCompatibility|MailCompatibility"'
+  alias battery-info='system_profiler -detailLevel mini SPPowerDataType'
 fi
 
 # vim: ft=zsh
