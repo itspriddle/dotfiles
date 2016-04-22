@@ -254,6 +254,17 @@ vmap <expr> <leader>a ':EasyAlign'.nr2char(getchar()).'<cr>'
 " Space doesn't work with the above map, so define it explicitly.
 vmap <leader>a<space> :EasyAlign\<cr>
 
+" Align Markdown style tables, changes:
+"
+" |foo|bar|foobar|
+" |1|2|3|
+"
+" to
+"
+" | foo | bar | foobar |
+" | 1   | 2   | 3      |
+vmap <leader>a<bar> :EasyAlign *<bar><cr>
+
 " }}}
 
 " filebeagle.vim {{{
