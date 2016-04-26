@@ -15,6 +15,9 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   # Disable emoji when installing packages with Homebrew
   export HOMEBREW_NO_EMOJI=1
 
+  # Opt-out of Analytics
+  export HOMEBREW_NO_ANALYTICS=1
+
   # $(sysctl -n hw.ncpu) + 1
   export MAKEFLAGS="-j9"
 
