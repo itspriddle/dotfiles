@@ -21,9 +21,6 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   # $(sysctl -n hw.ncpu) + 1
   export MAKEFLAGS="-j9"
 
-  # Add Postgres.app bin to PATH
-  PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:${PATH}"
-
   if [ "$PS1" ]; then
     # Double the amount of open files OS X allows
     ulimit -n 1024
