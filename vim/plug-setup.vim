@@ -40,6 +40,9 @@ Plug 'tpope/vim-rake'
 Plug 'tpope/vim-haml'
 Plug 'vim-ruby/vim-ruby'
 
+" Bash
+Plug 'markcornick/vim-bats'
+
 " Markdown/Jekyll
 Plug 'tpope/vim-liquid'
 Plug 'tpope/vim-markdown'
