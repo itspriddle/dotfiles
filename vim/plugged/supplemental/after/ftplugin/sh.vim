@@ -4,7 +4,7 @@
 "       leader automatically.
 "   r - Automatically insert the current comment leader after hitting <Enter>
 "       in Insert mode.
-"   o -	Automatically insert the current comment leader after hitting 'o' or
+"   o - Automatically insert the current comment leader after hitting 'o' or
 "       'O' in Normal mode.
 "   q - Allow formatting of comments with "gq".
 "   l - Long lines are not broken in insert mode.
