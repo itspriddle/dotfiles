@@ -24,7 +24,6 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'itchyny/lightline.vim'
 Plug 'itspriddle/ZoomWin'
 Plug 'milkypostman/vim-togglelist'
-Plug 'mhinz/vim-startify'
 
 " Colors
 Plug 'altercation/vim-colors-solarized'
