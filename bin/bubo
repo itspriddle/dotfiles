@@ -3,12 +3,24 @@
 #
 # Runs `brew update` and `brew outdated`
 
+set -e
+
 if ! type brew &> /dev/null; then
   echo "Error: \`brew\` not found."
   exit 1
 fi
 
+cd $(brew --repository)
+
+current_sha=$(git rev-parse HEAD)
+
 brew update
+
+new_sha=$(git rev-parse HEAD)
+
+if [ "${current_sha}" != "${new_sha}" ]; then
+  git log ${current_sha}..${new_sha}
+fi
 
 outdated=$(brew outdated --verbose)
 
