@@ -37,10 +37,10 @@ set noshowmode
 " Whitespace {{{
 
 set nowrap
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set expandtab
+" set tabstop=2
+" set shiftwidth=2
+" set softtabstop=2
+" set expandtab
 set textwidth=78
 
 " Only one space after punctuation
