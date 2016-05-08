@@ -70,7 +70,9 @@ Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
 
 " ctags integration
-Plug 'ludovicchabant/vim-gutentags'
+if executable("ctags")
+  Plug 'ludovicchabant/vim-gutentags'
+endif
 
 " Man viewer
 Plug 'lambdalisue/vim-manpager'
