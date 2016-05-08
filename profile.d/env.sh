@@ -25,6 +25,11 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
     # Double the amount of open files OS X allows
     ulimit -n 1024
   fi
+elif [ "${OSTYPE:0:5}" = "linux" ]; then
+  # Disable weird keyboard bindkey behavior on Ubuntu/Debian
+  if [ -f /etc/debian_version ]; then
+    export DEBIAN_PREVENT_KEYBOARD_CHANGES=1
+  fi
 fi
 
 export PATH
