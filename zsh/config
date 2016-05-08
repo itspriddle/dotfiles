@@ -21,6 +21,9 @@ setopt PUSHD_MINUS
 # Default: *?_-.[]~=/&;!#$%^(){}<>
 WORDCHARS='*?_-.[]~\!#$%^(){}<>|`@#$%^*()+:?''`'
 
+# Nothing but alpha numeric chars (see how I like it :D)
+WORDCHARS=''
+
 # emacs style keybindings
 bindkey -e
 
