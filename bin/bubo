@@ -19,6 +19,7 @@ brew update
 new_sha=$(git rev-parse HEAD)
 
 if [ "${current_sha}" != "${new_sha}" ]; then
+  echo -e "\n\033[34m==>\033[0m \033[01mgit diff\033[0m"
   git log ${current_sha}..${new_sha}
 fi
 
