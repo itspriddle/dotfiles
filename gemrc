@@ -1,3 +1,4 @@
 ---
-install: --no-ri --no-rdoc
-update: --no-ri --no-rdoc
+install: --no-ri --no-rdoc --env-shebang
+update: --no-ri --no-rdoc --env-shebang
+pristine: --env-shebang
