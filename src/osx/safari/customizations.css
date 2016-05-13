@@ -1,0 +1,12 @@
+/**
+ * Safari CSS customizations
+ *
+ * To install: save this file, visit Safari > Preferences > Advanced, click the
+ * "Style sheet" dropdown and select this file.
+ */
+
+/* Hide annoying subreddits when signed in */
+body.loggedin [data-subreddit='The_Donald'],
+body.loggedin [data-subreddit='The_Donald'] + div.clearleft {
+  display: none;
+}
