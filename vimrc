@@ -285,6 +285,7 @@ map <silent> - <Plug>FileBeagleOpenCurrentBufferDir
 
 " Keep tags files under .git
 let g:gutentags_tagfile = ".git/tags"
+let g:gutentags_auto_set_tags = 0
 
 " }}}
 
