@@ -74,8 +74,9 @@ if executable("ctags")
   Plug 'ludovicchabant/vim-gutentags'
 endif
 
-" Man viewer
+" Documentation
 Plug 'lambdalisue/vim-manpager'
+Plug 'rizzatti/dash.vim'
 
 " My stuff
 Plug '~/.vim/plugged/supplemental'
