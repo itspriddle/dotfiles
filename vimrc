@@ -32,6 +32,9 @@ set shortmess+=c
 " Hide "-- INSERT --" etc on last line (lightline does this already)
 set noshowmode
 
+" Ctags files
+set tags=./.git/tags;
+
 " }}}
 
 " Whitespace {{{
