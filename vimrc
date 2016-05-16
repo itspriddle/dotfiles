@@ -211,7 +211,11 @@ let g:ctrlp_user_command = [
 let g:ctrlp_use_caching = 0
 let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:10,results:30'
 
+" ^b opens CtrlP buffer search
 noremap <c-b> :CtrlPBuffer<cr>
+
+" ^t opens CtrlP tag search
+noremap <c-t> :CtrlPTag<cr>
 
 " }}}
 
