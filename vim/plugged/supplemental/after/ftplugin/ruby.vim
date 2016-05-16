@@ -1,9 +1,8 @@
 let g:ruby_space_errors = 1
 let g:ruby_operators    = 1
 
-
-" Disable K (ri lookup)
-noremap <buffer> K <nop>
+" Lookup docs in Dash.app on OS X
+nmap <buffer> K <nop>
 
 " Open or create the associated file in a horizontal split
 noremap <buffer> <leader>s :AS<cr>
