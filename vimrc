@@ -347,6 +347,9 @@ command! -bang PU
 augroup ft_quickfix
   autocmd!
 
+  " Quickfix windows always on bottom, full window width
+  autocmd FileType qf wincmd J
+
   " Cleanup quickfix windows so they're not so ugly
   autocmd BufNewFile,BufRead *
     \ if &bt =~# '^\%(quickfix\|nofile\)$' |
