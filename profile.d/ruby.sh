@@ -6,7 +6,7 @@ if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
 else
   lib_version="${RUBY_VERSION%%?}0"
 
-  if [ -d "$HOME/.rubies/$ruby_version" ]; then
+  if [ -d "$HOME/.rubies/ruby-$RUBY_VERSION" ]; then
     PATH="$HOME/.gem/ruby/$lib_version/bin:$HOME/.rubies/ruby-$RUBY_VERSION/bin:$PATH"
 
     export GEM_HOME=$HOME/.gem/ruby/$lib_version
