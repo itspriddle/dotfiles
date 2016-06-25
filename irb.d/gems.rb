@@ -12,7 +12,7 @@
 #   NO_UNBUNDLED_REQUIRE=1 rails console
 #
 # Reference: https://gist.github.com/3894925
-def unbundled_require(name)
+unbundled_require = -> name, &block do
   return if ENV["NO_UNBUNDLED_REQUIRE"]
 
   if defined? Bundler
@@ -31,16 +31,12 @@ def unbundled_require(name)
 
   begin
     require name
-    yield if block_given?
+    block.call if block
   rescue Exception => err
     warn "Couldn't load #{name}: #{err}"
   end
 end
-private :unbundled_require
 
-unbundled_require 'awesome_print' do
+unbundled_require.call 'awesome_print' do
   AwesomePrint.irb!
 end
-
-# Cleanup your mess.
-undef :unbundled_require
