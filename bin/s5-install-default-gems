@@ -6,6 +6,7 @@ gems=(
   awesome_print
   benchmark-ips
   bundler
+  gem-browse
   gem-shut-the-fuck-up
   id3tag
   lunchy
