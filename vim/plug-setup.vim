@@ -24,6 +24,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'itspriddle/ZoomWin'
 Plug 'milkypostman/vim-togglelist'
 Plug 'yssl/QFEnter'
+Plug 'timakro/vim-searchant'
 
 " Colors
 Plug 'altercation/vim-colors-solarized'
