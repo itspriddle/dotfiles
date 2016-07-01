@@ -174,13 +174,16 @@ vnoremap <C-@> I<space><esc>gv
 
 " Plugin Settings/Filetype maps {{{
 
-" ag.vim {{{
+" ack.vim {{{
 
-noremap <leader>f :Ag!<space>
+noremap <leader>f :Ack!<space>
 
 if executable("ag")
-  let g:ag_prg = "ag --vimgrep"
+  let g:ackprg = "ag --vimgrep"
 endif
+
+let g:ack_apply_qmappings = 0
+let g:ack_apply_lmappings = 0
 
 " }}}
 
@@ -360,6 +363,16 @@ augroup ft_quickfix
     \   setlocal colorcolumn=0 nolist nocursorline nowrap foldcolumn=0 |
     \ endif
 augroup END
+
+" QFEnter.vim {{{
+
+let g:qfenter_open_map            = ['<CR>', 'o']
+let g:qfenter_vopen_map           = ['v']
+let g:qfenter_hopen_map           = ['h']
+let g:qfenter_topen_map           = ['t']
+let g:qfenter_enable_autoquickfix = 0
+
+" }}}
 
 " }}}
 

@@ -23,6 +23,7 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'itchyny/lightline.vim'
 Plug 'itspriddle/ZoomWin'
 Plug 'milkypostman/vim-togglelist'
+Plug 'yssl/QFEnter'
 
 " Colors
 Plug 'altercation/vim-colors-solarized'
@@ -30,7 +31,7 @@ Plug 'altercation/vim-colors-solarized'
 " File browsing/search
 Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'rking/ag.vim'
+Plug 'mileszs/ack.vim'
 Plug 'bogado/file-line'
 
 " Ruby
