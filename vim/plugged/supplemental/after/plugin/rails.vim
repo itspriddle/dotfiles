@@ -52,7 +52,7 @@ let g:rails_projections["app/inputs/*_input.rb"] = {
 " Opens/creates the given file under app/validators:
 "
 " :[ERSTV]validator <filename>[!]
-let g:rails_projections["app/validators/*.rb"] = {
+let g:rails_projections["app/validators/*_validator.rb"] = {
   \   "command": "validator",
   \   "test": "spec/validators/{singular}_spec.rb",
   \   "template": [
