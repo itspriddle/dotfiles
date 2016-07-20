@@ -40,6 +40,7 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-haml'
 Plug 'vim-ruby/vim-ruby'
+Plug 'sunaku/vim-ruby-minitest'
 
 " Bash
 Plug 'markcornick/vim-bats'
