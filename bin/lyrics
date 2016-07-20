@@ -11,5 +11,5 @@ lyrics=`osascript -e'tell application "iTunes"' -e'get lyrics of current track' 
 
 echo -e "$artist - $title"
 
-curl -G --data-urlencode "artist=$artist" \
+curl -L -G --data-urlencode "artist=$artist" \
   --data-urlencode "title=$title" -s http://makeitpersonal.co/lyrics
