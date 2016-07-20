@@ -405,9 +405,8 @@ nnoremap <leader>? :execute 'vimgrep /'.@/.'/g %'<cr>:copen<cr>
 
 " searchant.vim {{{
 
-" Clears Searchant highlight and invokes ^L from sensible to set nohl and
-" redraw.
-nmap <C-L> <Plug>SearchantStop
+" Clears Searchant highlight redraw window
+nmap <C-L> <Plug>SearchantStop:redraw!<cr>
 
 " }}}
 
