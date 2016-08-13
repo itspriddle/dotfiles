@@ -300,12 +300,14 @@ let g:liquid_highlight_types = ['ruby', 'javascript']
 
 " Lightline.vim {{{
 
+let g:lightline = { 'colorscheme': 'solarized' }
+
 function s:set_lightline(init)
   if has('gui_running') || (exists('g:colors_name') && g:colors_name == 'solarized')
-    let g:lightline = { 'colorscheme': 'solarized_'.&bg }
-
     if a:init
+      runtime autoload/lightline/colorscheme/solarized.vim
       call lightline#init()
+      call lightline#colorscheme()
       call lightline#update()
     endif
   endif
