@@ -3,6 +3,8 @@
 " See `:help rails-projections` for details
 let g:rails_projections = {}
 
+" let g:rails_projections["*"] = { "keywords": "validates_attachment has_attachment" }
+
 " Opens the given file under config/:
 "
 "   :[ERSTV]config <filename>
