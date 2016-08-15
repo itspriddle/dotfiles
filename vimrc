@@ -302,23 +302,19 @@ let g:liquid_highlight_types = ['ruby', 'javascript']
 
 let g:lightline = { 'colorscheme': 'solarized' }
 
-function s:set_lightline(init)
+function s:set_lightline()
   if has('gui_running') || (exists('g:colors_name') && g:colors_name == 'solarized')
-    if a:init
-      runtime autoload/lightline/colorscheme/solarized.vim
-      call lightline#init()
-      call lightline#colorscheme()
-      call lightline#update()
-    endif
+    runtime autoload/lightline/colorscheme/solarized.vim
+    call lightline#init()
+    call lightline#colorscheme()
+    call lightline#update()
   endif
 endfunction
-
-call s:set_lightline(0)
 
 augroup lightline_setup
   autocmd!
 
-  autocmd ColorScheme * call s:set_lightline(1)
+  autocmd ColorScheme * call s:set_lightline()
 augroup END
 
 " }}}
