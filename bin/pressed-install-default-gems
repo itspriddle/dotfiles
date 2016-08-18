@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Usage: s5 install-default-gems
+# Usage: pressed install-default-gems
 # Summary: Installs default gems
 
 gems=(
