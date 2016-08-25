@@ -49,7 +49,7 @@ alias mv='mv -iv'
 alias grep='grep --color'
 alias dush='du -shc'
 alias opendns='echo "208.67.222.222 208.67.220.220"'
-alias what-is-my-ip="curl -s checkip.dyndns.org | grep --color=never -Eo '[0-9\\.]+'"
+alias what-is-my-ip="curl v4.ifconfig.co"
 alias copy-new-uuid="uuidgen | tr -d '\\n' | pbcopy"
 alias gist="gist -p"
 alias wp="WP_CLI_DISABLE_AUTO_CHECK_UPDATE=1 PAGER=cat wp"
