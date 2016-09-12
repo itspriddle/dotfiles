@@ -6,19 +6,17 @@
 " Based on http://git.io/IOKE-g
 if &cp || exists("g:simpletab_loaded") && g:simpletab_loaded
   finish
+else
+  let g:simpletab_loaded = 1
 endif
 
-let g:simpletab_loaded = 1
-
 function! s:SimpleTab(completion, trigger)
-  let l:col = col('.') - 1
-
-  if !l:col || getline('.')[l:col - 1] !~ '\k'
+  if !pumvisible() && getline('.')[col('.') - 2] !~ '\k'
     return a:trigger
   else
     return a:completion
   endif
 endfunction
 
-inoremap <expr> <tab>   <SID>SimpleTab("\<c-p>", '<tab>')
-inoremap <expr> <s-tab> <SID>SimpleTab("\<c-n>", '<s-tab>')
+inoremap <expr> <tab>   <SID>SimpleTab("\<c-p>", "\<tab>")
+inoremap <expr> <s-tab> <SID>SimpleTab("\<c-n>", "\<s-tab>")
