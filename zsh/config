@@ -31,4 +31,10 @@ bindkey -e
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
 
+# Disable highlighting on pastes
+zle_highlight+=(paste:none)
+
+# Disable bracketed paste
+unset zle_bracketed_paste
+
 # vim: ft=zsh
