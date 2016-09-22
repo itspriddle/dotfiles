@@ -273,7 +273,10 @@ map <silent> - <Plug>FileBeagleOpenCurrentBufferDir
 
 " Grepper.vim {{{
 
-" let g:grepper = { "switch": 0 }
+" :Ag <query> - Search for <query>
+" :Ag         - Search for word under cursor
+command! -nargs=* -complete=file Ag
+  \ exe "Grepper -noprompt -tool ag -query " empty(<q-args>) ? expand("<cword>") : "<args>"
 
 noremap <leader>f :Ag<space>
 
