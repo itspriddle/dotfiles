@@ -174,19 +174,6 @@ vnoremap <C-@> I<space><esc>gv
 
 " Plugin Settings/Filetype maps {{{
 
-" ack.vim {{{
-
-noremap <leader>f :Ack!<space>
-
-if executable("ag")
-  let g:ackprg = "ag --vimgrep"
-endif
-
-let g:ack_apply_qmappings = 0
-let g:ack_apply_lmappings = 0
-
-" }}}
-
 " Buffers (performed on every buffer) {{{
 
 augroup all_buffers
@@ -283,6 +270,15 @@ let g:filebeagle_suppress_keymaps = 1
 map <silent> - <Plug>FileBeagleOpenCurrentBufferDir
 
 " }}}
+
+" Grepper.vim {{{
+
+" let g:grepper = { "switch": 0 }
+
+noremap <leader>f :Ag<space>
+
+" }}}
+
 
 " Gutentags {{{
 
