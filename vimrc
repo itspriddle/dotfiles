@@ -349,7 +349,7 @@ augroup ft_quickfix
   autocmd!
 
   " Quickfix windows always on bottom, full window width
-  autocmd FileType qf wincmd J
+  autocmd FileType qf wincmd J | resize 10
 
   " Cleanup quickfix windows so they're not so ugly
   autocmd BufNewFile,BufRead *
