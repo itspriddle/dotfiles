@@ -357,7 +357,7 @@ augroup ft_quickfix
   " Cleanup quickfix windows so they're not so ugly
   autocmd BufNewFile,BufRead *
     \ if &bt =~# '^\%(quickfix\|nofile\)$' |
-    \   setlocal colorcolumn=0 nolist nocursorline nowrap foldcolumn=0 |
+    \   setlocal colorcolumn=0 nolist nobuflisted nocursorline nowrap foldcolumn=0 |
     \ endif
 augroup END
 
