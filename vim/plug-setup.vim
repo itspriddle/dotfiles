@@ -57,11 +57,8 @@ Plug 'kchmck/vim-coffee-script'
 " HTML5
 Plug 'othree/html5.vim'
 
-" CSS/SCSS/LESS
-Plug 'groenewege/vim-less'
+" CSS
 Plug 'hail2u/vim-css3-syntax'
-Plug 'cakebaker/scss-syntax.vim'
-Plug 'ap/vim-css-color'
 
 " Other syntax
 Plug 'evanmiller/nginx-vim-syntax'
