@@ -11,7 +11,9 @@ let cmds = [
   \ ]
 
 for [cmd, tool] in cmds
-  execute 'delcommand ' cmd
+  if exists(":" . cmd)
+    execute 'delcommand ' cmd
+  endif
 endfor
 
 " Run Grepper for `ag`
