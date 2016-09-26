@@ -355,18 +355,6 @@ let g:qfenter_enable_autoquickfix = 0
 
 " }}}
 
-" rails.vim {{{
-
-augroup ft_rails
-  " Open the associated file in a horizontal split (overrides map in ft_ruby)
-  autocmd User Rails noremap <buffer> <leader>s :AS<cr>
-
-  " Open the associated file in a vertical split (overrides map in ft_ruby)
-  autocmd User Rails noremap <buffer> <leader>v :AV<cr>
-augroup END
-
-" }}}
-
 " rsi.vim {{{
 
 " Disable meta maps, causes a jump to back to insert mode if `<ESC>b` is

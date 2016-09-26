@@ -104,3 +104,11 @@ let g:rails_projections["lib/*.rb"] = {
 let g:rails_projections["spec/*_spec.rb"] = {
   \   "alternate": "lib/{}.rb"
   \ }
+
+augroup ft_rails
+  " Open the associated file in a horizontal split (overrides map in ft_ruby)
+  autocmd User Rails noremap <buffer> <leader>s :AS<cr>
+
+  " Open the associated file in a vertical split (overrides map in ft_ruby)
+  autocmd User Rails noremap <buffer> <leader>v :AV<cr>
+augroup END
