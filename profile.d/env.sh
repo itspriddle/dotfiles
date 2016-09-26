@@ -18,6 +18,9 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   # Opt-out of Analytics
   export HOMEBREW_NO_ANALYTICS=1
 
+  # Disable homebrew autoupdate
+  export HOMEBREW_NO_AUTO_UPDATE=1
+
   # $(sysctl -n hw.ncpu) + 1
   export MAKEFLAGS="-j9"
 
