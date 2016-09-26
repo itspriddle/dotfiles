@@ -377,6 +377,13 @@ nmap <C-L> <Plug>SearchantStop:redraw!<cr>
 
 " }}}
 
+" simple-qf-toggle.vim {{{
+
+" Toggle quickfix, like unimpaired
+nmap coq <Plug>(simple-qf-toggle)
+
+" }}}
+
 " splitjoin.vim {{{
 
 " No trailing comma when splitting Ruby hashes
@@ -388,13 +395,6 @@ let g:splitjoin_ruby_trailing_comma = 0
 
 " make test commands execute using dispatch.vim
 let test#strategy = "dispatch"
-
-" }}}
-
-" togglelist.vim
-
-let g:toggle_list_no_mappings = 1
-nnoremap <silent> coq :call ToggleQuickfixList()<cr>
 
 " }}}
 
