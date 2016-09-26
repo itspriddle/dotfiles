@@ -165,7 +165,7 @@ nnoremap <leader>R :Remove
 " Shortcut for typing :help
 nnoremap <leader>h :help<space>
 
-" Insert space before selection
+" ^<space> to Insert space before selection
 vnoremap <C-@> I<space><esc>gv
 
 " }}}
