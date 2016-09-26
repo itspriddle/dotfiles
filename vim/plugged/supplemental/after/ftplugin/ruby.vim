@@ -18,3 +18,9 @@ if expand('%') =~# '_spec\.rb$'
   let b:dispatch = 'rspec %'
   compiler rspec
 endif
+
+" Run Dispatch for the current file
+map <leader>d :TestFile<cr>
+
+" Run Dispatch for the current line
+map <leader>D :TestNearest<cr>

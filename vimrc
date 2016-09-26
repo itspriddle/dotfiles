@@ -384,6 +384,13 @@ let g:splitjoin_ruby_trailing_comma = 0
 
 " }}}
 
+" test.vim {{{
+
+" make test commands execute using dispatch.vim
+let test#strategy = "dispatch"
+
+" }}}
+
 " togglelist.vim
 
 let g:toggle_list_no_mappings = 1
