@@ -2,12 +2,13 @@
 
 " Disable helper commands I don't use
 let cmds = [
-  \ ['Ag',      'ag'     ],
-  \ ['Ack',     'ack'    ],
-  \ ['Findstr', 'findstr'],
-  \ ['GG',      'git'    ],
-  \ ['Grep',    'grep'   ],
-  \ ['Pt',      'pt'     ],
+  \ ['GrepperAck',     'ack'    ],
+  \ ['GrepperAg',      'ag'     ],
+  \ ['GrepperFindstr', 'findstr'],
+  \ ['GrepperGit',     'git'    ],
+  \ ['GrepperGrep',    'grep'   ],
+  \ ['GrepperRg',      'rg'     ],
+  \ ['GrepperPt',      'pt'     ],
   \ ]
 
 for [cmd, tool] in cmds
