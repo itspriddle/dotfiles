@@ -5,10 +5,6 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export TERM="xterm-256color"
 
-if [ -r "${HOME}/.vim/plugged/vim-manpager" ]; then
-  export MANPAGER="vim -c MANPAGER -"
-fi
-
 export PATH="${HOME}/.dotfiles/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin:/bin"
 
 if [ "${OSTYPE:0:6}" = darwin ]; then

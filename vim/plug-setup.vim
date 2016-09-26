@@ -74,7 +74,6 @@ if executable("ctags")
 endif
 
 " Documentation
-Plug 'lambdalisue/vim-manpager'
 Plug 'rizzatti/dash.vim'
 
 " My stuff
