@@ -21,7 +21,6 @@ Plug 'tpope/vim-characterize'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'itchyny/lightline.vim'
-Plug 'itspriddle/ZoomWin'
 Plug 'yssl/QFEnter'
 Plug 'timakro/vim-searchant'
 
