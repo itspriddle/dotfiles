@@ -1,21 +1,8 @@
 " Grepper.vim
 
-" Disable helper commands I don't use
-let cmds = [
-  \ ['GrepperAck',     'ack'    ],
-  \ ['GrepperAg',      'ag'     ],
-  \ ['GrepperFindstr', 'findstr'],
-  \ ['GrepperGit',     'git'    ],
-  \ ['GrepperGrep',    'grep'   ],
-  \ ['GrepperRg',      'rg'     ],
-  \ ['GrepperPt',      'pt'     ],
-  \ ]
-
-for [cmd, tool] in cmds
-  if exists(":" . cmd)
-    execute 'delcommand ' cmd
-  endif
-endfor
+if exists(":Grepper") != 2
+  finish
+endif
 
 " Run Grepper for `ag`
 "
