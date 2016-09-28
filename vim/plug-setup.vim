@@ -1,7 +1,7 @@
 " Disable shallow clones
 let g:plug_shallow = 0
 
-call plug#begin('~/.vim/plugged')
+call plug#begin()
 
 " Core
 Plug 'tpope/vim-sensible'
