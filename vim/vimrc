@@ -1,7 +1,10 @@
 " Initialization {{{
 
+" Store path to vim config (probably ~/.vim)
+let g:vim_home = fnamemodify($MYVIMRC, ":p:h")
+
 " Load plugins
-source ~/.vim/plug-setup.vim
+execute "source" g:vim_home . "/plug-setup.vim"
 
 " Set background and colorscheme
 set background=dark
