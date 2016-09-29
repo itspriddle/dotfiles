@@ -1,8 +1,3 @@
-" :PU  - Reload plugin setup and run PlugUpdate
-" :PU! - Reload plugin setup, run PlugClean and PlugUpdate
-command! -bang PU
-  \ source ~/.vim/plug-setup.vim |
-  \ if <bang>0 |
-  \   :PlugClean |
-  \ endif |
-  \ :PlugUpdate
+" :PU  - Run PlugUpdate
+" :PU! - Run PlugClean and PlugUpdate
+command! -bang PU if <bang>0 | :PlugClean | endif | :PlugUpdate
