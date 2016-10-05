@@ -1,3 +1,7 @@
+" ------------------------------------------------------------------------------
+" Plugin setup via vim-plug
+" ------------------------------------------------------------------------------
+
 " Disable shallow clones
 let g:plug_shallow = 0
 
@@ -89,4 +93,4 @@ unlet g:plug_url_format
 
 call plug#end()
 
-" vim:ft=vim:ts=2:sw=2:sts=2:et
+" vim:ft=vim:ts=2:sw=2:sts=2:et:fdm=marker
