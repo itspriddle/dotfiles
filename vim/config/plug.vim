@@ -75,8 +75,10 @@ if executable("ctags")
   Plug 'ludovicchabant/vim-gutentags'
 endif
 
-" Documentation
-Plug 'rizzatti/dash.vim'
+if has("mac")
+  " Documentation viewer (OS X only)
+  Plug 'rizzatti/dash.vim'
+endif
 
 " My stuff
 Plug '~/.vim/plugged/supplemental'
