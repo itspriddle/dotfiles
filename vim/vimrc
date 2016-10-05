@@ -278,21 +278,6 @@ let g:liquid_highlight_types = ['ruby', 'javascript']
 
 let g:lightline = { 'colorscheme': 'solarized' }
 
-function s:set_lightline()
-  if has('gui_running') || (exists('g:colors_name') && g:colors_name == 'solarized')
-    runtime autoload/lightline/colorscheme/solarized.vim
-    call lightline#init()
-    call lightline#colorscheme()
-    call lightline#update()
-  endif
-endfunction
-
-augroup lightline_setup
-  autocmd!
-
-  autocmd ColorScheme * call s:set_lightline()
-augroup END
-
 " }}}
 
 " netrw.vim {{{
