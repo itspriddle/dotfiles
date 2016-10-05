@@ -35,7 +35,6 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mhinz/vim-grepper'
-Plug 'bogado/file-line'
 
 " Ruby
 Plug 'tpope/vim-rails'
