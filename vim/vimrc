@@ -295,21 +295,6 @@ inoremap <F1> <nop>
 
 " }}}
 
-" Quickfix windows {{{
-
-augroup ft_quickfix
-  autocmd!
-
-  " Quickfix windows always on bottom, full window width
-  autocmd FileType qf wincmd J | resize 10
-
-  " Cleanup quickfix windows so they're not so ugly
-  autocmd BufNewFile,BufRead *
-    \ if &bt =~# '^\%(quickfix\|nofile\)$' |
-    \   setlocal colorcolumn=0 nolist nobuflisted nocursorline nowrap foldcolumn=0 |
-    \ endif
-augroup END
-
 " QFEnter.vim {{{
 
 let g:qfenter_open_map            = ['<CR>', 'o']
