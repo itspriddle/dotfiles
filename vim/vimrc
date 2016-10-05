@@ -174,24 +174,6 @@ vnoremap <C-@> I<space><esc>gv
 
 " Plugin Settings/Filetype maps {{{
 
-" Buffers (performed on every buffer) {{{
-
-augroup all_buffers
-  autocmd!
-
-  " Resize splits when the window is resized
-  autocmd VimResized * exe 'normal! \<c-w>='
-
-  " Remember last location in file
-  autocmd BufReadPost *
-    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-    \   exe "normal! g'\"" |
-    \ endif
-
-augroup END
-
-" }}}
-
 " ctrlp {{{
 
 " CtrlP: Use `git ls-files` in git projects, otherwise fall back to `ag`
