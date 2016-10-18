@@ -135,7 +135,11 @@ map <silent> - <Plug>FileBeagleOpenCurrentBufferDir
 
 " vim-grepper {{{
 
+" Opens command line with `:Ag `, results go to Quickfix
 noremap <leader>f :Ag<space>
+
+" Opens command line with `:LAg `, results go to Location List
+noremap <leader>F :LAg<space>
 
 " }}}
 
