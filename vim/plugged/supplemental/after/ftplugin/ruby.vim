@@ -2,7 +2,7 @@ let g:ruby_space_errors = 1
 let g:ruby_operators    = 1
 
 " Lookup docs in Dash.app on OS X
-nmap <buffer> K <nop>
+nmap <buffer> K <Plug>DashSearch
 
 " Open or create the associated file in a horizontal split
 noremap <buffer> <leader>s :AS<cr>
