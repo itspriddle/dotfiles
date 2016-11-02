@@ -1,6 +1,6 @@
 function! s:Scratch(cmd, options)
-    exe a:cmd tempname()
-    setl buftype=nofile textwidth=0 bufhidden=wipe nobuflisted
+    exe a:cmd "Scratch"
+    setl buftype=nofile textwidth=0 bufhidden=hide nobuflisted noswapfile
     if !empty(a:options) | exe 'setl' a:options | endif
 endfunction
 
