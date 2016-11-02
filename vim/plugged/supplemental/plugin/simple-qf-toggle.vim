@@ -9,24 +9,17 @@ else
   let g:simple_qf_toggle_loaded = 1
 endif
 
-" Private: Returns the number of buffers visible on the current tabpage.
-"
-" Returns an Integer.
-function! s:buffer_count()
-  return tabpagewinnr(tabpagenr(), "$")
-endfunction
-
 " Private: Toggles visibility of the Quickfix/Location List window.
 "
 " prefix - Command prefix, "c" for quickfix, "l" for Location List
 "
 " Returns nothing.
 function! s:toggle(prefix)
-  let cnt = s:buffer_count()
+  let cnt = tabpagewinnr(tabpagenr(), "$")
 
   execute a:prefix . "close"
 
-  if s:buffer_count() == cnt
+  if cnt == tabpagewinnr(tabpagenr(), "$")
     try
       execute "botright " . a:prefix . "open"
     catch /E776/ " Location List can't be opened if it is empty
