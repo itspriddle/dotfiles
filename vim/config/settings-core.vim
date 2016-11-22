@@ -143,6 +143,12 @@ set wildmode=longest:full,full
 " Allow <c-z> in maps to open completion menu
 set wildcharm=<c-z>
 
+" Disable tag completion
+set complete-=t
+
+" Disable included file completion
+set complete-=i
+
 " }}}
 
 " vim:ft=vim:ts=2:sw=2:sts=2:et:fdm=marker
