@@ -20,6 +20,9 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   # $(sysctl -n hw.ncpu) + 1
   export MAKEFLAGS="-j9"
 
+  # Load PHP ini files in ~/.dotfiles/src/php
+  export PHP_INI_SCAN_DIR="${HOME}/.dotfiles/src/php"
+
   if [ "$PS1" ]; then
     # Double the amount of open files OS X allows
     ulimit -n 1024
