@@ -34,7 +34,7 @@ alias gs='git status -sb'
 # ruby/rails
 alias rg='rails generate'
 alias rc='rails console'
-alias sc='rails console'
+alias sc="echo \"Ugh, use rc, it's 2017 dude\""
 alias be='bundle exec'
 
 # GPG
