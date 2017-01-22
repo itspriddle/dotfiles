@@ -2,6 +2,7 @@ export RUBY_VERSION=2.2.5
 
 if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
   source /usr/local/opt/chruby/share/chruby/chruby.sh
+  source /usr/local/opt/chruby/share/chruby/auto.sh
   chruby $RUBY_VERSION
 else
   lib_version="${RUBY_VERSION%%?}0"
