@@ -119,14 +119,14 @@ module Kernel
   #
   # Example
   #
-  #     copy "Some text"
+  #     pbcopy "Some text"
   #
   #     foo = :bar
   #
-  #     copy #=> Copies "bar" to clipboard
+  #     pbcopy #=> Copies "bar" to clipboard
   #
   # Returns an IO::Object
-  def copy(str = irb_context.last_value)
+  def pbcopy(str = irb_context.last_value)
     IO.popen('pbcopy', 'w') { |f| f << str.to_s }
   end if RUBY_PLATFORM =~ /darwin/
 
@@ -134,10 +134,10 @@ module Kernel
   #
   # Example
   #
-  #     puts "Hi #{paste}"
+  #     puts "Hi #{pbpaste}"
   #
   # Returns a String.
-  def paste
+  def pbpaste
     `pbpaste`
   end if RUBY_PLATFORM =~ /darwin/
 end
