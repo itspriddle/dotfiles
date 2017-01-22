@@ -22,4 +22,4 @@
 \set COMP_KEYWORD_CASE upper
 
 -- Enable query timing
-\timing on
+-- \timing on
