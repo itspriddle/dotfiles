@@ -3,3 +3,6 @@ setlocal commentstring=//\ %s
 
 " Show invisibles since PHP code often uses hard tabs
 setlocal list
+
+" Check syntax
+nnoremap <leader>l :!php -l %<cr>

@@ -27,3 +27,6 @@ map <leader>D :TestNearest<cr>
 
 " Stop highlighting after 200 columns, recent vim-ruby is slow on long lines
 setlocal synmaxcol=200
+
+" Check syntax
+nnoremap <leader>l :!ruby -c %<cr>
