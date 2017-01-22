@@ -33,8 +33,11 @@ Plug 'altercation/vim-colors-solarized'
 
 " File browsing/search
 Plug 'jeetsukumaran/vim-filebeagle'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mhinz/vim-grepper'
+
+if executable("fzf")
+  Plug '/usr/local/opt/fzf'
+endif
 
 " Ruby
 Plug 'tpope/vim-rails'
