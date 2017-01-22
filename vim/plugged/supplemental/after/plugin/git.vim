@@ -18,12 +18,6 @@ augroup ft_git
   " :Gfixup => :Gcommit -m 'fixup'
   autocmd User Fugitive command! -buffer Gfixup exe 'Gcommit -m "fixup"'
 
-  autocmd VimEnter .git/PULLREQ_EDITMSG
-    \ setl wrap filetype=gitcommit textwidth=0 linebreak spell
-
-  autocmd BufReadPost .git/PULLREQ_EDITMSG
-    \ execute "normal! gg"
-
   " Replace GitHub issue/pull/commit URLS with Markdown shorthand syntax
   "
   " Eg:
