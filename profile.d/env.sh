@@ -58,8 +58,8 @@ elif [ "${OSTYPE:0:5}" = "linux" ]; then
 fi
 
 # FZF
-export FZF_DEFAULT_OPTS="--color fg:-1,bg:-1,hl:33,fg+:4,bg+:-1,hl+:32,prompt:-1"
-export FZF_DEFAULT_COMMAND="ag -g ''"
+export FZF_DEFAULT_OPTS="--color fg:-1,fg+:4,hl:5,hl+:5,bg:-1,bg+:-1,prompt:4,info:2 --bind=ctrl-u:half-page-up,ctrl-d:half-page-down"
+export FZF_DEFAULT_COMMAND="ag -U -g ''"
 
 # Private ENV vars, this file is ignored by git
 if [ -f "$(dirname "$0")/env-private.sh" ]; then
