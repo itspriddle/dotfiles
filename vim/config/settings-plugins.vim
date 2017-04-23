@@ -139,10 +139,10 @@ noremap <leader>F :LAg<space>
 " vim-gutentags {{{
 
 " Keep tags files under .git
-let g:gutentags_tagfile = ".git/tags"
+let g:gutentags_ctags_tagfile = ".git/tags"
 
 " Don't let Gutentags `set tags`
-let g:gutentags_auto_set_tags = 0
+let g:gutentags_ctags_auto_set_tags = 0
 
 " }}}
 
