@@ -27,6 +27,7 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'itchyny/lightline.vim'
 Plug 'yssl/QFEnter'
 Plug 'timakro/vim-searchant'
+Plug 'fcpg/vim-altscreen'
 
 " Colors
 Plug 'altercation/vim-colors-solarized'
