@@ -36,7 +36,15 @@ function! s:handler(lines)
 endfunction
 
 command! FZFBuffers call fzf#run({
+  \   'down': 20,
   \   'source':  s:list_buffers(),
-  \   'options': '--expect='.join(keys(s:default_action), ','),
+  \   'options': '--prompt="buffers> " --expect='.join(keys(s:default_action), ','),
+  \   'sink*':   function("s:handler")
+  \ })
+
+command! FZFMRU call fzf#run({
+  \   'down': 20,
+  \   'source': v:oldfiles,
+  \   'options': '--prompt="mru> " --expect='.join(keys(s:default_action), ','),
   \   'sink*':   function("s:handler")
   \ })
