@@ -72,6 +72,7 @@ Plug 'pearofducks/ansible-vim'
 " Git integration
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 
 " ctags integration
 if executable("ctags")
