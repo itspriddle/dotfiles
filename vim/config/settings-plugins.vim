@@ -9,7 +9,7 @@
 " Note this is the fzf.vim shipped with fzf itself, not the separate fzf.vim
 " project
 
-let g:fzf_layout = { "down": 20 }
+let g:fzf_layout = { "down": 10 }
 
 noremap <c-p> :FZF<cr>
 noremap <c-b> :FZFBuffers<cr>
