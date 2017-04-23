@@ -13,7 +13,7 @@
 #
 # Reference: https://gist.github.com/3894925
 unbundled_require = -> name, &block do
-  return if ENV["NO_UNBUNDLED_REQUIRE"]
+  return if ENV["NO_UNBUNDLED_REQUIRE"] || !defined?(Gem)
 
   if defined? Bundler
     unless spec_path = Dir["#{Gem.dir}/specifications/#{name}-*.gemspec"].last
