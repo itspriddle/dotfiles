@@ -31,10 +31,11 @@ let g:netrw_gx = '<cWORD>'
 
 " QFEnter.vim {{{
 
-let g:qfenter_open_map            = ['<CR>', 'o']
-let g:qfenter_vopen_map           = ['v']
-let g:qfenter_hopen_map           = ['h']
-let g:qfenter_topen_map           = ['t']
+let g:qfenter_keymap              = {}
+let g:qfenter_keymap.open         = ['<CR>', 'o']
+let g:qfenter_keymap.vopen        = ['v']
+let g:qfenter_keymap.hopen        = ['h']
+let g:qfenter_keymap.topen        = ['t']
 let g:qfenter_enable_autoquickfix = 0
 
 " }}}
