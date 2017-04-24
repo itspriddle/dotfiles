@@ -1,4 +1,4 @@
-export RUBY_VERSION=2.2.5
+export RUBY_VERSION=2.3.3
 
 if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
   source /usr/local/opt/chruby/share/chruby/chruby.sh
