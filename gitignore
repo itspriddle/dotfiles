@@ -21,3 +21,6 @@ TAGS
 # Rbenv
 .rbenv-version
 .ruby-version
+
+# Ruby
+.byebug_history
