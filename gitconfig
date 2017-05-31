@@ -58,6 +58,7 @@
 	strip-whitepsace = !git ls-files | xargs perl -i -pe 's/[\\t ]+$//g'
 	showf            = show --format=fuller
 	pr               = pull-request --push --copy --browse
+	todo             = grep -wniI -e TODO -e FIXME
 
 [advice]
 	statusHints        = false
