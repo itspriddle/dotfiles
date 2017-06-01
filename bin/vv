@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# NAME
+#   vv - open recently edited files in Vim
+#
+# SYNOPSIS
+#   vv [files]
+#
+# DESCRIPTION
+#   vv uses fzf to display a list of files that Vim has recently accessed in
+#   the current directory. Selected files are passed to Vim.
+#
+#   Based on https://github.com/junegunn/fzf/wiki/Examples#v
+#
+# SEE ALSO
+#   fzf(1), vim(1)
+
+[ "$DEBUG" ] && set -x
+
+# Print help text and exit.
+if [[ "$1" = "-h" ]]; then
+  sed -ne '/^#/!q;s/.\{1,2\}//;1d;p' < "$0"
+  exit
+fi
+
+# Ensure `fzf` is available.
+if ! type fzf &> /dev/null; then
+  >&2 echo "Error: \`fzf\` not found. Install from https://github.com/junegunn/fzf"
+  exit 1
+fi
+
+candidates=($(
+  awk -v path="${PWD/#$HOME/~}/" '
+    $0 ~ /^> / && $0 ~ path && $0 !~ /.git/ {
+      print substr($2, length(path)+1)
+    }
+  ' < ~/.viminfo |
+    while read line; do
+      [ -f "${line}" ] && echo "$line"
+    done
+))
+
+size=${#candidates[@]}
+
+if [[ ${size} -gt 0 ]]; then
+  [[ ${size} -gt 10 ]] && size=10
+
+  height=$((2 + $size)) # 2 extra rows for FZF prompt
+
+  files=$(
+    printf "%s\n" "${candidates[@]}" | fzf --height ${height} -d -m -q "$*"
+  ) && vim ${files}
+else
+  >&2 echo "No recent files found!"
+  exit 1
+fi
