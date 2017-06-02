@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-# Usage: git prb [options]
+# NAME
+#   git prb - pull request browse: open existing Pull Requests on GitHub.com
+#
+# SYNOPSIS
+#   git prb [-u|-c]
 #
 # DESCRIPTION
 #   Opens an existing Pull Request on GitHub.com in your browser using the
@@ -7,11 +11,14 @@
 #   remote refs on GitHub. Options other than `-h` are passed to `hub browse`.
 #
 # EXAMPLES
-#   Open the pull request for HEAD.
-#   $ git pr --browse
+#   Open the pull request for HEAD in the browser.
+#   $ git prb
 #
 #   Just print the URL, don't open it in the browser.
-#   $ git pr --browse -u
+#   $ git prb -u
+#
+#   Copy the URL to the clipboard.
+#   $ git prb -c
 #
 # SEE ALSO
 #   hub(1), hub-browse(1)
@@ -42,7 +49,6 @@ if [[ "$branch" = "master" ]]; then
   >&2 echo "Error: You are on \`master', checkout a new branch first!"
   exit 1
 fi
-
 
 # Get the current revision
 sha="$(git rev-parse HEAD)"
