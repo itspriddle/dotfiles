@@ -65,6 +65,9 @@ Plug 'othree/html5.vim'
 " CSS
 Plug 'hail2u/vim-css3-syntax'
 
+" Crystal
+Plug 'rhysd/vim-crystal'
+
 " Other syntax
 Plug 'evanmiller/nginx-vim-syntax'
 Plug 'pearofducks/ansible-vim'
