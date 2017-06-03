@@ -69,7 +69,7 @@ Plug 'hail2u/vim-css3-syntax'
 Plug 'rhysd/vim-crystal'
 
 " Other syntax
-Plug 'evanmiller/nginx-vim-syntax'
+Plug 'chr4/nginx.vim'
 Plug 'pearofducks/ansible-vim'
 
 " Git integration
