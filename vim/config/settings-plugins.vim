@@ -40,6 +40,16 @@ let g:qfenter_enable_autoquickfix = 0
 
 " }}}
 
+" simple-ag.vim {{{
+
+" Opens command line with `:Ag `, results go to Quickfix
+noremap <leader>f :Ag<space>
+
+" Opens command line with `:LAg `, results go to Location List
+noremap <leader>F :LAg<space>
+
+" }}}
+
 " simple-qf-toggle.vim {{{
 
 " Toggle quickfix, like unimpaired
@@ -126,16 +136,6 @@ map <silent> - <Plug>FileBeagleOpenCurrentBufferDir
 
 " }}}
 
-" vim-grepper {{{
-
-" Opens command line with `:Ag `, results go to Quickfix
-noremap <leader>f :Ag<space>
-
-" Opens command line with `:LAg `, results go to Location List
-noremap <leader>F :LAg<space>
-
-" }}}
-
 " vim-gutentags {{{
 
 " Keep tags files under .git
@@ -164,7 +164,7 @@ let g:peekaboo_prefix	= "<leader>"
 
 " }}}
 
-" vim-rsi.vim {{{
+" vim-rsi {{{
 
 " Disable meta maps, causes a jump to back to insert mode if `<ESC>b` is
 " pressed too fast in insert mode.
