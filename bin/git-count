@@ -9,6 +9,8 @@
 #     git count
 #     git count --no-merges --email
 
+[ "$DEBUG" ] && set -x
+
 # Print help text and exit.
 if [[ "$1" = "-h" ]]; then
   sed -ne '/^#/!q;s/.\{1,2\}//;1d;p' < "$0"

@@ -23,6 +23,8 @@
 # SEE ALSO
 #   hub(1), hub-browse(1)
 
+[ "$DEBUG" ] && set -x
+
 # Print help text and exit.
 if [[ "$1" = "-h" ]]; then
   sed -ne '/^#/!q;s/.\{1,2\}//;1d;p' < "$0"
