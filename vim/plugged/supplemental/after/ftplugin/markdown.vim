@@ -14,3 +14,7 @@ setlocal spell
 
 " Set textwidth
 setlocal textwidth=78
+
+" Convert smart chars to normal ASCII
+command! -buffer MarkdownFixup |
+  \ silent exe "%s/[‘’]/'/ge | %s/[“”]/\"/ge | %s/—/---/ge | %s/–/--/ge"
