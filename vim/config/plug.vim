@@ -28,6 +28,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'yssl/QFEnter'
 Plug 'timakro/vim-searchant'
 Plug 'fcpg/vim-altscreen'
+Plug 'junegunn/vim-peekaboo'
 
 " Colors
 Plug 'altercation/vim-colors-solarized'

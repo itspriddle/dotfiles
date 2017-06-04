@@ -152,6 +152,18 @@ let g:liquid_highlight_types = ['ruby', 'javascript']
 
 " }}}
 
+" vim-peekaboo {{{
+
+" Normal mode:
+"   <leader>"
+"   <leader>@
+"
+" Insert mode:
+"   <ctrl-r>
+let g:peekaboo_prefix	= "<leader>"
+
+" }}}
+
 " vim-rsi.vim {{{
 
 " Disable meta maps, causes a jump to back to insert mode if `<ESC>b` is
