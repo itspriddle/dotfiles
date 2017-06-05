@@ -30,7 +30,7 @@ inoremap <C-k> <C-o>gk
 nnoremap Y y$
 
 " Cycle through open buffers (C-z with 'wildcharm' triggers the wildmenu)
-nnoremap <Leader>b :buffer <C-z>
+nnoremap <leader>B :buffer <C-z>
 
 " Shortcut for typing :help
 nnoremap <leader>h :help<space>
