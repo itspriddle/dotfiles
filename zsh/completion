@@ -4,6 +4,9 @@ compinit -i
 # Automatically list choices on ambiguous completion.
 setopt AUTO_LIST
 
+# Don't beep on an ambiguous completion.
+setopt NO_LIST_BEEP
+
 # Cache completions
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$HOME/.zcompcache"

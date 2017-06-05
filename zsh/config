@@ -9,12 +9,23 @@ fpath=(${(@)fpath:#/usr/local/share/zsh/site-functions})
 
 autoload -U ~/.dotfiles/zsh/functions/*(:t)
 
+# Don't run all background jobs at a lower priority
 setopt NO_BGNICE
+
+# Don't send the HUP signal to running jobs when the shell exits
 setopt NO_HUP
-setopt NO_LIST_BEEP
+
+# Allow functions work with ZSH options
 setopt LOCAL_OPTIONS
+
+# Allow functions to work with traps
 setopt LOCAL_TRAPS
+
+# Make cd push the old directory onto the directory stack.
 setopt AUTO_PUSHD
+
+# Exchanges the meanings of `+' and `-' when used with a number to specify a
+# directory in the stack.
 setopt PUSHD_MINUS
 
 # Leave =/&; out of WORDCHARS so ^W acts more nicely
