@@ -47,8 +47,8 @@ if [[ ${size} -gt 0 ]]; then
   height=$((2 + $size)) # 2 extra rows for FZF prompt
 
   files=$(
-    printf "%s\n" "${candidates[@]}" | fzf --height ${height} -d -m -q "$*"
-  ) && vim ${files}
+    printf "%s\n" "${candidates[@]}" | fzf-tmux --height ${height} -d -m -q "$*"
+  ) && vim -O ${files}
 else
   >&2 echo "No recent files found!"
   exit 1
