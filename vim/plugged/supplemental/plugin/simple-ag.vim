@@ -23,23 +23,21 @@ function! s:ag(args, qf) abort
 
   execute "silent" (a:qf ? "cgetexpr" : "lgetexpr") "system(cmd)"
 
-  let list = a:qf ? getqflist() : getloclist(0)
-  let size = len(list)
-
   " Hack so we can set the title in `:chistory` and `:lhistory` :(
   if a:qf
-    call setqflist(list, "r", { "title": cmd })
+    call setqflist([], "r", { "title": cmd })
   else
-    call setloclist(0, list, "r", { "title": cmd })
+    call setloclist(0, [], "r", { "title": cmd })
   endif
 
-  if size
-    execute (a:qf ? "botright copen" : "lopen") 10
-    echo size == 1 ? "Found 1 match." : printf("Found %d matches.", size)
-  else
+  if v:shell_error
     execute (a:qf ? "cclose" : "lclose")
     echo "No matches found."
-  endif
+  else
+    execute (a:qf ? "botright copen" : "lopen") 10
+    let size = line("$")
+    echo size == 1 ? "Found 1 match." : printf("Found %d matches.", size)
+  end
 
   redraw
 endfunction
