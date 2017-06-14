@@ -1,0 +1,5 @@
+copy-torrents() {
+  scp "$@" jarvis.local:deluge/watch
+}
+
+copy-torrents "$@"
