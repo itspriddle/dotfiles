@@ -1,14 +1,14 @@
 " Quickfix windows
 
-function s:run_cmd()
+function! s:cmd(cmd) abort
   let info = get(getwininfo(win_getid()), 0, {})
   let is_qf = has_key(info, "quickfix") && info.quickfix
   let is_ll = has_key(info, "loclist")  && info.loclist
 
   if is_qf && is_ll
-    execute "l" . a:cmd
+    return "l" . a:cmd
   elseif is_qf
-    execute "c" . a:cmd
+    return "c" . a:cmd
   endif
 endfunction
 
@@ -19,10 +19,10 @@ augroup ft_quickfix
   autocmd FileType qf wincmd J | resize 10 | nnoremap <silent> <buffer> q :q<cr>
 
   " - in a quickfix/location list window for :colder/:lolder
-  autocmd FileType qf nnoremap <silent> <buffer> - :<C-U>exe <SID>run_cmd("older")<cr>
+  autocmd FileType qf nnoremap <silent> <buffer> - :<C-U>exe <SID>cmd("older")<cr>
 
   " + in a quickfix/location list window for :cnewer/:lnewer
-  autocmd FileType qf nnoremap <silent> <buffer> + :<C-U>exe <SID>run_cmd("newer")<cr>
+  autocmd FileType qf nnoremap <silent> <buffer> + :<C-U>exe <SID>cmd("newer")<cr>
 
   " Cleanup quickfix windows so they're not so ugly
   autocmd BufNewFile,BufRead *
