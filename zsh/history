@@ -1,7 +1,7 @@
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
-REPORTTIME=10
+# REPORTTIME=20
 
 # Treat the '!' character specially during expansion.
 setopt BANG_HIST
