@@ -15,8 +15,8 @@ endfunction
 augroup ft_quickfix
   autocmd!
 
-  " Quickfix windows always on bottom, full window width
-  autocmd FileType qf wincmd J | resize 10 | nnoremap <silent> <buffer> q :q<cr>
+  " q to close the quickfix/location list windows
+  autocmd FileType qf nnoremap <silent> <buffer> q :q<cr>
 
   " - in a quickfix/location list window for :colder/:lolder
   autocmd FileType qf nnoremap <silent> <buffer> - :<C-U>exe <SID>cmd("older")<cr>
