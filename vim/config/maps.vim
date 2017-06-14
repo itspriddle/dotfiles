@@ -45,4 +45,7 @@ nnoremap <leader>? :execute 'vimgrep /'.@/.'/g %'<cr>:copen<cr>
 nnoremap <F1> <nop>
 inoremap <F1> <nop>
 
+" Repeat last change for selection
+vnoremap . :norm.<CR>
+
 " vim:ft=vim:ts=2:sw=2:sts=2:et:fdm=marker
