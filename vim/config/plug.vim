@@ -7,31 +7,32 @@ let g:plug_shallow = 0
 
 call plug#begin()
 
-" Core
+" Core/editor
 Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-speeddating'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-abolish'
+Plug 'altercation/vim-colors-solarized'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-scriptease'
-Plug 'tpope/vim-characterize'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'itchyny/lightline.vim'
 Plug 'yssl/QFEnter'
 Plug 'timakro/vim-searchant'
 Plug 'fcpg/vim-altscreen'
 Plug 'junegunn/vim-peekaboo'
 
-" Colors
-Plug 'altercation/vim-colors-solarized'
+" Unix
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-rsi'
+
+" Editing
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-characterize'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
 
 " File browsing/search
 Plug 'jeetsukumaran/vim-filebeagle'
@@ -40,38 +41,27 @@ if executable("fzf")
   Plug '/usr/local/opt/fzf'
 endif
 
-" Ruby
+" Testing
+Plug 'janko-m/vim-test'
+Plug 'tpope/vim-dispatch'
+
+" Syntax
+Plug 'chr4/nginx.vim'
+Plug 'pearofducks/ansible-vim'
+Plug 'rhysd/vim-crystal'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'othree/html5.vim'
+Plug 'itspriddle/vim-javascript-indent'
+Plug 'itspriddle/vim-jquery'
+Plug 'kchmck/vim-coffee-script'
+Plug 'markcornick/vim-bats'
+Plug 'tpope/vim-liquid'
+Plug 'tpope/vim-markdown'
+Plug 'sunaku/vim-ruby-minitest'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-haml'
 Plug 'vim-ruby/vim-ruby'
-Plug 'sunaku/vim-ruby-minitest'
-Plug 'janko-m/vim-test'
-
-" Bash
-Plug 'markcornick/vim-bats'
-
-" Markdown/Jekyll
-Plug 'tpope/vim-liquid'
-Plug 'tpope/vim-markdown'
-
-" Javascript
-Plug 'itspriddle/vim-javascript-indent'
-Plug 'itspriddle/vim-jquery'
-Plug 'kchmck/vim-coffee-script'
-
-" HTML5
-Plug 'othree/html5.vim'
-
-" CSS
-Plug 'hail2u/vim-css3-syntax'
-
-" Crystal
-Plug 'rhysd/vim-crystal'
-
-" Other syntax
-Plug 'chr4/nginx.vim'
-Plug 'pearofducks/ansible-vim'
 
 " Git integration
 Plug 'tpope/vim-git'
@@ -83,8 +73,8 @@ if executable("ctags")
   Plug 'ludovicchabant/vim-gutentags'
 endif
 
+" Documentation viewer (OS X only)
 if has("mac")
-  " Documentation viewer (OS X only)
   Plug 'rizzatti/dash.vim'
 endif
 
@@ -95,8 +85,11 @@ let g:plug_url_format = 'git@github.com:%s.git'
 
 Plug 'itspriddle/vim-stripper'
 Plug 'itspriddle/vim-jekyll'
-Plug 'itspriddle/vim-marked'
-Plug 'itspriddle/applescript.vim'
+
+if has("mac")
+  Plug 'itspriddle/vim-marked'
+  Plug 'itspriddle/applescript.vim'
+endif
 
 unlet g:plug_url_format
 
