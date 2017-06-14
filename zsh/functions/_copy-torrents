@@ -1,3 +1,0 @@
-#compdef copy-torrents
-
-_path_files -g '*.torrent(-.)'
