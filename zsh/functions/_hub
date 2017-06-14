@@ -58,6 +58,14 @@ __hub_setup_zsh_fns () {
       - set1 \
         '-m[message]' \
         '-F[file]' \
+        '-e[edit]' \
+        '-a[user]' \
+        '-M[milestone]' \
+        '-l[labels]' \
+        '-a[assign]' \
+        '-p[push]' \
+        '-c[copy]' \
+        '-b[browse]' \
       - set2 \
         '-i[issue]:issue number:' \
       - set3 \
