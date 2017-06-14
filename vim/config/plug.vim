@@ -14,7 +14,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-scriptease'
 Plug 'itchyny/lightline.vim'
-Plug 'yssl/QFEnter'
+Plug 'yssl/QFEnter', { 'for': 'qf' }
 Plug 'timakro/vim-searchant'
 Plug 'fcpg/vim-altscreen'
 Plug 'junegunn/vim-peekaboo'
@@ -48,7 +48,7 @@ Plug 'tpope/vim-dispatch'
 " Syntax
 Plug 'chr4/nginx.vim'
 Plug 'pearofducks/ansible-vim'
-Plug 'rhysd/vim-crystal'
+Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
 Plug 'hail2u/vim-css3-syntax'
 Plug 'othree/html5.vim'
 Plug 'itspriddle/vim-javascript-indent'
