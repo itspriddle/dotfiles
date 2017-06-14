@@ -12,7 +12,10 @@
 let g:fzf_layout = { "down": 10 }
 
 noremap <c-p> :FZF<cr>
-noremap <c-b> :FZFBuffers<cr>
+noremap <c-b> :echoerr "Use `<leader>b`!"<cr>
+
+nnoremap <leader>b :FZFBuffers<cr>
+nnoremap <leader>m :FZFMRU<cr>
 
 " }}}
 
