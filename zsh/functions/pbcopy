@@ -1,4 +1,4 @@
-if type pbcopy &> /dev/null; then
+if (( ${+commands[pbcopy]} )); then
   # Strip trailing new lines when copying text to clipboard with `pbcopy`
   printf "%s" "$(cat)" | command pbcopy
 else
