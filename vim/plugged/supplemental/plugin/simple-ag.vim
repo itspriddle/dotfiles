@@ -19,15 +19,17 @@ endif
 "
 " Returns nothing.
 function! s:ag(args, qf) abort
-  let cmd = "ag --vimgrep " . (empty(a:args) ? expand("<cword>") : a:args)
+  let l:args  = (empty(a:args) ? expand("<cword>") : a:args)
+  let l:cmd   = "ag --vimgrep " . l:args
+  let l:title = (a:qf ? ":Ag " : ":LAg ") . l:args
 
-  execute "silent" (a:qf ? "cgetexpr" : "lgetexpr") "system(cmd)"
+  execute "silent" (a:qf ? "cgetexpr" : "lgetexpr") "system(l:cmd)"
 
   " Hack so we can set the title in `:chistory` and `:lhistory` :(
   if a:qf
-    call setqflist([], "r", { "title": cmd })
+    call setqflist([], "r", { "title": l:title })
   else
-    call setloclist(0, [], "r", { "title": cmd })
+    call setloclist(0, [], "r", { "title": l:title })
   endif
 
   if v:shell_error
@@ -35,8 +37,8 @@ function! s:ag(args, qf) abort
     echo "No matches found."
   else
     execute (a:qf ? "botright copen" : "lopen") 10
-    let size = line("$")
-    echo size == 1 ? "Found 1 match." : printf("Found %d matches.", size)
+    let l:size = line("$")
+    echo l:size == 1 ? "Found 1 match." : printf("Found %d matches.", l:size)
   end
 
   redraw
