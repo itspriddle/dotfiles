@@ -1,5 +1,10 @@
 #!/usr/bin/env zsh
 
+if (( ! ${+commands[gcalcli]} )); then
+  >&2 echo "zsh: command not found: gcalcli"
+  return 127
+fi
+
 url="$(
   gcalcli agenda \
     --calendar=Work \
