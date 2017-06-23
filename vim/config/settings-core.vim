@@ -63,6 +63,9 @@ if !has('win32') && (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8')
   let &showbreak = "\u21aa"
 endif
 
+" Don't unload abandoned buffers.
+set hidden
+
 " }}}
 
 " Searching {{{
