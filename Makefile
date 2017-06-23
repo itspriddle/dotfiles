@@ -1,33 +1,25 @@
-DOTFILES = $(shell pwd)
+PARTS = \
+	agignore ctags gemrc gitconfig gitignore hushlogin inputrc irbrc irb.d \
+	my.cnf powconfig profile.d psqlrc railsrc vim zsh zshenv zshrc
 
-.PHONY: install default
+LINKS = $(addprefix $(HOME)/., $(PARTS))
+
+.PHONY: default backup force-uninstall install uninstall
 
 default:
 	@echo 'Run `make install` to install dotfiles'
 
-install:
-	@ln -s $(DOTFILES)/agignore ~/.agignore
-	@ln -s $(DOTFILES)/bash ~/.bash
-	@ln -s $(DOTFILES)/bash_profile ~/.bash_profile
-	@ln -s $(DOTFILES)/bashrc ~/.bashrc
-	@ln -s $(DOTFILES)/gemrc ~/.gemrc
-	@ln -s $(DOTFILES)/gitconfig ~/.gitconfig
-	@ln -s $(DOTFILES)/gitignore ~/.gitignore
-	@ln -s $(DOTFILES)/gvimrc ~/.gvimrc
-	@ln -s $(DOTFILES)/hushlogin ~/.hushlogin
-	@ln -s $(DOTFILES)/inputrc ~/.inputrc
-	@ln -s $(DOTFILES)/irb.d ~/.irb.d
-	@ln -s $(DOTFILES)/irbrc ~/.irbrc
-	@ln -s $(DOTFILES)/my.cnf ~/.my.cnf
-	@ln -s $(DOTFILES)/powconfig ~/.powconfig
-	@ln -s $(DOTFILES)/profile.d ~/.profile.d
-	@ln -s $(DOTFILES)/psqlrc ~/.psqlrc
-	@ln -s $(DOTFILES)/railsrc ~/.railsrc
-	@ln -s $(DOTFILES)/screenrc ~/.screenrc
-	@ln -s $(DOTFILES)/tmux.conf ~/.tmux.conf
-	@ln -s $(DOTFILES)/vim ~/.vim
-	@ln -s $(DOTFILES)/vimrc ~/.vimrc
-	@ln -s $(DOTFILES)/zprofile ~/.zprofile
-	@ln -s $(DOTFILES)/zsh ~/.zsh
-	@ln -s $(DOTFILES)/zshenv ~/.zshenv
-	@ln -s $(DOTFILES)/zshrc ~/.zshrc
+backup:
+	mkdir -p .backups
+	-tar -C $(HOME) -zcf .backups/dotfiles-`date +%s`.tar.gz $(addprefix ., $(PARTS))
+
+force-uninstall: backup
+	rm -vfR $(LINKS)
+
+install: $(LINKS)
+
+uninstall:
+	-for i in $(LINKS); do test -L $$i && rm -vf $$i; done
+
+$(LINKS):
+	ln -s $(abspath $(@:$(HOME)/.%=%)) $@
