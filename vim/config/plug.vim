@@ -42,6 +42,10 @@ if executable("fzf")
   Plug '/usr/local/opt/fzf'
 endif
 
+if executable("ctags")
+  Plug 'ludovicchabant/vim-gutentags'
+endif
+
 " Testing
 Plug 'janko-m/vim-test'
 Plug 'tpope/vim-dispatch'
@@ -68,11 +72,6 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-
-" ctags integration
-if executable("ctags")
-  Plug 'ludovicchabant/vim-gutentags'
-endif
 
 " Documentation viewer (OS X only)
 if has("mac")
