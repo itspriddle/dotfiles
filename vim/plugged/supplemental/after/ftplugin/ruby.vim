@@ -26,7 +26,13 @@ map <leader>d :TestFile<cr>
 map <leader>D :TestNearest<cr>
 
 " Stop highlighting after 200 columns, recent vim-ruby is slow on long lines
-setlocal synmaxcol=200
+" setlocal synmaxcol=400
+
+" regexpengine=1 is faster in my experience. It broke under vim-ruby a while
+" back but seems to work again. Addint it here so I remember, but leaving it
+" disabled for now so I can see how recent upstream performance improvements
+" work out.
+" set regexpengine=1
 
 " Check syntax
 nnoremap <leader>l :!ruby -c %<cr>
