@@ -18,6 +18,7 @@ Plug 'yssl/QFEnter', { 'for': 'qf' }
 Plug 'timakro/vim-searchant'
 Plug 'fcpg/vim-altscreen'
 Plug 'junegunn/vim-peekaboo'
+Plug 'jszakmeister/vim-togglecursor'
 
 " Unix
 Plug 'tpope/vim-eunuch'
