@@ -25,13 +25,6 @@ let g:lightline = { 'colorscheme': 'solarized' }
 
 " }}}
 
-" netrwPlugin.vim {{{
-
-" Use <cWORD> instead of <cfile> for URLs (allows GET params)
-let g:netrw_gx = '<cWORD>'
-
-" }}}
-
 " QFEnter.vim {{{
 
 let g:qfenter_keymap              = {}
