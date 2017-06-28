@@ -40,7 +40,6 @@ brew "gnupg2"
 brew "hub"
 brew "itspriddle/brews/vim"
 brew "jq"
-brew "keybase"
 brew "rename"
 brew "shellcheck"
 brew "speedtest_cli"
@@ -48,11 +47,10 @@ brew "ssh-copy-id"
 brew "terminal-notifier"
 brew "the_silver_searcher"
 brew "tree"
-brew "universal-ctags"
+brew "universal-ctags", args: ["HEAD"]
 brew "vnstat"
 brew "wget"
 brew "youtube-dl"
-brew "zsh"
 
 # Mac App Store apps
 mas "1Password",         id: 443987910
@@ -71,8 +69,10 @@ mas "The Unarchiver",    id: 425424353
 mas "Tweetbot",          id: 557168941
 mas "iA Writer",         id: 775737590
 
+# TODO: This doesn't work anymore, the commands are invoked immediately when
+# this script is eval'd, not at the end as expected.
 # Setup Postgres if needed
-unless system "psql #{ENV["USER"]} -c '' 2> /dev/null"
-  system "initdb $(brew --prefix)/var/postgres -E utf8"
-  system "createdb #{ENV["USER"]}"
-end
+# unless system "psql #{ENV["USER"]} -c '' 2> /dev/null"
+#   system "initdb $(brew --prefix)/var/postgres -E utf8"
+#   system "createdb #{ENV["USER"]}"
+# end
