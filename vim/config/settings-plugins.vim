@@ -121,7 +121,7 @@ vmap <leader>a<bar> :EasyAlign *<bar><cr>
 nnoremap <leader>r :Rename <c-r>=expand('%:t')<cr><space>
 
 " :Remove, deletes current buffer/file.
-nnoremap <leader>R :Remove
+nnoremap <leader>R :Delete
 
 " }}}
 
