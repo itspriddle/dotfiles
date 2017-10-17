@@ -17,3 +17,6 @@ hi link rubyAttribute      Statement
 hi link rubyBlockParameter Identifier
 hi link rubyMacro          Function
 hi link rubyResponse       Function
+
+" vim-bundler
+hi link rubyGemfileMethod  rubyFunction
