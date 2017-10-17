@@ -1,9 +1,9 @@
-if ! type -p docker &> /dev/null; then
-  >&2 echo "Error: \`docker\` not found."
-  return 1
-elif ! type -p docker-machine &> /dev/null; then
-  >&2 echo "Error: \`docker-machine\` not found."
-  return 1
+if (( ${+commands[docker]} == 0 )); then
+  >&2 echo "zsh: command not found: docker"
+  return 127
+elif (( ${+commands[docker-machine]} == 0 )); then
+  >&2 echo "zsh: command not found: docker-machine"
+  return 127
 fi
 
 if [ -z "$DOCKER_HOST" ]; then
