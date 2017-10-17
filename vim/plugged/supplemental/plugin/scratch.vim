@@ -1,10 +1,12 @@
 function! s:Scratch(cmd, options)
     exe a:cmd "Scratch"
+    wincmd J
+    resize 10
     setl buftype=nofile textwidth=0 bufhidden=hide nobuflisted noswapfile
     if !empty(a:options) | exe 'setl' a:options | endif
 endfunction
 
-command! -nargs=* Scratch call s:Scratch('split', <q-args>)
+command! -nargs=* Scratch call s:Scratch('10split', <q-args>)
 
 " command! -bar -nargs=* Sedit call functions#ScratchEdit('edit', <q-args>)
 " command! -bar -nargs=* Ssplit call functions#ScratchEdit('split', <q-args>)
