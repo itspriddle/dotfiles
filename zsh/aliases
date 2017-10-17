@@ -58,7 +58,7 @@ alias p="pressed"
 # OS X
 if [[ $OSTYPE == darwin* ]]; then
   alias addr="ifconfig | awk '/broadcast/ { print \$2 }'"
-  alias flush-dns='sudo dscacheutil -flushcache'
+  alias flush-dns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
   alias top-cpu='top -o cpu'
   alias force-vnstat-update="pkill -HUP vnstatd"
   alias speedtest="speedtest-cli --simple"
