@@ -3,7 +3,7 @@ export DISABLE_HELIX_CORE_RSPEC_FORMATTER=1
 
 # Open a helix_core console
 hcc() {
-  cd ~/work/helix_core
+  cd ~/work/helix_apps/helix_core
   ./script/console
   cd -
 }
