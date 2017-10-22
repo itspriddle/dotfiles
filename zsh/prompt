@@ -6,7 +6,8 @@ zstyle ':vcs_info:*'      enable git
 zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
 zstyle ':vcs_info:git*:*' unstagedstr "+" # %u
-zstyle ':vcs_info:git*:*' stagedstr "⚡"  # %c
+# zstyle ':vcs_info:git*:*' stagedstr "⚡"  # %c
+zstyle ':vcs_info:git*:*' stagedstr "*"  # %c
 zstyle ':vcs_info:git*'   actionformats "%b %c%u|%a"
 zstyle ':vcs_info:git*'   formats       "%b %c%u"
 
