@@ -61,6 +61,9 @@ fi
 export FZF_DEFAULT_OPTS="--color fg:-1,fg+:4,hl:5,hl+:5,bg:-1,bg+:-1,prompt:4,info:2,marker:3 --bind=ctrl-u:half-page-up,ctrl-d:half-page-down"
 export FZF_DEFAULT_COMMAND="ag -g ''"
 
+# Direnv
+command -v direnv > /dev/null && eval "$(direnv hook "$(basename "$SHELL")")"
+
 # Private ENV vars, this file is ignored by git
 if [ -f "$(dirname "$0")/env-private.sh" ]; then
   source "$(dirname "$0")/env-private.sh"
