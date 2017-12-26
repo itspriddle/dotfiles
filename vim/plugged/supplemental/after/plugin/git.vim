@@ -34,6 +34,7 @@ augroup ft_git
 
   " Replace public Dropbox URLs with download URLs when used for Markdown
   " images.
+  "
   " Eg: ![My cat is great](https://www.dropbox.com/s/123/MyCat.jpg) becomes
   "     ![My cat is great](https://dl.dropboxusercontent.com/s/123/MyCat.jpg)
   autocmd BufWritePre .git/PULLREQ_EDITMSG
@@ -44,7 +45,7 @@ augroup ft_git
   "
   " Eg:
   "   https://app.clubhouse.io/foocompany/story/2020/make-some-feature becomes
-  "   [ch2020] https://app.clubhouse.io/foocompany/story/2020/make-some-feature becomes
+  "   [ch2020] https://app.clubhouse.io/foocompany/story/2020/make-some-feature
   "
   autocmd BufWritePre .git/PULLREQ_EDITMSG
     \ execute 'keeppatterns %s,\vhttps://app.clubhouse.io/([^/]+)/story/([0-9]+)/\.*,[ch\2] \0,gei'
