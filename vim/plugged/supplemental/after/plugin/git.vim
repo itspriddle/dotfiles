@@ -38,4 +38,14 @@ augroup ft_git
   "     ![My cat is great](https://dl.dropboxusercontent.com/s/123/MyCat.jpg)
   autocmd BufWritePre .git/PULLREQ_EDITMSG
     \ execute 'keeppatterns %s,\v!\[(.*)\]\(https://www.dropbox.com,![\1](https://dl.dropboxusercontent.com,gei'
+
+  " Inserts a story number for clubhouse.io URL so GitHub+Clubhouse
+  " integration works properly.
+  "
+  " Eg:
+  "   https://app.clubhouse.io/foocompany/story/2020/make-some-feature becomes
+  "   [ch2020] https://app.clubhouse.io/foocompany/story/2020/make-some-feature becomes
+  "
+  autocmd BufWritePre .git/PULLREQ_EDITMSG
+    \ execute 'keeppatterns %s,\vhttps://app.clubhouse.io/([^/]+)/story/([0-9]+)/\.*,[ch\2] \0,gei'
 augroup END
