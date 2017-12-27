@@ -14,4 +14,7 @@ augroup filetypedetect
 
   " Enable syntax highlighting for tmux config files
   autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setfiletype tmux
+
+  " Enable syntax highlighting for ~/.aws/config
+  autocmd BufNewFile,BufRead ~/.aws/config setfiletype dosini
 augroup END
