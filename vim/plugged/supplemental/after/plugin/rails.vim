@@ -84,7 +84,7 @@ let g:rails_projections["spec/factories/*.rb"] = {
   \   "alternate": "app/models/{singular}.rb",
   \   "test": "spec/models/{singular}_spec.rb",
   \   "template": [
-  \     "FactoryGirl.define do",
+  \     "FactoryBot.define do",
   \     "  factory :{underscore|singular} do",
   \     "  end",
   \     "end"
