@@ -7,8 +7,7 @@
 #
 # DESCRIPTION
 #   Opens an existing Pull Request on GitHub.com in your browser using the
-#   `hub browse` command. This is done by comparing the SHA for HEAD against
-#   remote refs on GitHub. Options other than `-h` are passed to `hub browse`.
+#   `hub browse` command. Options other than `-h` are passed to `hub browse`.
 #
 # EXAMPLES
 #   Open the pull request for HEAD in the browser.
@@ -52,24 +51,4 @@ if [[ "$branch" = "master" ]]; then
   exit 1
 fi
 
-# Get the current revision
-sha="$(git rev-parse HEAD)"
-
-# GitHub stores remotes for each PR as `refs/pull/#/head`. Find the first
-# one that matches the current revision.
-pull="$(
-  git ls-remote origin | awk -v line="^${sha}.*pull.*" ' $0 ~ line {
-    gsub(/[^[:digit:]]/, "", $2)
-    print $2
-    exit
-  }'
-)"
-
-# If a pull request was found open it, otherwise print an error. In either
-# case execution of this script stops here.
-if [[ "$pull" ]]; then
-  exec hub browse "${@}" -- "pull/${pull}"
-else
-  >&2 echo "Couldn't find a pull request for ${sha:0:7}"
-  exit 1
-fi
+exec hub browse "${@}" -- "pull/${branch}"
