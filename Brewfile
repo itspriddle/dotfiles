@@ -62,7 +62,6 @@ mas "Magnet",            id: 441258766
 mas "Marked 2",          id: 890031187
 mas "Numbers",           id: 409203825
 mas "Pages",             id: 409201541
-mas "Paws for Trello",   id: 1124077199
 mas "Pixelmator",        id: 407963104
 mas "Slack",             id: 803453959
 mas "The Unarchiver",    id: 425424353
