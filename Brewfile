@@ -26,7 +26,7 @@ brew "itspriddle/brews/wp-cli"
 
 # Databases
 brew "mariadb"
-brew "postgresql@9.4"
+brew "postgresql@9.6"
 
 # Utilities
 brew "argon/mas/mas"
