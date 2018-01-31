@@ -68,6 +68,10 @@
 	autosquash = true
 	autostash  = true
 
+[stash]
+	showStat  = true
+	showPatch = true
+
 [include]
 	path = .gitconfig.local
 
