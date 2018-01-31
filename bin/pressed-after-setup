@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+cd ~/work/helix_apps/helix_core && pressed rails-cleanup
 cd ~/work/helix_apps/helix && pressed rails-cleanup
 cd ~/work/helix_apps/backstage && pressed rails-cleanup
 cd ~/work/helix_apps/partnerpanel && pressed rails-cleanup
