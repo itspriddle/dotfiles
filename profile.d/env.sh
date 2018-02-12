@@ -58,7 +58,7 @@ elif [ "${OSTYPE:0:5}" = "linux" ]; then
 fi
 
 # FZF
-export FZF_DEFAULT_OPTS="--color fg:-1,fg+:4,hl:5,hl+:5,bg:-1,bg+:-1,prompt:4,info:2,marker:3 --bind=ctrl-u:half-page-up,ctrl-d:half-page-down"
+export FZF_DEFAULT_OPTS="--no-mouse --color fg:-1,fg+:4,hl:5,hl+:5,bg:-1,bg+:-1,prompt:4,info:2,marker:3 --bind=ctrl-u:half-page-up,ctrl-d:half-page-down"
 export FZF_DEFAULT_COMMAND="ag -g ''"
 
 # Direnv
