@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+if [ "${OSTYPE:0:6}" = "darwin" ];
+  fc -l 1 |
+    fzf +s --tac |
+    sed -Ee 's/^\s*[0-9]+\s*//' |
+    perl -e 'ioctl STDOUT, 0x5412, $_ for split //, <>'
+else
+  fc -l 1 |
+    fzf +s --tac |
+    sed -re 's/^\s*[0-9]+\s*//' |
+    perl -e 'ioctl STDOUT, 0x5412, $_ for split //, <>'
+fi
