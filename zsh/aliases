@@ -67,6 +67,7 @@ if [[ $OSTYPE == darwin* ]]; then
   alias eject-all="diskutil list | awk '/external/ { print \$1 }' | xargs -tn1 diskutil unmountDisk"
   alias mail-uuids='defaults find UUID | grep -E "MessageCompatibility|MailCompatibility"'
   alias battery-info='system_profiler -detailLevel mini SPPowerDataType'
+  alias reset-touchbar='pkill "Touch Bar agent"; killall ControlStrip'
 fi
 
 # vim: ft=zsh
