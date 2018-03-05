@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-if [ "${OSTYPE:0:6}" = "darwin" ];
+if [ "${OSTYPE:0:6}" = "darwin" ]; then
   fc -l 1 |
     fzf +s --tac |
     sed -Ee 's/^\s*[0-9]+\s*//' |
