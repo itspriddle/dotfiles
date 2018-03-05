@@ -64,6 +64,11 @@ export FZF_DEFAULT_COMMAND="ag -g ''"
 # Direnv
 command -v direnv > /dev/null && eval "$(direnv hook "$(basename "$SHELL")")"
 
+# BROWSER, used by `hub pull-request`
+if [ "$SSH_CONNECTION" ]; then
+  export BROWSER=echo
+fi
+
 # Private ENV vars, this file is ignored by git
 if [ -f "$(dirname "$0")/env-private.sh" ]; then
   source "$(dirname "$0")/env-private.sh"
