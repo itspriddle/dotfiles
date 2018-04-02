@@ -20,6 +20,3 @@ hi link rubyResponse       Function
 
 " vim-bundler
 hi link rubyGemfileMethod  rubyFunction
-
-" heredoc syntax fix
-runtime after/syntax/ruby-heredoc-fix.vim
