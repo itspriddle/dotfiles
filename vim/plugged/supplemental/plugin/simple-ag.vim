@@ -20,7 +20,7 @@ endif
 " Returns nothing.
 function! s:ag(args, qf) abort
   let l:args  = (empty(a:args) ? expand("<cword>") : a:args)
-  let l:cmd   = "ag --vimgrep " . l:args
+  let l:cmd   = printf(get(g:, "simple_ag_command", "ag --vimgrep %s"), l:args)
   let l:title = (a:qf ? ":Ag " : ":LAg ") . l:args
 
   execute "silent" (a:qf ? "cgetexpr" : "lgetexpr") "system(l:cmd)"
