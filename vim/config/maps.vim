@@ -51,4 +51,7 @@ vnoremap . :norm.<CR>
 " Override ^w T to keep the existing buffer
 map <C-w>T :exe "tabnew +" . line(".") . " %"<cr>
 
+" ^w Q to close the current tab page
+map <C-w>Q :tabclose<cr>
+
 " vim:ft=vim:ts=2:sw=2:sts=2:et:fdm=marker
