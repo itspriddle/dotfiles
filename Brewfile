@@ -74,11 +74,3 @@ mas "Slack",             id: 803453959
 mas "The Unarchiver",    id: 425424353
 mas "Tweetbot",          id: 557168941
 mas "iA Writer",         id: 775737590
-
-# TODO: This doesn't work anymore, the commands are invoked immediately when
-# this script is eval'd, not at the end as expected.
-# Setup Postgres if needed
-# unless system "psql #{ENV["USER"]} -c '' 2> /dev/null"
-#   system "initdb $(brew --prefix)/var/postgres -E utf8"
-#   system "createdb #{ENV["USER"]}"
-# end
