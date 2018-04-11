@@ -32,6 +32,15 @@ set noshowmode
 " Ctags files
 set tags=./.git/tags;
 
+" Configure ~/.viminfo file:
+"
+"   !    - Save and restore global variables
+"   '250 - Save 250 previously edited files' marks (default is 100)
+"   <50  - Save 50 lines in each register (default is 50)
+"   s10  - Maximum size of an item in kilobytes (default is 10)
+"   h    - Disable hlsearch when viminfo file is loaded (eg when vim loads, default is set)
+set viminfo=!,'250,<50,s10,h
+
 " }}}
 
 " Viewing/Editing {{{
