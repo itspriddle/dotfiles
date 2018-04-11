@@ -10,7 +10,6 @@ tap "itspriddle/brews"
 tap "universal-ctags/universal-ctags"
 
 # Ruby/Rails apps
-brew "ansible"
 brew "awscli"
 brew "chruby"
 brew "dwdiff"
