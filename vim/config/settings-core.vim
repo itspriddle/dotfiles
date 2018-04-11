@@ -5,6 +5,7 @@
 " General {{{
 
 " Set background and colorscheme
+runtime plugin/solarized-customizations.vim
 set background=dark
 colorscheme solarized
 
