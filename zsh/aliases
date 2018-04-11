@@ -32,7 +32,6 @@ alias grm="git status --porcelain | awk '\$1 == \"D\" {print \$2}' | xargs git -
 alias gs='git status -sb'
 
 # ruby/rails
-alias rg='rails generate'
 alias rc='rails console'
 alias sc="echo \"Ugh, use rc, it's 2017 dude\""
 alias be='bundle exec'
