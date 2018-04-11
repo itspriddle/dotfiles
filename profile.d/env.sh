@@ -64,6 +64,9 @@ export FZF_DEFAULT_COMMAND="ag -g ''"
 # Direnv
 command -v direnv > /dev/null && eval "$(direnv hook "$(basename "$SHELL")")"
 
+# hub
+command -v hub > /dev/null && eval "$(hub alias -s)"
+
 # BROWSER, used by `hub pull-request`
 if [ "$SSH_CONNECTION" ]; then
   export BROWSER=echo
