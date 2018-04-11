@@ -7,6 +7,7 @@
 tap "argon/mas"
 tap "homebrew/services"
 tap "itspriddle/brews"
+tap "puma/homebrew-puma"
 tap "universal-ctags/universal-ctags"
 
 # Ruby/Rails apps
@@ -15,7 +16,7 @@ brew "chruby"
 brew "dwdiff"
 brew "imagemagick"
 brew "mailhog"
-brew "pow"
+brew "puma-dev"
 brew "redis"
 brew "ruby-install"
 
