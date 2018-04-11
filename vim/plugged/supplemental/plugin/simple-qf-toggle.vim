@@ -9,7 +9,7 @@ else
   let g:simple_qf_toggle_loaded = 1
 endif
 
-let s:openers = { "c": "botright %sopen", "l": "%sopen" }
+let s:openers = { "c": "botright copen", "l": "lopen" }
 
 " Private: Toggles visibility of the Quickfix/Location List window.
 "
@@ -23,7 +23,7 @@ function! s:toggle(prefix)
 
   if cnt == tabpagewinnr(tabpagenr(), "$")
     try
-      execute printf(s:openers[a:prefix], a:prefix)
+      execute s:openers[a:prefix]
     catch /E776/ " Location List can't be opened if it is empty
       echohl ErrorMsg
       echo "E776: No location list"
