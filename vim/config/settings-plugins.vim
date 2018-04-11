@@ -178,7 +178,7 @@ nmap <C-L> <Plug>SearchantStop:redraw!<cr>
 " vim-test {{{
 
 " make test commands execute using dispatch.vim
-let test#strategy = "dispatch"
+let test#strategy = "vimterminal"
 
 " Expose `:RSpec` and `:Minitest` commands
 let g:test#runner_commands = ["RSpec", "Minitest"]
