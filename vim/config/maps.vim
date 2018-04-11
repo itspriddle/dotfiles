@@ -48,4 +48,7 @@ inoremap <F1> <nop>
 " Repeat last change for selection
 vnoremap . :norm.<CR>
 
+" Override ^w T to keep the existing buffer
+map <C-w>T :exe "tabnew +" . line(".") . " %"<cr>
+
 " vim:ft=vim:ts=2:sw=2:sts=2:et:fdm=marker
