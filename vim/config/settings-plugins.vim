@@ -44,6 +44,9 @@ noremap <leader>f :Ag<space>
 " Opens command line with `:LAg `, results go to Location List
 noremap <leader>F :LAg<space>
 
+" Try ripgrep
+let g:simple_ag_command = "rg --sort-files --vimgrep %s"
+
 " }}}
 
 " simple-qf-toggle.vim {{{
