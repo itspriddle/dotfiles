@@ -18,10 +18,10 @@
 " Note that `gx` in visual mode will use the default `<Plug>NetrwBrowseXVis`
 " plugin command.
 
-if &cp || exists("g:simple_url_browse") && g:simple_url_browse
+if &cp || exists("g:simple_url_browse_loaded") && g:simple_url_browse_loaded
   finish
 else
-  let g:simple_url_browse = 1
+  let g:simple_url_browse_loaded = 1
 endif
 
 " Regex to match a URL.
