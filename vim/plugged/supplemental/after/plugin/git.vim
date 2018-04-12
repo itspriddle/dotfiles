@@ -48,5 +48,5 @@ augroup ft_git
   "   [ch2020] https://app.clubhouse.io/foocompany/story/2020/make-some-feature
   "
   autocmd BufWritePre *.git/PULLREQ_EDITMSG
-    \ execute 'keeppatterns %s,\vhttps://app.clubhouse.io/([^/]+)/story/([0-9]+)/\.*,[ch\2] \0,gei'
+    \ execute 'keeppatterns %s,\v%(\[ch[0-9]+\] )@<!https://app.clubhouse.io/([^/]+)/story/([0-9]+)/\.*,[ch\2] \0,gei'
 augroup END
