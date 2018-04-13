@@ -11,7 +11,7 @@
 
 let g:fzf_layout = { "down": 10 }
 
-noremap <c-p> :FZF<cr>
+noremap <silent> <expr> <c-p> (&ft == "qf" ? ":" : ":FZF")."\<cr>"
 noremap <c-b> :echoerr "Use `<leader>b`!"<cr>
 
 nnoremap <leader>b :FZFBuffers<cr>
