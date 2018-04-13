@@ -21,8 +21,8 @@ brew "redis"
 brew "ruby-install"
 
 # PHP
-brew "itspriddle/brews/composer"
-brew "itspriddle/brews/wp-cli"
+brew "composer"
+brew "wp-cli"
 
 # Databases
 brew "mariadb"
