@@ -15,7 +15,6 @@ Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-scriptease'
 Plug 'itchyny/lightline.vim'
 Plug 'yssl/QFEnter', { 'for': 'qf' }
-Plug 'timakro/vim-searchant'
 Plug 'fcpg/vim-altscreen'
 Plug 'junegunn/vim-peekaboo'
 Plug 'jszakmeister/vim-togglecursor'

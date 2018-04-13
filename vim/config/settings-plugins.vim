@@ -171,13 +171,6 @@ let g:rsi_no_meta = 1
 
 " }}}
 
-" vim-searchant {{{
-
-" Clears Searchant highlight redraw window
-nmap <C-L> <Plug>SearchantStop:redraw!<cr>
-
-" }}}
-
 " vim-test {{{
 
 " make test commands execute using dispatch.vim
