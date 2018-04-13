@@ -59,6 +59,7 @@
 	showf            = show --format=fuller
 	prq              = pull-request --push --copy --browse
 	todo             = grep -wniI -e TODO -e FIXME
+	last-committer   = --no-pager log --pretty="%an" --no-merges -1
 
 [advice]
 	statusHints        = false
