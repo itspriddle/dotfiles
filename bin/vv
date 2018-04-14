@@ -3,7 +3,7 @@
 #   vv - open recently edited files in Vim
 #
 # SYNOPSIS
-#   vv [files]
+#   vv
 #
 # DESCRIPTION
 #   vv uses fzf to display a list of files that Vim has recently accessed in
