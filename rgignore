@@ -1,0 +1,13 @@
+log
+tags
+tmp
+sql
+*.pdf
+.gitkeep
+
+# Images
+*.gif
+*.ico
+*.jpg
+*.png
+*.svg
