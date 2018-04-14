@@ -1,6 +1,6 @@
 PARTS = \
 	agignore ctags gemrc gitconfig gitignore hushlogin inputrc irbrc irb.d \
-	my.cnf powconfig profile.d psqlrc railsrc rgignore vim zsh zshenv zshrc
+	my.cnf profile.d psqlrc railsrc rgignore vim zsh zshenv zshrc
 
 LINKS = $(addprefix $(HOME)/., $(PARTS))
 
