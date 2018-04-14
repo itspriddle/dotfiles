@@ -2,8 +2,6 @@
 " Author:  Joshua Priddle <jpriddle@me.com>
 " Version: 0.0.0
 " License: Same as Vim itself (see :help license)
-"
-" Partially based on https://github.com/mhinz/vim-grepper
 
 if &cp || exists("g:simple_ag_loaded") && g:simple_ag_loaded
   finish
@@ -20,12 +18,17 @@ endif
 " Returns nothing.
 function! s:ag(args, qf) abort
   let l:args  = (empty(a:args) ? expand("<cword>") : a:args)
+
+  if empty(l:args)
+    echo "No search specified."
+    return
+  endif
+
   let l:cmd   = printf(get(g:, "simple_ag_command", "ag --vimgrep %s"), l:args)
   let l:title = (a:qf ? ":Ag " : ":LAg ") . l:args
 
   execute "silent" (a:qf ? "cgetexpr" : "lgetexpr") "system(l:cmd)"
 
-  " Hack so we can set the title in `:chistory` and `:lhistory` :(
   if a:qf
     call setqflist([], "r", { "title": l:title })
   else
