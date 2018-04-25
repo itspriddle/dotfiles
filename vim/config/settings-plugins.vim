@@ -52,8 +52,8 @@ let g:simple_ag_command = "rg --sort-files --vimgrep %s"
 " simple-qf-toggle.vim {{{
 
 " Toggle quickfix, like unimpaired
-nmap coq <Plug>(simple-qf-toggle)
-nmap coQ <Plug>(simple-qf-toggle-ll)
+nmap =oq <Plug>(simple-qf-toggle)
+nmap =oQ <Plug>(simple-qf-toggle-ll)
 
 " }}}
 
