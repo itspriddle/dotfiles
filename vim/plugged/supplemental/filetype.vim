@@ -17,4 +17,7 @@ augroup filetypedetect
 
   " Enable syntax highlighting for ~/.aws/config
   autocmd BufNewFile,BufRead ~/.aws/config setfiletype dosini
+
+  " YAML highlighting for Rails secrets
+  autocmd BufNewFile,BufRead secrets.yml.enc.[0-9]\+ setfiletype yaml
 augroup END
