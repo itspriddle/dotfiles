@@ -185,9 +185,7 @@ let g:test#runner_commands = ["RSpec", "Minitest"]
 
 " Open insert mode with 'paste'
 nmap yp <Plug>unimpairedPastei
-
-" Use old `co` style map to change options
-nmap co =o
+nmap yP <Plug>unimpairedPasteo
 
 " }}}
 
