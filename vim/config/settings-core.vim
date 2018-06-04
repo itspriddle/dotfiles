@@ -145,6 +145,9 @@ set number
 " Disable (side)scrolloff that is set in sensible.vim
 set scrolloff=0 sidescrolloff=0
 
+" Show a vertical bar at cols 80 and 100
+set colorcolumn=80,100
+
 " }}}
 
 " Command line completion {{{
