@@ -10,6 +10,9 @@ tap "itspriddle/brews"
 tap "puma/homebrew-puma"
 tap "universal-ctags/universal-ctags"
 
+# Casks
+cask "docker"
+
 # Ruby/Rails apps
 brew "awscli"
 brew "chruby"
@@ -34,8 +37,6 @@ brew "argon/mas/mas"
 brew "bats"
 brew "chromedriver"
 brew "direnv"
-brew "docker"
-brew "docker-machine"
 brew "exiftool"
 brew "fzf"
 brew "gist"
