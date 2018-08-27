@@ -54,6 +54,8 @@ alias gist="gist -p"
 alias wp="WP_CLI_DISABLE_AUTO_CHECK_UPDATE=1 PAGER=cat wp"
 alias p="pressed"
 alias gmt-date="date -u"
+alias geolocation="curl -s https://freegeoip.app/json/ | jq"
+alias weather="curl 'wttr.in/Clifton+Park+NY?n'"
 
 # OS X
 if [[ $OSTYPE == darwin* ]]; then
