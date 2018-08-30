@@ -39,9 +39,9 @@ _josh_prompt_command() {
   case "$TERM" in
     xterm*|rxvt*)
       if [ "$SSH_CONNECTION" ]; then
-        printf '\e]0;%s@%s:%s\a' "$USER" "$HOSTNAME" "${prompt_cwd}"
+        printf '\e]0;%s@%s:%s\a' "$USER" "$HOSTNAME" "$cwd"
       else
-        printf '\e]0;%s\a' "${prompt_cwd}"
+        printf '\e]0;%s\a' "$cwd"
       fi
       ;;
   esac
