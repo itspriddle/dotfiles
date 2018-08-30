@@ -68,6 +68,9 @@ if [ "${shell}" ]; then
   # Direnv
   command -v direnv > /dev/null && eval "$(direnv hook "${shell}")"
 
+  # jarvis
+  command -v jarvis > /dev/null && eval "$(jarvis init --shell "${shell}" -)"
+
   # hub
   command -v hub > /dev/null && eval "$(hub alias -s "${shell}")"
 fi
