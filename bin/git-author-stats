@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+# Usage: git author-stats [author]
+#
+# SYNOPSIS
+#   git author-stats
+#   git author-stats author
+#
+# NAME
+#   git author-stats - show commit stats by author
+#
+# DESCRIPTION
+#   Prints total commits, insertions, and deletions in a git repo by author.
+#   If an author is not specified, the current value of `git config user.name`
+#   is used. Author can be anything that `git log --author` understands, such
+#   as an email address or full name.
+#
+# OPTIONS
+#   -h
+#       Print this help message and exit 1
+#
+#   --usage
+#       Print usage info and exit 1
+#
+# SEE ALSO
+#   git-log(1)
+
+[ "$DEBUG" ] && set -x && export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+
+set -euo pipefail
+
+# Print help text and exit.
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--usage" ]; then
+  sed -ne '/^#/!q;s/.\{1,2\}//;1d;p' < "$0" | awk -v flag="${1}" '
+    { rows = rows $0 "\n" } /^[Uu]sage: / { if (flag == "--usage") usage = $0 "\n" }
+    END { out = usage ? usage : rows; gsub(/^\n*|\n*$/, "", out); print out }'
+  exit 1
+fi
+
+# Ensure `git` is available.
+if ! type git &> /dev/null; then
+  echo "Error: \`git' not found." >&2
+  exit 127
+fi
+
+commit_count() {
+  local author="${1}"
+
+  git shortlog --author="${author}" --summary "${@:2}" | awk '{ print $1 }'
+}
+
+print_author_stats() {
+  local author commit_count pr_merge_count
+
+  author="${1}"
+  commit_count="$(commit_count "${author}")"
+  pr_merge_count="$(commit_count "${author}" --grep="Merge pull request #")"
+
+  git log \
+    --no-merges \
+    --author="${author}" \
+    --oneline \
+    --shortstat \
+    --format=tformat: |
+    awk \
+      -v author="${author}" \
+      -v commit_count="${commit_count:-0}" \
+      -v pr_merge_count="${pr_merge_count:-0}" '
+      BEGIN {
+        insertions = 0
+        deletions  = 0
+      }
+
+      /files? changed/ {
+        insertions += $4
+        deletions  += $6
+      }
+
+      END {
+        printf "author:     %s\n", author
+        printf "commits:    %s\n", commit_count
+        printf "pr merges:  %s\n", pr_merge_count
+        printf "insertions: %s\n", insertions
+        printf "deletions:  %s\n", deletions
+      }
+    '
+}
+
+main() {
+  local author="${1:-}"
+
+  if [ "$#" -eq 0 ] && [ -z "${author}" ]; then
+    author="$(git config user.name 2> /dev/null || true)"
+  fi
+
+  if [ -z "${author}" ]; then
+    echo "Error: must specify an author" >&2
+    exec "$0" --usage
+  fi
+
+  print_author_stats "${author}"
+}
+
+main "$@"
