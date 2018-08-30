@@ -4,7 +4,7 @@
 shopt -u mailwarn
 unset MAILCHECK
 
-if [ -f /etc/bashrc ]; then
+if [ "${OSTYPE:0:6}" != "darwin" ] && [ -f /etc/bashrc ]; then
   source /etc/bashrc
 fi
 
