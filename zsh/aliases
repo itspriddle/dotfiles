@@ -4,9 +4,9 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 # ls
-if [[ $OSTYPE == darwin* ]]; then
+if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias ls='ls -G'
-elif [[ $OSTYPE == linux* ]]; then
+elif [ "${OSTYPE:0:5}" = "linux" ]; then
   alias ls='ls --color'
 fi
 
@@ -15,7 +15,7 @@ alias ll='ls -lh'
 alias la='ls -A'
 
 # git
-if [[ $ZSH_NAME = "zsh" ]]; then
+if [ "${ZSH_NAME}" = "zsh" ]; then
   alias ga='git add'
   alias gb='git branch'
   alias gbd='git branch -d'
@@ -59,7 +59,7 @@ alias geolocation="curl -s https://freegeoip.app/json/ | jq"
 alias weather="curl 'wttr.in/Clifton+Park+NY?n'"
 
 # OS X
-if [[ $OSTYPE == darwin* ]]; then
+if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias addr="ifconfig | awk '/broadcast/ { print \$2 }'"
   alias flush-dns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
   alias top-cpu='top -o cpu'
