@@ -61,11 +61,16 @@ fi
 export FZF_DEFAULT_OPTS="--no-mouse --color fg:-1,fg+:4,hl:5,hl+:5,bg:-1,bg+:-1,prompt:4,info:2,marker:3 --bind=ctrl-u:half-page-up,ctrl-d:half-page-down"
 export FZF_DEFAULT_COMMAND="rg --files --sort-files"
 
-# Direnv
-command -v direnv > /dev/null && eval "$(direnv hook "$(basename "$SHELL")")"
+[ "${BASH_VERSION}" ] && shell="bash"
+[ "${ZSH_VERSION}" ]  && shell="zsh"
 
-# hub
-command -v hub > /dev/null && eval "$(hub alias -s)"
+if [ "${shell}" ]; then
+  # Direnv
+  command -v direnv > /dev/null && eval "$(direnv hook "${shell}")"
+
+  # hub
+  command -v hub > /dev/null && eval "$(hub alias -s "${shell}")"
+fi
 
 # BROWSER, used by `hub pull-request`
 if [ "$SSH_CONNECTION" ]; then
