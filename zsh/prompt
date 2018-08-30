@@ -18,7 +18,7 @@ _josh_prompt_precmd() {
   local git_prompt="" host_prompt="" dir_prompt git_info
 
   if [[ $TERM == xterm* ]]; then
-    print -Pn "\e]0;${SSH_CONNECTION:+%n@%M:}%~\a"
+    print -Pn "\\e]0;${SSH_CONNECTION:+%n@%M:}%~\\a"
   fi
 
   vcs_info 2> /dev/null
