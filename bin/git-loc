@@ -52,16 +52,14 @@ if [ "$1" = "-h" ]; then
   exit
 fi
 
-args=("${@-$PWD}")
-
-for arg in "${args[@]}"; do
-  if [ "$arg" = "$PWD" ]; then
+for arg in "${@:-${PWD}}"; do
+  if [ "${arg}" = "${PWD}" ]; then
     name=""
   else
     name="${arg%%/}: "
   fi
 
-  printf "${name}%d\n" $(
+  printf "${name}%d\\n" $(
     git grep --cached -Ile "" -- "${arg}" |
       xargs -I{} cat {} |
       sed -E '
