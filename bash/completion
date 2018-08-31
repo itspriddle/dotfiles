@@ -1,13 +1,23 @@
 #!/usr/bin/env bash
 
-for script in $HOME/.dotfiles/bash/completion.d/*
-do
-  [ -f "${script}" ] && source "${script}"
-done
-unset script
-
 # Case insensitive completion
 bind 'set completion-ignore-case on'
 
 # Show matches on ambiguous completion
 bind 'set show-all-if-ambiguous on'
+
+# Store nullglob state
+shopt -q nullglob && old_nullglob=1
+shopt -s nullglob
+
+# Source all completion plugins
+for script in ~/.dotfiles/bash/completion.d/* /usr/local/etc/bash_completion.d/*;
+do
+  [ -f "${script}" ] && source "${script}"
+done
+
+# Restore nullglob state
+[ "${old_nullglob:-}" ] && shopt -u nullglob
+
+# Cleanup
+unset script old_nullglob
