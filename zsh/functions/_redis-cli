@@ -1,5 +1,26 @@
 #compdef redis-cli rec
 # ------------------------------------------------------------------------------
+# Copyright (c) 2009-2015 Robby Russell and contributors (see
+# https://github.com/robbyrussell/oh-my-zsh/contributors)
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+# ------------------------------------------------------------------------------
 # Description
 # -----------
 #
@@ -32,7 +53,7 @@ _1st_arguments=(
   # 'debug object:get debugging information about a key'
   # 'debug setgfault:make the server crash'
   'decr:decrement the integer value of a key by one'
-  'decrby:decrement the integet value of a key by the given number'
+  'decrby:decrement the integer value of a key by the given number'
   'del:delete a key'
   'discard:discard all commands issued after MULTI'
   'echo:echo the given string'
@@ -76,8 +97,8 @@ _1st_arguments=(
   'mget:get the values of all the given keys'
   'monitor:listen for all requests received by the server in real time'
   'move:move a key to another database'
-  'mset:set multiple keys to muliple values'
-  'msetnx:set multiple keys tom ultiple values, only if none of the keys exist'
+  'mset:set multiple keys to multiple values'
+  'msetnx:set multiple keys to multiple values, only if none of the keys exist'
   'multi:mark the start of a transaction block'
   'object:inspect the internals of Redis objects'
   'persist:remove the expiration from a key'
@@ -135,11 +156,11 @@ _1st_arguments=(
   'zrem:remove a member from a sorted set'
   'zremrangebyrank:remove all members in a sorted set within the given indexes'
   'zremrangebyscore:remove all members in a sorted set within the given scores'
-  'zrevrange:return a range of membrs in a sorted set, by index, with scores ordered from high to low'
+  'zrevrange:return a range of members in a sorted set, by index, with scores ordered from high to low'
   'zrevrangebyscore:return a range of members in a sorted set, by score, with scores ordered from high to low'
   'zrevrank:determine the index of a member in a sorted set, with scores ordered from high to low'
   'zscore:get the score associated with the given member in a sorted set'
-  'zunionstore:add multiple sorted sets and store te resulting sorted set in a new key'
+  'zunionstore:add multiple sorted sets and store the resulting sorted set in a new key'
 )
 
 local expl
