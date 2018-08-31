@@ -4,9 +4,6 @@ colors
 
 fpath=(~/.dotfiles/zsh/functions $fpath)
 
-# Remove /usr/local/share/zsh/site-functions from $fpath
-fpath=(${(@)fpath:#/usr/local/share/zsh/site-functions})
-
 autoload -U ~/.dotfiles/zsh/functions/*(:t)
 
 # Don't run all background jobs at a lower priority
