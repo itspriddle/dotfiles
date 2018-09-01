@@ -39,7 +39,13 @@ zstyle ":completion:*" list-colors ""
 
   # Only complete hosts in ~/.ssh/config, not /etc/hosts.
   if [[ -f $HOME/.ssh/config ]]; then
-    _ssh_hosts=($(awk '/^Host [a-z0-9.\-]+$/ { print $2 }' ~/.ssh/config))
+    _ssh_hosts=($(
+      awk '/^Host [A-Za-z0-9][A-Za-z0-9\.\- ]+$/ {
+        sub(/^Host /, "", $0)
+        gsub(" ", "\n", $0)
+        print $0
+      }' ~/.ssh/config
+    ))
   else
     _ssh_hosts=()
   fi
@@ -68,6 +74,5 @@ zstyle ':completion:*:killall:*' command 'ps -u $USER -o comm'
 
 # Ignore completion on some files when there's an ambiguous match
 zstyle ':completion:*:*:*:*:*files' ignored-patterns 'appspec.yml'
-
 
 # vim: ft=zsh
