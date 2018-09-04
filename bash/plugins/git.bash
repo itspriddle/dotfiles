@@ -23,16 +23,8 @@ __git_shortcut () {
   complete -o default -o nospace -F _git_${git_cmd}_shortcut $alias_name
 }
 
-__git_shortcut ga add
 __git_shortcut gb branch
 __git_shortcut gbd branch -d
-__git_shortcut gc commit
 __git_shortcut gco checkout
 __git_shortcut gd diff
 __git_shortcut gdc diff --cached
-
-alias gco.='git checkout -- .'
-alias gcomp-='git checkout master; git pull; git checkout -'
-alias gcomp='git checkout master; git pull'
-alias grm="git status --porcelain | awk '\$1 == \"D\" {print \$2}' | xargs git --git-dir=\$(git rev-parse --git-dir) rm --ignore-unmatch"
-alias gs='git status -sb'
