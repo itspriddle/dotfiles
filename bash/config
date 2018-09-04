@@ -8,11 +8,21 @@ if [ "${OSTYPE:0:6}" != "darwin" ] && [ -f /etc/bashrc ]; then
   source /etc/bashrc
 fi
 
-for plugin in $HOME/.dotfiles/bash/plugins/*
+# Store nullglob state
+shopt -q nullglob && old_nullglob=1
+shopt -s nullglob
+
+# Source plugin files
+for plugin in ~/.dotfiles/bash/plugins/*
 do
-  source $plugin
+  [ -f "${plugin}" ] && source "${plugin}"
 done
-unset plugin
+
+# Restore nullglob state
+[ "${old_nullglob:-}" ] && shopt -u nullglob
+
+# Cleanup
+unset plugin old_nullglob
 
 # History
 export HISTCONTROL=ignoredups
