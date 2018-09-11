@@ -55,6 +55,9 @@ let g:simple_ag_command = "rg --sort-files --vimgrep %s"
 nmap yoq <Plug>(simple-qf-toggle)
 nmap yoQ <Plug>(simple-qf-toggle-ll)
 
+" Use old `co` style map to change options
+nmap co yo
+
 " }}}
 
 " splitjoin.vim {{{
