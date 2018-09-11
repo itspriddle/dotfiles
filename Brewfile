@@ -28,7 +28,7 @@ brew "composer"
 brew "wp-cli"
 
 # Databases
-brew "mariadb"
+brew "mysql@5.6"
 brew "postgresql@9.6"
 brew "sqlite"
 
