@@ -32,6 +32,7 @@
 [core]
 	whitespace   = fix,-indent-with-non-tab,trailing-space,cr-at-eol
 	excludesfile = ~/.gitignore
+	commentChar = ";"
 
 [format]
 	pretty = format:%C(red)%h%Creset%C(yellow)%d%Creset %C(magenta)%an%Creset: %s %C(green)(%ar)%Creset
