@@ -19,6 +19,9 @@
 	new        = green bold
 	whitespace = red reverse
 
+[branch]
+	sort = -authordate
+
 [push]
 	default = current
 
