@@ -75,7 +75,7 @@
 	showPatch = true
 
 [include]
-	path = .gitconfig.local
+	path = ~/.gitconfig.local
 
 [mergetool "fugitive"]
 	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
