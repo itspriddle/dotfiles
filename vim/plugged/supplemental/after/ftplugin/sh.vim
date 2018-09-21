@@ -9,3 +9,9 @@
 "   q - Allow formatting of comments with "gq".
 "   l - Long lines are not broken in insert mode.
 setlocal formatoptions=jcroql
+
+" Run shellcheck on `:make`
+setlocal makeprg=shellcheck\ -f\ gcc\ %
+
+" Run shellcheck and open qf list via vim-dispatch
+map <leader>d :Make<cr>
