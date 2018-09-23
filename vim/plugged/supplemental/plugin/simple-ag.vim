@@ -12,45 +12,47 @@ endif
 " Private: Run `ag` silently and open results in quickfix window/location
 " list.
 "
-" args - Query args, if blank default is "<cword>"
-" qf   - If true, use the quickfix window, if false use location list
+" args  - Query args, if blank default is "<cword>"
+" qf    - If true, use the quickfix window, if false use location list
+" count - Number of items to add
 "
 " Returns nothing.
-function! s:ag(args, qf) abort
-  let l:args  = (empty(a:args) ? expand("<cword>") : a:args)
+function! s:ag(args, qf, count) abort
+  let l:args = (empty(a:args) ? expand("<cword>") : a:args)
+  let l:end  = (a:count > 0 ? a:count : get(g:, "simple_ag_max", 1000)) - 1
+  let l:cmd  = printf(get(g:, "simple_ag_command", "ag --vimgrep %s"), l:args)
+  let l:out = ["No matches found. ", "Found %d match. ", "Found %d matches. "]
 
   if empty(l:args)
     echo "No search specified."
     return
   endif
 
-  let l:cmd   = printf(get(g:, "simple_ag_command", "ag --vimgrep %s"), l:args)
-  let l:title = (a:qf ? ":Ag " : ":LAg ") . l:args
-
-  execute "silent" (a:qf ? "cgetexpr" : "lgetexpr") "system(l:cmd)"
+  let l:start = reltime()
+  execute "silent" (a:qf ? "cgetexpr" : "lgetexpr") "systemlist(l:cmd)[0:".l:end."]"
+  let l:duration = printf("[duration: %.2f]", reltimefloat(reltime(l:start)))
 
   if a:qf
-    call setqflist([], "r", { "title": l:title })
+    call setqflist([], "r", { "title": ":Ag " . l:args })
   else
-    call setloclist(0, [], "r", { "title": l:title })
+    call setloclist(0, [], "r", { "title": ":LAg " . l:args })
   endif
 
   if v:shell_error
     execute (a:qf ? "cclose" : "lclose")
-    echo "No matches found."
+    echo l:out[0].l:duration
   else
     execute (a:qf ? "botright copen" : "lopen") 10
-    let l:size = line("$")
-    echo l:size == 1 ? "Found 1 match." : printf("Found %d matches.", l:size)
+    echo printf(l:out[line("$") == 1 ? 1 : 2], line("$")).l:duration
   end
 
   redraw
 endfunction
 
-" :Ag <query> - Search for <query>, open results in quickfix window
-" :Ag         - Search for word under cursor, open results in quickfix window
-command! -nargs=* -complete=file Ag call s:ag(<q-args>, 1)
+" :[N]Ag <query> - Search for <query>, open results in quickfix window
+" :[N]Ag         - Search for word under cursor, open results in quickfix window
+command! -range=0 -nargs=* -complete=file Ag call s:ag(<q-args>, 1, <count>)
 
-" :LAg <query> - Search for <query>, open results in location list
-" :LAg         - Search for word under cursor, open results in location list
-command! -nargs=* -complete=file LAg call s:ag(<q-args>, 0)
+" :[N]LAg <query> - Search for <query>, open results in location list
+" :[N]LAg         - Search for word under cursor, open results in location list
+command! -range=0 -nargs=* -complete=file LAg call s:ag(<q-args>, 0, <count>)
