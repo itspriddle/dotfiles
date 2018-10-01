@@ -85,6 +85,7 @@ let g:plug_url_format = 'git@github.com:%s.git'
 
 Plug 'itspriddle/vim-stripper'
 Plug 'itspriddle/vim-jekyll'
+Plug 'itspriddle/vim-shellcheck'
 
 if has("mac")
   Plug 'itspriddle/vim-marked'
