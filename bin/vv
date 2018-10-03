@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Usage: vv
+#
 # NAME
 #   vv - open recently edited files in Vim
 #
@@ -17,9 +19,12 @@
 [ "$DEBUG" ] && set -x
 
 # Print help text and exit.
-if [[ "$1" = "-h" ]]; then
-  sed -ne '/^#/!q;s/.\{1,2\}//;1d;p' < "$0"
-  exit
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" | awk -v flag="${1}" '
+    { help = help $0 "\n" } /^[Uu]sage: / { if (flag == "-h") usage = $0 "\n" }
+    END { out = usage ? usage : help; gsub(/^\n*|\n*$/, "", out); print out }
+  '
+  exit 1
 fi
 
 # Ensure `fzf` is available.
@@ -28,27 +33,37 @@ if ! type fzf &> /dev/null; then
   exit 1
 fi
 
-candidates=($(
+get_candidates() {
   awk -v path="${PWD/#$HOME/~}/" '
     $0 ~ /^> / && $0 ~ path && $0 !~ /.git/ {
-      print substr($2, length(path)+1)
+      print substr($2, length(path) + 1)
     }
-  ' < ~/.viminfo |
-    while read line; do
-      [ -f "${line}" ] && echo "$line"
-    done
-))
+  ' < ~/.viminfo
+}
+
+candidates=()
+
+while IFS=$'\n' read -r line; do
+  [[ -f "$line" ]] && candidates+=("$line")
+done < <(get_candidates)
 
 size=${#candidates[@]}
 
 if [[ ${size} -gt 0 ]]; then
   [[ ${size} -gt 10 ]] && size=10
 
-  height=$((2 + $size)) # 2 extra rows for FZF prompt
+  height=$((2 + size)) # 2 extra rows for FZF prompt
+  files=()
 
-  files=$(
-    printf "%s\n" "${candidates[@]}" | fzf-tmux --height ${height} -d -m -q "$*"
-  ) && vim -O ${files}
+  while IFS=$'\n' read -r line; do
+    files+=("$line")
+  done < <(printf "%s\\n" "${candidates[@]}" | fzf-tmux --height ${height} -d -m -q "$*")
+
+  if [[ ${#files[@]} -gt 0 ]]; then
+    exec "vim" "-O" "${files[@]}"
+  else
+    exit 1
+  fi
 else
   >&2 echo "No recent files found!"
   exit 1
