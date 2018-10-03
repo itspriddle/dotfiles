@@ -7,7 +7,7 @@ LINKS = $(addprefix $(HOME)/., $(PARTS))
 .PHONY: default backup force-uninstall install uninstall
 
 default:
-	@echo 'Run `make install` to install dotfiles'
+	@echo 'Run `make install` to install dotfiles' && false
 
 backup:
 	mkdir -p .backups
