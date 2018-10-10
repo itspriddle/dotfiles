@@ -16,6 +16,7 @@ noremap <c-b> :echoerr "Use `<leader>b`!"<cr>
 
 nnoremap <leader>b :FZFBuffers<cr>
 nnoremap <leader>m :FZFMRU<cr>
+nnoremap <leader>M :FZFMRU!<cr>
 
 " }}}
 
