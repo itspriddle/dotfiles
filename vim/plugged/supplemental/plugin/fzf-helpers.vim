@@ -36,19 +36,28 @@ function! s:handler(lines)
 endfunction
 
 command! FZFBuffers call fzf#run({
-  \   'down': 20,
+  \   'down':    20,
   \   'source':  s:list_buffers(),
   \   'options': '--prompt="buffers> " --expect='.join(keys(s:default_action), ','),
   \   'sink*':   function("s:handler")
   \ })
 
-command! FZFMRU call fzf#run({
-  \   'down': 20,
-  \   'source': filter(v:oldfiles, 'filereadable(fnamemodify(v:val, ":p"))'),
+function! s:mru_files(cwd)
+  let filter = 'filereadable(fnamemodify(v:val, ":p"))'
+
+  if a:cwd
+    let filter .= ' && fnamemodify(v:val, ":p") =~# "^".getcwd()'
+  endif
+
+  return filter(copy(v:oldfiles), filter)
+endfunction
+
+command! -bang FZFMRU call fzf#run({
+  \   'down':    20,
+  \   'source':  s:mru_files(<q-bang> == ""),
   \   'options': '--prompt="mru> " --expect='.join(keys(s:default_action), ','),
   \   'sink*':   function("s:handler")
   \ })
-
 
 function! s:tags_sink(line)
   let parts = split(a:line, '\t\zs')
