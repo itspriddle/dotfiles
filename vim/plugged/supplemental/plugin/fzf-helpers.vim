@@ -44,7 +44,7 @@ command! FZFBuffers call fzf#run({
 
 command! FZFMRU call fzf#run({
   \   'down': 20,
-  \   'source': v:oldfiles,
+  \   'source': filter(v:oldfiles, 'filereadable(fnamemodify(v:val, ":p"))'),
   \   'options': '--prompt="mru> " --expect='.join(keys(s:default_action), ','),
   \   'sink*':   function("s:handler")
   \ })
