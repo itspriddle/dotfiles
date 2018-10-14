@@ -68,26 +68,6 @@ let g:splitjoin_ruby_trailing_comma = 0
 
 " }}}
 
-" vim-dispatch {{{
-
-augroup setup_dispatch
-  autocmd!
-
-  autocmd BufReadPost *
-    \ if getline(1) =~# '^#!' |
-    \   let b:dispatch = getline(1)[2:-1] . ' %' |
-    \   let b:start    = b:dispatch |
-    \ endif
-augroup END
-
-" Run Dispatch for the current file
-map <leader>d :Dispatch<cr>
-
-" Run Dispatch for the current line
-map <leader>D :.Dispatch<cr>
-
-" }}}
-
 " vim-easy-align {{{
 
 " Allow aligning stuff that is commented out
