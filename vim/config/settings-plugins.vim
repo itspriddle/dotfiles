@@ -44,8 +44,14 @@ noremap <leader>f :Ag<space>
 " Opens command line with `:LAg `, results go to Location List
 noremap <leader>F :LAg<space>
 
-" Try ripgrep
-let g:simple_ag_command = "rg --sort-files --vimgrep %s"
+" Use ripgrep if available
+if executable("rg")
+  let g:simple_ag_command = "rg --sort-files --vimgrep %s"
+endif
+
+" But prefer git-grep since it is faster than ag/rg
+autocmd User Fugitive
+  \ let g:simple_ag_command = "git --no-pager grep -n --no-color --column %s"
 
 " }}}
 
