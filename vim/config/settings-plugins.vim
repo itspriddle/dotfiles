@@ -28,12 +28,11 @@ let g:lightline = { 'colorscheme': 'solarized' }
 
 " QFEnter.vim {{{
 
-let g:qfenter_keymap              = {}
-let g:qfenter_keymap.open         = ['<CR>', 'o']
-let g:qfenter_keymap.vopen        = ['v']
-let g:qfenter_keymap.hopen        = ['h']
-let g:qfenter_keymap.topen        = ['t']
-let g:qfenter_enable_autoquickfix = 0
+let g:qfenter_keymap       = {}
+let g:qfenter_keymap.open  = ['<CR>', 'o']
+let g:qfenter_keymap.vopen = ['<C-v>']
+let g:qfenter_keymap.hopen = ['<C-h>', '<C-s>']
+let g:qfenter_keymap.topen = ['<C-t>']
 
 " }}}
 
