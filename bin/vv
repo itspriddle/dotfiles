@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Usage: vv
+# Usage: vv [-a|--all]
 #
 # NAME
 #   vv - open recently edited files in Vim
@@ -8,8 +8,9 @@
 #   vv
 #
 # DESCRIPTION
-#   vv uses fzf to display a list of files that Vim has recently accessed in
-#   the current directory. Selected files are passed to Vim.
+#   vv uses fzf to display a list of files that Vim has recently accessed. By
+#   default, only files from the current directory are displayed. Use the
+#   `--all` option to show all files.
 #
 #   Based on https://github.com/junegunn/fzf/wiki/Examples#v
 #
@@ -20,11 +21,12 @@
 
 # Print help text and exit.
 if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
-  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" | awk -v flag="${1}" '
-    { help = help $0 "\n" } /^[Uu]sage: / { if (flag == "-h") usage = $0 "\n" }
-    END { out = usage ? usage : help; gsub(/^\n*|\n*$/, "", out); print out }
-  '
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
   exit 1
+elif [ "${1:-}" = "-a" ] || [ "${1:-}" = "--all" ]; then
+  no_cwd=1
+  shift
 fi
 
 # Ensure `fzf` is available.
@@ -34,18 +36,27 @@ if ! type fzf &> /dev/null; then
 fi
 
 get_candidates() {
-  awk -v path="${PWD/#$HOME/~}/" '
-    $0 ~ /^> / && $0 ~ path && $0 !~ /.git/ {
-      print substr($2, length(path) + 1)
-    }
-  ' < ~/.viminfo
+  { if [ "$1" ]; then
+      awk '
+        $0 ~ /^> / && $0 !~ /.git/ {
+          print $2
+        }
+      '
+    else
+      awk -v path="${PWD/#$HOME/~}/" '
+        $0 ~ /^> / && $0 ~ path && $0 !~ /.git/ {
+          print substr($2, length(path) + 1)
+        }
+      '
+    fi
+  } < ~/.viminfo
 }
 
 candidates=()
 
 while IFS=$'\n' read -r line; do
-  [[ -f "$line" ]] && candidates+=("$line")
-done < <(get_candidates)
+  [[ -f "${line/#~/$HOME}" ]] && candidates+=("$line")
+done < <(get_candidates "${no_cwd:-}")
 
 size=${#candidates[@]}
 
@@ -56,7 +67,7 @@ if [[ ${size} -gt 0 ]]; then
   files=()
 
   while IFS=$'\n' read -r line; do
-    files+=("$line")
+    files+=("${line/#~/$HOME}")
   done < <(printf "%s\\n" "${candidates[@]}" | fzf-tmux --height ${height} -d -m -q "$*")
 
   if [[ ${#files[@]} -gt 0 ]]; then
