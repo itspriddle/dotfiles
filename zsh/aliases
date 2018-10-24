@@ -49,6 +49,7 @@ alias p="pressed"
 alias gmt-date="date -u"
 alias geolocation="curl -s https://freegeoip.app/json/ | jq"
 alias weather="curl 'wttr.in/Clifton+Park+NY?n'"
+alias v="vv -a"
 
 # OS X
 if [ "${OSTYPE:0:6}" = "darwin" ]; then
