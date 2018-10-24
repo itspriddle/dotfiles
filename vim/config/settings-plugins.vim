@@ -120,6 +120,7 @@ nnoremap <leader>R :Delete
 " vim-filebeagle {{{
 
 let g:filebeagle_suppress_keymaps = 1
+let g:filebeagle_show_hidden = 1
 map <silent> - <Plug>FileBeagleOpenCurrentBufferDir
 
 " }}}
