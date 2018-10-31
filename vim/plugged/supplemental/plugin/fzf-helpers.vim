@@ -43,13 +43,14 @@ command! FZFBuffers call fzf#run({
   \ })
 
 function! s:mru_files(cwd)
-  let filter = 'filereadable(fnamemodify(v:val, ":p"))'
+  let mru = filter(copy(v:oldfiles), 'filereadable(fnamemodify(v:val, ":p"))')
 
   if a:cwd
-    let filter .= ' && fnamemodify(v:val, ":p") =~# "^".getcwd()'
+    let mru = filter(mru, 'fnamemodify(v:val, ":p") =~# "^".getcwd()')
+    return map(mru, "substitute(fnamemodify(v:val, ':p'), '^'.getcwd().'/', '', '')")
+  else
+    return mru
   endif
-
-  return filter(copy(v:oldfiles), filter)
 endfunction
 
 command! -bang FZFMRU call fzf#run({
