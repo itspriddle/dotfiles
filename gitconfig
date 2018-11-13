@@ -1,6 +1,7 @@
 [user]
-	name  = Joshua Priddle
-	email = jpriddle@me.com
+	name       = Joshua Priddle
+	email      = jpriddle@me.com
+	signingkey = E7ED7E4CEC917FE0
 
 [color]
 	ui = auto
@@ -31,6 +32,9 @@
 [merge]
 	ff = only
 	tool = fugitive
+
+[commit]
+	gpgsign = true
 
 [core]
 	whitespace   = fix,-indent-with-non-tab,trailing-space,cr-at-eol
