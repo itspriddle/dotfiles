@@ -53,6 +53,7 @@ brew "hub"
 brew "itspriddle/brews/imgur-bash"
 brew "itspriddle/brews/vim"
 brew "jq"
+brew 'pinentry-mac'
 brew "pv"
 brew "ripgrep"
 brew "rename"
