@@ -34,6 +34,9 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 
+" Database
+Plug 'tpope/vim-dadbod'
+
 " File browsing/search
 Plug 'jeetsukumaran/vim-filebeagle'
 
