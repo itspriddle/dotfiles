@@ -15,7 +15,3 @@ autocmd BufEnter *.git/PULLREQ_EDITMSG
   \ if expand("%") =~# ".*\.git\/PULLREQ_EDITMSG" |
   \   setlocal textwidth=0 |
   \ endif
-
-" Fix comment highlighting for
-" `git config core.commentChar ";"`
-autocmd FileType gitcommit syn match gitcommitComment	"^[#;].*"
