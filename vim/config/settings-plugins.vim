@@ -51,7 +51,7 @@ endif
 
 " But prefer git-grep since it is faster than ag/rg
 autocmd User Fugitive
-  \ let g:simple_ag_command = "git --no-pager grep -n --no-color --column %s"
+  \ let g:simple_ag_command = "git --no-pager grep -n --untracked --no-color --column %s"
 
 " }}}
 
