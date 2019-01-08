@@ -17,7 +17,9 @@ unbundled_require = -> name, &block do
 
   if defined? Bundler
     unless spec_path = Dir["#{Gem.dir}/specifications/#{name}-*.gemspec"].last
-      warn "Couldn't find #{name}. Install it with 'gem install #{name}'"
+      if ENV["DEBUG"]
+        warn "Couldn't find #{name}. Install it with 'gem install #{name}'"
+      end
       return
     end
 
@@ -33,7 +35,7 @@ unbundled_require = -> name, &block do
     require name
     block.call if block
   rescue Exception => err
-    warn "Couldn't load #{name}: #{err}"
+    warn "Couldn't load #{name}: #{err}" if ENV["DEBUG"]
   end
 end
 
