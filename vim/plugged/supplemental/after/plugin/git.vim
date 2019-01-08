@@ -49,4 +49,14 @@ augroup ft_git
   "
   autocmd BufWritePre *.git/PULLREQ_EDITMSG
     \ execute 'keeppatterns %s,\v%(\[ch[0-9]+\] )@<!https://app.clubhouse.io/([^/]+)/story/([0-9]+)/\.*,[ch\2] \0,gei'
+
+  " Enable syntax highlighting for GitHub Pull Request messages (via `hub`)
+  autocmd BufNewFile,BufRead *.git/PULLREQ_EDITMSG
+    \ set ft=markdown |
+    \ syn match   gitcommitSummary     ".*\%<50v" contained containedin=gitcommitFirstLine nextgroup=gitcommitOverflow contains=@Spell |
+    \ syn match   gitcommitOverflow    ".*" contained contains=@Spell |
+    \ syn include @gitcommitDiff syntax/diff.vim |
+    \ syn match gitcommitFirstLine     "\%^.*" nextgroup=gitcommitBlank skipnl |
+    \ syn region gitcommitDiff start=/\%(^diff --\%(git\|cc\|combined\) \)\@=/ end=/^\%(diff --\|$\|#\)\@=/ fold contains=@gitcommitDiff |
+    \ syn region gitcommitComment start=/^# -\+ >8 -\+$/ end=/\%$/ contains=gitcommitDiff
 augroup END
