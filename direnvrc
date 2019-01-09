@@ -1,0 +1,31 @@
+# Usage in .envrc
+#
+#   use ruby [version]
+#   PATH_add bin
+use_ruby() {
+  if [[ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]]; then
+    # enable the chruby command in an environment
+    source /usr/local/opt/chruby/share/chruby/chruby.sh
+
+    # desired Ruby version as first parameter
+    local ver="$1"
+
+    # if version not given as parameter and there is a .ruby-version file, get
+    # version from the file
+    if [[ -z "$ver" ]] && [[ -f .ruby-version ]]; then
+      ver=$(cat .ruby-version)
+    fi
+
+    # if the version still isn't set, error cause we don't know what to do
+    if [[ -z "$ver" ]]; then
+      >&2 echo "Unknown ruby version"
+      return 1
+    fi
+
+    # switch to the desired ruby version
+    chruby "$ver"
+  else
+    >&2 echo "chruby not available!"
+    return 1
+  fi
+}
