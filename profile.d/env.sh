@@ -57,6 +57,27 @@ elif [ "${OSTYPE:0:5}" = "linux" ]; then
   export LS_COLORS="di=1;34;27:ln=1;36;27:so=1;35;27:pi=33;27:ex=1;32;27:bd=1;33;27:cd=1;33;27:su=1;31;27:sg=1;31;27:tw=1;34;27:ow=1;34;27:"
 fi
 
+# Ruby
+RUBY_VERSION="$(< ~/.dotfiles/ruby-version)"
+export RUBY_VERSION
+
+if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
+  source /usr/local/opt/chruby/share/chruby/chruby.sh
+  [ -f ~/.config/chruby-auto-enabled ] && source /usr/local/opt/chruby/share/chruby/auto.sh
+  chruby "$RUBY_VERSION"
+else
+  lib_version="${RUBY_VERSION%%?}0"
+  ruby_home="$HOME/.rubies/ruby-$RUBY_VERSION"
+
+  if [ -d "$ruby_home" ]; then
+    PATH="$HOME/.gem/ruby/$lib_version/bin:$ruby_home/bin:$PATH"
+
+    export GEM_HOME="$HOME/.gem/ruby/$lib_version"
+    export GEM_PATH="$GEM_HOME:$ruby_home/lib/ruby/gems/$lib_version"
+  fi
+  unset lib_version ruby_home
+fi
+
 # FZF
 export FZF_DEFAULT_OPTS="--no-mouse --color fg:-1,fg+:4,hl:5,hl+:5,bg:-1,bg+:-1,prompt:4,info:2,marker:3 --bind=ctrl-u:half-page-up,ctrl-d:half-page-down"
 export FZF_DEFAULT_COMMAND="rg --files --sort-files"
