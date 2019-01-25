@@ -32,6 +32,9 @@ elif [ "${OSTYPE:0:5}" = "linux" ]; then
   if [ -f /etc/debian_version ]; then
     export DEBIAN_PREVENT_KEYBOARD_CHANGES=1
   fi
+
+  # Restore `ls` quoting behavior
+  export QUOTING_STYLE=literal
 fi
 
 if [ "$PS1" ]; then
