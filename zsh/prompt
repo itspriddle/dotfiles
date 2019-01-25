@@ -35,7 +35,7 @@ _josh_prompt_precmd() {
 
   dir_prompt="%{$fg_bold[blue]%}%3~%{$reset_color%}"
 
-  if [[ -n $SSH_CONNECTION ]]; then
+  if [[ -n $SSH_CONNECTION ]] && [[ -z $TMUX ]]; then
     host_prompt="%{$fg_bold[yellow]%}%n@%M%{$reset_color%} "
   fi
 
