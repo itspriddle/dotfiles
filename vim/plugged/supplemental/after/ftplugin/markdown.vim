@@ -7,8 +7,6 @@ noremap <buffer> <leader>mv :MarkedOpen<cr>
 " Marked.app quit
 noremap <buffer> <leader>mq :MarkedQuit<cr>
 
-command! -buffer Markoff silent exe "!open -a Markoff.app " expand("%:p") | redraw!
-
 " Show spelling errors
 setlocal spell
 
