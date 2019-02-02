@@ -1,0 +1,213 @@
+#!/usr/bin/env bash
+# Usage: amphetamine enable|on [duration]  -  enable Amphetamine
+#        amphetamine disable|off           -  disable Amphetamine
+#        amphetamine toggle [duration]     -  toggle Amphetamine state
+#        amphetamine status                -  print Amphetamine state
+#        amphetamine quit                  -  quit Amphetamine
+#        amphetamine open                  -  open Amphetamine
+#        amphetamine restart               -  restart Amphetamine
+#        amphetamine is-installed          -  check if Amphetamine is installed
+#        amphetamine --help                -  print help for this tool
+#
+# NAME
+#   amphetamine - control Amphetamine.app
+#
+# COMMANDS
+#   enable [duration], on [duration]
+#     Starts a new session. With no duration, the default session duration is
+#     used. Duration must be a numeric value, with an optional unit value of
+#     "h" for hours or "m" for minutes (the default is minutes). Values are
+#     converted to minutes and rounded down if necessary.
+#
+#     Examples:
+#       amphetamine enable       # Enable for default duration
+#       amphetamine enable 10    # Enable for 10 minutes
+#       amphetamine enable 90m   # Enable for 90 minutes
+#       amphetamine enable 2.5h  # Enable for 150 minutes
+#       amphetamine enable 0     # Enable indefinitely
+#
+#   disable, off
+#     Stops an active session if one exists. Note that application or trigger
+#     based sessions cannot be disabled.
+#
+#   toggle [duration]
+#     If a session is active, the same as `amphetamine enable [duration]`,
+#     otherwise, the same as `amphetamine disable`.
+#
+#   status
+#     Checks if there is a running session, and print its duration. If a
+#     session is running, exits 0. If a session is not running, but
+#     Amphetamine itself is running, exits 1. If Amphetamine is not running,
+#     exits 2.
+#
+#   quit
+#     Quits the Amphetamine application. Any active sessions are abandoned.
+#
+#   open
+#     Opens the Amphetamine application.
+#
+#   restart
+#     Restarts the Amphetamine application.
+#
+#   is-installed
+#     Checks if the Amphetamine application is installed.
+#
+#   help, --help
+#     Print this help message
+#
+# OPTIONS
+#   -s, --silent
+#     Call any command with this as the first option to suppress output, eg:
+#     `amphetamine -s on`.
+#
+# LICENSE
+#   MIT License - https://opensource.org/licenses/MIT
+#
+#   (c) 2019 Joshua Priddle <jpriddle@me.com>
+
+if [[ "${DEBUG}" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
+fi
+
+set -e
+
+APP_ID="com.if.Amphetamine"
+
+puts() {
+  if [[ -z "${SILENT:-}" ]]; then
+    echo "${1:-}"
+  fi
+}
+
+warn() {
+  puts "${1:-}" >&2
+}
+
+abort() {
+  warn "${1:-}"
+  exit "${2:-1}"
+}
+
+run() {
+  osascript -e "tell application id \"${2:-$APP_ID}\"" -e "$1" -e "end tell"
+}
+
+parse_time() {
+  if [[ "$1" =~ ^[0-9][0-9\.]*m?$ ]]; then
+    echo "${1%m}"
+  elif [[ "$1" =~ ^[0-9][0-9\.]*h$ ]]; then
+    echo "(${1%h} * 60) / 1" | bc
+  else
+    return 1
+  fi
+}
+
+timestmap() {
+  local s="$1"
+  printf "%02dh:%02dm:%02ds" $((s / 3600)) $((s % 3600 / 60)) $((s % 60))
+}
+
+main() {
+  local cmd
+
+  cmd="${1:--h}"
+
+  case "$cmd" in
+    -s|--silent)
+      SILENT=1
+      shift
+      main "$@"
+      ;;
+    help|--help|-h)
+      sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+        awk -v f="${cmd#-h}" '!f && /^Usage:/ || u { u=!/^\s*$/; if (!u) exit } u || f'
+      return 1
+      ;;
+    enable|on)
+      if [[ -z "${2:-}" ]]; then
+        run "start new session"
+      else
+        local minutes
+        minutes="$(parse_time "$2" || abort "Invalid timestamp")"
+
+        run "start new session with options { duration:$minutes, displaySleepAllowed:false } "
+      fi
+      main status
+      ;;
+    disable|off)
+      if main status &> /dev/null; then
+        run "end session"
+      else
+        abort "no active session to quit"
+      fi
+      main status || true
+      ;;
+    toggle)
+      if main status &> /dev/null; then
+        main disable
+      else
+        main enable "${2:-}"
+      fi
+      ;;
+    status)
+      local remaining
+
+      if ! pgrep "${APP_ID##*.}" &> /dev/null; then
+        puts "not running"
+        return 2
+      fi
+
+      remaining=$(run "session time remaining")
+
+      case "$remaining" in
+         0) puts "active indefinitely";;
+        -1) puts "active indefinitely by trigger";;
+        -2) puts "active indefinitely by application";;
+        -3) puts "inactive"; return 1;;
+        -*) puts "active indefinitely (for $(timestmap "${remaining#-}"))";;
+         *) puts "active with $(timestmap "$remaining") remaining";;
+      esac
+      return 0
+      ;;
+    quit)
+      pkill "${APP_ID##*.}"
+      ;;
+    open)
+      open -b "$APP_ID"
+      ;;
+    restart)
+      main quit && main open
+      ;;
+    is-installed)
+      if [[ $(run "if exists application file id \"${APP_ID}\" then 1" com.apple.Finder) ]]; then
+        abort "installed" 0
+      else
+        abort "not installed"
+      fi
+      ;;
+    heisenberg)
+      run "enable heisenberg"
+      defaults write "$APP_ID" "Icon Style" 19
+      main restart
+      puts "So you do have a plan! Yeah, Mr. White! Yeah, science!"
+      ;;
+    heisenberg-off)
+      defaults delete "$APP_ID" Heisenberg 2>/dev/null || true
+      main restart
+      puts "We're done when I say we're done."
+      ;;
+    molecule)
+      run "give molecule"
+      ;;
+    *)
+      abort "Invalid command"
+      ;;
+  esac
+}
+
+if ! type osascript &> /dev/null; then
+  abort "couldn't find \`osascript\` executable, is this a Mac?"
+fi
+
+main "$@"
