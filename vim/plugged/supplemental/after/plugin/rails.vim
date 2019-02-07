@@ -92,6 +92,18 @@ let g:rails_projections["spec/factories/*.rb"] = {
   \   "keywords": "factory sequence"
   \ }
 
+" Opens/creates the given file under app/services:
+"
+" :[ERSTV]validator <filename>[!]
+let g:rails_projections["app/services/*_service.rb"] = {
+  \   "command": "service",
+  \   "test": "spec/services/{singular}_spec.rb",
+  \   "template": [
+  \     "class {camelcase|capitalize|colons}Service",
+  \     "end"
+  \   ]
+  \ }
+
 " Patch usage of `:A[SV]` to work in a Rails engine where lib specs are in
 " `spec/` rather than `spec/lib`.
 let g:rails_projections["lib/*.rb"] = {
@@ -111,4 +123,10 @@ augroup ft_rails
 
   " Open the associated file in a vertical split (overrides map in ft_ruby)
   autocmd User Rails noremap <buffer> <leader>v :AV<cr>
+
+  " autocmd BufWinEnter *db/migrate/*.rb
+  "   \ let b:migration = 1 |
+  "   \ if 1 |
+  "   \   execute 'keeppatterns %s,ActiveRecord::Migration,ActiveRecord::Migration[5.1],' |
+  "   \ endif
 augroup END
