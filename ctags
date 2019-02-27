@@ -1,1 +1,3 @@
 --tag-relative=yes
+--exclude=.bundle
+--exclude=node_modules
