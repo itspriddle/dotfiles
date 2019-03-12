@@ -52,15 +52,15 @@ print_author_stats() {
   local author commit_count pr_merge_count
 
   author="${1}"
-  commit_count="$(commit_count "${author}")"
-  pr_merge_count="$(commit_count "${author}" --grep="Merge pull request #")"
+  commit_count="$(commit_count "$@")"
+  pr_merge_count="$(commit_count "$@" --grep="Merge pull request #")"
 
   git log \
     --no-merges \
     --author="${author}" \
     --oneline \
     --shortstat \
-    --format=tformat: |
+    --format=tformat: "${@:2}" |
     awk \
       -v author="${author}" \
       -v commit_count="${commit_count:-0}" \
@@ -88,7 +88,9 @@ print_author_stats() {
 main() {
   local author="${1:-}"
 
-  if [ "$#" -eq 0 ] && [ -z "${author}" ]; then
+  [[ "$#" -gt 0 ]] && shift
+
+  if [ -z "${author}" ]; then
     author="$(git config user.name 2> /dev/null || true)"
   fi
 
@@ -97,7 +99,7 @@ main() {
     exec "$0" --usage
   fi
 
-  print_author_stats "${author}"
+  print_author_stats "${author}" "$@"
 }
 
 main "$@"
