@@ -19,7 +19,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead secrets.yml.enc.[0-9]\+ setfiletype yaml
 
   " Direnv
-  autocmd BufNewFile,BufRead .\\\{0,1\}{dir}\\\{0,1\}envrc
+  autocmd BufNewFile,BufRead .envrc,envrc,.direnvrc,direnvrc
     \ let g:is_bash = 1 |
     \ setfiletype sh |
     \ unlet g:is_bash
