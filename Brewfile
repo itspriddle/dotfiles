@@ -18,20 +18,14 @@ cask "docker"
 # Ruby/Rails apps
 brew "awscli"
 brew "chruby"
-brew "dwdiff"
 brew "imagemagick"
 brew "mailhog"
 brew "puma-dev"
 brew "redis"
 brew "ruby-install"
 
-# PHP
-brew "composer"
-brew "wp-cli"
-
 # Databases
 brew "mysql@5.6"
-brew "postgresql@9.6"
 brew "sqlite"
 
 # SAAS
@@ -40,21 +34,18 @@ brew "heroku"
 
 # Utilities
 brew "argon/mas/mas"
-brew "bats"
 brew "chromedriver"
 brew "direnv"
 brew "exiftool"
 brew "fzf"
 brew "gist"
 brew "git"
-brew "git-lfs"
 brew "gnupg2"
 brew "hub"
 brew "itspriddle/brews/imgur-bash"
 brew "itspriddle/brews/vim"
 brew "jq"
 brew 'pinentry-mac'
-brew "pv"
 brew "ripgrep"
 brew "rename"
 brew "shellcheck"
@@ -69,7 +60,6 @@ brew "wget"
 brew "youtube-dl"
 
 # Mac App Store apps
-mas "1Password",         id: 443987910
 mas "Affinity Designer", id: 824171161
 mas "Affinity Photo",    id: 824183456
 mas "Amphetamine",       id: 937984704
@@ -81,5 +71,6 @@ mas "Pages",             id: 409201541
 mas "Pixelmator",        id: 407963104
 mas "Slack",             id: 803453959
 mas "The Unarchiver",    id: 425424353
-mas "Tweetbot",          id: 557168941
+mas "Tweetbot",          id: 1384080005
 mas "iA Writer",         id: 775737590
+mas "Wipr",              id: 1320666476
