@@ -1,0 +1,53 @@
+#!/usr/bin/env osascript
+
+-- This is so dirty.
+--
+-- I use "Swipe with three fingers" on my Trackpad to swipe back in forth in
+-- applications. For some reason, it stops working randomly and has done so
+-- for as long as I can remember. Sometimes the Trackpad works fine for weeks,
+-- and other times it stops working multiple times a day. Very annoying.
+--
+-- Anyway, the "fix" I've used over the years is to toggle the gesture used
+-- under Trackpad preferences. But that's an obnoxious process. So, this
+-- stupid AppleScript does it for me. I'm not even sure this will fix the
+-- problem yet, but the script does what it is supposed to.
+--
+-- Notes: Terminal.app must be added to the list at:
+--   System Preferences > Security & Privacy > Privacy > Accessibility
+--
+-- Tested on macOS Mojave (10.14.3).
+
+set defaultOption to "Scroll left or right with two fingers"
+set desiredOption to "Swipe with three fingers"
+
+tell application "System Preferences"
+  activate
+  set the current pane to pane id "com.apple.preference.trackpad"
+end tell
+
+delay 0.5
+
+tell application "System Events" to tell process "System Preferences"
+  click radio button "More Gestures" of tab group 1 of window 1
+  delay 0.1
+
+  set theCheckbox to checkbox 1 of tab group 1 of window 1
+
+  tell theCheckbox
+    if (its value as boolean) then click theCheckbox
+    delay 0.1
+  end tell
+
+  click theCheckbox
+  delay 0.1
+
+  set theButton to menu button defaultOption of tab group 1 of window 1
+  click theButton
+  delay 0.1
+
+  set theMenu to menu defaultOption of thebutton
+  click menu item desiredOption of theMenu
+  delay 1
+end tell
+
+quit application "System Preferences"
