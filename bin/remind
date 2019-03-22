@@ -1,0 +1,66 @@
+#!/usr/bin/env ruby
+# Usage: remind [-h|--help] <note>
+#
+# Adds the given reminder to Reminders.app.
+#
+# Examples:
+#
+#   $ remind "This is a reminder"
+#   $ remind "This is the subject
+#
+#   And this is the body"
+#   $ remind < reminder.txt
+#   $ echo "This is a reminder" | remind
+#   $ remind
+#   This is the subject
+#
+#   And this is the body
+#   ^d
+
+def print_help
+  File.read(__FILE__).lines[1..-1].each do |line|
+    if line =~ /\A#/
+      puts line[2..-1]
+    else
+      break
+    end
+  end
+end
+
+if %w(-h --help).include? ARGV.first
+  print_help
+  exit
+end
+
+if ARGV.size > 1
+  puts "Invalid arguments\n"
+  print_help
+  exit 1
+elsif ARGV.size == 1
+  body = ARGV.first.dup
+else
+  body = STDIN.read
+end
+
+name = body.lines.first.rstrip
+
+if body.lines.size == 1
+  name = body
+  body = ""
+end
+
+[name, body].each { |str| str.gsub! '"', '\"' }
+
+if name.empty?
+  puts "Invalid note\n"
+  print_help
+  exit 1
+end
+
+IO.popen "osascript", "w" do |io|
+  io << %{
+    tell application "Reminders"
+      make new reminder with properties { name: "#{name}", body: "#{body}" }
+    end tell
+  }
+end
