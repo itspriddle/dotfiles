@@ -3,5 +3,6 @@ if [[ $- == *i* ]] && [[ -r /etc/zprofile ]] && grep -E '^\s*eval `/usr/libexec/
 fi
 
 source ~/.dotfiles/profile.d/env.sh
+source ~/.dotfiles/profile.d/gpg.sh
 
 # vim: ft=zsh
