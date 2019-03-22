@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+# Usage: marked
+#
+# NAME
+#   marked - open files and content in Marked 2
+#
+# SYNOPSIS
+#   marked <file1> [<file2>...]
+#   marked < FILE
+#   echo "# Markdown" | marked
+#   marked
+#   # Some Markdown
+#   ^d
+#
+# DESCRIPTION
+#   Opens files or input in Marked 2.
+#
+#   In the first synopsis form, opens the given files in Marked.
+#
+#   In the second synopsis form, reads input from a file and opens a preview
+#   in Marked.
+#
+#   In the third synopsis form, reads input from STDIN and opens a preview in
+#   Marked.
+#
+#   In the fourth synopsis form, opens STDIN and opens a preview in Marked
+#   with the content.
+#
+# SEE ALSO
+#   marked2app.com
+
+# [ "$DEBUG" ] && set -x && export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+
+# set -euo pipefail
+
+
+# Print help text and exit.
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+  exit 1
+fi
+
+# https://gist.github.com/cdown/1163649
+urlencode() {
+  # urlencode <string>
+  old_lc_collate=$LC_COLLATE
+  LC_COLLATE=C
+
+  local length="${#1}"
+  for (( i = 0; i < length; i++ )); do
+    local c="${1:i:1}"
+    case $c in
+      [a-zA-Z0-9.~_-]) printf "%s" "$c" ;;
+      *) printf '%%%02X' "'$c" ;;
+    esac
+  done
+
+  LC_COLLATE=$old_lc_collate
+}
+
+if [[ -t 0 ]] && [[ $# -gt 0 ]]; then
+  for arg; do
+    echo "x-marked://open?file=$(urlencode "${arg}")"
+  done
+else
+  echo "x-marked://preview?text=$(urlencode "$(cat /dev/stdin)")"
+fi
