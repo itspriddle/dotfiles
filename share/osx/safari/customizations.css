@@ -13,3 +13,9 @@ body.loggedin [data-subreddit='Mr_Trump'],
 body.loggedin [data-subreddit='Mr_Trump'] + div.clearleft {
   display: none;
 }
+
+/* Hide new reddit design nags */
+body.loggedin section.onboardingbar,
+body.loggedin #sr-header-area .width-clip button.redesign-beta-optin {
+  display: none!important;
+}
