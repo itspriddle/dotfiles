@@ -3,7 +3,18 @@
 #
 # Runs `brew update` and `brew outdated`
 
+[ "$DEBUG" ] && set -x
+
 set -e
+
+# Print help text and exit.
+if [[ "${1:-}" =~ ^(-h|--help)$ ]]; then
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" | awk -v flag="${1}" '
+    { help = help $0 "\n" } /^[Uu]sage: / { if (flag == "-h") usage = $0 "\n" }
+    END { out = usage ? usage : help; gsub(/^\n*|\n*$/, "", out); print out }
+  '
+  exit 1
+fi
 
 if ! type brew &> /dev/null; then
   echo "Error: \`brew\` not found."
