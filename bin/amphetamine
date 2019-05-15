@@ -70,7 +70,7 @@ if [[ "${DEBUG}" ]]; then
   set -x
 fi
 
-set -e
+set -euo pipefail
 
 APP_ID="com.if.Amphetamine"
 
@@ -84,19 +84,14 @@ warn() {
   puts "${1:-}" >&2
 }
 
-abort() {
-  warn "${1:-}"
-  exit "${2:-1}"
-}
-
 run() {
   osascript -e "tell application id \"${2:-$APP_ID}\"" -e "$1" -e "end tell"
 }
 
 parse_time() {
-  if [[ "$1" =~ ^[0-9][0-9\.]*m?$ ]]; then
+  if [[ "$1" =~ ^[0-9]+m?$ ]]; then
     echo "${1%m}"
-  elif [[ "$1" =~ ^[0-9][0-9\.]*h$ ]]; then
+  elif [[ "$1" =~ ^[0-9]+\.?[0-9]*h$ ]]; then
     echo "(${1%h} * 60) / 1" | bc
   else
     return 1
@@ -129,7 +124,12 @@ main() {
         run "start new session"
       else
         local minutes
-        minutes="$(parse_time "$2" || abort "Invalid timestamp")"
+        minutes="$(parse_time "$2" || true)"
+
+        if [[ -z "$minutes" ]]; then
+          warn "Invalid timestamp"
+          return 1
+        fi
 
         run "start new session with options { duration:$minutes, displaySleepAllowed:false } "
       fi
@@ -139,7 +139,8 @@ main() {
       if main status &> /dev/null; then
         run "end session"
       else
-        abort "no active session to quit"
+        warn "no active session to quit"
+        return 1
       fi
       main status || true
       ;;
@@ -161,14 +162,13 @@ main() {
       remaining=$(run "session time remaining")
 
       case "$remaining" in
-         0) puts "active indefinitely";;
-        -1) puts "active indefinitely by trigger";;
-        -2) puts "active indefinitely by application";;
+         0) puts "active indefinitely"; return 0;;
+        -1) puts "active indefinitely by trigger"; return 0;;
+        -2) puts "active indefinitely by application"; return 0;;
         -3) puts "inactive"; return 1;;
-        -*) puts "active indefinitely (for $(timestmap "${remaining#-}"))";;
-         *) puts "active with $(timestmap "$remaining") remaining";;
+        -*) puts "active indefinitely (for $(timestmap "${remaining#-}"))"; return 0;;
+         *) puts "active with $(timestmap "$remaining") remaining"; return 0;;
       esac
-      return 0
       ;;
     quit)
       pkill "${APP_ID##*.}"
@@ -181,9 +181,11 @@ main() {
       ;;
     is-installed)
       if [[ $(run "if exists application file id \"${APP_ID}\" then 1" com.apple.Finder) ]]; then
-        abort "installed" 0
+        warn "installed"
+        return 0
       else
-        abort "not installed"
+        warn "not installed"
+        return 1
       fi
       ;;
     heisenberg)
@@ -201,13 +203,15 @@ main() {
       run "give molecule"
       ;;
     *)
-      abort "Invalid command"
+      warn "Invalid command"
+      return 1
       ;;
   esac
 }
 
 if ! type osascript &> /dev/null; then
-  abort "couldn't find \`osascript\` executable, is this a Mac?"
+  warn "couldn't find \`osascript\` executable, is this a Mac?"
+  exit 1
 fi
 
 main "$@"
