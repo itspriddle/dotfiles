@@ -49,10 +49,6 @@ if executable("rg")
   let g:simple_ag_command = "rg --sort-files --vimgrep %s"
 endif
 
-" But prefer git-grep since it is faster than ag/rg
-autocmd User Fugitive
-  \ let g:simple_ag_command = "git --no-pager grep -n --untracked --no-color --column %s"
-
 " }}}
 
 " simple-qf-toggle.vim {{{
