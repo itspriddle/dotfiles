@@ -67,6 +67,7 @@
 	prq              = pull-request --push --copy --browse
 	todo             = grep -wniI -e TODO -e FIXME
 	last-committer   = --no-pager log --pretty="%an" --no-merges -1
+	last-subject     = --no-pager log --pretty="%s" -1
 	show-files       = --no-pager show --name-only --format=
 
 [advice]
