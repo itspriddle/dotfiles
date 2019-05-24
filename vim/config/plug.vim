@@ -70,6 +70,7 @@ Plug 'tpope/vim-rake'
 Plug 'tpope/vim-haml'
 Plug 'vim-ruby/vim-ruby'
 Plug 'leafgarland/typescript-vim'
+Plug 'vito-c/jq.vim'
 
 " Git integration
 Plug 'tpope/vim-git'
