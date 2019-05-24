@@ -35,7 +35,7 @@
 #     otherwise, the same as `amphetamine disable`.
 #
 #   status
-#     Checks if there is a running session, and print its duration. If a
+#     Checks if there is a running session, and prints its duration. If a
 #     session is running, exits 0. If a session is not running, but
 #     Amphetamine itself is running, exits 1. If Amphetamine is not running,
 #     exits 2.
