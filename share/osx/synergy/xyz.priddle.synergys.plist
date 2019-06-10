@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>xyz.priddle.synergys</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/Applications/Synergy.app/Contents/MacOS/synergys</string>
+      <string>--no-daemon</string>
+      <string>--no-tray</string>
+      <string>--debug</string>
+      <string>INFO</string>
+      <string>--name</string>
+      <string>Grievous</string>
+      <string>--enable-drag-drop</string>
+      <string>--address</string>
+      <string>:24800</string>
+      <string>--config</string>
+      <string>/Users/priddle/.dotfiles/share/osx/synergy/synergys.conf</string>
+      <string>--log</string>
+      <string>/Users/priddle/Library/Logs/synergys.log</string>
+      <!-- <string>--enable-crypto</string> -->
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+  </dict>
+</plist>
