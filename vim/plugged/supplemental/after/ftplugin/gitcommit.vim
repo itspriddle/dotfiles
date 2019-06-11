@@ -13,5 +13,5 @@ setlocal linebreak
 " Unlimited line length for PR messages
 autocmd BufEnter *.git/PULLREQ_EDITMSG
   \ if expand("%") =~# ".*\.git\/PULLREQ_EDITMSG" |
-  \   setlocal textwidth=0 |
+  \   setlocal textwidth=0 wrap |
   \ endif
