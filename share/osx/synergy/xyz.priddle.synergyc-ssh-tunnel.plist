@@ -3,7 +3,8 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>xyz.priddle.synergy-ssh-tunnel.plist</string>
+  <string>xyz.priddle.synergyc-ssh-tunnel.plist</string>
+  <!-- Run this on the Synergy CLIENT -->
   <key>ProgramArguments</key>
   <array>
     <string>/usr/bin/ssh</string>
