@@ -16,7 +16,7 @@
       <string>--enable-drag-drop</string>
       <!-- <string>--enable-crypto</string> -->
       <string>--log</string>
-      <string>/Users/priddle/Library/Logs/synergys.log</string>
+      <string>/Users/priddle/Library/Logs/synergyc.log</string>
       <string>10.0.1.70:24800</string>
     </array>
     <key>RunAtLoad</key>
