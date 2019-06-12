@@ -7,6 +7,8 @@
     <key>ProgramArguments</key>
     <array>
       <string>/Applications/Synergy.app/Contents/MacOS/synergys</string>
+      <!-- Requires Synergy Pro to enable -->
+      <!-- <string>--enable-crypto</string> -->
       <string>--no-daemon</string>
       <string>--no-tray</string>
       <string>--debug</string>
@@ -20,7 +22,6 @@
       <string>/Users/priddle/.dotfiles/share/osx/synergy/synergys.conf</string>
       <string>--log</string>
       <string>/Users/priddle/Library/Logs/synergys.log</string>
-      <!-- <string>--enable-crypto</string> -->
     </array>
     <key>RunAtLoad</key>
     <true/>

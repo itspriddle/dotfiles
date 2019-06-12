@@ -7,6 +7,8 @@
     <key>ProgramArguments</key>
     <array>
       <string>/Applications/Synergy.app/Contents/MacOS/synergyc</string>
+      <!-- Requires Synergy Pro to enable -->
+      <!-- <string>--enable-crypto</string> -->
       <string>--no-daemon</string>
       <string>--no-tray</string>
       <string>--debug</string>
@@ -14,7 +16,6 @@
       <string>--name</string>
       <string>Coruscant</string>
       <string>--enable-drag-drop</string>
-      <!-- <string>--enable-crypto</string> -->
       <string>--log</string>
       <string>/Users/priddle/Library/Logs/synergyc.log</string>
       <string>localhost</string>
