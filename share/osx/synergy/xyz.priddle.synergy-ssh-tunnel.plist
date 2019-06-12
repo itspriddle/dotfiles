@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>xyz.priddle.synergy-ssh-tunnel.plist</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/ssh</string>
+    <string>-q</string>
+    <string>-T</string>
+    <string>-C</string>
+    <string>-N</string>
+    <string>-o</string>
+    <string>ServerAliveInterval=3</string>
+    <string>-L</string>
+    <string>24800:localhost:24800</string>
+    <string>grievous.local</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>UserName</key>
+  <string>priddle</string>
+</dict>
+</plist>
