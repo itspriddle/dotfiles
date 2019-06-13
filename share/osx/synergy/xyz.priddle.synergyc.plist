@@ -16,6 +16,8 @@
       <string>--name</string>
       <string>Coruscant</string>
       <string>--enable-drag-drop</string>
+      <string>--yscroll</string>
+      <string>30</string>
       <string>--log</string>
       <string>/Users/priddle/Library/Logs/synergyc.log</string>
       <string>localhost</string>
