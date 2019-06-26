@@ -11,3 +11,6 @@ sql
 *.jpg
 *.png
 *.svg
+
+/.bundle
+/node_modules/*
