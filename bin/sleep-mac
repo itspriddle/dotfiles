@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Usage: sleep-mac [[user@]hostname]
+#
+# NAME
+#   sleep-mac - put Macs to sleep
+#
+# SYNOPSIS
+#   sleep-mac
+#     Puts the current machine to sleep.
+#
+#   sleep-mac user@foobar.local
+#     Connect to `foobar.local` as `user` via SSH and sleeps.
+#
+# LICENSE
+#   MIT License - https://opensource.org/licenses/MIT
+#
+#   (c) 2019 Joshua Priddle <jpriddle@me.com>
+
+if [[ "${DEBUG}" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
+fi
+
+set -euo pipefail
+
+main() {
+  local cmd_or_host="${1-}"
+
+  if [[ "${cmd_or_host}" =~ ^(-h|--help)$ ]]; then
+    sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+      awk -v f="${cmd_or_host#-h}" '!f && /^Usage:/ || u { u=!/^\s*$/; if (!u) exit } u || f'
+    return 1
+  fi
+
+  if [[ $# -eq 0 ]]; then
+    pmset sleepnow
+    return
+  fi
+
+  if [[ $# -eq 1 ]]; then
+    if ! [[ "${cmd_or_host}" =~ ^-.*$ ]]; then
+      ssh "${cmd_or_host}" "pmset sleepnow"
+      return
+    fi
+  fi
+
+  echo "Invalid arguments."
+  echo "See '${0##*/} --help' for usage."
+  return 1
+}
+
+main "$@"
