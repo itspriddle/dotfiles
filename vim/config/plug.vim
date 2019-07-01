@@ -71,6 +71,7 @@ Plug 'tpope/vim-haml'
 Plug 'vim-ruby/vim-ruby'
 Plug 'leafgarland/typescript-vim'
 Plug 'vito-c/jq.vim'
+Plug 'elixir-editors/vim-elixir'
 
 " Git integration
 Plug 'tpope/vim-git'
