@@ -38,7 +38,7 @@ _josh_prompt_precmd() {
   if [[ -n $SSH_CONNECTION ]] && [[ -z $TMUX ]]; then
     [[ $HOST =~ (\.local|\.lan)$ ]] && host_format="%m"
 
-    host_prompt="%{$fg_bold[yellow]%}%n@%{$host_format%}%{$reset_color%} "
+    host_prompt="%{$fg_bold[yellow]%}%n@${host_format}%{$reset_color%} "
   fi
 
   PS1="${host_prompt}${dir_prompt}${git_prompt} %# "
