@@ -1,7 +1,9 @@
 " Initialization {{{
 
 " Source all files under `./vim/config/` relative to this vimrc file
-for f in split(glob(resolve(expand('<sfile>:p:h')).'/config/**/*.vim'), '\n')
+let s:dotvim = resolve(fnamemodify(resolve(expand('<sfile>')), ':p:h'))
+
+for f in split(glob(s:dotvim.'/config/**/*.vim'), '\n')
   execute "source" f
 endfor
 
