@@ -48,6 +48,9 @@ setopt NO_HIST_BEEP
 # Share history between all sessions.
 setopt SHARE_HISTORY
 
+# Ignore lines with leading space
+setopt HIST_IGNORE_SPACE
+
 autoload -U history-search-end
 
 zle -N history-beginning-search-backward-end history-search-end
