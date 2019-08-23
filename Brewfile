@@ -9,18 +9,15 @@ tap "heroku/brew"
 tap "homebrew/services"
 tap "itspriddle/brews"
 tap "puma/homebrew-puma"
-tap "sj26/git-buildkite"
 tap "universal-ctags/universal-ctags"
 
 # Casks
 cask "docker"
 
 # Ruby/Rails apps
-brew "awscli"
 brew "chruby"
 brew "imagemagick"
 brew "mailhog"
-brew "puma-dev"
 brew "redis"
 brew "ruby-install"
 
@@ -29,7 +26,6 @@ brew "mysql@5.6"
 brew "sqlite"
 
 # SAAS
-brew "git-buildkite"
 brew "heroku"
 
 # Utilities
@@ -43,7 +39,7 @@ brew "git"
 brew "gnupg2"
 brew "hub"
 brew "itspriddle/brews/imgur-bash"
-brew "itspriddle/brews/vim"
+brew "vim"
 brew "jq"
 brew 'pinentry-mac'
 brew "ripgrep"
@@ -74,3 +70,4 @@ mas "The Unarchiver",    id: 425424353
 mas "Tweetbot",          id: 1384080005
 mas "iA Writer",         id: 775737590
 mas "Wipr",              id: 1320666476
+mas "Tyme 2",            id: 1063996724
