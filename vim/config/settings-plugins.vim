@@ -137,6 +137,13 @@ let g:liquid_highlight_types = ['ruby', 'javascript']
 
 " }}}
 
+" vim-marked {{{
+
+let g:marked_autoquit  = 0
+let g:marked_filetypes = ["markdown", "liquid"]
+
+" }}}
+
 " vim-peekaboo {{{
 
 " Normal mode:
