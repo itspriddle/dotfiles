@@ -38,7 +38,7 @@ brew "gist"
 brew "git"
 brew "gnupg2"
 brew "hub"
-brew "itspriddle/brews/imgur-bash"
+brew "itspriddle/brews/imgur-bash", args: ["HEAD"]
 brew "vim"
 brew "jq"
 brew 'pinentry-mac'
