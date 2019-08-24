@@ -13,6 +13,7 @@ tap "universal-ctags/universal-ctags"
 
 # Casks
 cask "docker"
+cask "chromedriver"
 
 # Ruby/Rails apps
 brew "chruby"
@@ -30,7 +31,6 @@ brew "heroku"
 
 # Utilities
 brew "argon/mas/mas"
-brew "chromedriver"
 brew "direnv"
 brew "exiftool"
 brew "fzf"
