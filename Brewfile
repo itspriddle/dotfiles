@@ -4,7 +4,6 @@
 #   brew bundle
 
 # Taps
-tap "argon/mas"
 tap "heroku/brew"
 tap "homebrew/services"
 tap "itspriddle/brews"
@@ -54,20 +53,3 @@ brew "universal-ctags", args: ["HEAD"]
 brew "vnstat"
 brew "wget"
 brew "youtube-dl"
-
-# Mac App Store apps
-mas "Affinity Designer", id: 824171161
-mas "Affinity Photo",    id: 824183456
-mas "Amphetamine",       id: 937984704
-mas "Deliveries",        id: 924726344
-mas "Magnet",            id: 441258766
-mas "Marked 2",          id: 890031187
-mas "Numbers",           id: 409203825
-mas "Pages",             id: 409201541
-mas "Pixelmator",        id: 407963104
-mas "Slack",             id: 803453959
-mas "The Unarchiver",    id: 425424353
-mas "Tweetbot",          id: 1384080005
-mas "iA Writer",         id: 775737590
-mas "Wipr",              id: 1320666476
-mas "Tyme 2",            id: 1063996724
