@@ -21,6 +21,7 @@ cask "virtualbox-extension-pack"
 brew "chruby"
 brew "imagemagick"
 brew "mailhog"
+brew "node"
 brew "redis"
 brew "ruby-install"
 
