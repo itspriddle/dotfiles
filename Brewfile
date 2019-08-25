@@ -48,6 +48,7 @@ brew "speedtest-cli"
 brew "ssh-copy-id"
 brew "terminal-notifier"
 brew "the_silver_searcher"
+brew "tmux"
 brew "tree"
 brew "universal-ctags", args: ["HEAD"]
 brew "vnstat"
