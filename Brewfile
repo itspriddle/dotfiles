@@ -13,6 +13,9 @@ tap "universal-ctags/universal-ctags"
 # Casks
 cask "docker"
 cask "chromedriver"
+cask "vagrant"
+cask "virtualbox"
+cask "virtualbox-extension-pack"
 
 # Ruby/Rails apps
 brew "chruby"
