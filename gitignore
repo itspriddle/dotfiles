@@ -17,6 +17,7 @@
 # ctags
 tags
 TAGS
+.tags
 
 # Rbenv
 .rbenv-version

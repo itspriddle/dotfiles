@@ -31,7 +31,7 @@ set shortmess+=c
 set noshowmode
 
 " Ctags files
-set tags=./.git/tags;
+set tags=./.tags;
 
 " Configure ~/.viminfo file:
 "

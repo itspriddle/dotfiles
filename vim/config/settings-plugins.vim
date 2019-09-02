@@ -124,10 +124,13 @@ map <silent> - <Plug>FileBeagleOpenCurrentBufferDir
 " vim-gutentags {{{
 
 " Keep tags files under .git
-let g:gutentags_ctags_tagfile = ".git/tags"
+let g:gutentags_ctags_tagfile = ".tags"
 
 " Don't let Gutentags `set tags`
 let g:gutentags_ctags_auto_set_tags = 0
+
+" Use ripgrep to list files
+let g:gutentags_file_list_command = 'rg --files'
 
 " }}}
 
