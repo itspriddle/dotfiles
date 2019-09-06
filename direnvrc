@@ -1,4 +1,6 @@
-# Usage in .envrc
+# Changes the current ruby version.
+#
+# Usage in .envrc:
 #
 #   use ruby [version]
 #   PATH_add bin
@@ -28,4 +30,22 @@ use_ruby() {
     >&2 echo "chruby not available!"
     return 1
   fi
+}
+
+# Sets work specific git configs.
+#
+# Usage in .envrc:
+#
+#   set_a2_git
+set_a2_git() {
+  local email
+  email="$(git config --global --includes a2-work.email)"
+
+  if [[ -z "$email" ]]; then
+    >&2 echo "Couldn't set A2 git email!"
+    return 1
+  fi
+
+  export GIT_COMMITTER_EMAIL="$email"
+  export GIT_AUTHOR_EMAIL="$email"
 }
