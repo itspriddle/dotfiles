@@ -31,4 +31,4 @@ defbce on
 # termcapinfo xterm* ti@:te@
 
 # Enable status-line always, and make it consise and pretty with Solarized
-hardstatus alwayslastline "%{= kY}screen: %?%-Lw%?%{.r}%n*%f %t%?(%u)%?%{.C}%?%+Lw %=%{.m}@%H %{.y}[%D %M %d %Y %c]"
+hardstatus alwayslastline "%{= kY}screen: %?%-Lw%?%{.r}%n*%f %t%?(%u)%?%{.Y}%?%+Lw %=%{.m}@%H %{.y}[%D %M %d %Y %c]"
