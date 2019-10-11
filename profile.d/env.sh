@@ -98,6 +98,9 @@ if [ "${shell}" ]; then
 
   # hub
   command -v hub > /dev/null && eval "$(hub alias -s "${shell}")"
+
+  # a2d
+  command -v a2d > /dev/null && eval "$(a2d init --shell "${shell}" -)"
 fi
 
 # BROWSER, used by `hub pull-request`
