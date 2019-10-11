@@ -6,3 +6,7 @@
 --exclude=log
 --exclude=node_modules
 --exclude=tmp
+
+#--languages=php
+#--languages=ruby
+--fields-php=+aimlS
