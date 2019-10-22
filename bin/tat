@@ -1,39 +1,77 @@
-#!/bin/sh
+#!/usr/bin/env bash
+# Usage: tat [--list|<session_name>]
 #
 # Attach or create tmux session named the same as current directory.
 
-path_name="$(basename "$PWD" | tr . -)"
-session_name=${1-$path_name}
+# https://github.com/thoughtbot/dotfiles/blob/2e49fae/bin/tat
+
+if [[ "$TAT_DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
+fi
+
+set -euo pipefail
+
+usage() {
+  local flag="${1-}"
+
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="$flag" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+}
 
 not_in_tmux() {
-  [ -z "$TMUX" ]
+  [[ -z "${TMUX-}" ]]
+}
+
+list_sessions() {
+  if ! tmux ls -F "#S" 2> /dev/null; then
+    echo "no open sessions" >&2
+    return 1
+  fi
 }
 
 session_exists() {
-  tmux list-sessions | sed -E 's/:.*$//' | grep -q "^$session_name$"
+  local session_name="$1"
+
+  tmux has-session -t "=$session_name"
 }
 
 create_detached_session() {
-  (TMUX='' launch new-session -Ad -s "$session_name")
+  local session_name="$1"
+
+  (TMUX='' tmux new-session -Ad -s "$session_name")
 }
 
 create_if_needed_and_attach() {
+  local session_name="$1"
+
   if not_in_tmux; then
-    launch new-session -As "$session_name"
+    tmux new-session -As "$session_name"
   else
-    if ! session_exists; then
-      create_detached_session
+    if ! session_exists "$session_name"; then
+      create_detached_session "$session_name"
     fi
     tmux switch-client -t "$session_name"
   fi
 }
 
-launch() {
-  if command -v direnv > /dev/null; then
-    direnv exec / tmux "$@"
-  else
-    tmux "$@"
-  fi
+main() {
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+      --list | -L)
+        list_sessions
+        return $?
+        ;;
+      --help | -h)
+        usage "$1"
+        return 1
+        ;;
+      *)
+        create_if_needed_and_attach "$1"
+        return $?
+        ;;
+    esac
+  done
 }
 
-create_if_needed_and_attach
+main "${@-$(basename "$PWD" | sed -e 's/[.:]/-/g;s/^-//')}"
