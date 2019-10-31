@@ -53,7 +53,7 @@
 	man              = help --man
 	msg              = commit --allow-empty -m
 	pa               = add --patch
-	pending          = !git --no-pager log origin/master..master && echo
+	pending          = !git --no-pager log @{u}.. && echo
 	undo             = reset --soft HEAD^
 	unstage          = reset HEAD -- ...
 	web              = instaweb --httpd=webrick -b open
