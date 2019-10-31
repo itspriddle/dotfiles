@@ -82,6 +82,10 @@
 	showStat  = true
 	showPatch = true
 
+[status]
+	short = true
+	branch = true
+
 [include]
 	path = ~/.gitconfig.local
 
