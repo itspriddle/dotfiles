@@ -62,6 +62,7 @@
 	recent-branches  = for-each-ref --count=10 --sort=-committerdate --format=\"%(refname:short)\" refs/heads/
 	fixup            = "!f() { git commit $* --fixup HEAD; }; f"
 	pulls            = browse -- pulls
+	root             = rev-parse --show-toplevel
 	strip-whitepsace = !git ls-files | xargs perl -i -pe 's/[\\t ]+$//g'
 	showf            = show --format=fuller
 	prq              = pull-request --push --copy --browse
