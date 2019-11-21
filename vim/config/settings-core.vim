@@ -25,7 +25,9 @@ set modelines=1
 set shortmess+=I
 
 " Hide ins-completion-menu messages
-set shortmess+=c
+if has("patch-7.4.314")
+  set shortmess+=c
+endif
 
 " Hide "-- INSERT --" etc on last line (lightline does this already)
 set noshowmode
