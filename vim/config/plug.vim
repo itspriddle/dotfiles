@@ -40,7 +40,7 @@ Plug 'tpope/vim-dadbod'
 " File browsing/search
 Plug 'jeetsukumaran/vim-filebeagle'
 
-if executable("fzf")
+if executable("/usr/local/opt/fzf/bin/fzf")
   Plug '/usr/local/opt/fzf'
 endif
 
