@@ -44,7 +44,7 @@ if executable("/usr/local/opt/fzf/bin/fzf")
   Plug '/usr/local/opt/fzf'
 endif
 
-if executable("ctags")
+if executable("ctags") && exists("*jobwait")
   Plug 'ludovicchabant/vim-gutentags'
 endif
 
