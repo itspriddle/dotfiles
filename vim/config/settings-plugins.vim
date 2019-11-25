@@ -163,7 +163,7 @@ let g:peekaboo_prefix	= "<leader>"
 
 " Disable meta maps, causes a jump to back to insert mode if `<ESC>b` is
 " pressed too fast in insert mode.
-let g:rsi_no_meta = 1
+let g:rsi_no_insert_meta = 1
 
 " }}}
 
