@@ -40,8 +40,14 @@ Plug 'tpope/vim-dadbod'
 " File browsing/search
 Plug 'jeetsukumaran/vim-filebeagle'
 
-if executable("/usr/local/opt/fzf/bin/fzf")
-  Plug '/usr/local/opt/fzf'
+if executable('fzf')
+  " fzf from Homebrew on MacOS
+  if isdirectory('/usr/local/opt/fzf')
+    Plug '/usr/local/opt/fzf'
+  " fzf manually installed to ~/local
+  elseif isdirectory(expand('~/local/opt/fzf'))
+    Plug '~/local/opt/fzf'
+  endif
 endif
 
 if executable("ctags") && exists("*jobwait")
