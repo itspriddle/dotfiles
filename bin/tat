@@ -46,12 +46,20 @@ create_if_needed_and_attach() {
   local session_name="$1"
 
   if not_in_tmux; then
-    tmux new-session -As "$session_name"
+    _tmux new-session -As "$session_name"
   else
     if ! session_exists "$session_name"; then
       create_detached_session "$session_name"
     fi
-    tmux switch-client -t "$session_name"
+    _tmux switch-client -t "$session_name"
+  fi
+}
+
+_tmux() {
+  if command -v direnv > /dev/null; then
+    direnv exec / tmux "$@"
+  else
+    tmux "$@"
   fi
 }
 
