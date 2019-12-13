@@ -98,7 +98,7 @@ parse_time() {
   fi
 }
 
-timestmap() {
+timestamp() {
   local s="$1"
   printf "%02dh:%02dm:%02ds" $((s / 3600)) $((s % 3600 / 60)) $((s % 60))
 }
@@ -166,8 +166,8 @@ main() {
         -1) puts "active indefinitely by trigger"; return 0;;
         -2) puts "active indefinitely by application"; return 0;;
         -3) puts "inactive"; return 1;;
-        -*) puts "active indefinitely (for $(timestmap "${remaining#-}"))"; return 0;;
-         *) puts "active with $(timestmap "$remaining") remaining"; return 0;;
+        -*) puts "active indefinitely (for $(timestamp "${remaining#-}"))"; return 0;;
+         *) puts "active with $(timestamp "$remaining") remaining"; return 0;;
       esac
       ;;
     quit)
