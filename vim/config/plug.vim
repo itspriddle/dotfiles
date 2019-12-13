@@ -50,7 +50,7 @@ if executable('fzf')
   endif
 endif
 
-if executable("ctags") && exists("*jobwait")
+if executable("ctags") && (has('job') || (has('nvim') && exists('*jobwait')))
   Plug 'ludovicchabant/vim-gutentags'
 endif
 
