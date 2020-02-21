@@ -188,17 +188,6 @@ main() {
         return 1
       fi
       ;;
-    heisenberg)
-      run "enable heisenberg"
-      defaults write "$APP_ID" "Icon Style" 19
-      main restart
-      puts "So you do have a plan! Yeah, Mr. White! Yeah, science!"
-      ;;
-    heisenberg-off)
-      defaults delete "$APP_ID" Heisenberg 2>/dev/null || true
-      main restart
-      puts "We're done when I say we're done."
-      ;;
     molecule)
       run "give molecule"
       ;;
