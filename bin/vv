@@ -65,7 +65,7 @@ done < <(get_candidates "${no_cwd:-}")
 size=${#candidates[@]}
 
 if [[ ${size} -gt 0 ]]; then
-  [[ ${size} -gt 10 ]] && size=10
+  [[ ${size} -gt 20 ]] && size=20
 
   height=$((2 + size)) # 2 extra rows for FZF prompt
   files=()
