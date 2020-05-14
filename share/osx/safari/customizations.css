@@ -6,15 +6,9 @@
  * edits are made to this file.
  */
 
-/* Hide annoying subreddits when signed in */
-body.loggedin [data-subreddit='The_Donald'],
-body.loggedin [data-subreddit='The_Donald'] + div.clearleft,
-body.loggedin [data-subreddit='Mr_Trump'],
-body.loggedin [data-subreddit='Mr_Trump'] + div.clearleft {
-  display: none;
-}
-
-/* Hide new reddit design nags */
+/**
+ * reddit.com: Hide new reddit design nags
+ */
 body.loggedin section.onboardingbar,
 body.loggedin #sr-header-area .width-clip button.redesign-beta-optin {
   display: none!important;
