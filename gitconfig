@@ -33,6 +33,9 @@
 	ff = only
 	tool = fugitive
 
+[pull]
+	rebase = true
+
 [commit]
 	cleanup = scissors
 
