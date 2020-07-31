@@ -1,0 +1,239 @@
+#!/usr/bin/env bash
+# Usage: add-to-things [options]
+#
+# NAME
+#   add-to-things - add todos to Things 3
+#
+# SYNOPSIS
+#   add-to-things --title="Finish add to Things script"
+#
+# DESCRIPTION
+#   Adds todos to Things 3.
+#
+# OPTIONS
+#   --canceled, --cancelled
+#     If set, mark the todo as canceled.
+#
+#   --checklist-item=<ITEM TEXT>
+#     Checklist item to be added. Can be specified multiple times to create
+#     additional checklist items.
+#
+#   --completed
+#     If set, mark the todo as completed.
+#
+#   --completion-date=<DATE>
+#     Completed date for the todo, ISO8601 format (eg:
+#     "2020-07-01T10:00:00Z-05:00)
+#
+#   --creation-date=<DATE>
+#     Creation date for the todo, ISO8601 format (eg:
+#     "2020-07-01T10:00:00Z-05:00)
+#
+#   --deadline=<DATE>
+#     Deadline for the todo, can be a date (eg: "2020-08-01"), or natural
+#     language (eg: "in 3 days").
+#
+#   --heading=<NAME>
+#     If specified, place the new todo under the given heading.
+#
+#   --list=<NAME>
+#     The list to add the new todo under. Ignored if `--list-id=` is provided.
+#
+#   --list-id=<ID>
+#     The list ID to add the new todo under. Takes precedence over `--list=`.
+#
+#   --reveal
+#     If true, go to the new todo in Things application after it is added.
+#
+#   --show-quick-entry
+#     If true, show the quick entry window in Things to review the new todo
+#     before saving it.
+#
+#   --tags=<tag1,tag2...>
+#     Comma separated list of tags to add to the new todo. If a tag does not
+#     exist already it is ignored.
+#
+#   --title=<TITLE>
+#     Title of the todo. If not provided, the quick entry window will be
+#     displayed.
+#
+#   --when=<DATE|DATETIME>
+#     Date of the todo, can be a date (eg: "2020-08-01"), datetime (eg:
+#     "2020-08-01 09:30:00"), or natural language (eg: "tomorrow at 9:30am").
+#
+# SEE ALSO
+#   https://culturedcode.com/things/support/articles/2803573/
+
+[[ "$DEBUG" ]] && set -x
+
+set -euo pipefail
+
+# Print help text and exit.
+if [[ "${1:-}" = "-h" ]] || [[ "${1:-}" = "--help" ]]; then
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+  exit 1
+fi
+
+# Ensure `open` is available.
+if ! type open &> /dev/null; then
+  >&2 echo "Error: \`open\` not found. Is this a Mac?"
+  exit 1
+fi
+
+urlencode() {
+  local LC_ALL=C
+  for (( i = 0; i < ${#1}; i++ )); do
+    : "${1:i:1}"
+    case "$_" in
+      [a-zA-Z0-9.~_-])
+        printf '%s' "$_"
+        ;;
+
+      *)
+        printf '%%%02X' "'$_"
+        ;;
+    esac
+  done
+  printf '\n'
+}
+
+main() {
+  local when deadline list list_id reveal show_quick_entry title query notes creation_date completion_date tags completed canceled heading
+  local -a checklist_items=()
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --when=?*)
+        when="$(urlencode "${1#*=}")"
+        shift
+        ;;
+      --deadline=?*)
+        deadline="$(urlencode "${1#*=}")"
+        shift
+        ;;
+      --completed)
+        completed=1
+        shift
+        ;;
+      --canceled|--cancelled)
+        canceled=1
+        shift
+        ;;
+      --checklist-item=?*)
+        checklist_items=("$(urlencode "${1#*=}")" "${checklist_items[@]}")
+        shift
+        ;;
+      --creation-date=?*)
+        creation_date="$(urlencode "${1#*=}")"
+        shift
+        ;;
+      --completion-date=?*)
+        completion_date="$(urlencode "${1#*=}")"
+        shift
+        ;;
+      --list=?*)
+        list="$(urlencode "${1#*=}")"
+        shift
+        ;;
+      --list-id=?*)
+        list_id="$(urlencode "${1#*=}")"
+        shift
+        ;;
+      --heading=?*)
+        heading="$(urlencode "${1#*=}")"
+        shift
+        ;;
+      --reveal)
+        reveal=1
+        shift
+        ;;
+      --show-quick-entry|--preview)
+        show_quick_entry=1
+        shift
+        ;;
+      --title=?*)
+        title="$(urlencode "${1#*=}")"
+        shift
+        ;;
+      --notes=?*)
+        notes="$(urlencode "${1#*=}")"
+        shift
+        ;;
+      --tags=?*)
+        tags="$(urlencode "${1#*=}")"
+        shift
+        ;;
+      *)
+        >&2 echo "invalid option '$1'"
+        return 1
+        ;;
+    esac
+  done
+
+  if [[ -z "$title" ]]; then
+    show_quick_entry=1
+  fi
+
+  query="things:///add?"
+
+  if [[ "${#checklist_items[@]}" -gt 0 ]]; then
+    query="${query}checklist-items=$(printf "%s%%0A" "${checklist_items[@]}")&"
+  fi
+
+  if [[ "$when" ]]; then
+    query="${query}when=${when}&"
+  fi
+
+  if [[ "$deadline" ]]; then
+    query="${query}deadline=${deadline}&"
+  fi
+
+  if [[ "$title" ]]; then
+    query="${query}title=${title}&"
+  fi
+
+  if [[ "$notes" ]]; then
+    query="${query}notes=${notes}&"
+  fi
+
+  if [[ "$list_id" ]]; then
+    query="${query}list-id=${list_id}&"
+  elif [[ "$list" ]]; then
+    query="${query}list=${list}&"
+  fi
+
+  if [[ "$heading" ]]; then
+    query="${query}heading=${heading}&"
+  fi
+
+  if [[ "$show_quick_entry" ]]; then
+    query="${query}show-quick-entry=true&"
+  fi
+
+  if [[ "$reveal" ]]; then
+    query="${query}reveal=true&"
+  fi
+
+  if [[ "$tags" ]]; then
+    query="${query}tags=$tags&"
+  fi
+
+  if [[ "$creation_date" ]]; then
+    query="${query}creation-date=$creation_date&"
+  fi
+
+  if [[ "$completion_date" ]]; then
+    query="${query}completion-date=$completion_date&"
+  fi
+
+  if [[ "$canceled" ]]; then
+    query="${query}canceled=true&"
+  elif [[ "$completed" ]]; then
+    query="${query}completed=true&"
+  fi
+
+  open "$query"
+}
+
+main "$@"
