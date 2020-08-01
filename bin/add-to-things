@@ -1,11 +1,36 @@
 #!/usr/bin/env bash
-# Usage: add-to-things [options]
+# Usage: add-to-things [options] [-|todo text]
 #
 # NAME
 #   add-to-things - add todos to Things 3
 #
 # SYNOPSIS
-#   add-to-things --title="Finish add to Things script"
+#   add-to-things [options] [-|todo text]
+#
+# EXAMPLES
+#   add-to-things "Finish add to Things script"
+#
+#   add-to-things "Add a todo with notes
+#
+#   The first line of text is the note title and the rest of the text is
+#   notes."
+#
+#   echo "Create a todo from STDIN" | add-to-things -
+#
+#   add-to-things -
+#   Another way to create a todo from STDIN
+#
+#   I can type a long form note here for my todo, then press ctrl-d...
+#   ^d
+#
+#   add-to-things --deadline=2020-08-01 "Ship this script"
+#
+#   add-to-things --when="2020-08-01 12:30:00" "Lunch time"
+#
+#   add-to-things --show-quick-entry \
+#     "Add a pending todo to the quick entry window"
+#
+#   add-to-things
 #
 # DESCRIPTION
 #   Adds todos to Things 3.
@@ -53,10 +78,6 @@
 #     Comma separated list of tags to add to the new todo. If a tag does not
 #     exist already it is ignored.
 #
-#   --title=<TITLE>
-#     Title of the todo. If not provided, the quick entry window will be
-#     displayed.
-#
 #   --when=<DATE|DATETIME>
 #     Date of the todo, can be a date (eg: "2020-08-01"), datetime (eg:
 #     "2020-08-01 09:30:00"), or natural language (eg: "tomorrow at 9:30am").
@@ -81,6 +102,9 @@ if ! type open &> /dev/null; then
   exit 1
 fi
 
+# URL encodes the given string
+#
+# $1 - String to encode
 urlencode() {
   local LC_ALL=C
   for (( i = 0; i < ${#1}; i++ )); do
@@ -98,8 +122,28 @@ urlencode() {
   printf '\n'
 }
 
+# Finds the title in the given string (ie: the first line).
+#
+# $1 - Message
+find_title() {
+  sed -n "1p" <<< "${1}"
+}
+
+# Finds the notes in the given string (ie: all but the first line). Note that
+# leading/trailing blank lines are stripped too.
+#
+# $1 - Message
+find_notes() {
+  sed -n "1d;p" <<< "${1}" |
+    awk '
+      /[[:graph:]]/ { p=1; for (i=1; i<=n; i++) print ""; n=0; print; }
+      p && /^[[:space:]]*$/ { n++ }
+    '
+}
+
+# Main program loop
 main() {
-  local when deadline list list_id reveal show_quick_entry title query notes creation_date completion_date tags completed canceled heading
+  local when deadline list list_id reveal show_quick_entry title query notes creation_date completion_date tags completed canceled heading raw_input
   local -a checklist_items=()
 
   while [[ $# -gt 0 ]]; do
@@ -152,10 +196,6 @@ main() {
         show_quick_entry=1
         shift
         ;;
-      --title=?*)
-        title="$(urlencode "${1#*=}")"
-        shift
-        ;;
       --notes=?*)
         notes="$(urlencode "${1#*=}")"
         shift
@@ -164,12 +204,32 @@ main() {
         tags="$(urlencode "${1#*=}")"
         shift
         ;;
-      *)
+      --)
+        shift
+        break
+        ;;
+      -?*)
         >&2 echo "invalid option '$1'"
         return 1
         ;;
+      *)
+        break
+        ;;
     esac
   done
+
+  if [[ $# -eq 1 ]] && [[ $1 == "-" ]]; then
+    raw_input="$(cat)"
+  elif [[ $# -gt 0 ]]; then
+    raw_input="$*"
+  fi
+
+  if [[ "$raw_input" ]] && [[ $(wc -l <<< "${raw_input}") -gt 1 ]]; then
+    title="$(urlencode "$(find_title "${raw_input}")")"
+    notes="$(urlencode "$(find_notes "${raw_input}")")"
+  elif [[ "$raw_input" ]]; then
+    title="$(urlencode "$raw_input")"
+  fi
 
   if [[ -z "$title" ]]; then
     show_quick_entry=1
@@ -236,4 +296,5 @@ main() {
   open "$query"
 }
 
+# Away we go!
 main "$@"
