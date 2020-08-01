@@ -46,7 +46,7 @@ noremap <leader>F :LAg<space>
 
 " Use ripgrep if available
 if executable("rg")
-  let g:simple_ag_command = "rg --sort-files --vimgrep %s"
+  let g:simple_ag_command = "rg -H --no-heading --sort-files --vimgrep %s"
 endif
 
 " }}}
