@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Usage: a2 todo
+# Summary: Add a todo for work
+
+add-to-things --list="A2 TODO" --heading="Inbox" "$@"
