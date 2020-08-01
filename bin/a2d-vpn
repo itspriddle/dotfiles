@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Usage: a2 vpn
+# Summary: Connects to the A2 VPN via `viscosity`
+
+[[ "${DEBUG}" ]] && set -x
+
+VPN_NAME="A2"
+
+if [[ "$(viscosity status "$VPN_NAME")" = "Connected" ]]; then
+  echo "Already connected"
+else
+  viscosity connect "$VPN_NAME"
+fi
