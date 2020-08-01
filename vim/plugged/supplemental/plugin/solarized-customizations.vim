@@ -3,7 +3,11 @@ augroup solarized_customizations
 
   autocmd ColorScheme *
     \ if expand("<amatch>") == "solarized" |
-    \   highlight! VertSplit ctermbg=0 ctermfg=0 |
+    \   if &background == "light" |
+    \     highlight! VertSplit ctermbg=7 ctermfg=7 |
+    \   else |
+    \     highlight! VertSplit ctermbg=0 ctermfg=0 |
+    \   endif |
     \   highlight Terminal ctermbg=none |
     \ endif
 augroup END

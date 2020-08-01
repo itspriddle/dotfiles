@@ -138,9 +138,6 @@ set viewoptions=folds,cursor
 " Handle folds manually
 set foldmethod=manual
 
-" Use a taller (utf) pipe for vertical split borders
-set fillchars+=vert:│
-
 " Show line numbers
 set number
 
