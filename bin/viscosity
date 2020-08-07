@@ -12,7 +12,10 @@
 #   viscosity status "My VPN"       Show connection status of the VPN named "My VPN"
 #   viscosity help                  Show this help message
 
-[[ "${DEBUG}" ]] && set -x
+if [[ "${DEBUG}" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
+fi
 
 case "${1}" in
   ""|-h|--help|help)
