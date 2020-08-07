@@ -51,7 +51,7 @@ set macmeta
 set visualbell
 
 " Set default font
-set guifont=Monaco:h10
+set guifont=Espresso\ Mono:h11
 
 " Disable blinking cursor
 set gcr=a:blinkon0
