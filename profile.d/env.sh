@@ -23,6 +23,9 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   # Load PHP ini files in ~/.dotfiles/src/php
   export PHP_INI_SCAN_DIR="${HOME}/.dotfiles/src/php"
 
+  # Disable Apple Terminal sessions
+  export SHELL_SESSIONS_DISABLE=1
+
   if [ "$PS1" ]; then
     # Double the amount of open files OS X allows
     ulimit -n 1024
