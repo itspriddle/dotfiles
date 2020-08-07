@@ -1343,7 +1343,7 @@
 	mw2gDagAAAAAAAACAQAAAAAAAAAmAAAAAAAAAAAAAAAAAAANqw==
 	</data>
 	<key>EscapeNonASCIICharacters</key>
-	<true/>
+	<false/>
 	<key>Font</key>
 	<data>
 	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
@@ -1448,6 +1448,8 @@
 	<key>ShowCommandKeyInTitle</key>
 	<false/>
 	<key>ShowDimensionsInTitle</key>
+	<false/>
+	<key>ShowRepresentedURLInTabTitle</key>
 	<false/>
 	<key>ShowRepresentedURLInTitle</key>
 	<false/>
