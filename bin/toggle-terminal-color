@@ -1,0 +1,25 @@
+#!/usr/bin/env osascript
+
+on run argv
+  if (count of argv) > 0 then
+    set new_theme to item 1 of argv
+  else
+    set new_theme to ""
+  end if
+
+  tell application "Terminal"
+    set current_theme to name of current settings of window 1
+
+    if new_theme is equal to "" then
+      if current_theme is equal to "Solarized Light" then
+        set new_theme to "Solarized Dark"
+      else if current_theme is equal to "Solarized Dark" then
+        set new_theme to "Solarized Light"
+      end if
+    end if
+
+    if new_theme is not equal to current_theme then
+      set current settings of window 1 to settings set new_theme
+    end if
+  end tell
+end run
