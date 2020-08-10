@@ -4,10 +4,23 @@
 
 " General {{{
 
-" Set background and colorscheme
-runtime plugin/solarized-customizations.vim
-set background=dark
-colorscheme solarized
+" Set colorscheme options
+let g:solarized_old_cursor_style = 1
+let g:solarized_extra_hi_groups = 1
+if has("gui_macvim") && has("gui_running")
+  let g:solarized_termcolors = 256
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+  set t_Co=256
+  set background=light
+else
+  let g:solarized_use16 = 1
+  let g:solarized_termcolors = 16
+  set t_Co=16
+  set background=dark
+endif
+colorscheme solarized8
 
 " Allow UTF8 chars
 set encoding=utf-8

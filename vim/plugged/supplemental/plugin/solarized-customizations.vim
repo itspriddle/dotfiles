@@ -2,7 +2,7 @@ augroup solarized_customizations
   autocmd!
 
   autocmd ColorScheme *
-    \ if expand("<amatch>") == "solarized" |
+    \ if expand("<amatch>") =~ '^solarized8\?' |
     \   if &background == "light" |
     \     highlight! VertSplit ctermbg=7 ctermfg=7 |
     \   else |

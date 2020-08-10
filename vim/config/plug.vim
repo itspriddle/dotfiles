@@ -9,7 +9,7 @@ call plug#begin()
 
 " Core/editor
 Plug 'tpope/vim-sensible'
-Plug 'altercation/vim-colors-solarized'
+Plug 'lifepillar/vim-solarized8'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-scriptease'
