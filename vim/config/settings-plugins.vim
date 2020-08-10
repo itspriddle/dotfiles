@@ -20,12 +20,6 @@ nnoremap <leader>M :FZFMRU!<cr>
 
 " }}}
 
-" lightline.vim {{{
-
-let g:lightline = { 'colorscheme': 'solarized' }
-
-" }}}
-
 " QFEnter.vim {{{
 
 let g:qfenter_keymap       = {}
