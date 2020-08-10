@@ -10,6 +10,10 @@ on run argv
   tell application "Terminal"
     set current_theme to name of current settings of window 1
 
+    if new_theme is equal to "-p" then
+      return current_theme
+    end if
+
     if new_theme is equal to "" then
       if current_theme is equal to "Solarized Light" then
         set new_theme to "Solarized Dark"
