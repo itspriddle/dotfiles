@@ -151,6 +151,9 @@ set viewoptions=folds,cursor
 " Handle folds manually
 set foldmethod=manual
 
+" Remove vert fillchar
+let &fillchars = substitute(&fillchars, '^vert:|,', '', 'g')
+
 " Show line numbers
 set number
 
