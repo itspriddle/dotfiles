@@ -40,7 +40,7 @@ noremap <leader>F :LAg<space>
 
 " Use ripgrep if available
 if executable("rg")
-  let g:simple_ag_command = "rg -H --no-heading --sort-files --vimgrep %s"
+  let g:simple_ag_command = "rg --max-columns-preview --max-columns 5000 -H --no-heading --sort-files --vimgrep %s"
 endif
 
 " }}}
