@@ -14,14 +14,13 @@ endif
 "
 " args  - Query args, if blank default is "<cword>"
 " qf    - If true, use the quickfix window, if false use location list
-" count - Number of items to add
+" limit - If true, limit to g:simple_ag_max entries (default: 1000)
 "
 " Returns nothing.
-function! s:ag(args, qf, count) abort
+function! s:ag(args, qf, limit) abort
   let l:args  = (empty(a:args) ? expand("<cword>") : a:args)
-  let l:count = (a:count > 0 ? a:count : get(g:, "simple_ag_max", 1000))
-  let l:end   = l:count - 1
-  let l:cmd   = printf(get(g:, "simple_ag_command", "ag --vimgrep %s"), l:args)
+  let l:count = (a:limit ? -1 : (get(g:, "simple_ag_max", 1000) - 1))
+  let l:cmd   = printf(get(g:, "simple_ag_command", "rg --vimgrep %s"), l:args)
   let l:out   = ["No matches found. ", "Found %d match. ", "Found %d matches. "]
 
   if empty(l:args)
@@ -33,7 +32,7 @@ function! s:ag(args, qf, count) abort
 
   let l:results = systemlist(l:cmd)
 
-  execute "silent" (a:qf ? "cgetexpr" : "lgetexpr") "l:results[0:".l:end."]"
+  execute "silent" (a:qf ? "cgetexpr" : "lgetexpr") "l:results[0:".l:count."]"
 
   let l:duration = printf("[duration: %.2f]", reltimefloat(reltime(l:start)))
 
@@ -63,10 +62,10 @@ function! s:ag(args, qf, count) abort
   redraw
 endfunction
 
-" :[N]Ag <query> - Search for <query>, open results in quickfix window
-" :[N]Ag         - Search for word under cursor, open results in quickfix window
-command! -range=0 -nargs=* -complete=file Ag call s:ag(<q-args>, 1, <count>)
+" :Ag[!] <query> - Search for <query>, open results in quickfix window
+" :Ag[!]         - Search for word under cursor, open results in quickfix window
+command! -bang -nargs=* -complete=file Ag call s:ag(<q-args>, 1, <bang>0)
 
-" :[N]LAg <query> - Search for <query>, open results in location list
-" :[N]LAg         - Search for word under cursor, open results in location list
-command! -range=0 -nargs=* -complete=file LAg call s:ag(<q-args>, 0, <count>)
+" :LAg[!] <query> - Search for <query>, open results in location list
+" :LAg[!]         - Search for word under cursor, open results in location list
+command! -bang -nargs=* -complete=file LAg call s:ag(<q-args>, 0, <bang>0)
