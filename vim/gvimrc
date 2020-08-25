@@ -11,15 +11,26 @@ set guioptions-=R
 set guioptions-=l
 set guioptions-=L
 
-" Label/tabbar title
+" Label/tab bar title
 set guitablabel=%t
 set title titlestring=%f
 
 " Default window size
 set lines=70 columns=220
 
-" Always show tab bar
-set showtabline=2
+" Never show tab bar
+set showtabline=1
+
+" Use termguicolors
+set termguicolors
+
+" Use 256 colors
+set t_Co=256
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+" Use light background
+set background=light
 
 " }}}
 
