@@ -89,6 +89,10 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 " My stuff
 Plug '~/.vim/plugged/supplemental'
 
+if isdirectory(expand('~/.vim/plugged/vim-notebook'))
+  Plug '~/.vim/plugged/vim-notebook'
+endif
+
 let g:plug_url_format = 'git@github.com:%s.git'
 
 Plug 'itspriddle/vim-stripper'
