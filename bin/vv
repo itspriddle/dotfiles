@@ -47,7 +47,7 @@ get_candidates() {
     else
       dir="$(pwd -P)"
 
-      awk -v path="${dir/#$HOME/~}/" '
+      awk -v path="${dir/$HOME/\~}/" '
         $0 ~ /^> / && $0 ~ path && $0 !~ /.git/ {
           print substr($2, length(path) + 1)
         }
