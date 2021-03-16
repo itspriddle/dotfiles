@@ -8,6 +8,16 @@ export TERM="xterm-256color"
 export PATH="${HOME}/.dotfiles/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin:/bin"
 
 if [ "${OSTYPE:0:6}" = darwin ]; then
+  # arm64 Homebrew setup (M1)
+  if [ -d /opt/homebrew ]; then
+    export HOMEBREW_PREFIX="/opt/homebrew"
+    export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+    export HOMEBREW_REPOSITORY="/opt/homebrew"
+    export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
+    export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+    export PATH="${HOME}/.dotfiles/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin:/bin"
+  fi
+
   # Disable emoji when installing packages with Homebrew
   export HOMEBREW_NO_EMOJI=1
 
