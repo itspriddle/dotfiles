@@ -93,6 +93,9 @@
 [include]
 	path = ~/.gitconfig.local
 
+[init]
+	defaultBranch = master
+
 [mergetool "fugitive"]
 	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
 
