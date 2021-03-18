@@ -78,30 +78,31 @@ export FZF_DEFAULT_OPTS="--no-mouse --color fg:-1,fg+:4,hl:5,hl+:5,bg:-1,bg+:-1,
 export FZF_DEFAULT_COMMAND="rg --follow --hidden --files --sort-files --glob '!.git'"
 
 # Ruby
-RUBY_VERSION="$(< ~/.dotfiles/ruby-version)"
-export RUBY_VERSION
+if [ -f ~/.ruby-version ]; then
+  RUBY_VERSION="$(< ~/.ruby-version)"
+  export RUBY_VERSION
 
-if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
-  source /usr/local/opt/chruby/share/chruby/chruby.sh
+  if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
+    source /usr/local/opt/chruby/share/chruby/chruby.sh
 
-  chruby "$RUBY_VERSION"
-elif [ -f /opt/homebrew/opt/chruby/share/chruby/chruby.sh ]; then
-  source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+    chruby "$RUBY_VERSION"
+  elif [ -f /opt/homebrew/opt/chruby/share/chruby/chruby.sh ]; then
+    source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 
-  chruby "$RUBY_VERSION"
-else
-  lib_version="${RUBY_VERSION%%?}0"
-  ruby_home="$HOME/.rubies/ruby-$RUBY_VERSION"
+    chruby "$RUBY_VERSION"
+  else
+    lib_version="${RUBY_VERSION%%?}0"
+    ruby_home="$HOME/.rubies/ruby-$RUBY_VERSION"
 
-  if [ -d "$ruby_home" ]; then
-    PATH="$HOME/.gem/ruby/$lib_version/bin:$ruby_home/bin:$PATH"
+    if [ -d "$ruby_home" ]; then
+      PATH="$HOME/.gem/ruby/$lib_version/bin:$ruby_home/bin:$PATH"
 
-    export GEM_HOME="$HOME/.gem/ruby/$lib_version"
-    export GEM_PATH="$GEM_HOME:$ruby_home/lib/ruby/gems/$lib_version"
+      export GEM_HOME="$HOME/.gem/ruby/$lib_version"
+      export GEM_PATH="$GEM_HOME:$ruby_home/lib/ruby/gems/$lib_version"
+    fi
+    unset lib_version ruby_home
   fi
-  unset lib_version ruby_home
 fi
-
 
 [ "${BASH_VERSION}" ] && shell="bash"
 [ "${ZSH_VERSION}" ]  && shell="zsh"
