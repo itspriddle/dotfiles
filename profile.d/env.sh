@@ -83,7 +83,11 @@ export RUBY_VERSION
 
 if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
   source /usr/local/opt/chruby/share/chruby/chruby.sh
-  # [ -f ~/.config/chruby-auto-enabled ] && source /usr/local/opt/chruby/share/chruby/auto.sh
+
+  chruby "$RUBY_VERSION"
+elif [ -f /opt/homebrew/opt/chruby/share/chruby/chruby.sh ]; then
+  source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+
   chruby "$RUBY_VERSION"
 else
   lib_version="${RUBY_VERSION%%?}0"
