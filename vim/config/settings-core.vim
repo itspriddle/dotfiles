@@ -174,6 +174,9 @@ set wildmode=longest:full,full
 " Allow <c-z> in maps to open completion menu
 set wildcharm=<c-z>
 
+" Ignore these files when using wildcards
+set wildignore+=.DS_Store
+
 " Disable tag completion
 set complete-=t
 
