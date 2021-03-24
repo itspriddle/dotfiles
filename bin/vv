@@ -38,6 +38,10 @@ fi
 get_candidates() {
   local dir
 
+  if [ ! -r ~/.viminfo ]; then
+    return 1
+  fi
+
   { if [ "$1" ]; then
       awk '
         $0 ~ /^> / && $0 !~ /.git/ {
