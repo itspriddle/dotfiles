@@ -42,9 +42,12 @@ Plug 'tpope/vim-dadbod'
 Plug 'jeetsukumaran/vim-filebeagle'
 
 if executable('fzf')
-  " fzf from Homebrew on MacOS
+  " fzf from Homebrew on MacOS (Intel)
   if isdirectory('/usr/local/opt/fzf')
     Plug '/usr/local/opt/fzf'
+  " fzf from Homebrew on MacOS (M1/arm)
+  elseif isdirectory('/opt/homebrew/opt/fzf')
+    Plug '/opt/homebrew/opt/fzf'
   " fzf manually installed to ~/local
   elseif isdirectory(expand('~/local/opt/fzf'))
     Plug '~/local/opt/fzf'
