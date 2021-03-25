@@ -36,17 +36,16 @@ use_ruby() {
   chruby "$ver"
 }
 
-# Sets work specific git configs.
+# Sets work specific git email.
 #
 # Usage in .envrc:
 #
-#   set_a2_git
-set_a2_git() {
-  local email
-  email="$(git config --global --includes a2-work.email)"
+#   set_git_email foo@bar.com
+set_git_email() {
+  local email="$1"
 
   if [[ -z "$email" ]]; then
-    >&2 echo "Couldn't set A2 git email!"
+    >&2 echo "Couldn't set git email!"
     return 1
   fi
 
