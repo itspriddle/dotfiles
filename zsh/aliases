@@ -57,7 +57,6 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias flush-dns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
   alias top-cpu='top -o cpu'
   alias force-vnstat-update="pkill -HUP vnstatd"
-  alias speedtest="speedtest-cli --simple"
   alias df="df -Plh"
   alias gist="gist -c -p"
   alias eject-all="diskutil list | awk '/external/ { print \$1 }' | xargs -tn1 diskutil unmountDisk"
