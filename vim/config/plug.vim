@@ -42,16 +42,11 @@ Plug 'tpope/vim-dadbod'
 Plug 'jeetsukumaran/vim-filebeagle'
 
 if executable('fzf')
-  " fzf from Homebrew on MacOS (Intel)
-  if isdirectory('/usr/local/opt/fzf')
-    Plug '/usr/local/opt/fzf'
-  " fzf from Homebrew on MacOS (M1/arm)
-  elseif isdirectory('/opt/homebrew/opt/fzf')
-    Plug '/opt/homebrew/opt/fzf'
-  " fzf manually installed to ~/local
-  elseif isdirectory(expand('~/local/opt/fzf'))
-    Plug '~/local/opt/fzf'
-  endif
+  for fzf_dir in ['/usr/local', '/opt/homebrew', expand('~/local')]
+    if isdirectory(fzf_dir . '/opt/fzf')
+      Plug printf('%s/opt/fzf', fzf_dir)
+    endif
+  endfor
 endif
 
 if executable("ctags") && (has('job') || (has('nvim') && exists('*jobwait')))
