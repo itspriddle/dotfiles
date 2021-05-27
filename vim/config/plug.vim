@@ -36,7 +36,7 @@ Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 
 " Database
-Plug 'tpope/vim-dadbod'
+Plug 'tpope/vim-dadbod', { 'on': 'DB' }
 
 " File browsing/search
 Plug 'jeetsukumaran/vim-filebeagle'
