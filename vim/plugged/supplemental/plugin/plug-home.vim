@@ -45,7 +45,10 @@ function! s:plug_home(name, launch)
   let plugs = filter(copy(g:plugs), 'has_key(v:val, "uri") && v:val["uri"] =~ "github"')
 
   if has_key(plugs, a:name)
-    let repo = matchstr(plugs[a:name].uri, '[^:/]*/'.a:name.'\.git$')
+    " https://git::@github.com/user/repo.git
+    " git@github.com:user/repo.git
+    let repo = substitute(plugs[a:name].uri, 'https://git::@github.com/', '', '')
+    let repo = substitute(repo, 'git@github.com:', '', '')
     let url = 'https://github.com/'.substitute(repo, '\.git$', '', '')
 
     call s:open_url(url, a:launch)
