@@ -1,0 +1,7 @@
+/* Fix weird task list output when items have no content, ie:
+ *   - [ ] Foo
+ *   - [ ]
+ */
+.task-list .task-list-item {
+  min-height: 1.5em;
+}
