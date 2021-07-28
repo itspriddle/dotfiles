@@ -11,6 +11,12 @@
 #   NO_UNBUNDLED_REQUIRE=1 irb
 #   NO_UNBUNDLED_REQUIRE=1 rails console
 #
+# Example:
+#
+#   unbundled_require.call 'awesome_print' do
+#     AwesomePrint.irb!
+#   end
+#
 # Reference: https://gist.github.com/3894925
 unbundled_require = -> name, &block do
   return if ENV["NO_UNBUNDLED_REQUIRE"] || !defined?(Gem)
@@ -37,8 +43,4 @@ unbundled_require = -> name, &block do
   rescue Exception => err
     warn "Couldn't load #{name}: #{err}" if ENV["DEBUG"]
   end
-end
-
-unbundled_require.call 'awesome_print' do
-  AwesomePrint.irb!
 end
