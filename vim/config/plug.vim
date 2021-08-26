@@ -83,7 +83,6 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'shumphrey/fugitive-gitlab.vim'
 
 " My stuff
 Plug '~/.vim/plugged/supplemental'
