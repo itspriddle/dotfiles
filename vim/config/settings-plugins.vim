@@ -115,6 +115,12 @@ map <silent> - <Plug>FileBeagleOpenCurrentBufferDir
 
 " }}}
 
+" vim-fugitive {{{
+
+map <leader>gw :Gwrite<cr>
+
+" }}}
+
 " vim-gutentags {{{
 
 " Keep tags files under .git
