@@ -3,13 +3,14 @@
 # Summary: See what's playing on Plex using the Tautulli API
 #
 # NAME
-#   tautulli-status -- see what's playing on
+#   tautulli-status -- see what's playing on Plex using the Tautulli API
 #
 # SYNOPSIS
 #   tautulli-status <options>
 #
 # DESCRIPTION
-#   See what's playing on Plex using the Tautulli API
+#   See what's playing on Plex using the Tautulli API. Requires a running
+#   Tautulli instance.
 #
 # OPTIONS
 #   -p, --plain
@@ -34,6 +35,38 @@
 #     "api_url": "https://tautulli.local/api/v2"
 #   }
 
+# Example Output:
+#
+# ------------------------------------------------------------------------------
+#
+# Name:      Arrested Development - S02E13 - Motherboy XXX
+# Duration:  00:21:55
+# Progress:  73% (00:16:00 watched - 00:05:55 remaining)
+# Player:    Plex for Apple TV (Office Apple TV @ 10.0.1.102)
+# State:     Paused
+# Air Date:  Mar 13, 2005
+# Rating:    TV-14
+# Summary:   Lucille abducts George Michael for a mother-son dance, Buster
+#            adjusts to having a hook for a hand and Gob reunites with his
+#            estranged wife. Also, Tobias stars as George Sr. in a biopic about
+#            the Bluth family, which causes Lindsay to become more attracted to
+#            him.
+#
+# ------------------------------------------------------------------------------
+#
+# Name:      Bob's Burgers - S01E06 - Sheesh! Cab, Bob?
+# Duration:  00:21:41
+# Progress:  93% (00:20:10 watched - 00:01:31 remaining)
+# Player:    Plex for Apple TV (Bedroom Apple TV @ 10.0.1.103)
+# State:     Playing
+# Air Date:  Mar 6, 2011
+# Rating:    TV-14
+# Summary:   Tina is desperate to get her first kiss at her 13th birthday party.
+#            But after Louise breaks the deep fryer, Bob takes a second job as a
+#            late-night cab driver to pay for Tina’s party. Things keep getting
+#            worse for Bob when the parents of Tina’s crush refuse to let their
+#            son attend the party, and Bob has to do everything in his power to
+#            save his daughter’s big day.
 
 if [[ "$DEBUG" ]]; then
   export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
@@ -276,12 +309,12 @@ get_activity() {
     {
       echo "${0##*/}: Error, configuration not found!"
       echo
-      echo "Create $file with:"
+      echo "Create \`$file' with:"
       echo
-      echo "{"
-      echo "  \"api_key\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\","
-      echo "  \"api_url\": \"https://tautulli.local/api/v2\""
-      echo "}"
+      echo "  jq --null-input \\"
+      echo "    --arg api_key \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\" \\"
+      echo "    --arg api_url \"https://tautulli.local/api/v2\" \\"
+      echo "    '\$ARGS.named' > $file"
     } >&2
     return 1
   fi
