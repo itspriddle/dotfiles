@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#!/usr/bin/env bash
 # Usage: tautulli-status [--text|--json|--raw]
 # Summary: See what's playing on Plex using the Tautulli API
 #
