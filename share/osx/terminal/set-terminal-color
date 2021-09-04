@@ -1,0 +1,19 @@
+#!/usr/bin/env osascript
+
+--- alias toggle-terminal-color='~/.dotfiles/share/osx/terminal/set-terminal-color "$(~/.dotfiles/share/osx/terminal/set-terminal-color -p | sed -Ee"/Dark/{s/Dark/Light/;q;};/Light/{s/Light/Dark/;}")"'
+
+on run argv
+  if (count of argv) > 0 then
+    set new_theme to item 1 of argv
+  else
+    set new_theme to "-p"
+  end if
+
+  tell application "Terminal"
+    if new_theme is equal to "-p" or new_theme is equal to "" then
+      return name of current settings of window 1
+    end if
+
+    set current settings of window 1 to settings set new_theme
+  end tell
+end run

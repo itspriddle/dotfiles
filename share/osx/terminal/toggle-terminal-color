@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+TOGGLE=~/.dotfiles/share/osx/terminal/set-terminal-color
+
+"$TOGGLE" "$("$TOGGLE" -p | sed -Ee"/Dark/{s/Dark/Light/;q;};/Light/{s/Light/Dark/;}")"
