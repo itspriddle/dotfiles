@@ -1,9 +1,0 @@
-#!/bin/sh
-
-#/ Usage:
-#/
-#/   tlog      # tails log/development.log
-#/   tlog test # tails log/test.log
-
-
-clear && tail -f -n 0 log/${1-development}.log
