@@ -63,6 +63,7 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias battery-info='system_profiler -detailLevel mini SPPowerDataType'
   alias reset-touchbar='pkill "Touch Bar agent"; killall ControlStrip'
   alias atom='atom --clear-window-state'
+  alias mkpassword='bashword'
 fi
 
 if [ "${OSTYPE:0:5}" = "linux" ] && [ -f /etc/rpi-issue ]; then
