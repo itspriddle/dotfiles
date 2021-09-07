@@ -8,7 +8,6 @@ tap "heroku/brew"
 tap "homebrew/services"
 tap "itspriddle/brews"
 tap "puma/homebrew-puma"
-tap "universal-ctags/universal-ctags"
 
 # Casks
 cask "docker"
@@ -54,7 +53,7 @@ brew "terminal-notifier"
 brew "the_silver_searcher"
 brew "tmux"
 brew "tree"
-brew "universal-ctags", args: ["HEAD"]
+brew "universal-ctags"
 brew "vnstat"
 brew "wget"
 brew "youtube-dl"
