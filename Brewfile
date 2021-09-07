@@ -4,35 +4,19 @@
 #   brew bundle
 
 # Taps
-tap "heroku/brew"
 tap "homebrew/services"
 tap "itspriddle/brews"
-tap "puma/homebrew-puma"
+tap "teamookla/speedtest"
 
 # Casks
-cask "docker"
 cask "chromedriver"
-cask "vagrant"
-cask "virtualbox"
-cask "virtualbox-extension-pack"
 
 # Ruby/Rails apps
 brew "chruby"
-brew "imagemagick"
-brew "mailhog"
 brew "node"
-brew "redis"
 brew "ruby-install"
 
-# Databases
-brew "mysql@5.6"
-brew "sqlite"
-
-# SAAS
-brew "heroku"
-
 # Utilities
-brew "argon/mas/mas"
 brew "direnv"
 brew "exiftool"
 brew "fzf"
@@ -47,9 +31,7 @@ brew 'pinentry-mac'
 brew "ripgrep"
 brew "rename"
 brew "shellcheck"
-brew "speedtest-cli"
-brew "ssh-copy-id"
-brew "terminal-notifier"
+brew "speedtest"
 brew "the_silver_searcher"
 brew "tmux"
 brew "tree"
