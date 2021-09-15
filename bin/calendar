@@ -56,20 +56,51 @@ class Schedule
     out = StringIO.new
 
     schedule.each do |date, events|
-      output = events.map do |event|
-        time  = event[:start_time]
-        title = event[:title]
-        links = "[Meet](#{event[:meet]})" if event[:meet]
+      output = events.select { |e| e[:duration] }.map.with_index(1) do |event, index|
+        time     = event[:start_time]
+        title    = event[:title]
+        duration = " `#{event[:duration]}m`" if event[:duration]
+        links    = "[Meet](#{event[:meet]})" if event[:meet]
 
-        [time, title, links].map(&:to_s)
-      end
+        [index, "#{time}#{duration}", title, links].map(&:to_s)
+      end.compact
 
-      out.puts "### #{date.strftime("%a, %b %-d")}"
+      meeting_count = events.count { |e| e[:duration] }
+      meeting_count = "no" if meeting_count == 0
+
+      time_total = events.inject(0) { |sum, e| sum + e[:duration].to_i }
+      time_total = (time_total / 60.0).round(1)
+      time_total = "%d" % time_total if time_total.round == time_total
+
+      out.puts "## #{date.strftime("%a, %b %-d")}"
       out.puts
 
+      out.puts "You have **%s** scheduled today, totaling **%s**." % [
+        "#{meeting_count} meeting#{meeting_count == 1 ? "" : "s"}",
+        "#{time_total} hour#{time_total == 1 ? "" : "s"}",
+      ]
+      out.puts
+
+      all_day = events.reject { |e| e[:start_time] }
+
+      if all_day.any?
+        one = all_day.one?
+
+        out.puts "> **All-Day Events**"
+        out.puts ">"
+        out.puts "> There #{one ? "is" : "are"} #{all_day.size} all-day event#{one ? "" : "s"} on your calendar:"
+        out.puts ">"
+
+        all_day.each do |event|
+          out.puts "> - #{event[:title]}"
+        end
+
+        out.puts
+      end
+
       out.puts MarkdownTable.generate(
-        headers: %W(Time Title Links),
-        rows: output
+        headers: %W(# Time Title Links),
+        rows:    output
       )
 
       out.puts
@@ -94,12 +125,16 @@ class Schedule
         date, raw_time       = *raw_date.split(" at ")
         start_time, end_time = *raw_time.split(" - ")
         date                 = Date.parse(date)
-        start_time           = Time.parse("#{date} #{start_time}:00").strftime("%-l:%M%P")
-        end_time             = Time.parse("#{date} #{end_time}:00").strftime("%-l:%M%P")
+        start_time           = Time.parse("#{date} #{start_time}:00")
+        end_time             = Time.parse("#{date} #{end_time}:00")
+        duration             = (end_time.to_i - start_time.to_i) / 60
+        start_time           = start_time.strftime("%-l:%M%P")
+        end_time             = end_time.strftime("%-l:%M%P")
       else
         date       = Date.parse(raw_date)
         start_time = nil
         end_time   = nil
+        duration   = nil
         time       = nil
       end
 
@@ -121,6 +156,7 @@ class Schedule
         date:       date,
         start_time: start_time,
         end_time:   end_time,
+        duration:   duration,
         notes:      notes,
         meet:       meet,
       }
@@ -176,7 +212,8 @@ end
 class MarkdownTable
   def self.generate(headers:, rows:)
     lengths = headers.each_with_index.map do |header, index|
-      [header.bytesize, *rows.map { |r| r[index].bytesize }].max
+      # Minimum cell width is 3 chars
+      [3, header.bytesize, *rows.map { |r| r[index].bytesize }].max
     end
 
     output = []
@@ -198,6 +235,8 @@ class MarkdownTable
     output.join("\n")
   end
 end
+
+return unless $0 == __FILE__
 
 begin
   options = {
@@ -300,3 +339,5 @@ when "json"
 else
   puts schedule.to_markdown
 end
+
+# vim:ft=ruby
