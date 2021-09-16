@@ -21,6 +21,10 @@ class Date
     self + 7
   end
 
+  def last_week
+    self - 7
+  end
+
   def start_of_month
     self.class.new(year, month, 1)
   end
@@ -69,7 +73,7 @@ class Schedule
       meeting_count = "no" if meeting_count == 0
 
       time_total = events.inject(0) { |sum, e| sum + e[:duration].to_i }
-      time_total = (time_total / 60.0).round(1)
+      time_total = (time_total / 60.0).round(2)
       time_total = "%d" % time_total if time_total.round == time_total
 
       out.puts "## #{date.strftime("%a, %b %-d")}"
@@ -292,7 +296,7 @@ begin
 
     # TODO: shows last days of the month due to icalBuddy
     opts.on "-m", "--month", "Show events for this month" do
-      options[:from] = Date.today.start_of_month.start_of_day
+      options[:from] = Date.today.start_of_month.to_time.start_of_day
       options[:until] = Date.today.end_of_month.to_time.end_of_day
     end
 
@@ -312,7 +316,7 @@ begin
   end.parse!
 rescue OptionParser::InvalidOption, OptionParser::MissingArgument => e
   abort e.message
-rescue Date::Error => e
+rescue ArgumentError => e
   abort "Invalid date format!"
 end
 
