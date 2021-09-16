@@ -172,7 +172,12 @@ class Schedule
       end
 
       notes = raw_notes.to_s.gsub(CalendarDriver::NL, "\n")
-      urls = URI.extract(notes)
+
+      urls = URI.extract(notes, %w(http https)).reject { |url|
+        url == "https:/" || # weird Google Calendar artifact
+          url.start_with?("https://tel.meet/")
+      }.uniq
+
       meet = urls.find { |u| u.start_with? "https://meet.google.com/" }
 
       out[date] ||=[]
@@ -192,6 +197,7 @@ class Schedule
         duration:   duration,
         notes:      notes,
         meet:       meet,
+        urls:       urls,
       }
     end
   end
