@@ -59,6 +59,32 @@ class Schedule
   def to_markdown
     out = StringIO.new
 
+    meeting_count = schedule.inject(0) { |sum, (date, events)|
+      sum + events.select { |e| e[:duration] }.size
+    }
+
+    meeting_total = schedule.inject(0) { |sum, (date, events)|
+      sum + events.sum { |e| e[:duration] || 0 }
+    }
+    meeting_total = (meeting_total / 60.0).round(2)
+
+    # TODO: "this week" isn't accurate
+    if time.first.to_date != time.last.to_date
+      out.puts "---"
+      out.puts "---"
+      out.puts
+      out.puts "# #{time.first.year} Notes"
+      out.puts
+      out.puts "## Overview"
+      out.puts
+      out.puts "Good morning!"
+      out.puts
+      out.puts "You have **#{meeting_count} meetings** this week, totaling **#{meeting_total} hours.**"
+      out.puts
+      out.puts "---"
+      out.puts
+    end
+
     schedule.each do |date, events|
       output = events.select { |e| e[:duration] }.map.with_index(1) do |event, index|
         time     = event[:start_time]
@@ -102,12 +128,15 @@ class Schedule
         out.puts
       end
 
-      out.puts MarkdownTable.generate(
-        headers: %W(# Time Title Links),
-        rows:    output
-      )
+      unless output.empty?
+        out.puts MarkdownTable.generate(
+          headers: %W(# Time Title Links),
+          rows:    output
+        )
 
-      out.puts
+        out.puts
+      end
+
       out.puts "---"
       out.puts
     end
