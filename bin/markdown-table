@@ -1,0 +1,155 @@
+#!/usr/bin/env bash
+# Usage: markdown-table
+#
+# NAME
+#   markdown-table -- FIXME
+#
+# SYNOPSIS
+#   markdown-table
+#
+# DESCRIPTION
+#   FIXME
+#
+# OPTIONS
+#   FIXME
+#
+# EXAMPLES
+#   FIXME
+#
+# SEE ALSO
+#   FIXME
+
+# Call this script with DEBUG=1 to add some debugging output
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
+fi
+
+set -e
+
+SEP="#PIPE#"
+
+MIN_CEL_WIDTH=3
+
+# Echoes given args to STDERR
+#
+# $@ - args to pass to echo
+warn() {
+  echo "$@" >&2
+}
+
+# Print the help text for this program
+#
+# $1 - flag used to ask for help ("-h" or "--help")
+print_help() {
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="$1" '
+      f == "-h" && ($1 == "Usage:" || u) {
+        u=1
+        if ($0 == "") {
+          exit
+        } else {
+          print
+        }
+      }
+      f != "-h"
+      '
+}
+
+# Returns the highest number in the given arguments
+#
+# $@ - one or more numeric arguments
+max() {
+  local max=0 arg
+
+  for arg; do
+    (( arg > max )) && max="$arg"
+  done
+
+  printf "%s" "$max"
+}
+
+# Formats a table in markdown format
+format_table() {
+  local buffer col current_col=0 current_line=0 cell_width
+  local -a lengths=()
+
+  buffer="$(cat)"
+
+  # First pass to get column lengths
+  while read -r line; do
+    current_col=0
+
+    while read -r col; do
+      if [[ "${lengths["$current_col"]}" ]]; then
+        lengths["$current_col"]="$(max "${#col}" "${lengths[$current_col]}")"
+      else
+        lengths["$current_col"]="${#col}"
+      fi
+
+      current_col=$((current_col + 1))
+    done <<< "${line//$SEP/$'\n'}"
+  done <<< "$buffer"
+
+  while read -r line; do
+    current_col=0
+
+    while read -r col; do
+      cell_width="$(max "${lengths[$current_col]}" "$MIN_CEL_WIDTH")"
+      printf "| "
+      printf "%-${cell_width}s" "$col"
+      printf " "
+      current_col=$((current_col + 1))
+    done <<< "${line//$SEP/$'\n'}"
+
+    printf "|\n"
+
+    if [[ "$current_line" -eq 0 ]]; then
+      for (( current_col=0; current_col < ${#lengths[@]}; current_col++ )); do
+        cell_width="$(max "${lengths[$current_col]}" "$MIN_CEL_WIDTH")"
+        printf "| "
+        printf "%${cell_width}s" | tr " " -
+        printf " "
+      done
+      printf "|\n"
+    fi
+
+    current_line=$((current_line + 1))
+  done <<< "$buffer"
+}
+
+# Main program
+main() {
+  local argv cols
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -h | --help) print_help "$1"; return 0 ;;
+      -c) cols="$2"; shift 2;;
+      --) shift; break ;;
+      -*) warn "Invalid option '$1'"; return 1 ;;
+      *) break ;;
+    esac
+  done
+
+  if [[ -z "$cols" ]]; then
+    warn "Must specify column count!"
+    return 1
+  fi
+
+  argv=("$@")
+
+  while [[ $# -gt 0 ]]; do
+    for (( i=0; i < cols; i++ )); do
+      printf "%s%s"  "${argv[$i]}" "$SEP"
+    done
+
+    printf "\n"
+
+    shift "$cols"
+
+    argv=("$@")
+  done | sed "s/$SEP\$//g" | format_table
+}
+
+main "$@"
