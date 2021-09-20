@@ -169,12 +169,16 @@ main() {
   { if [[ $# -gt 0 ]]; then
       for arg; do
         for (( i=0; i < cols; i++ )); do
-          printf "%s%s" "$1" "$fs"
+          if (( i + 1 == cols )); then
+            printf "%s" "$1"
+          else
+            printf "%s%s" "$1" "$fs"
+          fi
           shift
         done
 
         printf "\n"
-      done | sed "s/$fs\$//g"
+      done
     else
       cat
     fi
