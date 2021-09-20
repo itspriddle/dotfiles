@@ -1,8 +1,14 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-if [ $# -ne 3 ]; then
-  echo "Usage: $(basename $0) 0xR 0xG 0xB"
+if [ $# -eq 3 ]; then
+  printf "%d, %d, %d" $*
+  [ -t 1 ] && echo
+elif [ $# -eq 1 ]; then
+  dec="${1###}"
+  printf "%d, %d, %d" "0x${dec:0:2}" "0x${dec:2:2}" "0x${dec:4:2}"
+
+  [ -t 1 ] && echo
+else
+  echo "Usage: $(basename $0) [0xR 0xG 0xB] | [#hexcode]"
   exit 1
 fi
-
-printf "%d, %d, %d" $*
