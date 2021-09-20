@@ -253,23 +253,21 @@ class MarkdownTable
       [3, header.bytesize, *rows.map { |r| r[index].bytesize }].max
     end
 
-    output = []
+    [].tap { |output|
+      output << lengths.each_with_index.map { |length, index|
+        "%-#{length}s" % headers[index]
+      }
 
-    output << lengths.each_with_index.map { |length, index|
-      "%-#{length}s" % headers[index]
-    }.join(" | ").prepend("| ").concat(" |")
+      output << lengths.each_with_index.map { |length, index|
+        "-" * length
+      }
 
-    output << lengths.each_with_index.map { |length, index|
-      "-" * length
-    }.join(" | ").prepend("| ").concat(" |")
-
-    rows.each do |cols|
-      output << cols.each_with_index.map { |col, index|
-        "%-#{lengths[index]}s" % col
-      }.join(" | ").prepend("| ").concat(" |")
-    end
-
-    output.join("\n")
+      rows.each do |cols|
+        output << cols.each_with_index.map { |col, index|
+          "%-#{lengths[index]}s" % col
+        }
+      end
+    }.map { |row| row.join(" | ").prepend("| ").concat(" |") }.join("\n")
   end
 end
 
