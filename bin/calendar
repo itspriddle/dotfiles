@@ -118,8 +118,6 @@ class Schedule
 
         out.puts "> **All-Day Events**"
         out.puts ">"
-        out.puts "> There #{one ? "is" : "are"} #{all_day.size} all-day event#{one ? "" : "s"} on your calendar:"
-        out.puts ">"
 
         all_day.each do |event|
           out.puts "> - #{event[:title]}"
