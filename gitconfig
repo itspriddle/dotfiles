@@ -74,6 +74,7 @@
 	last-subject     = !git --no-pager log --pretty="%s" -1
 	show-files       = !git --no-pager show --name-only --format=
 	last-pull-sha    = !"git reflog | awk '/: pull / { if (l == 1) { print $1; exit }; l+=1 }'"
+	first-commit     = commit --allow-empty -m 'First commit'
 
 [advice]
 	statusHints        = false
