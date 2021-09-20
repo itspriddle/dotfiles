@@ -115,11 +115,10 @@ format_table() {
   # Second pass writes each row
   while read -r line; do
     current_col=0
+    current_row=$((current_row + 1))
 
     while read -r col; do
-      printf "| "
-      printf "%-$(max "${lengths[$current_col]}" "$min")s" "$col"
-      printf " "
+      printf "| %-$(max "${lengths[$current_col]}" "$min")s " "$col"
 
       current_col=$((current_col + 1))
     done <<< "${line//$fs/$'\n'}"
@@ -127,7 +126,7 @@ format_table() {
     printf "|\n"
 
     # If this is the first row, print the header dashes
-    if [[ "$current_row" -eq 0 ]]; then
+    if [[ "$current_row" -eq 1 ]]; then
       for (( current_col=0; current_col < ${#lengths[@]}; current_col++ )); do
         printf "| "
         printf "%$(max "${lengths[$current_col]}" "$min")s" | tr " " -
@@ -136,8 +135,6 @@ format_table() {
 
       printf "|\n"
     fi
-
-    current_row=$((current_row + 1))
   done <<< "$buffer"
 }
 
@@ -167,7 +164,7 @@ main() {
   fi
 
   { if [[ $# -gt 0 ]]; then
-      for arg; do
+      while [[ $# -gt 0 ]]; do
         for (( i=0; i < cols; i++ )); do
           if (( i + 1 == cols )); then
             printf "%s" "$1"
