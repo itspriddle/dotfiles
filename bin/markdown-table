@@ -3,40 +3,48 @@
 #        markdown-table -sSEPARATOR < file
 #
 # NAME
-#   markdown-table -- FIXME
+#   markdown-table -- generate markdown tables
 #
 # SYNOPSIS
 #   markdown-table -COLUMNS [CELLS]
 #   markdown-table -sSEPARATOR < file
 #
 # DESCRIPTION
-#   FIXME
+#   markdown-table helps generate markdown tables. Manually supply arguments
+#   and a column count to generate a table, or pass in a delimited file to
+#   convert to a table.
 #
 # OPTIONS
 #   -COLUMNS
+#       Number of columns to include in output.
 #
-#   -s
+#   -sSEPARATOR
+#       String used to separate colums in input files.
 #
 #   --csv
+#       Shortcut for `-s,` to parse CSV files. Note that this is a "dumb" CSV
+#       parser -- it won't work if your cells contain commas!
 #
 #   --tsv
+#       Shortcut for `-s$'\t'` to parse TSV files.
 #
 #   -h, --help
+#       Prints help text and exits.
 #
 # EXAMPLES
-#   markdown-table -4 \
-#     "Heading 1"  "Heading 2" "Heading 3" "Heading 4" \
-#     "Hi"         "There"     "From"      "Markdown!" \
-#     "Everything" "Is"        "So"        "Nicely Aligned!"
+#   Build a 4 column markdown table from arguments:
+#     markdown-table -4 \
+#       "Heading 1"  "Heading 2" "Heading 3" "Heading 4" \
+#       "Hi"         "There"     "From"      "Markdown!" \
+#       "Everything" "Is"        "So"        "Nicely Aligned!"
 #
-#   markdown-table -s, < some.csv
-#   markdown-table --csv < some.csv
+#   Convert a CSV file into a markdown table:
+#     markdown-table -s, < some.csv
+#     markdown-table --csv < some.csv
 #
-#   markdown-table -s$'\t' < test.tsv
-#   markdown-table --tsv < test.tsv
-#
-# SEE ALSO
-#   FIXME
+#   Convert a TSV file into a markdown table:
+#     markdown-table -s$'\t' < test.tsv
+#     markdown-table --tsv < test.tsv
 
 # Call this script with DEBUG=1 to add some debugging output
 if [[ "$DEBUG" ]]; then
@@ -161,7 +169,7 @@ main() {
   { if [[ $# -gt 0 ]]; then
       for arg; do
         for (( i=0; i < cols; i++ )); do
-          printf "%s%s"  "$1" "$fs"
+          printf "%s%s" "$1" "$fs"
           shift
         done
 
