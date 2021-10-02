@@ -140,6 +140,25 @@ let g:liquid_highlight_types = ['ruby', 'javascript']
 
 " }}}
 
+" vim-markdown (plasticboy) {{{
+
+" Don't mess with indents when hitting enter on a list item
+let g:vim_markdown_new_list_item_indent = 0
+
+" Don't automatically insert bullets hitting enter on a list item
+"
+" (This fixes annoying behavior when using gq to format long lines where every
+" new line gets a bullet)
+let g:vim_markdown_auto_insert_bullets = 0
+
+" Disable folding
+let g:vim_markdown_folding_disabled = 1
+
+" Highlight YAML frontmatter (i.e. Jekyll)
+let g:vim_markdown_frontmatter = 1
+
+" }}}
+
 " vim-marked {{{
 
 let g:marked_autoquit  = 0
