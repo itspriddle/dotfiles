@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Usage: urlencode "one two" "three"
+#        urlencode < file
+
+# URL encodes the given string
+#
+# $1 - string to encode
+urlencode() {
+  local LC_ALL=C
+
+  for (( i = 0; i < ${#1}; i++ )); do
+    : "${1:i:1}"
+    case "$_" in
+      [a-zA-Z0-9.~_-]) printf '%s' "$_" ;;
+      *) printf '%%%02X' "'$_" ;;
+    esac
+  done
+
+  printf '\n'
+}
+
+main() {
+  local arg
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -h | --help)
+        sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+          awk -v f="${1#-h}" '!f&&/^Usage:/||u{u=!/^\s*$/;if(!u)exit}u||f'
+        shift
+        ;;
+      --) shift; break ;;
+      -*) echo "Invalid option '$1'" >&2; exit 1 ;;
+      *) break ;;
+    esac
+  done
+
+  for arg in "$@"; do
+    urlencode "$arg"
+  done
+}
+
+main "${@-$(cat)}"
