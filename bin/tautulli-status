@@ -253,7 +253,7 @@ def map_now_playing:
       [
         "\(bar)",
         "",
-        "\(blue(bold("Name:")))      \(.name)",
+        "\(blue(bold("Name:")))      \(.name | wrap | trim)",
         "\(blue(bold("Duration:")))  \(.duration)",
         "\(blue(bold("Progress:")))  \(.progress_percent)% (\(.progress) watched - \(.remaining) remaining)",
         "\(blue(bold("Player:")))    \(.product) (\(.player) @ \(.ip_address))",
