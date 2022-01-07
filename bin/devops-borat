@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Usage: devops-borat
+#
+# NAME
+#   devops-borat - print a random devops_borat tweet
+#
+# DESCRIPTION
+#   It prints a random useless devops_borat tweet. That's it.
+#
+# SEE ALSO
+#   http://twitter.com/devops_borat
+
+# Print help text and exit.
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+  exit 1
+fi
+
+URL="https://gist.githubusercontent.com/textarcana/676ef78b2912d42dbf355a2f728a0ca1/raw/f50d5792496b551c847cc3deb04959daf7dd2638/devops_borat.dat"
+
+curl --silent "$URL" | grep -v "%" | sort -R | head -1
