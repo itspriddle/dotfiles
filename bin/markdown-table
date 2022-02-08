@@ -19,7 +19,7 @@
 #       Number of columns to include in output.
 #
 #   -sSEPARATOR
-#       String used to separate colums in input files.
+#       String used to separate columns in input files.
 #
 #   --csv
 #       Shortcut for `-s,` to parse CSV files. Note that this is a "dumb" CSV
@@ -94,7 +94,7 @@ max() {
 
 # Formats a table in markdown format
 #
-# $1 - field seprator string
+# $1 - field separator string
 format_table() {
   local fs="$1" buffer col current_col=0 current_row=0 min=3
   local -a lengths=()
