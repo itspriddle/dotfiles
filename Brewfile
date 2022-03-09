@@ -24,6 +24,7 @@ brew "gist"
 brew "git"
 brew "gnupg2"
 brew "hub"
+brew "ical-buddy"
 brew "itspriddle/brews/imgur-bash", args: ["HEAD"]
 brew "vim"
 brew "jq"
