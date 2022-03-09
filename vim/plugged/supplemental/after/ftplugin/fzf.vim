@@ -2,3 +2,5 @@
 if exists("+termwinkey")
   setlocal termwinkey=<F20>
 endif
+
+tunmap <buffer> <c-w>
