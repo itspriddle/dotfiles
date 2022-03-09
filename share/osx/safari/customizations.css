@@ -15,15 +15,8 @@ body.loggedin #sr-header-area .width-clip button.redesign-beta-optin {
 }
 
 /**
- * jira.com: Fix card titles on the board-view so that they aren't truncated.
+ * jira - hide ugly banner
  */
-body#jira .ghx-issue-fields .ghx-summary .ghx-inner {
-  max-height: none!important;
-}
-
-/**
- * jira.com: Fix "Issue Links" summaries so they aren't truncated.
- */
-body#jira .links-list .link-content .link-summary {
-  white-space: normal!important;
+body#jira #aui-flag-container {
+  display: none;
 }
