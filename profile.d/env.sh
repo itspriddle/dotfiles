@@ -104,6 +104,11 @@ if [ -f ~/.ruby-version ]; then
   fi
 fi
 
+# php7.4 via homebrew
+if [ "${OSTYPE:0:6}" = "darwin" ] && [ -x /opt/homebrew/opt/php@7.4/bin ]; then
+  export PATH="/opt/homebrew/opt/php@7.4/bin:/opt/homebrew/opt/php@7.4/sbin:$PATH"
+fi
+
 [ "${BASH_VERSION}" ] && shell="bash"
 [ "${ZSH_VERSION}" ]  && shell="zsh"
 
