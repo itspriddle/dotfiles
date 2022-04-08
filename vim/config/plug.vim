@@ -25,7 +25,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-rsi'
 
 " Editing
-Plug 'AndrewRadev/splitjoin.vim'
+" Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-characterize'
@@ -49,9 +49,9 @@ if executable('fzf')
   endfor
 endif
 
-if executable("ctags") && (has('job') || (has('nvim') && exists('*jobwait')))
-  Plug 'ludovicchabant/vim-gutentags'
-endif
+" if executable("ctags") && (has('job') || (has('nvim') && exists('*jobwait')))
+"   Plug 'ludovicchabant/vim-gutentags'
+" endif
 
 " Testing
 Plug 'janko-m/vim-test'
