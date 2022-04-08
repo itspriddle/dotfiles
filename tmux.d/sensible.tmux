@@ -13,7 +13,7 @@ is_osx() {
 }
 
 iterm_terminal() {
-	[[ "$TERM_PROGRAM" =~ ^iTerm ]]
+	[[ "${TERM_PROGRAM}" =~ ^iTerm || "${LC_TERMINAL}" =~ ^iTerm ]]
 }
 
 command_exists() {
@@ -47,7 +47,7 @@ server_option_value_not_changed() {
 }
 
 key_binding_not_set() {
-	local key="$1"
+	local key="${1//\\/\\\\}"
 	if $(tmux list-keys | grep -q "${KEY_BINDING_REGEX}${key}[[:space:]]"); then
 		return 1
 	else
@@ -66,14 +66,19 @@ key_binding_not_changed() {
 	fi
 }
 
+get_tmux_config() {
+	local tmux_config_xdg="${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf"
+	local tmux_config="$HOME/.tmux.conf"
+
+	if [ -f "${tmux_config_xdg}" ]; then
+		echo "${tmux_config_xdg}"
+	else
+		echo ${tmux_config}
+	fi
+}
+
 main() {
 	# OPTIONS
-
-	# enable utf8 (option removed in tmux 2.2)
-	tmux set-option -g utf8 on 2>/dev/null
-
-	# enable utf8 in tmux status-left and status-right (option removed in tmux 2.2)
-	tmux set-option -g status-utf8 on 2>/dev/null
 
 	# address vim mode switching delay (http://superuser.com/a/252717/65504)
 	if server_option_value_not_changed "escape-time" "500"; then
@@ -101,9 +106,9 @@ main() {
 	fi
 
 	# upgrade $TERM, tmux 1.9
-	# if option_value_not_changed "default-terminal" "screen"; then
-	# 	tmux set-option -g default-terminal "screen-256color"
-	# fi
+	if option_value_not_changed "default-terminal" "screen"; then
+		tmux set-option -g default-terminal "screen-256color"
+	fi
 	# upgrade $TERM, tmux 2.0+
 	if server_option_value_not_changed "default-terminal" "screen"; then
 		tmux set-option -s default-terminal "screen-256color"
@@ -155,9 +160,11 @@ main() {
 
 	# source `.tmux.conf` file - as suggested in `man tmux`
 	if key_binding_not_set "R"; then
-		tmux bind-key R run-shell ' \
-			tmux source-file ~/.tmux.conf > /dev/null; \
-			tmux display-message "Sourced .tmux.conf!"'
+		local tmux_config=$(get_tmux_config)
+
+		tmux bind-key R run-shell " \
+			tmux source-file ${tmux_config} > /dev/null; \
+			tmux display-message 'Sourced ${tmux_config}!'"
 	fi
 }
 main
