@@ -54,7 +54,7 @@ endif
 " endif
 
 " Testing
-Plug 'janko-m/vim-test'
+" Plug 'janko-m/vim-test'
 Plug 'tpope/vim-dispatch'
 
 " Syntax
