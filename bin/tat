@@ -57,9 +57,9 @@ create_if_needed_and_attach() {
 
 _tmux() {
   if command -v direnv > /dev/null; then
-    direnv exec / tmux "$@"
+    exec direnv exec / tmux "$@"
   else
-    tmux "$@"
+    exec tmux "$@"
   fi
 }
 
@@ -74,12 +74,22 @@ main() {
         usage "$1"
         return 1
         ;;
+      --)
+        shift
+        break
+        ;;
+      -*)
+        echo "invalid option $1" >&2
+        return 1
+        ;;
       *)
-        create_if_needed_and_attach "$1"
-        return $?
+        break
         ;;
     esac
   done
+
+  create_if_needed_and_attach "$1"
+  return $?
 }
 
 main "${@-$(basename "$PWD" | sed -e 's/[.:]/-/g;s/^-//')}"
