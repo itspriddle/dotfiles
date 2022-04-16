@@ -15,6 +15,8 @@ command! -buffer -range -bar Edit   :call s:choose('edit', <line1>, <line2>)
 command! -buffer -range -bar Reword :call s:choose('reword', <line1>, <line2>)
 command! -buffer -range -bar Fixup  :call s:choose('fixup', <line1>, <line2>)
 
+" TODO: think these need fixing
+
 " Rebase shortcuts, press P, R, E, S, F to change the current line to the
 " given command.
 autocmd FileType gitrebase nnoremap <buffer> <silent> P :Pick<cr>
