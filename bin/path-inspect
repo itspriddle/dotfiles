@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+shopt -s nullglob
+
+while read -r dir; do
+  echo "$dir:"
+  for bin in "$dir"/*; do
+    echo "  $bin"
+  done
+  echo
+done <<< "${PATH//:/$'\n'}"
