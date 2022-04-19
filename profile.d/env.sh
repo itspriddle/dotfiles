@@ -124,6 +124,9 @@ if [ "${shell}" ]; then
 
   # a2d
   command -v a2d > /dev/null && eval "$(a2d init --shell "${shell}" -)"
+
+  # tat
+  command -v tat > /dev/null && eval "$(tat --completions "$shell")"
 fi
 
 # BROWSER, used by `hub pull-request`
