@@ -96,9 +96,15 @@ COMPL
 _tat() {
   COMPREPLY=()
   local word="${COMP_WORDS[COMP_CWORD]}"
+  local suggestions
 
-  local sessions="$(tat -L 2> /dev/null)"
-  COMPREPLY=( $(compgen -W "--list -L --help -h $sessions" -- "$word") )
+  suggestions="$(tat -L 2> /dev/null)"
+
+  if [[ "${word:0:1}" = "-" ]]; then
+    suggestions="--list -L --help -h"
+  fi
+
+  COMPREPLY=( $(compgen -W "$suggestions" -- "$word") )
 }
 
 complete -F _tat tat
