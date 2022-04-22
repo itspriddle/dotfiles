@@ -47,7 +47,8 @@ function! s:plug_home(name, launch)
   if has_key(plugs, a:name)
     " https://git::@github.com/user/repo.git
     " git@github.com:user/repo.git
-    let repo = substitute(plugs[a:name].uri, 'https://git::@github.com/', '', '')
+    let repo = substitute(plugs[a:name].uri, 'https://github.com/', '', '')
+    let repo = substitute(repo, 'https://git::@github.com/', '', '')
     let repo = substitute(repo, 'git@github.com:', '', '')
     let url = 'https://github.com/'.substitute(repo, '\.git$', '', '')
 
