@@ -2,4 +2,4 @@
 # Usage: a2 todo
 # Summary: Add a todo for work
 
-things add --list="A2 TODO" --heading="Inbox" "$@"
+things add --list="Work" "$@"
