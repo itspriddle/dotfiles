@@ -1,0 +1,10 @@
+#!/usr/bin/env osascript
+
+tell application "Things3"
+	set toDos1 to to dos of list "Today"
+	set output to ""
+	repeat with toDo in toDos1
+		set output to (output & "- [ ] " & name of toDo & "\n")
+	end repeat
+  output
+end tell
