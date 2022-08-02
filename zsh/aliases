@@ -67,7 +67,7 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
 fi
 
 if [ "${OSTYPE:0:5}" = "linux" ] && [ -f /etc/rpi-issue ]; then
-  alias cpu-temp="/opt/vc/bin/vcgencmd measure_temp | egrep -o '[0-9\\.]+'"
+  alias cpu-temp="PATH='/opt/cv/bin:$PATH' vcgencmd measure_temp | egrep -o '[0-9\\.]+'"
 fi
 
 # vim: ft=zsh
