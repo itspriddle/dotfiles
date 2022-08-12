@@ -56,13 +56,6 @@ nmap co yo
 
 " }}}
 
-" splitjoin.vim {{{
-
-" No trailing comma when splitting Ruby hashes
-let g:splitjoin_ruby_trailing_comma = 0
-
-" }}}
-
 " vim-easy-align {{{
 
 " Allow aligning stuff that is commented out
