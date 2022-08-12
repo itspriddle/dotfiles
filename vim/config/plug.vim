@@ -68,7 +68,6 @@ Plug 'markcornick/vim-bats'
 Plug 'tpope/vim-liquid'
 " Plug 'tpope/vim-markdown'
 Plug 'plasticboy/vim-markdown', { 'as': 'vim-markdown-plasticboy' }
-Plug 'sunaku/vim-ruby-minitest'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-haml'

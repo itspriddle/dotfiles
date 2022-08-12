@@ -179,16 +179,6 @@ let g:rsi_no_meta = 1
 
 " }}}
 
-" vim-test {{{
-
-" make test commands execute using dispatch.vim
-let test#strategy = "dispatch"
-
-" Expose `:RSpec` and `:Minitest` commands
-let g:test#runner_commands = ["RSpec", "Minitest"]
-
-" }}}
-
 " vim-unimpaired {{{
 
 " Open insert mode with 'paste'
