@@ -57,7 +57,6 @@ endif
 Plug 'tpope/vim-dispatch'
 
 " Syntax
-Plug 'chr4/nginx.vim'
 Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
 Plug 'hail2u/vim-css3-syntax'
 Plug 'othree/html5.vim'
