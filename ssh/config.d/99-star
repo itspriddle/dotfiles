@@ -1,0 +1,13 @@
+# All hosts
+
+Host *
+	TCPKeepAlive yes
+	ServerAliveInterval 300
+	ServerAliveCountMax 6
+	AddKeysToAgent yes
+	IgnoreUnknown UseKeychain
+	UseKeychain yes
+	ForwardAgent no
+	IdentityFile ~/.ssh/id_rsa
+
+# vim:ft=sshconfig
