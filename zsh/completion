@@ -37,6 +37,8 @@ zstyle ":completion:*" list-colors ""
 {
   local -a _ssh_hosts _ssh_users
 
+  _ssh_hosts=()
+
   # Only complete hosts in ~/.ssh/config, not /etc/hosts.
   if [[ -f $HOME/.ssh/config ]]; then
     _ssh_hosts=($(
@@ -44,10 +46,8 @@ zstyle ":completion:*" list-colors ""
         sub(/^Host /, "", $0)
         gsub(" ", "\n", $0)
         print $0
-      }' ~/.ssh/config
+      }' ~/.ssh/config ~/.ssh/config.d/*(N)
     ))
-  else
-    _ssh_hosts=()
   fi
 
   # ssh host completion
