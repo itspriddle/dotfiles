@@ -27,7 +27,6 @@ alias gs='git status'
 
 # ruby/rails
 alias rc='rails console'
-alias sc="echo \"Ugh, use rc, it's 2017 dude\""
 alias be='bundle exec'
 
 # GPG
@@ -52,17 +51,11 @@ alias random-string='LC_CTYPE=C LC_ALL=C tr -dc "[:alnum:]" < /dev/urandom | fol
 
 # OS X
 if [ "${OSTYPE:0:6}" = "darwin" ]; then
-  alias addr="ifconfig | awk '/broadcast/ { print \$2 }'"
   alias flush-dns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
-  alias top-cpu='top -o cpu'
-  alias force-vnstat-update="pkill -HUP vnstatd"
   alias df="df -Plh"
   alias gist="gist -c -p"
   alias eject-all="diskutil list | awk '/external/ { print \$1 }' | xargs -tn1 diskutil unmountDisk"
-  alias mail-uuids='defaults find UUID | grep -E "MessageCompatibility|MailCompatibility"'
   alias battery-info='system_profiler -detailLevel mini SPPowerDataType'
-  alias reset-touchbar='pkill "Touch Bar agent"; killall ControlStrip'
-  alias atom='atom --clear-window-state'
   alias mkpassword='bashword'
 fi
 
