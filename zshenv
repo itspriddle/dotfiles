@@ -3,6 +3,5 @@ if [[ "${OSTYPE:0:6}" = darwin ]]; then
 fi
 
 source ~/.dotfiles/profile.d/env.sh
-source ~/.dotfiles/profile.d/gpg.sh
 
 # vim: ft=zsh
