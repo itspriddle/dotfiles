@@ -133,8 +133,3 @@ fi
 if [ "$SSH_CONNECTION" ]; then
   export BROWSER=echo
 fi
-
-# Private ENV vars, this file is ignored by git
-if [ -f "$(dirname "$0")/env-private.sh" ]; then
-  source "$(dirname "$0")/env-private.sh"
-fi
