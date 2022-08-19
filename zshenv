@@ -78,6 +78,9 @@ elif [ "${OSTYPE:0:5}" = linux ]; then
 
   # `ls` colors
   export LS_COLORS="di=1;34;27:ln=1;36;27:so=1;35;27:pi=33;27:ex=1;32;27:bd=1;33;27:cd=1;33;27:su=1;31;27:sg=1;31;27:tw=1;34;27:ow=1;34;27:"
+
+  # Ubuntu's /etc/zshrc tries to initialize completion, skip it
+  [ "$ZSH_VERSION" ] && skip_global_compinit=1
 fi
 
 # FZF

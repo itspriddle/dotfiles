@@ -1,5 +1,8 @@
-autoload -U compinit
-compinit -i
+# Some systems' /etc/zshrc might have called this already
+if ! type compinit &> /dev/null; then
+  autoload -U compinit
+  compinit -i
+fi
 
 # Automatically list choices on ambiguous completion.
 setopt AUTO_LIST
