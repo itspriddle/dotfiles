@@ -1,4 +1,4 @@
-source ~/.dotfiles/profile.d/env.sh
+source ~/.dotfiles/zshenv
 
 source ~/.dotfiles/bashrc
 
