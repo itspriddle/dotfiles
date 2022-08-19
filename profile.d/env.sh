@@ -5,7 +5,7 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export TERM="xterm-256color"
 
-export PATH="${HOME}/.dotfiles/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin:/bin"
+export PATH="$HOME/.dotfiles/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin:/bin"
 
 if [ "${OSTYPE:0:6}" = darwin ]; then
   # arm64 Homebrew setup (M1)
@@ -15,7 +15,7 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
     export HOMEBREW_REPOSITORY="/opt/homebrew"
     export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
     export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
-    export PATH="${HOME}/.dotfiles/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin:/bin"
+    export PATH="$HOME/.dotfiles/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin:/bin"
   fi
 
   # Disable emoji when installing packages with Homebrew
@@ -31,7 +31,7 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   export MAKEFLAGS="-j9"
 
   # Load PHP ini files in ~/.dotfiles/src/php
-  export PHP_INI_SCAN_DIR="${HOME}/.dotfiles/src/php"
+  export PHP_INI_SCAN_DIR="$HOME/.dotfiles/src/php"
 
   # Disable Apple Terminal sessions
   export SHELL_SESSIONS_DISABLE=1
@@ -40,7 +40,7 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
     # Double the amount of open files OS X allows
     ulimit -n 1024
   fi
-elif [ "${OSTYPE:0:5}" = "linux" ]; then
+elif [ "${OSTYPE:0:5}" = linux ]; then
   # Disable weird keyboard bindkey behavior on Ubuntu/Debian
   if [ -f /etc/debian_version ]; then
     export DEBIAN_PREVENT_KEYBOARD_CHANGES=1
@@ -56,7 +56,7 @@ if [ "$PS1" ]; then
 fi
 
 # `ls` colors
-if [ "${OSTYPE:0:6}" = "darwin" ]; then
+if [ "${OSTYPE:0:6}" = darwin ]; then
   # "Ex": bold blue, directory
   # "Gx": bold cyan, symlink
   # "Fx": bold magenta, socket
@@ -69,13 +69,15 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   # "Ex": bold blue, dir writable to others with sticky bit
   # "Ex": bold blue, dir writable to others no sticky
   export LSCOLORS=ExGxFxDxCxDxDxBxBxExEx
-elif [ "${OSTYPE:0:5}" = "linux" ]; then
+elif [ "${OSTYPE:0:5}" = linux ]; then
   export LS_COLORS="di=1;34;27:ln=1;36;27:so=1;35;27:pi=33;27:ex=1;32;27:bd=1;33;27:cd=1;33;27:su=1;31;27:sg=1;31;27:tw=1;34;27:ow=1;34;27:"
 fi
 
 # FZF
-export FZF_DEFAULT_OPTS="--no-mouse --color fg:-1,fg+:4,hl:5,hl+:5,bg:-1,bg+:-1,prompt:4,info:2,marker:3 --bind=ctrl-u:half-page-up,ctrl-d:half-page-down --tiebreak=end,length,index"
-export FZF_DEFAULT_COMMAND="rg --follow --hidden --files --sort-files --glob '!.git'"
+if command -v fzf > /dev/null; then
+  export FZF_DEFAULT_OPTS="--no-mouse --color fg:-1,fg+:4,hl:5,hl+:5,bg:-1,bg+:-1,prompt:4,info:2,marker:3 --bind=ctrl-u:half-page-up,ctrl-d:half-page-down --tiebreak=end,length,index"
+  export FZF_DEFAULT_COMMAND="rg --follow --hidden --files --sort-files --glob '!.git'"
+fi
 
 # Ruby
 if [ -f ~/.ruby-version ]; then
@@ -95,7 +97,7 @@ if [ -f ~/.ruby-version ]; then
     ruby_home="$HOME/.rubies/ruby-$RUBY_VERSION"
 
     if [ -d "$ruby_home" ]; then
-      PATH="$HOME/.gem/ruby/$lib_version/bin:$ruby_home/bin:$PATH"
+      export PATH="$HOME/.gem/ruby/$lib_version/bin:$ruby_home/bin:$PATH"
 
       export GEM_HOME="$HOME/.gem/ruby/$lib_version"
       export GEM_PATH="$GEM_HOME:$ruby_home/lib/ruby/gems/$lib_version"
@@ -105,31 +107,35 @@ if [ -f ~/.ruby-version ]; then
 fi
 
 # php7.4 via homebrew
-if [ "${OSTYPE:0:6}" = "darwin" ] && [ -x /opt/homebrew/opt/php@7.4/bin ]; then
+if [ "${OSTYPE:0:6}" = darwin ] && [ -x /opt/homebrew/opt/php@7.4/bin ]; then
   export PATH="$HOME/.composer/vendor/bin:/opt/homebrew/opt/php@7.4/bin:/opt/homebrew/opt/php@7.4/sbin:$PATH"
 fi
 
-[ "${BASH_VERSION}" ] && shell="bash"
-[ "${ZSH_VERSION}" ]  && shell="zsh"
+[ "$BASH_VERSION" ] && shell="bash"
+[ "$ZSH_VERSION" ]  && shell="zsh"
 
-if [ "${shell}" ]; then
+if [ "$shell" ]; then
   # Direnv
-  command -v direnv > /dev/null && eval "$(direnv hook "${shell}")"
+  command -v direnv > /dev/null && eval "$(direnv hook "$shell")"
 
   # jarvis
-  command -v jarvis > /dev/null && eval "$(jarvis init --shell "${shell}" -)"
+  command -v jarvis > /dev/null && eval "$(jarvis init --shell "$shell" -)"
 
   # hub
-  command -v hub > /dev/null && eval "$(hub alias -s "${shell}")"
+  command -v hub > /dev/null && eval "$(hub alias -s "$shell")"
 
   # a2d
-  command -v a2d > /dev/null && eval "$(a2d init --shell "${shell}" -)"
+  command -v a2d > /dev/null && eval "$(a2d init --shell "$shell" -)"
 
   # tat
   command -v tat > /dev/null && eval "$(tat --completions "$shell")"
 fi
 
+unset shell
+
 # BROWSER, used by `hub pull-request`
 if [ "$SSH_CONNECTION" ]; then
   export BROWSER=echo
 fi
+
+# vim: ft=bash
