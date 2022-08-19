@@ -1,3 +1,14 @@
+# On macOS I've `unsetopt GLOBAL_RCS` in ~/.zshenv to avoid loading
+# /etc/zshenv which messes with PATH. Source /etc/zshrc up front
+# to restore those behaviors (like keybinds) that I don't want to maintain
+# here myself.
+if [[ "${OSTYPE:0:6}" = darwin ]]; then
+  # Need to load terminfo too
+  autoload -U zsh/terminfo
+
+  source /etc/zshrc
+fi
+
 # makes color constants available
 autoload -U colors
 colors
