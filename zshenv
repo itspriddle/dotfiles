@@ -116,6 +116,33 @@ if [ "$shell" ]; then
   command -v tat > /dev/null && eval "$(tat --completions "$shell")"
 fi
 
+# Ruby
+if [ -f ~/.ruby-version ]; then
+  RUBY_VERSION="$(< ~/.ruby-version)"
+  export RUBY_VERSION
+
+  if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
+    source /usr/local/opt/chruby/share/chruby/chruby.sh
+
+    chruby "$RUBY_VERSION"
+  elif [ -f /opt/homebrew/opt/chruby/share/chruby/chruby.sh ]; then
+    source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+
+    chruby "$RUBY_VERSION"
+  else
+    lib_version="${RUBY_VERSION%%?}0"
+    ruby_home="$HOME/.rubies/ruby-$RUBY_VERSION"
+
+    if [ -d "$ruby_home" ]; then
+      export PATH="$HOME/.gem/ruby/$lib_version/bin:$ruby_home/bin:$PATH"
+
+      export GEM_HOME="$HOME/.gem/ruby/$lib_version"
+      export GEM_PATH="$GEM_HOME:$ruby_home/lib/ruby/gems/$lib_version"
+    fi
+    unset lib_version ruby_home
+  fi
+fi
+
 unset shell
 
 # vim: ft=zsh
