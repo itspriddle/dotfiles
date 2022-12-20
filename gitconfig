@@ -1,7 +1,10 @@
 [user]
 	name       = Joshua Priddle
 	email      = jpriddle@me.com
-	signingkey = E7ED7E4CEC917FE0
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINwu62M5uiyRWHy+iMcc7iJpZXFK9mkdWI3LvtFOxSsc gitsigning@priddle.xyz
+
+[gpg]
+	format = ssh
 
 [color]
 	ui = auto
