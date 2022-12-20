@@ -1,0 +1,149 @@
+#!/usr/bin/env bash
+# Usage: droplr-upload <file1> [<file2>...]
+#
+# NAME
+#   droplr-upload - upload files to Droplr
+
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
+fi
+
+set -eu
+
+API_URL="https://api.droplr.com"
+
+# URL encodes the given string
+#
+# $1 - string to encode
+urlencode() {
+  local LC_ALL=C
+
+  for (( i = 0; i < ${#1}; i++ )); do
+    : "${1:i:1}"
+    case "$_" in
+      [a-zA-Z0-9.~_-]) printf '%s' "$_" ;;
+      *) printf '%%%02X' "'$_" ;;
+    esac
+  done
+
+  printf '\n'
+}
+
+# Uploads the file to Droplr
+#
+# $1 - local path to file to upload
+# $2 - Basic auth token
+upload_file() {
+  local path="$1" auth="$2" mime filename
+
+  if [[ ! -r "$path" ]]; then
+    echo "'$path' doesn't exist or can't be read!" >&2
+    return 1
+  fi
+
+  mime="$(file -b --mime-type "$path")"
+
+  if [[ -z "$mime" ]]; then
+    echo "Couldn't determine mime type of '$path'" >&2
+    return 1
+  fi
+
+  filename="$(urlencode "${path##*/}")"
+
+  # Post the file
+  # {
+  #   "active": true,
+  #   "boards": [],
+  #   "groupsAccessList": [],
+  #   "excludeRedactionGroupsList": [],
+  #   "clones": 0,
+  #   "code": "TKUTkH",
+  #   "content": "https://cdn-std.droplr.net/files/acc_111111/XXXXXX",
+  #   "createdAt": 1661542699167,
+  #   "deleted": false,
+  #   "fileCreatedAt": 1661542699330,
+  #   "filePrivacy": "PUBLIC",
+  #   "fileUpdated": true,
+  #   "isOwnerPro": true,
+  #   "lastAccess": 1661542699167,
+  #   "locked": false,
+  #   "obscureCode": "AAAAAAAAAAAAAAAA",
+  #   "owner": "111111",
+  #   "password": "xxxxxxxxxx",
+  #   "privacy": "PUBLIC",
+  #   "selfDestructType": "TIME",
+  #   "selfDestructValue": 1662147499170,
+  #   "selfDestructReminderType": "NONE",
+  #   "selfDestructReminderSent": false,
+  #   "shortlink": "https://d.pr/i/XXXXXX",
+  #   "size": 65928,
+  #   "storageProvider": "AMAZON",
+  #   "redaction": "NONE",
+  #   "tags": [
+  #     "image"
+  #   ],
+  #   "team": "111111",
+  #   "temporary": false,
+  #   "title": "foobar.jpg",
+  #   "type": "IMAGE",
+  #   "uploading": false,
+  #   "variant": "image/jpeg",
+  #   "views": 0,
+  #   "downloadable": true,
+  #   "cloneable": true,
+  #   "poweredBy": true
+  # }
+  curl --silent \
+    -X POST \
+    -H "Authorization: Basic $auth" \
+    -H "Content-Type: $mime" \
+    --data-binary "@$path" \
+    "$API_URL/files?filename=$filename" |
+    jq -r .shortlink
+}
+
+# Main Program
+main() {
+  local arg auth_file auth
+
+  # Setup the auth
+  auth_file="$HOME/.config/droplr-upload.base64"
+
+  if [[ -r "$auth_file" ]]; then
+    auth="$(< "$auth_file")"
+  fi
+
+  if [[ -z "${auth:-}" ]]; then
+    echo "Couldn't load credentials!" >&2
+    echo "Run this command to create the necessary configuration file:" >&2
+    echo >&2
+    echo "  mkdir ~/.config 2> /dev/null; echo -n 'droplrusername:droplrpass' | base64 | tee ~/.config/droplr-upload.base64" >&2
+    return 1
+  elif ! type jq &> /dev/null; then
+    echo "Couldn't find \`jq'!" >&2
+    return 1
+  elif ! type curl &> /dev/null; then
+    echo "Couldn't find \`curl'!" >&2
+    return 1
+  fi
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -h | --help)
+        sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+          awk -v f="${1#-h}" '!f&&/^Usage:/||u{u=!/^\s*$/;if(!u)exit}u||f'
+        shift
+        ;;
+      --) shift; break ;;
+      -*) echo "Invalid option '$1'" >&2; exit 1 ;;
+      *) break ;;
+    esac
+  done
+
+  for arg in "$@"; do
+    upload_file "$arg" "$auth"
+  done
+}
+
+main "$@"
