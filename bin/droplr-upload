@@ -115,10 +115,11 @@ main() {
   fi
 
   if [[ -z "${auth:-}" ]]; then
-    echo "Couldn't load credentials!" >&2
+    echo "Couldn't find Droplr credentials!" >&2
+    echo >&2
     echo "Run this command to create the necessary configuration file:" >&2
     echo >&2
-    echo "  mkdir ~/.config 2> /dev/null; echo -n 'droplrusername:droplrpass' | base64 | tee ~/.config/droplr-upload.base64" >&2
+    echo "  mkdir ~/.config 2> /dev/null; echo -n 'droplrusername:droplrpass' | base64 | tee $auth_file" >&2
     return 1
   elif ! type jq &> /dev/null; then
     echo "Couldn't find \`jq'!" >&2
@@ -134,12 +135,18 @@ main() {
         sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
           awk -v f="${1#-h}" '!f&&/^Usage:/||u{u=!/^\s*$/;if(!u)exit}u||f'
         shift
+        return 1
         ;;
       --) shift; break ;;
-      -*) echo "Invalid option '$1'" >&2; exit 1 ;;
+      -*) echo "Invalid option '$1'" >&2; return 1 ;;
       *) break ;;
     esac
   done
+
+  if [[ $# -eq 0 ]]; then
+    echo "Specify one or more files to upload." >&2
+    return 1
+  fi
 
   for arg in "$@"; do
     upload_file "$arg" "$auth"
