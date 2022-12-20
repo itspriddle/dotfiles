@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>xyz.priddle.audioengine-play-silence.plist</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/usr/bin/afplay</string>
+      <string>/Users/priddle/.dotfiles/share/osx/sounds/silence-10.mp3</string>
+    </array>
+    <key>StandardOutPath</key>
+    <string>/dev/null</string>
+    <key>StandardErrorPath</key>
+    <string>/dev/null</string>
+    <key>StartCalendarInterval</key>
+    <dict>
+      <key>Minute</key>
+      <integer>33</integer>
+    </dict>
+  </dict>
+</plist>
