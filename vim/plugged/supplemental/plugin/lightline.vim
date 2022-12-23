@@ -52,7 +52,7 @@ augroup set_lightline_for_solarized
   autocmd ColorScheme *
     \ if !has('vim_starting') |
     \   if expand("<amatch>") =~ '^solarized8\?' |
-    \     source autoload/lightline/colorscheme/solarized.vim |
+    \     runtime autoload/lightline/colorscheme/solarized.vim |
     \   endif |
     \   call lightline#init() |
     \   call lightline#colorscheme() |
