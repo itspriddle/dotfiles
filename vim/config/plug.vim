@@ -46,6 +46,8 @@ if executable('fzf')
       Plug printf('%s/opt/fzf', fzf_dir)
     endif
   endfor
+
+  unlet fzf_dir
 endif
 
 " if executable("ctags") && (has('job') || (has('nvim') && exists('*jobwait')))
@@ -82,10 +84,12 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 
 " My stuff
-Plug '~/.vim/plugged/supplemental'
+let s:vimhome = resolve(fnamemodify(expand('<sfile>'), ':p:h:h'))
 
-if isdirectory(expand('~/.vim/plugged/vim-notebook'))
-  Plug '~/.vim/plugged/vim-notebook'
+call plug#(s:vimhome . '/plugged/supplemental')
+
+if isdirectory(expand(s:vimhome . '/plugged/vim-notebook'))
+  call plug#(s:vimhome . '/plugged/vim-notebook')
 endif
 
 let g:plug_url_format = 'git@github.com:%s.git'
