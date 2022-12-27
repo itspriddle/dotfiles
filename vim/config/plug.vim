@@ -5,20 +5,38 @@
 " Disable shallow clones
 let g:plug_shallow = 0
 
+" Find real path to ~/.vim files
+let s:vimhome = resolve(fnamemodify(expand('<sfile>'), ':p:h:h'))
+
 call plug#begin()
+
+if exists('$_JOSH_VIM_PLATFORM')
+  let s:platform = $_JOSH_VIM_PLATFORM
+elseif has('mac')
+  let s:platform = 'macos'
+elseif filereadable('/etc/rpi-issue')
+  let s:platform = 'linux-rpi'
+elseif filereadable('/etc/lsb-release')
+  let s:platform = 'linux-ubuntu'
+elseif filereadable('/etc/synoinfo.conf')
+  let s:platform = 'linux-synology'
+endif
 
 " Core/editor
 Plug 'tpope/vim-sensible'
 Plug 'lifepillar/vim-solarized8'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-scriptease'
 Plug 'itchyny/lightline.vim'
 Plug 'yssl/QFEnter', { 'for': 'qf' }
 Plug 'fcpg/vim-altscreen'
-Plug 'junegunn/vim-peekaboo'
 Plug 'jszakmeister/vim-togglecursor'
-Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+
+if s:platform == 'macos'
+  Plug 'tpope/vim-projectionist'
+  Plug 'tpope/vim-scriptease'
+  Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+  Plug 'junegunn/vim-peekaboo'
+endif
 
 " Unix
 Plug 'tpope/vim-eunuch'
@@ -34,9 +52,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 
-" Database
-Plug 'tpope/vim-dadbod', { 'on': 'DB' }
-
 " File browsing/search
 Plug 'jeetsukumaran/vim-filebeagle'
 
@@ -50,55 +65,65 @@ if executable('fzf')
   unlet fzf_dir
 endif
 
-" if executable("ctags") && (has('job') || (has('nvim') && exists('*jobwait')))
-"   Plug 'ludovicchabant/vim-gutentags'
-" endif
 
-" Testing
-" Plug 'janko-m/vim-test'
-Plug 'tpope/vim-dispatch'
+if s:platform == 'macos'
+  " ctags integration
+  " if executable("ctags") && (has('job') || (has('nvim') && exists('*jobwait')))
+  "   Plug 'ludovicchabant/vim-gutentags'
+  " endif
+
+  " Testing
+  " Plug 'janko-m/vim-test'
+  Plug 'tpope/vim-dispatch'
+
+  " Syntax
+  Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
+  Plug 'hail2u/vim-css3-syntax'
+  Plug 'othree/html5.vim'
+  Plug 'pangloss/vim-javascript'
+  Plug 'isRuslan/vim-es6'
+  Plug 'itspriddle/vim-jquery'
+  Plug 'kchmck/vim-coffee-script'
+  Plug 'markcornick/vim-bats'
+  Plug 'tpope/vim-liquid'
+  Plug 'tpope/vim-rails'
+  Plug 'tpope/vim-rake'
+  Plug 'tpope/vim-haml'
+  Plug 'vim-ruby/vim-ruby'
+  Plug 'leafgarland/typescript-vim'
+  Plug 'vito-c/jq.vim'
+  Plug 'elixir-editors/vim-elixir'
+
+  " Git integration
+  Plug 'tpope/vim-git'
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-rhubarb'
+
+  if isdirectory(expand(s:vimhome . '/plugged/vim-notebook'))
+    call plug#(s:vimhome . '/plugged/vim-notebook')
+  endif
+endif
 
 " Syntax
-Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
-Plug 'hail2u/vim-css3-syntax'
-Plug 'othree/html5.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'isRuslan/vim-es6'
-Plug 'itspriddle/vim-jquery'
-Plug 'kchmck/vim-coffee-script'
-Plug 'markcornick/vim-bats'
-Plug 'tpope/vim-liquid'
-" Plug 'tpope/vim-markdown'
 Plug 'plasticboy/vim-markdown', { 'as': 'vim-markdown-plasticboy' }
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-rake'
-Plug 'tpope/vim-haml'
-Plug 'vim-ruby/vim-ruby'
-Plug 'leafgarland/typescript-vim'
-Plug 'vito-c/jq.vim'
-Plug 'elixir-editors/vim-elixir'
-
-" Git integration
-Plug 'tpope/vim-git'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
+" Plug 'tpope/vim-markdown'
 
 " My stuff
-let s:vimhome = resolve(fnamemodify(expand('<sfile>'), ':p:h:h'))
-
 call plug#(s:vimhome . '/plugged/supplemental')
-
-if isdirectory(expand(s:vimhome . '/plugged/vim-notebook'))
-  call plug#(s:vimhome . '/plugged/vim-notebook')
-endif
 
 let g:plug_url_format = 'git@github.com:%s.git'
 
 Plug 'itspriddle/vim-stripper'
-Plug 'itspriddle/vim-jekyll'
-Plug 'itspriddle/vim-shellcheck'
 
-if has("mac")
+if s:platform == 'macos'
+  Plug 'itspriddle/vim-jekyll'
+endif
+
+if executable('shellcheck')
+  Plug 'itspriddle/vim-shellcheck'
+endif
+
+if s:platform == 'macos'
   Plug 'itspriddle/vim-marked'
   Plug 'itspriddle/applescript.vim'
 endif
