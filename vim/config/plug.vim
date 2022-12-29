@@ -8,7 +8,7 @@ let g:plug_shallow = 0
 " Find real path to ~/.vim files
 let s:vimhome = resolve(fnamemodify(expand('<sfile>'), ':p:h:h'))
 
-call plug#begin()
+call plug#begin(s:vimhome . '/plugged')
 
 if exists('$_JOSH_VIM_PLATFORM')
   let s:platform = $_JOSH_VIM_PLATFORM
