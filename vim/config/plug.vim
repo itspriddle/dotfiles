@@ -36,6 +36,7 @@ if s:platform == 'macos'
   Plug 'tpope/vim-scriptease'
   Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
   Plug 'junegunn/vim-peekaboo'
+  Plug 'github/copilot.vim'
 endif
 
 " Unix
