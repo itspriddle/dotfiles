@@ -101,8 +101,6 @@ if [ "$shell" ]; then
 
   # hub
   if command -v hub > /dev/null; then
-    eval "$(hub alias -s "$shell")"
-
     # BROWSER, used by `hub pull-request`
     if [ "$SSH_CONNECTION" ]; then
       export BROWSER=echo

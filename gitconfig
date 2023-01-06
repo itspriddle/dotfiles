@@ -67,11 +67,12 @@
 	fetch-pr         = "!f() { git fetch origin refs/pull/$1/head:pr/$1; } ; f"
 	recent-branches  = for-each-ref --count=10 --sort=-committerdate --format=\"%(refname:short)\" refs/heads/
 	fixup            = "!f() { git commit $* --fixup HEAD; }; f"
+	browse           = "!f() { if command -v git-browse >/dev/null; then git-browse \"$@\"; else hub browse \"$@\"; fi }; f"
 	pulls            = browse -- pulls
 	root             = rev-parse --show-toplevel
 	strip-whitepsace = !git ls-files | xargs perl -i -pe 's/[\\t ]+$//g'
 	showf            = show --format=fuller
-	prq              = pull-request --push --copy --browse
+	prq              = !hub pull-request --push --copy --browse
 	todo             = grep -wniI -e TODO -e FIXME
 	last-committer   = !git --no-pager log --pretty="%an" --no-merges -1
 	last-subject     = !git --no-pager log --pretty="%s" -1
