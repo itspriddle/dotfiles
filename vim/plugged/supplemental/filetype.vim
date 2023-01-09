@@ -21,6 +21,7 @@ augroup filetypedetect
   " Direnv
   autocmd BufNewFile,BufRead .envrc,envrc,.direnvrc,direnvrc
     \ let g:is_bash = 1 |
+    \ let b:is_bash = 1 |
     \ setfiletype sh |
     \ unlet g:is_bash
 augroup END
