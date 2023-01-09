@@ -64,7 +64,7 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   export LSCOLORS=ExGxFxDxCxDxDxBxBxExEx
 
   # php7.4 via homebrew
-  if [ -x /opt/homebrew/opt/php@7.4/bin ]; then
+  if [ -x /opt/homebrew/opt/php@7.4/bin/php ]; then
     export PATH="$HOME/.composer/vendor/bin:/opt/homebrew/opt/php@7.4/bin:/opt/homebrew/opt/php@7.4/sbin:$PATH"
   fi
 elif [ "${OSTYPE:0:5}" = linux ]; then
