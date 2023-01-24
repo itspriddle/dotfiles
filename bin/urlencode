@@ -2,25 +2,46 @@
 # Usage: urlencode "one two" "three"
 #        urlencode < file
 
+# Call this script with DEBUG=1 to add some debugging output
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
+fi
+
+set -e
+
 # URL encodes the given string
 #
 # $1 - string to encode
 urlencode() {
-  local LC_ALL=C
+  if type jq &> /dev/null; then
+    jq -sRr @uri <<< "$1" | sed "s/%0A$//"
+  elif type python3 &> /dev/null; then
+    python3 -c "import sys, urllib.parse as ul; print(ul.quote(sys.argv[1]))" "$1"
+  elif type php &> /dev/null; then
+    php -r "echo rawurlencode(\$argv[1]);" "$1"
+  else
+    # TODO: this won't handle emojis
+    local LC_ALL=C
 
-  for (( i = 0; i < ${#1}; i++ )); do
-    : "${1:i:1}"
-    case "$_" in
-      [a-zA-Z0-9.~_-]) printf '%s' "$_" ;;
-      *) printf '%%%02X' "'$_" ;;
-    esac
-  done
+    for (( i = 0; i < ${#1}; i++ )); do
+      : "${1:i:1}"
+      case "$_" in
+        [a-zA-Z0-9.~_-]) printf '%s' "$_" ;;
+        *) printf '%%%02X' "'$_" ;;
+      esac
+    done
 
-  printf '\n'
+    printf '\n'
+  fi
 }
 
 main() {
   local arg
+
+  if [[ $# -eq 0 ]]; then
+    set -- -- "$(cat)"
+  fi
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -40,4 +61,4 @@ main() {
   done
 }
 
-main "${@-$(cat)}"
+main "$@"
