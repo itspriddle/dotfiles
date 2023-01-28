@@ -1,0 +1,134 @@
+#!/usr/bin/env bash
+# Usage: markdown-preview < file.md
+#        markdown-preview <<< "# markdown"
+#        cat file.md | markdown-preview
+#        markdown-preview
+#        # Markdown
+#        ^d
+#
+# NAME
+#   markdown-preview -- preview Markdown in a browser
+#
+# SYNOPSIS
+#   markdown-preview < file.md
+#   cat file.md | markdown-preview
+#   markdown-preview <<< "# markdown"
+#   cat file.md | markdown-preview
+#   markdown-preview
+#   # Markdown
+#   ^d
+#
+# DESCRIPTION
+#   markdown-preview uses the GitHub API to render STDIN as Markdown. The
+#   Primer Theme (https://pages-themes.github.io/primer/) is used to generate
+#   a page similar to a GitHub README.
+#
+# SEE ALSO
+#   gh(1)
+
+# Call this script with DEBUG=1 to add some debugging output
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
+fi
+
+set -e
+
+# Echoes given args to STDERR
+#
+# $@ - args to pass to echo
+warn() {
+  echo "$@" >&2
+}
+
+#/ <!DOCTYPE html>
+#/ <html lang="en-US">
+#/   <head>
+#/     <meta charset="UTF-8">
+#/     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+#/     <meta name="viewport" content="width=device-width, initial-scale=1">
+#/
+#/     <title>markdown-preview</title>
+#/
+#/     <link rel="stylesheet" href="https://pages-themes.github.io/primer/assets/css/style.css?v=%s">
+#/   </head>
+#/   <body>
+#/     <div class="container-lg px-3 my-5 markdown-body">
+#/       %s
+#/     </div>
+#/   </body>
+#/ </html>
+
+# Renders an HTML template from the comments above.
+render_template() {
+  local template content
+
+  content="$(cat)"
+  template="$(grep '^#/ ' "$0" | cut -c 4-)"
+
+  # shellcheck disable=SC2059
+  printf "$template" "$(date '+%s')" "$content"
+}
+
+# Submits STDIN to GitHub's Markdown API.
+render_markdown() {
+  local text
+
+  text="$(cat)"
+
+  gh api \
+    -X POST \
+    -f text="$text" \
+    -f mode=gfm \
+    markdown
+}
+
+# Opens the given URL in a web browser
+#
+# $1 - URL to open
+open_browser() {
+  local url="$1"
+
+  # TODO: I have no idea if the non-mac ones work
+  if command -v open &>/dev/null; then
+    open -a "${BROWSER:-Safari}" "$url"
+  elif command -v xdg-open &>/dev/null; then
+    xdg-open "$url"
+  elif command -v gnome-open &>/dev/null; then
+    gnome-open "$url"
+  elif command -v kde-open &>/dev/null; then
+    kde-open "$url"
+  else
+    warn "No browser found. Please open manually."
+    warn
+    warn "$url"
+    return 1
+  fi
+}
+
+# Print the help text for this program
+#
+# $1 - flag used to ask for help ("-h" or "--help")
+print_help() {
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="${1#-h}" '!f&&/^Usage:/||u{u=!/^\s*$/;if(!u)exit}u||f'
+}
+
+main() {
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -h | --help) print_help "$1"; return 0 ;;
+      --) shift; break ;;
+      *) break ;;
+    esac
+  done
+
+  if ! type gh &> /dev/null; then
+    warn "Missing \`gh' command." >&2
+    return 1
+  fi
+
+  open_browser "data:text/html;base64,$(render_markdown | render_template | base64)"
+}
+
+main "$@"
