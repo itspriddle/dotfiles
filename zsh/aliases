@@ -24,6 +24,7 @@ alias gcomp-='git checkout master; git pull; git checkout -'
 alias gcomp='git checkout master; git pull'
 alias grm="git status --porcelain | awk '\$1 == \"D\" {print \$2}' | xargs git --git-dir=\$(git rev-parse --git-dir) rm --ignore-unmatch"
 alias gs='git status'
+alias gv='vim +Git'
 
 # ruby/rails
 alias rc='rails console'
