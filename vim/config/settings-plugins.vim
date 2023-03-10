@@ -4,6 +4,12 @@
 " Configuration and custom mappings used with third party plugins.
 " ------------------------------------------------------------------------------
 
+" editorconfig-vim {{{
+
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
+" }}}
+
 " fzf.vim {{{
 
 " Note this is the fzf.vim shipped with fzf itself, not the separate fzf.vim

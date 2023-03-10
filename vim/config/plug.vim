@@ -52,6 +52,7 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
+Plug 'editorconfig/editorconfig-vim'
 
 " File browsing/search
 Plug 'jeetsukumaran/vim-filebeagle'
