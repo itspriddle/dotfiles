@@ -9,7 +9,7 @@ tap "itspriddle/brews"
 tap "teamookla/speedtest"
 
 # Casks
-cask "chromedriver"
+# cask "chromedriver"
 
 # Ruby/Rails apps
 brew "chruby"
@@ -28,6 +28,7 @@ brew "ical-buddy"
 brew "itspriddle/brews/imgur-bash", args: ["HEAD"]
 brew "vim"
 brew "jq"
+brew "php"
 brew 'pinentry-mac'
 brew "ripgrep"
 brew "rename"
