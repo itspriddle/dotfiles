@@ -8,7 +8,7 @@ backup: ## backup live eq settings to this repo
 	cp -f "$(LIVE_EQ_PATH)" .
 
 install: ## install eq settings
-	cp -f com.apple.Music.eq.plist "$(LIVE_EQ_PATH)" .
+	cp -f com.apple.Music.eq.plist "$(LIVE_EQ_PATH)"
 	@echo 'You MUST reboot for the settings to take effect!'
 
 help: ## show this help text
