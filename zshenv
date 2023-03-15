@@ -16,6 +16,7 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   fi
 
   # arm64 Homebrew setup (M1)
+  # See `brew shellenv`
   if [ -d /opt/homebrew ]; then
     export HOMEBREW_PREFIX="/opt/homebrew"
     export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
@@ -62,11 +63,6 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   # "Ex": bold blue, dir writable to others with sticky bit
   # "Ex": bold blue, dir writable to others no sticky
   export LSCOLORS=ExGxFxDxCxDxDxBxBxExEx
-
-  # php7.4 via homebrew
-  if [ -x /opt/homebrew/opt/php@7.4/bin/php ]; then
-    export PATH="$HOME/.composer/vendor/bin:/opt/homebrew/opt/php@7.4/bin:/opt/homebrew/opt/php@7.4/sbin:$PATH"
-  fi
 elif [ "${OSTYPE:0:5}" = linux ]; then
   # Disable weird keyboard bindkey behavior on Ubuntu/Debian
   if [ -f /etc/debian_version ]; then
@@ -114,16 +110,17 @@ if [ "$shell" ]; then
   command -v tat > /dev/null && eval "$(tat --completions "$shell")"
 fi
 
+# PHP
+if command -v composer > /dev/null; then
+  export PATH="$HOME/.composer/vendor/bin:$PATH"
+fi
+
 # Ruby
 if [ -f ~/.ruby-version ]; then
   RUBY_VERSION="$(< ~/.ruby-version)"
   export RUBY_VERSION
 
-  if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
-    source /usr/local/opt/chruby/share/chruby/chruby.sh
-
-    chruby "$RUBY_VERSION"
-  elif [ -f /opt/homebrew/opt/chruby/share/chruby/chruby.sh ]; then
+  if [ -f /opt/homebrew/opt/chruby/share/chruby/chruby.sh ]; then
     source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 
     chruby "$RUBY_VERSION"
