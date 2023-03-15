@@ -36,28 +36,6 @@ use_ruby() {
   chruby "$ver"
 }
 
-# Changes the current php version.
-#
-# Usage in .envrc:
-#
-#   use php [version]
-#   PATH_add bin
-use_php() {
-  # desired PHP version as first parameter
-  local ver="$1"
-
-  if [[ -z "$ver" ]]; then
-    >&2 echo "Unknown php version"
-    return 1
-  fi
-
-  if [ -x "/opt/homebrew/opt/php@$ver/bin/php" ]; then
-    PATH_add "$HOME/.composer/vendor/bin"
-    PATH_add "/opt/homebrew/opt/php@$ver/bin"
-    PATH_add "/opt/homebrew/opt/php@$ver/sbin"
-  fi
-}
-
 # Sets work specific git email.
 #
 # Usage in .envrc:
