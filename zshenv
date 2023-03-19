@@ -95,14 +95,6 @@ if [ "$shell" ]; then
   # jarvis
   command -v jarvis > /dev/null && eval "$(jarvis init --shell "$shell" -)"
 
-  # hub
-  if command -v hub > /dev/null; then
-    # BROWSER, used by `hub pull-request`
-    if [ "$SSH_CONNECTION" ]; then
-      export BROWSER=echo
-    fi
-  fi
-
   # a2d
   command -v a2d > /dev/null && eval "$(a2d init --shell "$shell" -)"
 
