@@ -43,7 +43,7 @@ alias sh='env -i sh'
 alias grep='grep --color'
 alias dush='du -shc'
 alias what-is-my-ip="curl https://ifconfig.me; echo"
-alias gist="gist -p"
+alias gist="gh gist create --web"
 alias wp="WP_CLI_DISABLE_AUTO_CHECK_UPDATE=1 PAGER=cat wp"
 alias gmt-date="date -u"
 alias weather="curl 'wttr.in/Clifton+Park+NY?n'"
