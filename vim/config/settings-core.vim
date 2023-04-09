@@ -7,23 +7,10 @@
 " Set colorscheme options
 let g:solarized_old_cursor_style = 1
 let g:solarized_extra_hi_groups = 1
-if ($TERM_PROGRAM != 'Apple_Terminal' && $SSH_CONNECTION != '' && $SSH_AUTH_SOCK == '') || (has("gui_macvim") && has("gui_running"))
-  let g:solarized_termcolors = 256
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-  set t_Co=256
-  if has("gui_macvim") && has("gui_running")
-    set background=light
-  else
-    set background=dark
-  end
-else
-  let g:solarized_use16 = 1
-  let g:solarized_termcolors = 16
-  set t_Co=16
-  set background=dark
-endif
+let g:solarized_use16 = 1
+let g:solarized_termcolors = 16
+set t_Co=16
+set background=dark
 colorscheme solarized8
 
 " Allow UTF8 chars
