@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+wget https://raw.githubusercontent.com/junegunn/fzf/0.38.0/man/man1/fzf.1 -O /usr/local/man/man1/fzf.1
+wget https://raw.githubusercontent.com/junegunn/fzf/0.38.0/man/man1/fzf-tmux.1 -O /usr/local/man/man1/fzf-tmux.1
+
+mkdir -p /usr/local/src/fzf
+
+wget https://github.com/junegunn/fzf/releases/download/0.38.0/fzf-0.38.0-linux_amd64.tar.gz -O /usr/local/src/fzf/fzf-0.38.0-linux_amd64.tar.gz
+cd /usr/local/src/fzf
+tar -vzxf fzf-0.38.0-linux_amd64.tar.gz
+mv fzf /usr/local/bin/
