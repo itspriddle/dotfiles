@@ -36,6 +36,28 @@ use_ruby() {
   chruby "$ver"
 }
 
+# Sets PATH for Homebrew core and shivammathur/php taps
+#
+# Usage in .envrc:
+#
+#   use homebrew_php
+#   use homebrew_php 8.2
+use_homebrew_php() {
+  local version="$1" optdir="/opt/homebrew/opt/php"
+
+  if [[ "$version" ]]; then
+    optdir="$optdir@$version"
+  fi
+
+  if [[ -d "$optdir" ]]; then
+    PATH_add "$optdir/bin"
+    PATH_add "$optdir/sbin"
+  else
+    >&2 echo "Unknown PHP version"
+    return 1
+  fi
+}
+
 # Sets work specific git email.
 #
 # Usage in .envrc:
