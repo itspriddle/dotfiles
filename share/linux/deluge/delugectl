@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Usage: delugectl [start|stop|restart|status] [both|daemon|web]
+
+main() {
+  local cmd="${1:-help}" target="${2:-both}" d w
+
+  case "$target" in
+    both)
+      w=1
+      d=1
+      ;;
+    daemon)
+      d=1
+      ;;
+    web)
+      w=1
+      ;;
+  esac
+
+  case "$cmd" in
+    start)
+      [ "$w" ] && sudo systemctl start deluge-web.service
+      [ "$d" ] && sudo systemctl start deluged.service
+      ;;
+    stop)
+      [ "$w" ] && sudo systemctl stop deluge-web.service
+      [ "$d" ] && sudo systemctl stop deluged.service
+      ;;
+    restart)
+      [ "$w" ] && sudo systemctl restart deluge-web.service
+      [ "$d" ] && sudo systemctl restart deluged.service
+      ;;
+    status)
+      [ "$w" ] && sudo systemctl status deluge-web.service
+      [ "$d" ] && sudo systemctl status deluged.service
+      ;;
+    help|-h|--help|"")
+      sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+        awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+      ;;
+    *)
+      >&2 echo "invalid command '$cmd'"
+      ;;
+  esac
+}
+
+main "$@"
