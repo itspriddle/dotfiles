@@ -52,6 +52,7 @@ use_homebrew_php() {
   if [[ -d "$optdir" ]]; then
     PATH_add "$optdir/bin"
     PATH_add "$optdir/sbin"
+    MANPATH_add "$optdir/share/man"
   else
     >&2 echo "Unknown PHP version"
     return 1
