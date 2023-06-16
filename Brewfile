@@ -16,6 +16,13 @@ brew "chruby"
 brew "node"
 brew "ruby-install"
 
+# PHP/WP
+brew "php"
+brew "shivammathur/php/php@7.4"
+brew "mysql"
+brew "wp-cli"
+brew "composer"
+
 # Utilities
 brew "direnv"
 brew "exiftool"
