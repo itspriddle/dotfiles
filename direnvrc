@@ -7,10 +7,11 @@
 use_ruby() {
   # load up chruby if needed and available
   if ! command -v chruby > /dev/null; then
-    if [[ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]]; then
-      source /usr/local/opt/chruby/share/chruby/chruby.sh
-    elif [[ -f /opt/homebrew/opt/chruby/share/chruby/chruby.sh ]]; then
-      source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+    local src="${HOMEBREW_PREFIX-/opt/homebrew}/opt/chruby/share/chruby/chruby.sh"
+
+    if [[ -f "$src" ]]; then
+      # shellcheck source=/dev/null
+      source "$src"
     else
       >&2 echo "chruby not available!"
       return 1
@@ -43,7 +44,8 @@ use_ruby() {
 #   use homebrew_php
 #   use homebrew_php 8.2
 use_homebrew_php() {
-  local version="$1" optdir="/opt/homebrew/opt/php"
+  local version="$1"
+  local optdir="${HOMEBREW_PREFIX-/opt/homebrew}/opt/php"
 
   if [[ "$version" ]]; then
     optdir="$optdir@$version"
