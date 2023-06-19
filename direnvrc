@@ -45,11 +45,7 @@ use_ruby() {
 #   use homebrew_php 8.2
 use_homebrew_php() {
   local version="$1"
-  local optdir="${HOMEBREW_PREFIX-/opt/homebrew}/opt/php"
-
-  if [[ "$version" ]]; then
-    optdir="$optdir@$version"
-  fi
+  local optdir="${HOMEBREW_PREFIX-/opt/homebrew}/opt/php${version:+"@$version"}"
 
   if [[ -d "$optdir" ]]; then
     PATH_add "$optdir/bin"
