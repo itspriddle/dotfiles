@@ -18,6 +18,8 @@ elseif filereadable('/etc/rpi-issue')
   let s:platform = 'linux-rpi'
 elseif filereadable('/etc/lsb-release')
   let s:platform = 'linux-ubuntu'
+elseif filereadable('/etc/centos-release')
+  let s:platform = 'linux-centos'
 elseif filereadable('/etc/synoinfo.conf')
   let s:platform = 'linux-synology'
 endif
