@@ -5,10 +5,6 @@
 " General {{{
 
 " Set colorscheme options
-let g:solarized_old_cursor_style = 1
-let g:solarized_extra_hi_groups = 1
-let g:solarized_use16 = 1
-let g:solarized_termcolors = 16
 set t_Co=16
 set background=dark
 colorscheme solarized8

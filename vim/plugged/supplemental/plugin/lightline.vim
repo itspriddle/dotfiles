@@ -1,5 +1,9 @@
 " Lightline.vim settings
 
+if &t_Co != ''
+  let g:solarized_termcolors = &t_Co
+endif
+
 " Use the solarized theme and enable custom component logic
 let g:lightline = {
   \   "colorscheme": "solarized" ,
