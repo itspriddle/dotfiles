@@ -154,7 +154,7 @@ main() {
     status)
       local remaining
 
-      if ! pgrep "${APP_ID##*.}" &> /dev/null; then
+      if [[ -z $(run "(bundle identifier of processes) contains \"$APP_ID\"" "com.apple.systemevents") ]]; then
         puts "not running"
         return 2
       fi
