@@ -103,6 +103,10 @@ timestamp() {
   printf "%02dh:%02dm:%02ds" $((s / 3600)) $((s % 3600 / 60)) $((s % 60))
 }
 
+running() {
+  [[ $(run "(bundle identifier of processes) contains \"$APP_ID\"" "com.apple.systemevents") = true ]]
+}
+
 main() {
   local cmd
 
@@ -154,7 +158,7 @@ main() {
     status)
       local remaining
 
-      if [[ -z $(run "(bundle identifier of processes) contains \"$APP_ID\"" "com.apple.systemevents") ]]; then
+      if ! running; then
         puts "not running"
         return 2
       fi
@@ -171,7 +175,12 @@ main() {
       esac
       ;;
     quit)
-      pkill "${APP_ID##*.}"
+      if running; then
+        pkill "${APP_ID##*.}"
+      else
+        puts "not running"
+        return 1
+      fi
       ;;
     open)
       open -b "$APP_ID"
