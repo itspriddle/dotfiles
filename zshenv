@@ -11,6 +11,13 @@ export TERM="xterm-256color"
 export PATH="$HOME/.dotfiles/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin:/bin"
 
 if [ "${OSTYPE:0:6}" = darwin ]; then
+  # Disable loading global ZSH configs on macOS
+  # - /etc/zprofile - sets $PATH via path_helper, which I don't want
+  # - /etc/zlogout  - does not exist by default
+  # - /etc/zlogin   - does not exist by default
+  # - /etc/zshrc    - sets some unnecessary options and terminfo stuff;
+  #                   includes /etc/zshrc_Apple_Terminal, which all relates
+  #                   to terminal sessions, which I don't use
   if [ "$ZSH_VERSION" ] && [ "${OSTYPE:0:6}" = darwin ]; then
     unsetopt GLOBAL_RCS
   fi
