@@ -12,7 +12,7 @@ zstyle ':vcs_info:git*'   actionformats "%b %c%u|%a"
 zstyle ':vcs_info:git*'   formats       "%b %c%u"
 
 _josh_prompt_precmd() {
-  local git_prompt="" host_prompt="" host_format="%M" dir_prompt git_info
+  local git_prompt="" user_prompt="%n@" host_prompt="" host_format="%M" dir_prompt git_info
 
   if [[ $TERM == xterm* ]]; then
     print -Pn "\\e]0;${SSH_CONNECTION:+%n@%M:}%~\\a"
@@ -35,8 +35,10 @@ _josh_prompt_precmd() {
   # if [[ -n $SSH_CONNECTION ]] && [[ -z $TMUX ]]; then
   if [[ -n $SSH_CONNECTION ]]; then
     [[ $HOST =~ (\.local|\.lan)$ ]] && host_format="%m"
+    [[ $USER == priddle ]] && [[ $HOST =~ priddle\.xyz$ ]] && user_prompt=""
 
-    host_prompt="%{$fg_bold[yellow]%}%n@${host_format}%{$reset_color%} "
+
+    host_prompt="%{$fg_bold[yellow]%}${user_prompt}${host_format}%{$reset_color%} "
   fi
 
   PS1="${host_prompt}${dir_prompt}${git_prompt} %# "
