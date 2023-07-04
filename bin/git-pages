@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Usage: git pages
+#
+# If a CNAME file exists in the root of the repository, open that URL.
+#
+# Alternatively, check if the origin URL is for github.com and open a
+# github.io pages URL.
+
+if [[ $1 =~ ^(-h|--help)$ ]]; then
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0"
+
+  exit 1
+fi
+
+if [[ -f CNAME ]]; then
+  url="https://$(cat CNAME)"
+else
+  url=$(git config --get remote.origin.url)
+
+  if ! [[ "$url" =~ github\.com ]]; then
+    echo "Not a GitHub repo" >&2
+    exit 1
+  fi
+
+  url=${url#git@}
+  url=${url#https://}
+  url=${url%.git}
+  url=${url#github.com:}
+  url=${url#github.com}
+
+  org="${url%%/*}"
+  repo="${url##*/}"
+  url="https://$org.github.io/$repo/"
+fi
+
+echo "$url"
+
+if type open &>/dev/null; then
+  open "$url"
+fi
