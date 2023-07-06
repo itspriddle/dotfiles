@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Usage: create-repo NAME
+
+set -eu
+
+REPO_ROOT=/var/services/homes/vcs
+REPO_UNIX_OWNER=vcs
+REPO_UNIX_GROUP=users
+
+main() {
+  local name="${1:-}"
+
+  if [[ "$name" =~ ^(-h|--help) ]]; then
+    sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0"
+    return 1
+  fi
+
+  if [[ -z "$name" ]]; then
+    echo "Must specify repo name" >&2
+    return 1
+  fi
+
+  name="${name%%.git}.git"
+
+  if [[ -r "$REPO_ROOT/$name" ]]; then
+    echo "Repo '$name' already exists!" >&2
+    return 1
+  fi
+
+  sudo git init --bare -b master "$REPO_ROOT/$name"
+  sudo chown -R "$REPO_UNIX_OWNER:$REPO_UNIX_GROUP" "$REPO_ROOT/$name"
+}
+
+main "$@"
