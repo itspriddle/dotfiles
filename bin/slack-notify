@@ -57,7 +57,7 @@ send_slack() {
         "text": $text,
         "channel": $channel
       } | with_entries(select(.value != ""))
-    ' | curl --location --silent --data @- "$webhook_url"
+    ' | curl --silent --data @- "$webhook_url"
 }
 
 main() {
