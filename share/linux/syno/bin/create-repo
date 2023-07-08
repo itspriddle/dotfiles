@@ -27,8 +27,8 @@ main() {
     return 1
   fi
 
-  sudo git init --bare -b master "$REPO_ROOT/$name"
-  sudo chown -R "$REPO_UNIX_OWNER:$REPO_UNIX_GROUP" "$REPO_ROOT/$name"
+  sudo -u "$REPO_UNIX_OWNER" -g "$REPO_UNIX_GROUP" \
+    git init --bare -b master "$REPO_ROOT/$name"
 }
 
 main "$@"
