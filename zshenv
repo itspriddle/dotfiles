@@ -39,6 +39,9 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   # Opt-out of Analytics
   export HOMEBREW_NO_ANALYTICS=1
 
+  # Silence Analytics nags
+  export HOMEBREW_NO_ANALYTICS_MESSAGE_OUTPUT=1
+
   # Disable homebrew autoupdate
   export HOMEBREW_NO_AUTO_UPDATE=1
 
