@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+# Usage: slack-notify [options] [message]
+#
+# NAME
+#   slack-notify -- send notifications via Slack and/or Email (Mailgun)
+#
+# SYNOPSIS
+#   slack-notify [options] [message]
+#   echo "Message" | slack-notify [options]
+#
+# DESCRIPTION
+#   Sends an old school Slack web hook.
+#
+# OPTIONS
+#   -r RECIPIENT, --recipient RECIPIENT
+#       Slack channel/user
+#
+#   -w URL, --webhook-url URL
+#       Slack webhook URL
+#
+# EXAMPLES
+#   Send notification
+#   $ slack-notify "Warning, something broke"
+#
+#   Or use a multi-line body
+#   $ slack-notify "Subject
+#
+#   This is the body"
+#
+#   Using STDIN
+#   $ { echo "Subject"; echo "Errors"; tail -5 /var/log/messages } | slack-notify
+#   $ slack-notify
+#   This is a message
+#   ^d
+
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
+fi
+
+# Sends a notification via Slack
+#
+# $1 - Webhook URL (required)
+# $2 - Text (required)
+# $2 - Channel/user to send to (optional)
+send_slack() {
+  local webhook_url="$1"
+  local text="$2"
+  local channel="$3"
+
+  jq \
+    --null-input \
+    --arg text "$text" \
+    --arg channel "$channel" \
+    '
+      {
+        "text": $text,
+        "channel": $channel
+      } | with_entries(select(.value != ""))
+    ' | curl --location --silent --data @- "$webhook_url"
+}
+
+main() {
+  local message webhook_url recipient result
+
+  while [[ "$1" ]]; do
+    case "$1" in
+      -r|--recipient)
+        recipient="$2"
+        shift 2
+        ;;
+      -w|--webhook-url)
+        webhook_url="$2"
+        shift 2
+        ;;
+      -h|--help)
+        sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+          awk -v f="${1#-h}" '!f && /^Usage:/ || u { u=!/^\s*$/; if (!u) exit } u || f'
+        return 0
+        ;;
+      --)
+        shift
+        break
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  if ! command -v jq >/dev/null; then
+    echo "jq is required" >&2
+    return 1
+  elif ! command -v curl >/dev/null; then
+    echo "curl is required" >&2
+    return 1
+  fi
+
+  message="${1:-$(cat)}"
+
+  if [[ -z "$message" ]]; then
+    echo "Message is required" >&2
+    return 1
+  fi
+
+  if [[ -z "$webhook_url" ]]; then
+    echo "Webhook URL is required" >&2
+    return 1
+  fi
+
+  result=$(send_slack "$webhook_url" "$message" "$recipient")
+
+  if [[ "$result" != "ok" ]]; then
+    echo "Error: $result" >&2
+    return 1
+  fi
+}
+
+main "$@"
