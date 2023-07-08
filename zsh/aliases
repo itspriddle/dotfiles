@@ -52,7 +52,7 @@ alias random-string='LC_CTYPE=C LC_ALL=C tr -dc "[:alnum:]" < /dev/urandom | fol
 
 # OS X
 if [ "${OSTYPE:0:6}" = "darwin" ]; then
-  alias flush-dns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+  alias flush-dns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder; sudo killall -HUP mDNSResponderHelper'
   alias df="df -Plh"
   alias gist="gist -c -p"
   alias eject-all="diskutil list | awk '/external/ { print \$1 }' | xargs -tn1 diskutil unmountDisk"
