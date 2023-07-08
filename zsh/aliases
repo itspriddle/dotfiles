@@ -58,6 +58,7 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias battery-info='system_profiler -detailLevel mini SPPowerDataType'
   alias mkpassword='bashword'
   alias deluge-upload="$HOME/.dotfiles/share/linux/deluge/upload-torrent"
+  alias set-audio-device="$HOME/.dotfiles/share/osx/utils/set-audio-device"
 fi
 
 if [ "${OSTYPE:0:5}" = "linux" ] && [ -f /etc/rpi-issue ]; then
