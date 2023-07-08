@@ -61,7 +61,12 @@ send_slack() {
 }
 
 main() {
-  local message webhook_url recipient result
+  local message recipient result
+
+  # I have an internal proxy on this address to my actual Slack webhook.
+  # If you are stealing this script from me, you can set your own or just
+  # leave it blank.
+  local webhook_url="https://slack.priddle.xyz"
 
   while [[ "$1" ]]; do
     case "$1" in
