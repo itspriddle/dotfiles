@@ -6,16 +6,22 @@ zstyle ':vcs_info:*'      enable git
 zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
 zstyle ':vcs_info:git*:*' unstagedstr "+" # %u
-# zstyle ':vcs_info:git*:*' stagedstr "⚡"  # %c
 zstyle ':vcs_info:git*:*' stagedstr "*"  # %c
 zstyle ':vcs_info:git*'   actionformats "%b %c%u|%a"
 zstyle ':vcs_info:git*'   formats       "%b %c%u"
 
 _josh_prompt_precmd() {
-  local git_prompt="" user_prompt="%n@" host_prompt="" host_format="%M" dir_prompt git_info
+  local git_prompt="" user_format="%n@" host_prompt="" host_format="%M" dir_prompt git_info
+
+  # if [[ -n $SSH_CONNECTION ]] && [[ -z $TMUX ]]; then
+  if [[ -n $SSH_CONNECTION ]]; then
+    [[ $HOST =~ (\.local|\.lan|\.priddle\.network)$ ]] && host_format="%m"
+
+    host_prompt="%{$fg_bold[yellow]%}${user_format}${host_format}%{$reset_color%} "
+  fi
 
   if [[ $TERM == xterm* ]]; then
-    print -Pn "\\e]0;${SSH_CONNECTION:+%n@%M:}%~\\a"
+    print -Pn "\\e]0;${SSH_CONNECTION:+${user_format}${host_format}:}%~\\a"
   fi
 
   vcs_info 2> /dev/null
@@ -27,19 +33,10 @@ _josh_prompt_precmd() {
     # Strip trailing space
     git_info="${git_info%\ }"
 
-    git_prompt="%{$fg_bold[green]%} (${git_info})%{$reset_color%}"
+    git_prompt=" %{$fg_bold[green]%}(${git_info})%{$reset_color%}"
   fi
 
   dir_prompt="%{$fg_bold[blue]%}%3~%{$reset_color%}"
-
-  # if [[ -n $SSH_CONNECTION ]] && [[ -z $TMUX ]]; then
-  if [[ -n $SSH_CONNECTION ]]; then
-    [[ $HOST =~ (\.local|\.lan)$ ]] && host_format="%m"
-    [[ $USER == priddle ]] && [[ $HOST =~ priddle\.xyz$ ]] && user_prompt=""
-
-
-    host_prompt="%{$fg_bold[yellow]%}${user_prompt}${host_format}%{$reset_color%} "
-  fi
 
   PS1="${host_prompt}${dir_prompt}${git_prompt} %# "
 }
