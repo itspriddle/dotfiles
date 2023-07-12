@@ -5,4 +5,4 @@ if [[ $# -eq 0 ]]; then
   exit 1
 fi
 
-rsync -auv -e ssh "$@" scarif.priddle.xyz:/volume1/torrents/deluge-data/watch/
+rsync -auv -e ssh "$@" scarif.priddle.network:/volume1/torrents/deluge-data/watch/
