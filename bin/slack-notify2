@@ -57,11 +57,11 @@
 #       -p1 "Attachment 2 Ready"
 #
 #   The following options have no effect when sending a plaintext message:
-#     -f / --fallback
+#     -b / --fallback
 #     -p / --pretext
 #     -c / --color
 #     -s / --separator
-#     --footer
+#     -f / --footer
 #
 # OPTIONS
 #   -w URL, --webhook-url URL
@@ -96,13 +96,13 @@
 #       attachment with the specified index. Eg: `-F1 FIELD`, `--field10
 #       FIELD`.
 #
-#   -f FALLBACK, --fallback FALLBACK
+#   -b FALLBACK, --fallback FALLBACK
 #       Fallback text to send. This is displayed in notifications. Ignored if
 #       at least one field is not supplied with `-F` / `--field`.
 #
-#   -f[0-9]+ FALLBACK, --fallback[0-9]+ FALLBACK
+#   -b[0-9]+ FALLBACK, --fallback[0-9]+ FALLBACK
 #       Same as `-f` / `--fallback` above, but adds the fallback text to the
-#       message attachment with the specified index. Eg: `-f1 FALLBACK`,
+#       message attachment with the specified index. Eg: `-b1 FALLBACK`,
 #       `--fallback10 FALLBACK`.
 #
 #   -p PRETEXT, --pretext PRETEXT
@@ -123,14 +123,14 @@
 #       attachment with the specified index. Eg: `-c1 COLOR`, `--color10
 #       COLOR`.
 #
-#   --footer FOOTER
+#   -f, --footer FOOTER
 #       Footer text, displayed below the fieldset. Ignored if at least one
 #       field is not supplied with `-F` / `--field`.
 #
-#   --footer[0-9]+ FOOTER
+#   -f[0-9]+, --footer[0-9]+ FOOTER
 #       Same as `--footer` above, but adds the footer to the message
-#       attachment with the specified index. Eg: `--footer1 FOOTER`,
-#       `--footer10 FOOTER`.
+#       attachment with the specified index. Eg: `-f1FOOTER`, `--footer10
+#       FOOTER`.
 #
 #   --print-payload
 #       Print the Slack payload instead of sending it.
@@ -175,7 +175,7 @@ fs="|"
 for arg in "$@"; do
   if [[ "$arg" =~ ^(--help|-h)$ ]]; then
     sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
-      awk -v f="${1#-h}" '!f && /^Usage:/ || u { u=!/^\s*$/; if (!u) exit } u || f'
+      awk -v f="${1#-h}" '!f&&/^Usage:/||u{u=!/^\s*$/;if(!u)exit}u||f'
     exit 0
   fi
 done
@@ -195,12 +195,12 @@ while [[ "$1" ]]; do
     arg="--field${arg#-F}"
   elif [[ "$arg" =~ ^-c([0-9]+)?$ ]]; then
     arg="--color${arg#-c}"
-  elif [[ "$arg" =~ ^-f([0-9]+)?$ ]]; then
-    arg="--footer${arg#-f}"
+  elif [[ "$arg" =~ ^-b([0-9]+)?$ ]]; then
+    arg="--footer${arg#-b}"
   elif [[ "$arg" =~ ^-p([0-9]+)?$ ]]; then
     arg="--pretext${arg#-p}"
-  # elif [[ "$arg" =~ ^-f([0-9]+)?$ ]]; then
-    # arg="--fallback${arg#-f}"
+  elif [[ "$arg" =~ ^-f([0-9]+)?$ ]]; then
+    arg="--fallback${arg#-f}"
   fi
 
   if [[ "$arg" =~ ^--field([0-9]+)?$ ]]; then
