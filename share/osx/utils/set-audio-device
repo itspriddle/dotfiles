@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# 2023-07-10:
+# TODO: use uid?
+# {"name": "Studio Display Microphone", "type": "input", "id": "58", "uid": "AppleUSBAudioEngine:Apple Inc.:Studio Display:00008030-0008586C0184802E:6,7"}
+# {"name": "Studio Display Microphone", "type": "input", "id": "63", "uid": "AppleUSBAudioEngine:Apple Inc.:Studio Display:00008030-001835203EF0802E:6,7"}
+# {"name": "Studio Display Speakers", "type": "output", "id": "48", "uid": "AppleUSBAudioEngine:Apple Inc.:Studio Display:00008030-0008586C0184802E:8,9"}
+# {"name": "Studio Display Speakers", "type": "output", "id": "53", "uid": "AppleUSBAudioEngine:Apple Inc.:Studio Display:00008030-001835203EF0802E:8,9"}
+
 # Output from my M2 Mac Mini
 #
 # SwitchAudioSource -a -f json
@@ -62,6 +69,10 @@
 
 SWITCH=/opt/homebrew/bin/SwitchAudioSource
 
+RIGHT_STUDIO_MIC_UID="AppleUSBAudioEngine:Apple Inc.:Studio Display:00008030-0008586C0184802E:6,7"
+RIGHT_STUDIO_SPEAKERS_UID="AppleUSBAudioEngine:Apple Inc.:Studio Display:00008030-0008586C0184802E:8,9"
+EXTERNAL_HEADPHONES_UID="BuiltInHeadphoneOutputDevice"
+
 main() {
   local device="${1-}"
 
@@ -76,12 +87,12 @@ main() {
         awk -v f="${device#-h}" '!f&&/^Usage:/||u{u=!/^\s*$/;if(!u)exit}u||f'
       ;;
     external|a5)
-      "$SWITCH" -s "External Headphones"
-      "$SWITCH" -i 63 -t input
+      "$SWITCH" -u "$EXTERNAL_HEADPHONES_UID" -t output
+      "$SWITCH" -u "$RIGHT_STUDIO_MIC_UID" -t input
       ;;
     studio|"")
-      "$SWITCH" -i 53 -t output
-      "$SWITCH" -i 63 -t input
+      "$SWITCH" -u "$RIGHT_STUDIO_SPEAKERS_UID" -t output
+      "$SWITCH" -u "$RIGHT_STUDIO_MIC_UID" -t input
       ;;
     *)
       echo "Invalid argument: $1" >&2
