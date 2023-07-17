@@ -49,6 +49,7 @@ alias gmt-date="date -u"
 alias weather="curl 'wttr.in/Clifton+Park+NY?n'"
 alias v="vv -a"
 alias random-string='LC_CTYPE=C LC_ALL=C tr -dc "[:alnum:]" < /dev/urandom | fold -w 50 | head -n 1'
+alias vman='MANPAGER="vim +MANPAGER --not-a-term -" man'
 
 # OS X
 if [ "${OSTYPE:0:6}" = "darwin" ]; then
