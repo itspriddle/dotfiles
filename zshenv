@@ -95,6 +95,11 @@ if command -v fzf > /dev/null; then
   export FZF_DEFAULT_COMMAND="rg --follow --hidden --files --sort-files --glob '!.git'"
 fi
 
+# slack-notify
+if command -v slack-notify > /dev/null; then
+  export SLACK_WEBHOOK_URL="https://slack.priddle.network"
+fi
+
 [ "$BASH_VERSION" ] && shell="bash"
 [ "$ZSH_VERSION" ]  && shell="zsh"
 
