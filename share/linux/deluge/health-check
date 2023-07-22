@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
+fi
+
+set -e
+
+SITE="https://ifconfig.me"
+
+CONTAINER="deluge-deluge-openvpn-1"
+
+notify() {
+  slack-notify --webhook-url "https://slack.priddle.network" "$@"
+}
+
+deluge_running() {
+  sudo docker ps | grep -q "$CONTAINER"
+}
+
+stop_deluge() {
+  sudo docker stop "$CONTAINER"
+}
+
+if ! deluge_running; then
+  notify "Deluge is not running!"
+  exit 1
+fi
+
+real_ip=$(curl -s "$SITE")
+
+openvpn_ip=$(sudo docker exec -t "$CONTAINER" /usr/bin/curl -s "$SITE")
+
+if [[ "$real_ip" == "$openvpn_ip" ]]; then
+  stop_deluge
+
+  notify \
+    --color "F1AEB5" \
+    --pretext "Deluge IP is the same as our real IP!" \
+    --field "OpenVPN IP|$openvpn_ip" \
+    --field "Real IP|$real_ip"
+  exit 1
+fi
