@@ -36,6 +36,7 @@ if [[ "$real_ip" == "$openvpn_ip" ]]; then
   stop_deluge
 
   notify \
+    --channel "#deluge" \
     --color "F1AEB5" \
     --pretext "Deluge IP is the same as our real IP!" \
     --field "OpenVPN IP|$openvpn_ip" \
