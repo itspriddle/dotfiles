@@ -43,7 +43,6 @@ alias sh='env -i sh'
 alias grep='grep --color'
 alias dush='du -shc'
 alias what-is-my-ip="curl https://ifconfig.me; echo"
-alias gist="gh gist create --web"
 alias wp="WP_CLI_DISABLE_AUTO_CHECK_UPDATE=1 PAGER=cat wp"
 alias gmt-date="date -u"
 alias weather="curl 'wttr.in/Clifton+Park+NY?n'"
@@ -60,6 +59,9 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias mkpassword='bashword'
   alias deluge-upload="$HOME/.dotfiles/share/linux/deluge/upload-torrent"
   alias set-audio-device="$HOME/.dotfiles/share/osx/utils/set-audio-device"
+
+  # gh alias set --shell 'gist create-and-copy' 'gh gist create "$@" 2> /dev/null | tee /dev/tty | pbcopy'
+  alias gist="gh gist create-and-copy"
 fi
 
 if [ "${OSTYPE:0:5}" = "linux" ] && [ -f /etc/rpi-issue ]; then
