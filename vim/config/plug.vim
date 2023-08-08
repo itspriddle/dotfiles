@@ -97,6 +97,7 @@ if s:platform == 'macos'
   Plug 'leafgarland/typescript-vim'
   Plug 'vito-c/jq.vim'
   Plug 'elixir-editors/vim-elixir'
+  Plug 'jwalton512/vim-blade'
 
   " Git integration
   Plug 'tpope/vim-git'
