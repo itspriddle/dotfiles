@@ -25,19 +25,20 @@ brew "composer"
 
 # Utilities
 brew "direnv"
-brew "exiftool"
+# brew "exiftool"
 brew "fzf"
 brew "gh"
 brew "git"
 brew "gnupg2"
 brew "ical-buddy"
-brew "itspriddle/brews/imgur-bash", args: ["HEAD"]
+# brew "itspriddle/brews/imgur-bash", args: ["HEAD"]
 brew "vim"
 brew "jq"
 brew "php"
 brew 'pinentry-mac'
 brew "ripgrep"
 brew "rename"
+brew "rsync"
 brew "shellcheck"
 brew "speedtest"
 brew "switchaudio-osx"
