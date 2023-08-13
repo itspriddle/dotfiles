@@ -1,8 +1,22 @@
 #!/usr/bin/env bash
 
+set -e
+
 if [[ $# -eq 0 ]]; then
-  echo "Usage: ${0##*/} <torrent-file> [torrent-file...]"
+  echo "Usage: ${0##*/} [-d|--delete] <torrent-file> [torrent-file...]"
   exit 1
 fi
 
+delete=
+
+if [[ "$1" =~ ^(-d|--delete)$ ]]; then
+  delete=1
+  shift
+fi
+
 rsync -auv -e ssh "$@" scarif.priddle.network:/volume1/torrents/deluge-data/watch/
+
+if [[ "$delete" ]]; then
+  printf "Deleted: "
+  rm -vf "$@"
+fi
