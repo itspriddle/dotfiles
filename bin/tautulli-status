@@ -222,6 +222,26 @@ def map_now_playing:
       end
     ) as $thumb |
 
+    (
+      if .stream_audio_decision == "transcode" then
+        "Transcode"
+      elif .stream_audio_decision == "copy" then
+        "Direct Stream"
+      else
+        "Direct Play"
+      end
+    ) as $audio_playback |
+
+    (
+      if .stream_video_decision == "transcode" then
+        "Transcode"
+      elif .stream_video_decision == "copy" then
+        "Direct Stream"
+      else
+        "Direct Play"
+      end
+    ) as $video_playback |
+
     {
       name: $name,
       date: .originally_available_at,
@@ -245,7 +265,9 @@ def map_now_playing:
       duration_seconds: $duration_seconds,
       remaining: $remaining,
       remaining_seconds: $remaining_seconds,
-      episode_code: $episode_code
+      episode_code: $episode_code,
+      audio_playback: $audio_playback,
+      video_playback: $video_playback
     }
   ) |
   if $format == "text" then
@@ -257,6 +279,8 @@ def map_now_playing:
         "\(blue(bold("Duration:")))  \(.duration)",
         "\(blue(bold("Progress:")))  \(.progress_percent)% (\(.progress) watched - \(.remaining) remaining)",
         "\(blue(bold("Player:")))    \(.product) (\(.player) @ \(.ip_address))",
+        "\(blue(bold("Audio:")))     \(.audio_playback)",
+        "\(blue(bold("Video:")))     \(.video_playback)",
         "\(blue(bold("State:")))     \(.state)",
         "\(blue(bold("Air Date:")))  \("\(.date)T00:00:00Z" | fromdate | strftime("%b %-d, %Y"))",
         "\(blue(bold("Rating:")))    \(.content_rating)",
