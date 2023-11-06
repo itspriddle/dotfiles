@@ -22,6 +22,10 @@ elseif filereadable('/etc/centos-release')
   let s:platform = 'linux-centos'
 elseif filereadable('/etc/synoinfo.conf')
   let s:platform = 'linux-synology'
+elseif executable('freebsd-version')
+  let s:platform = 'freebsd'
+else
+  let s:platform = 'unknown'
 endif
 
 " Core/editor
