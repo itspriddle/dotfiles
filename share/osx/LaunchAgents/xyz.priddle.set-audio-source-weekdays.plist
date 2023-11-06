@@ -10,10 +10,6 @@
       <string>/Users/priddle/.dotfiles/share/osx/utils/set-audio-device</string>
       <string>studio</string>
     </array>
-    <key>StandardErrorPath</key>
-    <string>/Users/priddle/test.error</string>
-    <key>StandardOutPath</key>
-    <string>/Users/priddle/test.log</string>
     <key>StartCalendarInterval</key>
     <array>
       <dict>
