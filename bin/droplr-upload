@@ -4,53 +4,6 @@
 # NAME
 #   droplr-upload - upload files to Droplr
 
-if [[ "$DEBUG" ]]; then
-  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
-  set -x
-fi
-
-set -eu
-
-API_URL="https://api.droplr.com"
-
-# URL encodes the given string
-#
-# $1 - string to encode
-urlencode() {
-  local LC_ALL=C
-
-  for (( i = 0; i < ${#1}; i++ )); do
-    : "${1:i:1}"
-    case "$_" in
-      [a-zA-Z0-9.~_-]) printf '%s' "$_" ;;
-      *) printf '%%%02X' "'$_" ;;
-    esac
-  done
-
-  printf '\n'
-}
-
-# Uploads the file to Droplr
-#
-# $1 - local path to file to upload
-# $2 - Basic auth token
-upload_file() {
-  local path="$1" auth="$2" mime filename
-
-  if [[ ! -r "$path" ]]; then
-    echo "'$path' doesn't exist or can't be read!" >&2
-    return 1
-  fi
-
-  mime="$(file -b --mime-type "$path")"
-
-  if [[ -z "$mime" ]]; then
-    echo "Couldn't determine mime type of '$path'" >&2
-    return 1
-  fi
-
-  filename="$(urlencode "${path##*/}")"
-
   # Post the file
   # {
   #   "active": true,
@@ -94,6 +47,85 @@ upload_file() {
   #   "cloneable": true,
   #   "poweredBy": true
   # }
+
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
+fi
+
+set -eu
+
+API_URL="https://api.droplr.com"
+
+# URL encodes the given string
+#
+# $1 - string to encode
+urlencode() {
+  local LC_ALL=C
+
+  for (( i = 0; i < ${#1}; i++ )); do
+    : "${1:i:1}"
+    case "$_" in
+      [a-zA-Z0-9.~_-]) printf '%s' "$_" ;;
+      *) printf '%%%02X' "'$_" ;;
+    esac
+  done
+
+  printf '\n'
+}
+
+# Gets the mime type from the given file
+#
+# $1 - local path to file
+mime_type() {
+  local path="$1" mime
+
+  mime=$(file -b --mime-type "$path")
+
+  if [[ -z "$mime" ]]; then
+    echo "Couldn't determine mime type of '$path'" >&2
+    return 1
+  fi
+
+  printf "%s\n" "$mime"
+}
+
+# Finds file extension from the given mime type
+#
+# $1 - mime type
+ext_from_mime() {
+  local mime="${1##*/}"
+
+  case "$mime" in
+    jpeg)
+      echo jpg
+      ;;
+    *)
+      echo "$mime"
+      ;;
+  esac
+}
+
+# Uploads the file to Droplr
+#
+# $1 - local path to file to upload
+# $2 - Basic auth token
+upload_file() {
+  local path="$1" auth="$2" mime filename
+
+  if [[ ! -r "$path" ]]; then
+    echo "'$path' doesn't exist or can't be read!" >&2
+    return 1
+  fi
+
+  mime=$(mime_type "$path")
+
+  if [[ "$path" == *"droplr-upload-temp"* ]]; then
+    filename="droplr-upload.$(ext_from_mime "$mime")"
+  else
+    filename="$(urlencode "${path##*/}")"
+  fi
+
   curl --silent \
     -X POST \
     -H "Authorization: Basic $auth" \
@@ -138,6 +170,7 @@ main() {
         return 1
         ;;
       --) shift; break ;;
+      -) break ;;
       -*) echo "Invalid option '$1'" >&2; return 1 ;;
       *) break ;;
     esac
@@ -149,6 +182,18 @@ main() {
   fi
 
   for arg in "$@"; do
+    if [[ "$arg" == "-" ]]; then
+      if [[ -z "${TEMPFILE-}" ]]; then
+        TEMPFILE=$(mktemp droplr-upload-temp.XXXXXX)
+        cat > "$TEMPFILE"
+        trap 'rm -f "$TEMPFILE"' EXIT
+        arg="$TEMPFILE"
+      else
+        echo "Already uploaded from stdin, skipping" >&2
+        continue
+      fi
+    fi
+
     upload_file "$arg" "$auth"
   done
 }
