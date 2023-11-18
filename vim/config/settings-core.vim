@@ -9,6 +9,11 @@ set t_Co=16
 set background=dark
 colorscheme solarized8
 
+" solarized8 sets these to hexidecimal colors. With t_Co=16 this causes the
+" wrong colors in `:terminal`s on some systems (Ubuntu for me, but not macOS
+" for some reason?)
+unlet! g:terminal_ansi_colors
+
 " Allow UTF8 chars
 set encoding=utf-8
 
