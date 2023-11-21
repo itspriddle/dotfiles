@@ -6,6 +6,7 @@ set -eu
 REPO_ROOT=/var/services/homes/vcs
 REPO_UNIX_OWNER=vcs
 REPO_UNIX_GROUP=users
+REPO_CLONE_URL="git.priddle.network"
 
 main() {
   local name="${1:-}"
@@ -27,8 +28,9 @@ main() {
     return 1
   fi
 
-  sudo -u "$REPO_UNIX_OWNER" -g "$REPO_UNIX_GROUP" \
-    git init --bare -b master "$REPO_ROOT/$name"
+  sudo git init --bare -b master "$REPO_ROOT/$name"
+  sudo sh -c "echo \"$REPO_UNIX_OWNER@$REPO_CLONE_URL:$name\" > $REPO_ROOT/$name/cloneurl"
+  sudo chown -R "$REPO_UNIX_OWNER:$REPO_UNIX_GROUP" "$REPO_ROOT/$name"
 }
 
 main "$@"
