@@ -17,6 +17,13 @@ force-uninstall: backup ## forcefully uninstall all dotfiles (even if they aren'
 
 install: $(LINKS) ## install all dotfiles to $HOME
 
+setup-raspberry-pi:
+	ln -s gitconfig $(HOME)/.gitconfig
+	ln -s inputrc $(HOME)/.inputrc
+	ln -s vim $(HOME)/.vim
+	share/linux/scripts/rpi-init.sh
+.PHONY: setup
+
 uninstall: ## uninstall dotfiles (if they are symlinks)
 	-for i in $(LINKS); do test -L $$i && rm -vf $$i; done
 
