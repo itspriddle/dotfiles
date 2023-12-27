@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+target="$(hostname -s)"
+
+if [[ -z "$target" ]]; then
+  echo "Uh oh, couldn't determine target from hostname" >&2
+  exit 1
+fi
+
+echo ~/Downloads ~/Pictures ~/Sites ~/work |
+  xargs -I {} -P 5 -n 1 \
+    rsync "$@" \
+    --password-file="$HOME/.config/synology-rsync" \
+    --stats \
+    --delete \
+    --progress \
+    --partial \
+    --verbose \
+    --log-file="$HOME/Library/Logs/rsync-mac.log" \
+    --archive "{}" "scarif.priddle.network::NetBackup/$target/"
