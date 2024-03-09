@@ -28,6 +28,7 @@
 #
 # SEE ALSO
 #   marked2app.com
+#   https://marked2app.com/help/URL_Handler.html#open
 
 # [ "$DEBUG" ] && set -x && export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
 
@@ -40,6 +41,23 @@ if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
     awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
   exit 1
 fi
+
+# addstyle
+#   css
+#   file
+#   name
+
+# defaults
+#   refresh 0|1
+#   optionname
+#
+# do
+# help
+# open
+# paste
+# preview
+# refresh
+# style
 
 # https://gist.github.com/cdown/1163649
 urlencode() {
