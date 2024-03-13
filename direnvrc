@@ -51,8 +51,13 @@ use_homebrew_php() {
     PATH_add "$optdir/bin"
     PATH_add "$optdir/sbin"
     MANPATH_add "$optdir/share/man"
+
+    if [[ -d "$HOME/.dotfiles/share/php" ]]; then
+      export PHP_INI_SCAN_DIR="$HOME/.dotfiles/share/php"
+    fi
   else
-    >&2 echo "Unknown PHP version"
+    log_error "PHP version '$version' not found"
+    log_error "Try \`brew install shivammathur/php/php@${version}\`"
     return 1
   fi
 }
