@@ -55,9 +55,21 @@ use_homebrew_php() {
     if [[ -d "$HOME/.dotfiles/share/php" ]]; then
       export PHP_INI_SCAN_DIR="$HOME/.dotfiles/share/php"
     fi
+
+    # Set the composer home directory, so that we can have multiple versions of
+    # global packages installed. Not sure I actually need it, so commented out
+    # for now.
+    # if [[ -z "$version" ]]; then
+    #   export COMPOSER_HOME="$HOME/.composer/php$version"
+    # fi
   else
-    log_error "PHP version '$version' not found"
-    log_error "Try \`brew install shivammathur/php/php@${version}\`"
+    if [[ -z "$version" ]]; then
+      log_error "Homebrew PHP not found"
+      log_error "Try \`brew install php\` or \`brew install shivammathur/php/php@version\`"
+    else
+      log_error "Homebrew PHP version '$version' not found"
+      log_error "Try \`brew install shivammathur/php/php@$version\`"
+    fi
     return 1
   fi
 }
