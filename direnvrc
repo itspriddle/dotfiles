@@ -13,7 +13,8 @@ use_ruby() {
       # shellcheck source=/dev/null
       source "$src"
     else
-      >&2 echo "chruby not available!"
+      log_error "chruby not available!"
+      log_error "Try \`brew install chruby\`"
       return 1
     fi
   fi
@@ -29,7 +30,8 @@ use_ruby() {
 
   # if the version still isn't set, error cause we don't know what to do
   if [[ -z "$ver" ]]; then
-    >&2 echo "Unknown ruby version"
+    log_error "Unknown ruby version"
+    log_error "Specify ruby version with \`use ruby VERSION\` or create a .ruby-version file in the project directory."
     return 1
   fi
 
@@ -83,7 +85,7 @@ set_git_email() {
   local email="$1"
 
   if [[ -z "$email" ]]; then
-    >&2 echo "Couldn't set git email!"
+    log_error "Couldn't set git email!"
     return 1
   fi
 
