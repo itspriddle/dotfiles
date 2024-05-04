@@ -27,8 +27,8 @@ termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 # (allows swapping background in Vim to work properly)
 defbce on
 
-# Allow scrolling with the mouse (2019-10-10: doesn't work)
-# termcapinfo xterm* ti@:te@
+# Allow scrolling with the mouse
+termcapinfo xterm* ti@:te@
 
 # Enable status-line always, and make it consise and pretty with Solarized
 hardstatus alwayslastline "%{= kY}screen: %?%-Lw%?%{.r}%n*%f %t%?(%u)%?%{.Y}%?%+Lw %=%{.m}@%H %{.y}[%D %M %d %Y %c]"
