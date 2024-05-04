@@ -24,8 +24,13 @@ stop_deluge() {
 }
 
 if ! deluge_running; then
-  notify "Deluge is not running!"
+  if [[ ! -f ~/.deluge-notified ]]; then
+    touch ~/.deluge-notified
+    notify "Deluge is not running!"
+  fi
   exit 1
+else
+  rm -f ~/.deluge-notified
 fi
 
 real_ip=$(curl -s "$SITE")
