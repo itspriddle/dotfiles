@@ -1,11 +1,6 @@
 [user]
 	name       = Joshua Priddle
 	email      = jpriddle@me.com
-	; ssh-add --apple-use-keychain ~/.ssh/id_ed25519_git
-	signingkey = ~/.ssh/id_ed25519_git.pub
-
-[gpg]
-	format = ssh
 
 [color]
 	ui = auto
