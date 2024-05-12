@@ -22,7 +22,7 @@
 #   0 0 * * * bash -c "cat /home/pi/.dotfiles/share/linux/ubnt/ubnt-cron.sh | sshpass -f /home/pi/.config/sshpass ssh admin@wifi1.priddle.network 'cat | sh'" > /dev/null
 
 if ! grep -q "0.0.0.0 unifi" /etc/hosts; then
-  echo "0.0.0.0 unifi" >> /etc/hosts
+  echo "0.0.0.0 unifi unifi.priddle.network" >> /etc/hosts
 fi
 
 if ! grep -q "priddle" /etc/dropbear/authorized_keys 2> /dev/null; then
