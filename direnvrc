@@ -11,6 +11,7 @@ use_ruby() {
 
     if [[ -f "$src" ]]; then
       # shellcheck source=/dev/null
+      log_status "loading chruby"
       source "$src"
     else
       log_error "chruby not available!"
