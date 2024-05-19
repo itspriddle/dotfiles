@@ -8,6 +8,6 @@ Host *
 	IgnoreUnknown UseKeychain
 	UseKeychain yes
 	ForwardAgent no
-	IdentityFile ~/.ssh/id_rsa
+	IdentityFile ~/.ssh/id_ed25519
 
 # vim:ft=sshconfig
