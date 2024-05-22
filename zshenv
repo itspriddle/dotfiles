@@ -70,6 +70,9 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   # "Ex": bold blue, dir writable to others with sticky bit
   # "Ex": bold blue, dir writable to others no sticky
   export LSCOLORS=ExGxFxDxCxDxDxBxBxExEx
+
+  # Load SSH passphrases from macOS keychain
+  ssh-add --apple-load-keychain -q 2>/dev/null
 elif [ "${OSTYPE:0:5}" = linux ]; then
   # Disable weird keyboard bindkey behavior on Ubuntu/Debian
   if [ -f /etc/debian_version ]; then
