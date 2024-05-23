@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 # Usage: emby-status [--text|--json|--raw]
-# Summary: See what's playing on Plex using the Emby API
+# Summary: See what's playing on Emby
 #
 # NAME
-#   emby-status -- see what's playing on Plex using the Emby API
+#   emby-status -- see what's playing on Emby
 #
 # SYNOPSIS
 #   emby-status <options>
 #
 # DESCRIPTION
-#   See what's playing on Plex using the Emby API. Requires a running Emby
-#   instance.
+#   See what's playing on Emby. Requires a running Emby instance.
 #
 # OPTIONS
 #   -p, --plain
@@ -22,7 +21,7 @@
 #   -j, --json
 #       Show results in JSON format. Note that the format differs from the
 #       standard Emby API payload -- use `--raw` to obtain the raw JSON
-#       payload from Tautulli.
+#       payload from Emby.
 #
 #   -r, --raw
 #       Show raw JSON payload from the Emby API.
@@ -310,8 +309,10 @@ get_activity() {
       echo
       echo "  jq --null-input \\"
       echo "    --arg api_key \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\" \\"
-      echo "    --arg api_url \"http://emby.local/api/v2\" \\"
-      echo "    '\$ARGS.named' > $file"
+      echo "    --arg api_url \"http://emby.local:8096\" \\"
+      echo "    '\$ARGS.named' > \"$file\""
+      echo
+      echo "  chmod 600 \"$file\""
     } >&2
     return 1
   fi
@@ -319,7 +320,7 @@ get_activity() {
   curl --silent \
     -H "Accept: */*" \
     -H "Content-Type: application/json" \
-    "${api_url}/Sessions?api_key=${api_key}"
+    "${api_url%%/}/Sessions?api_key=${api_key}"
 }
 
 main() {
