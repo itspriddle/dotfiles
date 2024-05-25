@@ -10,11 +10,13 @@ fi
 echo ~/Downloads ~/Pictures ~/Sites ~/work |
   xargs -I {} -P 5 -n 1 \
     rsync "$@" \
-    --password-file="$HOME/.config/synology-rsync" \
-    --stats \
-    --delete \
-    --progress \
-    --partial \
-    --verbose \
-    --log-file="$HOME/Library/Logs/rsync-mac.log" \
-    --archive "{}" "scarif.priddle.network::NetBackup/$target/"
+      --stats \
+      --delete \
+      --progress \
+      --partial \
+      --verbose \
+      --compress \
+      --log-file="$HOME/Library/Logs/rsync-mac.log" \
+      --archive \
+      -e "ssh -o Compression=no" \
+      "{}" "scarif.priddle.network:/volume1/NetBackup/$target/"
