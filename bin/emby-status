@@ -160,8 +160,13 @@ def ticks_to_seconds(ticks):
   round(ticks / 10000000)
   ;
 
+def ip_to_decimal(ip):
+  (ip | split(".") | map(tonumber)) as $octets |
+  ($octets[0] * pow(256; 3)) + ($octets[1] * pow(256; 2)) + ($octets[2] * 256) + $octets[3]
+  ;
+
 def map_now_playing:
-  . | sort_by(.RemoteEndPoint) | map(
+  . | sort_by(ip_to_decimal(.RemoteEndPoint)) | map(
     (
       if .NowPlayingItem.Type == "Episode" then
         "S\(zero_pad(.NowPlayingItem.ParentIndexNumber))E\(zero_pad(.NowPlayingItem.IndexNumber))"
