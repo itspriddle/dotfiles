@@ -15,8 +15,7 @@ echo ~/Downloads ~/Pictures ~/Sites ~/work |
       --progress \
       --partial \
       --verbose \
-      --compress \
       --log-file="$HOME/Library/Logs/rsync-mac.log" \
       --archive \
-      -e "ssh -o Compression=no" \
-      "{}" "scarif.priddle.network:/volume1/NetBackup/$target/"
+      -e "ssh" \
+      "{}" "scarif5.priddle.network:/volume1/NetBackup/$target/"
