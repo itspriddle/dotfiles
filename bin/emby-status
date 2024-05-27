@@ -270,19 +270,14 @@ def map_now_playing:
   ;
 
 def process(sessions):
-  # Start processing
-  if (sessions | length) == 0 then
-    if $format == "text" then
-      "Nothing playing"
-    else
-      []
-    end
+  if ((sessions | length) == 0) and $format == "text" then
+    "Nothing playing"
   else
     sessions | map_now_playing
   end
   ;
 
-process(. | map(select(. | has("NowPlayingItem"))))
+process(. | map(select(has("NowPlayingItem"))))
 '
   fi
 }
@@ -325,7 +320,9 @@ get_activity() {
   curl --silent \
     -H "Accept: */*" \
     -H "Content-Type: application/json" \
-    "${api_url%%/}/Sessions?api_key=${api_key}"
+    -G \
+    -d "api_key=$api_key" \
+    "${api_url%%/}/Sessions"
 }
 
 main() {
