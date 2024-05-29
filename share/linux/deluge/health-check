@@ -31,9 +31,9 @@ else
   rm -f ~/.deluge-notified
 fi
 
-real_ip=$(dig +short -4 ip @dns.toys | tr -d '"')
+real_ip=$(dig @1.1.1.1 ch txt whoami.cloudflare +short | tr -d '"')
 
-openvpn_ip=$(sudo docker exec -t deluge-deluge-openvpn-1 dig +short -4 ip @dns.toys | tr -d '"')
+openvpn_ip=$(sudo docker exec -t deluge-deluge-openvpn-1 dig @1.1.1.1 ch txt whoami.cloudflare +short | tr -d '"')
 
 if [[ "$real_ip" == "$openvpn_ip" ]]; then
   stop_deluge
