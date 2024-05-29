@@ -1,23 +1,50 @@
 #!/usr/bin/env bash
-# Usage: what-is-my-ip
+# Usage: what-is-my-ip [-4|-6]
 #
 # NAME
 #   what-is-my-ip -- Get your public IP address from CloudFlare DNS
 #
 # OPTIONS
+#   -4
+#     Check IPv4 address.
+#
+#   -6
+#     Check IPv6 address.
+#
 #   -h, --help
 #     Print this help message and exit.
 #
 # SEE ALSO
 #   dig(1)
 
-if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
-  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
-    awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
-  exit 1
-elif [ "$#" -gt 0 ]; then
-  echo "Error: Invalid arguments"
-  exec "$0" -h
+if [[ "${DEBUG}" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
 fi
 
-dig @1.1.1.1 ch txt whoami.cloudflare +short | tr -d '"'
+set -euo pipefail
+
+main() {
+  case "${1:--4}" in
+    -h|--help)
+      sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+        awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+      return 1
+      ;;
+    -4) ip_version=4 ;;
+    -6) ip_version=6 ;;
+    *)
+      echo "Error: Invalid arguments" >&2
+      exec "$0" -h
+      ;;
+  esac
+
+  { if [ "${ip_version:-4}" = "4" ]; then
+      dig -4 ch txt whoami.cloudflare +short @1.1.1.1
+    else
+      dig -6 ch txt whoami.cloudflare +short @2606:4700:4700::1111
+    fi
+  } | tr -d '"'
+}
+
+main "$@"
