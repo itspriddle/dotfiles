@@ -160,7 +160,7 @@ let g:vim_markdown_frontmatter = 1
 
 " vim-marked {{{
 
-let g:marked_autoquit  = 0
+let g:marked_auto_quit = 1
 let g:marked_filetypes = ["markdown", "liquid"]
 
 " }}}
