@@ -1,10 +1,13 @@
 " Setup ``` style syntax highlighting
 let g:markdown_fenced_languages = ['ruby', 'erb=eruby', 'php', 'sh']
 
-" Marked.app view
-noremap <buffer> <leader>mv :MarkedOpen<cr>
+" View current file in Marked 2
+nnoremap <buffer> <leader>mv :MarkedOpen<cr>
 
-" Marked.app quit
+" Preview selected text in Marked 2
+vnoremap <buffer> <leader>mv :MarkedPreview<cr>
+
+" Quit Marked 2
 noremap <buffer> <leader>mq :MarkedQuit<cr>
 
 " Show spelling errors
