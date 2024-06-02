@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-# Usage: marked
+# Usage: marked <file1> [<file2>...]
+#        marked < FILE
+#        echo "# Markdown" | marked
+#        marked
+#        # Some Markdown
+#        ^d
 #
 # NAME
 #   marked - open files and content in Marked 2
@@ -26,61 +31,105 @@
 #   In the fourth synopsis form, opens STDIN and opens a preview in Marked
 #   with the content.
 #
+# OPTIONS
+#   -c <file>, --css <file>
+#     Adds a new custom style to Marked.
+#
+#   -h, --help
+#     Prints this help text.
+#
 # SEE ALSO
-#   marked2app.com
+#   https://marked2app.com
 #   https://marked2app.com/help/URL_Handler.html#open
 
-# [ "$DEBUG" ] && set -x && export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
-
-# set -euo pipefail
-
-
-# Print help text and exit.
-if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
-  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
-    awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
-  exit 1
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
 fi
 
-# addstyle
-#   css
-#   file
-#   name
+set -euo pipefail
 
-# defaults
-#   refresh 0|1
-#   optionname
+# Prints help text from the top of this file
 #
-# do
-# help
-# open
-# paste
-# preview
-# refresh
-# style
+# $1 - h to show one line usage, otherwise print full help
+print_help() {
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="$1" '
+      f == "-h" && ($1 == "Usage:" || u) {
+        u=1
+        if ($0 == "") {
+          exit
+        } else {
+          print
+        }
+      }
+      f != "-h"
+      '
 
-# https://gist.github.com/cdown/1163649
+  return 1
+}
+
+# URL encodes the given string
+#
+# $1 - string to encode
 urlencode() {
-  # urlencode <string>
-  old_lc_collate=$LC_COLLATE
-  LC_COLLATE=C
+  local LC_ALL=C
 
-  local length="${#1}"
-  for (( i = 0; i < length; i++ )); do
-    local c="${1:i:1}"
-    case $c in
-      [a-zA-Z0-9.~_-]) printf "%s" "$c" ;;
-      *) printf '%%%02X' "'$c" ;;
+  for (( i = 0; i < ${#1}; i++ )); do
+    : "${1:i:1}"
+    case "$_" in
+      [a-zA-Z0-9.~_-]) printf '%s' "$_" ;;
+      *) printf '%%%02X' "'$_" ;;
     esac
   done
 
-  LC_COLLATE=$old_lc_collate
+  printf '\n'
 }
 
-if [[ -t 0 ]] && [[ $# -gt 0 ]]; then
-  for arg; do
-    echo "x-marked://open?file=$(urlencode "${arg}")"
+main() {
+  local file
+
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+      -h | --help)
+        print_help "$1"
+        return 1
+        ;;
+      -c | --css)
+        shift
+        if [[ "$#" -eq 0 ]]; then
+          echo "${0##*/}: Must specify CSS file" >&2
+          return 1
+        elif [[ ! -f "$2" ]]; then
+          echo "${0##*/}: CSS file '$2' not found" >&2
+          return 1
+        fi
+        file=$(realpath "$2")
+        open "x-marked://addstyle?file=$(urlencode "$2")"
+        return 0
+        ;;
+      --)
+        shift
+        break
+        ;;
+      *-)
+        echo "${0##*/}: Invalid option '$1'" >&2
+        return 1
+        ;;
+      *)
+        break
+        ;;
+    esac
   done
-else
-  echo "x-marked://preview?text=$(urlencode "$(cat /dev/stdin)")"
-fi
+
+  if [[ -t 0 ]] && [[ $# -gt 0 ]]; then
+    for arg; do
+      file=$(realpath "$arg")
+      open "x-marked://open?file=$(urlencode "$file")"
+    done
+  else
+    open "x-marked://preview?text=$(urlencode "$(cat /dev/stdin)")"
+  fi
+}
+
+main "$@"
