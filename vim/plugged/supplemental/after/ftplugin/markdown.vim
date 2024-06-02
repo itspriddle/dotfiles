@@ -20,6 +20,10 @@ setlocal textwidth=78
 command! -buffer MarkdownFixup |
   \ silent exe "%s/[‘’]/'/ge | %s/[“”]/\"/ge | %s/—/---/ge | %s/–/--/ge"
 
+" Render markdown with the GitHub Primer theme via `markdown-preview`
+command! -buffer -range=% MarkdownPreview
+  \ <line1>,<line2>w !markdown-preview
+
 " If path starts with ~/work/notebook
 if expand('%:p:h') =~ '/work/notebook'
   let b:StripperStripOnSave = 0
