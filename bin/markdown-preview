@@ -78,8 +78,9 @@ render_markdown() {
 
   gh api \
     -X POST \
+    -H "Accept: application/vnd.github+json" \
     -f text="$text" \
-    -f mode=gfm \
+    -f mode=markdown \
     markdown
 }
 
