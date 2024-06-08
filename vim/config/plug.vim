@@ -98,6 +98,7 @@ if s:platform == 'macos'
   Plug 'vim-ruby/vim-ruby'
   Plug 'elixir-editors/vim-elixir'
   Plug 'jwalton512/vim-blade'
+  Plug 'itspriddle/applescript.vim'
 
   " Git integration
   Plug 'tpope/vim-git'
@@ -122,15 +123,11 @@ Plug 'itspriddle/vim-stripper'
 
 if s:platform == 'macos'
   Plug 'itspriddle/vim-jekyll'
+  Plug 'itspriddle/vim-marked'
 endif
 
 if executable('shellcheck')
   Plug 'itspriddle/vim-shellcheck'
-endif
-
-if s:platform == 'macos'
-  Plug 'itspriddle/vim-marked'
-  Plug 'itspriddle/applescript.vim'
 endif
 
 unlet g:plug_url_format
