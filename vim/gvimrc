@@ -5,11 +5,12 @@ endif
 " Window settings {{{
 
 " Hide toolbar and scrollbars
-set guioptions-=T
-set guioptions-=r
-set guioptions-=R
-set guioptions-=l
-set guioptions-=L
+set guioptions-=T " toolbar
+set guioptions-=r " right scrollbar always present
+set guioptions-=R " right scrollback with vsplit
+set guioptions-=l " left scrollbar always present
+set guioptions-=L " left scrollback with vsplit
+set guioptions-=e " use text tabbar
 
 " Label/tab bar title
 set guitablabel=%t
@@ -19,7 +20,7 @@ set title titlestring=%f
 set lines=70 columns=220
 
 " Never show tab bar
-set showtabline=1
+" set showtabline=1
 
 " Use termguicolors
 set termguicolors
@@ -36,20 +37,8 @@ set background=light
 
 " Other settings  {{{
 
-" Highlight column 80 and 100
-set colorcolumn=80,100
-
-" Line numbers
-set number
-
 " Highlight the current line
 set cursorline
-
-" Highlight spelling errors
-set spell
-
-" Highlight tabs and eol
-set list
 
 " Enable alt key as meta key
 set macmeta
@@ -62,7 +51,7 @@ set macmeta
 set visualbell
 
 " Set default font
-set guifont=Espresso\ Mono:h11
+set guifont=.AppleSystemUIFontMonospaced-Regular:h11
 
 " Disable blinking cursor
 set gcr=a:blinkon0
@@ -88,9 +77,6 @@ imap <D-BS> <C-u>
 nmap <D-/> <C-_><C-_>
 vmap <D-/> <C-_><C-_>gv
 imap <D-/> <C-_><C-_>
-
-" Set colorcolumn for gitcommit
-autocmd FileType gitcommit setl colorcolumn=72
 
 " }}}
 
