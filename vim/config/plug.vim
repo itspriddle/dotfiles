@@ -64,9 +64,10 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'jeetsukumaran/vim-filebeagle'
 
 if executable('fzf')
-  for fzf_dir in ['/usr/local', '/opt/homebrew', expand('~/local')]
+  for fzf_dir in ['/opt/homebrew', '/usr/local', expand('~/local')]
     if isdirectory(fzf_dir . '/opt/fzf')
       Plug printf('%s/opt/fzf', fzf_dir)
+      break
     endif
   endfor
 
