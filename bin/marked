@@ -51,20 +51,10 @@ set -euo pipefail
 
 # Prints help text from the top of this file
 #
-# $1 - h to show one line usage, otherwise print full help
+# $1 - -h to show one line usage, otherwise print full help
 print_help() {
   sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
-    awk -v f="$1" '
-      f == "-h" && ($1 == "Usage:" || u) {
-        u=1
-        if ($0 == "") {
-          exit
-        } else {
-          print
-        }
-      }
-      f != "-h"
-      '
+    awk -v f="${1#-h}" '!f && /^Usage:/ || u { u=!/^\s*$/; if (!u) exit } u || f'
 
   return 1
 }
