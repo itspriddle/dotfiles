@@ -1,4 +1,7 @@
-/* Fix weird task list output when items have no content, ie:
+/**
+ * Manually copy to Marked > Preferences > Style > Additional CSS
+ *
+ * Fix weird task list output when items have no content, ie:
  *   - [ ] Foo
  *   - [ ]
  */
