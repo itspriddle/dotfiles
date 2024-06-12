@@ -58,7 +58,12 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
-Plug 'editorconfig/editorconfig-vim'
+
+if isdirectory($VIMRUNTIME . '/pack/dist/opt/editorconfig/')
+  packadd editorconfig
+else
+  Plug 'editorconfig/editorconfig-vim'
+endif
 
 " File browsing/search
 Plug 'jeetsukumaran/vim-filebeagle'
