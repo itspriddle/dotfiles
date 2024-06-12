@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-if [[ "$SSH_CONNECTION" ]]; then
-  /usr/local/bin/pinentry-curses "$@"
-else
-  /usr/local/bin/pinentry-mac "$@"
-fi

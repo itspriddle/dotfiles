@@ -35,7 +35,6 @@ brew "ical-buddy"
 brew "vim"
 brew "jq"
 brew "php"
-brew 'pinentry-mac'
 brew "ripgrep"
 brew "rename"
 brew "rsync"
