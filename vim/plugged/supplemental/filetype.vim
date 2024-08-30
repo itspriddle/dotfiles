@@ -18,8 +18,8 @@ augroup filetypedetect
   " YAML highlighting for Rails secrets
   autocmd BufNewFile,BufRead secrets.yml.enc.[0-9]\+ setfiletype yaml
 
-  " Direnv
-  autocmd BufNewFile,BufRead .envrc,envrc,.direnvrc,direnvrc
+  " Direnv/dotenv
+  autocmd BufNewFile,BufRead .envrc,envrc,.direnvrc,direnvrc,.envrc.*,.env.*
     \ let g:is_bash = 1 |
     \ let b:is_bash = 1 |
     \ setfiletype sh |
