@@ -85,6 +85,9 @@ elif [ "${OSTYPE:0:5}" = linux ]; then
   # `ls` colors
   export LS_COLORS="di=1;34:ln=1;36:so=1;35:pi=1;33:ex=1;32:bd=1;33:cd=1;33:su=1;31:sg=1;31:tw=1;34:ow=1;34"
 
+  # CentOS uses an override flag
+  export USER_LS_COLORS="$LS_COLORS"
+
   # Ubuntu's /etc/zshrc tries to initialize completion, skip it
   [ "$ZSH_VERSION" ] && skip_global_compinit=1
 fi
