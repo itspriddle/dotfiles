@@ -51,11 +51,44 @@ warn() {
 #/     <title>markdown-preview</title>
 #/
 #/     <link rel="stylesheet" href="https://pages-themes.github.io/primer/assets/css/style.css?v=%s">
+#/     <style>
+#/       .highlight-source-mermaid {
+#/         background-color: #ffffff;
+#/       }
+#/     </style>
 #/   </head>
 #/   <body>
 #/     <div class="container-lg px-3 my-5 markdown-body">
 #/       %s
 #/     </div>
+#/     <script>
+#/       document.addEventListener('DOMContentLoaded', () => {
+#/         document.querySelectorAll('.highlight-source-mermaid').forEach((el) => {
+#/           const text = el.textContent;
+#/           el.innerHTML = text;
+#/         });
+#/       });
+#/     </script>
+#/     <script type="module">
+#/       import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+#/
+#/       mermaid.initialize({
+#/         startOnLoad: false,
+#/         themeVariables: {
+#/           fontFamily: 'Helvetica,Arial,sans-serif',
+#/           pieTitleTextSize: '14px',
+#/           pieSectionTextSize: '13px',
+#/           pieLegendTextSize: '13px',
+#/           pieStrokeWidth: '1px',
+#/           pieOuterStrokeWidth: '1px',
+#/           background: '#ffffff',
+#/         },
+#/       });
+#/
+#/       await mermaid.run({
+#/         querySelector: '.highlight-source-mermaid',
+#/       });
+#/     </script>
 #/   </body>
 #/ </html>
 
@@ -76,13 +109,13 @@ render_markdown() {
 
   text="$(cat)"
 
-  gh api \
-    -X POST \
-    -H "Accept: application/vnd.github+json" \
-    -f text="$text" \
-    -f mode=markdown \
-    markdown
-}
+  jq -n --arg text "$text" '{ text: $text, mode: "gfm" }' |
+    curl -sSL \
+      -X POST \
+      -H "Accept: application/vnd.github+json" \
+      -d @- \
+      https://api.github.com/markdown
+  }
 
 # Opens the given URL in a web browser
 #
