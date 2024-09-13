@@ -116,7 +116,11 @@ map <silent> - <Plug>FileBeagleOpenCurrentBufferDir
 
 " vim-fugitive {{{
 
+" Stage the current file to the index
 map <leader>gw :Gwrite<cr>
+
+" Open :G (full window)
+map <leader>gv :Ge :<cr>
 
 " }}}
 
