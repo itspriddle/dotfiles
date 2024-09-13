@@ -2,13 +2,13 @@
 let g:markdown_fenced_languages = ['ruby', 'erb=eruby', 'php', 'sh']
 
 " View current file in Marked 2
-nnoremap <buffer> <leader>mv :MarkedOpen<cr>
+nnoremap <silent> <buffer> <leader>mv :MarkedOpen<cr>
 
 " Preview selected text in Marked 2
-vnoremap <buffer> <leader>mv :MarkedPreview<cr>
+vnoremap <silent> <buffer> <leader>mv :MarkedPreview<cr>
 
 " Quit Marked 2
-noremap <buffer> <leader>mq :MarkedQuit<cr>
+noremap <silent> <buffer> <leader>mq :MarkedQuit<cr>
 
 " Show spelling errors
 setlocal spell
