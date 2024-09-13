@@ -1,0 +1,549 @@
+#!/usr/bin/env bash
+# Usage: emby <COMMAND> [ARGS...]
+#
+# NAME
+#   emby - CLI for some random stuff in Emby
+#
+# SYNOPSIS
+#   emby <COMMAND> [ARGS...]
+#
+# DESCRIPTION
+#   CLI for some random stuff in Emby. Requires jq and a running Emby
+#   instance.
+#
+# COMMANDS
+#   playing - show what's playing on Emby
+#   scan    - trigger library scans in Emby
+#   help    - show help for emby and its subcommands
+#
+# AUTHOR
+#   Joshua Priddle <jpriddle@me.com>
+#
+# LICENSE
+#   MIT License
+#
+# SEE ALSO
+#   https://dev.emby.media/doc/restapi/index.html
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+# Usage: emby help [COMMAND]
+#
+# NAME
+#   emby help - show help for emby and its subcommands
+#
+# SYNOPSIS
+#   emby help [COMMAND]
+#
+# DESCRIPTION
+#   Prints documentation for emby commands.
+help() {
+  local cmd="$1" usage="${2:-}" pattern="^# Usage: ${0##*/}"
+
+  if [[ "$cmd" == "-h" ]]; then
+    cmd=
+    usage=1
+  fi
+
+  [[ "$cmd" ]] && pattern="$pattern $cmd "
+
+  if ! grep -q "$pattern" "$0"; then
+    echo "Error: Invalid command \`${0##*/} $cmd'" >&2
+    return 1
+  fi
+
+  awk \
+    -v cmd="$cmd" \
+    -v usage="$usage" \
+    -v pattern="$pattern" \
+    '$0 ~ pattern,/^[^#]/ {
+      if ($1 == "#") {
+        sub("^# ?", "", $0)
+        print
+        if (usage) exit
+      } else {
+        exit
+      }
+    }' "$0" |
+      { if [[ -t 1 ]]; then
+          sed -E "s/^([A-Z0-9][A-Z0-9 ]+)\$/$(tput bold)\\1$(tput sgr0)/"
+        else
+          cat
+        fi
+      }
+}
+
+# Usage: emby scan <shows|movies|all>
+#
+# NAME
+#   emby scan -- trigger library scans in Emby
+#
+# SYNOPSIS
+#   emby scan <shows|movies|all> -- trigger library scans in Emby
+#
+# DESCRIPTION
+#   Trigger library scans in Emby.
+scan() {
+  local lib_type="${1-all}" lib_ids=() id
+
+  case "$lib_type" in
+    tvshows|tv|t)
+      scan shows
+      ;;
+    mov|m)
+      scan movies
+      ;;
+    movies|shows)
+      [[ "$lib_type" == "shows" ]] && lib_type="tvshows"
+
+      while IFS='' read -r line; do
+        lib_ids+=("$line")
+      done < <(_scan_list_libraries "$lib_type")
+
+      if [[ ${#lib_ids[@]} -eq 0 ]]; then
+        echo "No ${lib_type:0: -1} libraries found" >&2
+        return 1
+      fi
+
+      for id in "${lib_ids[@]}"; do
+        _scan_api_request "$id"
+        echo "Triggered ${lib_type:0: -1} scan for library ID $id"
+      done
+      ;;
+    all)
+      scan movies
+      scan shows
+      ;;
+    *)
+      echo "Error: Invalid option \`$lib_type'" >&2
+      help scan -h
+      return 1
+      ;;
+  esac
+}
+
+_scan_list_libraries() {
+  local lib_type="$1" query
+
+  _load_config || return 1
+
+  local api_params=("api_key=$EMBY_API_KEY")
+
+  query="$(IFS='&'; echo "${api_params[*]}")"
+
+  curl -s -X GET \
+    -H "Accept: */*" \
+    -H "Content-Type: application/json" \
+    "${EMBY_API_URL%%/}/emby/Library/VirtualFolders?$query" |
+    jq '.[] |
+      select(.CollectionType == "movies" or .CollectionType == "tvshows") |
+      {(.CollectionType): [.Id]}
+    '|
+    jq -s '{
+      tvshows: (map(select(.tvshows) | .tvshows[]) | unique),
+      movies: (map(select(.movies) | .movies[]) | unique | reverse)
+    }' |
+    jq -r ".$lib_type | .[]"
+}
+
+_scan_api_request() {
+  local lib_id="$1" query
+
+  _load_config || return 1
+
+  local api_params=(
+    Recursive=true
+    MetadataRefreshMode=Default
+    ImageRefreshMode=Default
+    ReplaceAllMetadata=false
+    ReplaceAllImages=false
+    "api_key=$EMBY_API_KEY"
+  )
+
+  query="$(IFS='&'; echo "${api_params[*]}")"
+
+  curl -s -X POST \
+    -H "Accept: */*" \
+    -H "Content-Type: application/json" \
+    "${EMBY_API_URL%%/}/emby/Items/$lib_id/Refresh?$query"
+}
+
+# Usage: emby playing [--text|--json|--raw]
+#
+# NAME
+#   emby playing -- see what's playing on Emby
+#
+# SYNOPSIS
+#   emby playing <options>
+#
+# DESCRIPTION
+#   See what's playing on Emby.
+#
+# OPTIONS
+#   -p, --plain
+#       Don't colorize output.
+#
+#   -t, --text
+#       Show results in plain text. This is the default format.
+#
+#   -j, --json
+#       Show results in JSON format. Note that the format differs from the
+#       standard Emby API payload -- use `--raw` to obtain the raw JSON
+#       payload from Emby.
+#
+#   -r, --raw
+#       Show raw JSON payload from the Emby API.
+playing() {
+  [[ -t 1 ]] && ANSI=1
+
+  local fmt
+
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+      -p | --plain) ANSI=0; shift;;
+      -r | --raw) fmt="raw"; shift;;
+      -j | --json) fmt="json"; shift;;
+      -t | --text) fmt="text"; shift;;
+      *)
+        echo "Error: Invalid option '$1'" >&2
+        help playing -h
+        return 1
+        ;;
+    esac
+  done
+
+  if ! type jq &>/dev/null; then
+    echo "${0##*/}: Error, jq not found!" >&2
+    return 1
+  fi
+
+  _playing_get_activity | _playing_format "${fmt:-text}"
+
+  unset ANSI
+}
+
+# Get activity from Emby API
+_playing_get_activity() {
+  _load_config || return 1
+
+  curl --silent \
+    -H "Accept: */*" \
+    -H "Content-Type: application/json" \
+    -G \
+    -d "api_key=$EMBY_API_KEY" \
+    "${EMBY_API_URL%%/}/emby/Sessions"
+}
+
+# Formats activity from Emby API.
+#
+# $1 - format, "raw", "text", or "json"
+_playing_format() {
+  local colorize="--monochrome-output"
+
+  [[ "${ANSI:-}" = "1" ]] && colorize="--color-output"
+
+  if [[ "$1" = "raw" ]]; then
+    jq '. | map(select(. | has("NowPlayingItem")))'
+  else
+    jq "$colorize" \
+      --arg ansi "${ANSI:-}" \
+      --arg format "$1" \
+      --raw-output "$(_playing_jq)"
+  fi
+}
+
+_playing_jq() {
+  cat <<'EOF'
+  def ansi(code; str):
+    if $ansi == "1" then
+      "\u001B[\(code)m\(str)\u001B[0m"
+    else
+      str
+    end
+    ;
+
+  def bold(str):
+    ansi(1; str)
+    ;
+
+  def blue(str):
+    ansi(34; str)
+    ;
+
+  def bar:
+    bold("-" * 78)
+    ;
+
+  def trim:
+    . |
+      gsub("^(\\n+|\\s+)"; "") |
+      gsub("(\\n|\\s+)$"; "")
+    ;
+
+  def normalize_whitespace:
+    . |
+      gsub("\\s+"; " ") |
+      trim
+    ;
+
+  def wrap:
+    (11) as $indent |
+    (78 - $indent) as $length |
+
+    . | gsub("(?<line>.{1,\($length)})(\\s+|$)"; "\(.line)\n\(" " * $indent // "")")
+    ;
+
+  def round(decimal):
+    (decimal | tostring | split(".")) as $fields |
+    ($fields[0] | tonumber) as $integer |
+    ("0.\($fields[1] // 0)" | tonumber) as $decimal |
+
+    if $decimal >= 0.5 then
+      $integer + 1
+    else
+      $integer
+    end
+    ;
+
+  def zero_pad(i):
+    if i != "" and (i | tonumber) < 10 then
+      "0\(i)"
+    else
+      "\(i)"
+    end
+    ;
+
+  def seconds_to_time(seconds):
+    (seconds | tonumber / 3600 | floor) as $hours |
+    (seconds | tonumber % 3600 / 60 | floor) as $minutes |
+    (seconds | tonumber % 60) as $seconds |
+
+    "\(zero_pad($hours)):\(zero_pad($minutes)):\(zero_pad($seconds))"
+    ;
+
+  def ticks_to_seconds(ticks):
+    round(ticks / 10000000)
+    ;
+
+  def ip_to_decimal(ip):
+    (ip | split(".") | map(tonumber)) as $octets |
+    ($octets[0] * pow(256; 3)) + ($octets[1] * pow(256; 2)) + ($octets[2] * 256) + $octets[3]
+    ;
+
+  def map_now_playing:
+    . | sort_by(ip_to_decimal(.RemoteEndPoint)) | map(
+      (
+        if .NowPlayingItem.Type == "Episode" then
+          "S\(zero_pad(.NowPlayingItem.ParentIndexNumber))E\(zero_pad(.NowPlayingItem.IndexNumber))"
+        else
+          ""
+        end
+      ) as $episode_code |
+
+      (
+        if .NowPlayingItem.Type == "Episode" then
+          "\(.NowPlayingItem.SeriesName) - \($episode_code) - \(.NowPlayingItem.Name)"
+        else
+          .NowPlayingItem.Name
+        end
+      ) as $name |
+
+      (
+        ticks_to_seconds(.NowPlayingItem.RunTimeTicks)
+      ) as $duration_seconds |
+
+      (
+        seconds_to_time($duration_seconds)
+      ) as $duration |
+
+      (
+        ticks_to_seconds(.PlayState.PositionTicks)
+      ) as $progress_seconds |
+
+      (
+        seconds_to_time($progress_seconds)
+      ) as $progress |
+
+      (
+        round($progress_seconds / $duration_seconds * 100)
+      ) as $progress_percent |
+
+      (
+        round($duration_seconds - $progress_seconds)
+      ) as $remaining_seconds |
+
+      (
+        seconds_to_time($remaining_seconds)
+      ) as $remaining |
+
+      (
+        if .Client | test("Infuse") then
+          "Infuse"
+        else
+          .Client
+        end
+      ) as $client |
+
+      (
+        (.NowPlayingItem.PremiereDate | split("T") | .[0])
+      ) as $date |
+
+      (
+        .PlayState.PlayMethod
+      ) as $stream |
+
+      {
+        name: $name,
+        date: $date,
+        ip_address: .RemoteEndPoint,
+        device: .DeviceName,
+        client: $client,
+        media_type: .NowPlayingItem.Type,
+        rating: (.NowPlayingItem.OfficialRating // "None"),
+        state: (if .PlayState.IsPaused then "Paused" else "Playing" end),
+        summary: .NowPlayingItem.Overview | normalize_whitespace,
+        progress_percent: $progress_percent,
+        progress_seconds: $progress_seconds,
+        progress: $progress,
+        duration: $duration,
+        duration_seconds: $duration_seconds,
+        remaining: $remaining,
+        remaining_seconds: $remaining_seconds,
+        episode_code: $episode_code,
+        stream: $stream
+      }
+    ) |
+    if $format == "text" then
+      map(
+        [
+          "\(bar)",
+          "",
+          "\(blue(bold("Name:")))      \(.name | wrap | trim)",
+          "\(blue(bold("Duration:")))  \(.duration)",
+          "\(blue(bold("Progress:")))  \(.progress_percent)% (\(.progress) watched - \(.remaining) remaining)",
+          "\(blue(bold("Player:")))    \(.client) (\(.device) @ \(.ip_address))",
+          "\(blue(bold("Stream:")))    \(.stream)",
+          "\(blue(bold("State:")))     \(.state)",
+          "\(blue(bold("Air Date:")))  \("\(.date)T00:00:00Z" | fromdate | strftime("%b %-d, %Y"))",
+          "\(blue(bold("Rating:")))    \(.rating)",
+          "\(blue(bold("Summary:")))   \(.summary | wrap | trim)"
+        ] | join("\n")
+      ) | join("\n\n")
+    else
+      .
+    end
+    ;
+
+  def process(sessions):
+    if ((sessions | length) == 0) and $format == "text" then
+      "Nothing playing"
+    else
+      sessions | map_now_playing
+    end
+    ;
+
+  process(. | map(select(has("NowPlayingItem"))))
+EOF
+}
+
+EMBY_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/emby-api.json" \
+
+_read_config() {
+  if ! type jq &> /dev/null; then
+    echo "Missing \`jq' command." >&2
+    return 1
+  fi
+
+  if [[ ! -r "$EMBY_CONFIG" ]]; then
+    echo "Config '$EMBY_CONFIG' doesn't exist" >&2
+    return 1
+  fi
+
+  jq -r 'to_entries |
+    map("EMBY_\(.key | ascii_upcase)=\(.value | tostring)") |
+    .[]
+  ' "$EMBY_CONFIG"
+}
+
+_load_config() {
+  if [[ "${EMBY_CONFIG_LOADED-}" ]]; then
+    return 0
+  fi
+
+  for var in $(_read_config); do
+    case "${var%=*}" in
+      EMBY_API_URL|EMBY_API_KEY)
+        export "${var?}"
+        ;;
+    esac
+  done
+
+  local ret=0
+
+  if [[ -z "${EMBY_API_URL-}" ]]; then
+    echo "Must set 'api_url' in $EMBY_CONFIG" >&2
+    ret=1
+  fi
+
+  if [[ -z "${EMBY_API_KEY-}" ]]; then
+    echo "Must set 'api_key' in $EMBY_CONFIG" >&2
+    ret=1
+  fi
+
+  if [[ "$ret" -ne 0 ]]; then
+    _configure_help
+  fi
+
+  export EMBY_CONFIG_LOADED=1
+
+  return $ret
+}
+
+_configure_help() {
+  {
+    echo
+    echo "Create \`$EMBY_CONFIG' with:"
+    echo
+    echo "  jq --null-input \\"
+    echo "    --arg api_key \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\" \\"
+    echo "    --arg api_url \"http://emby.local:8096\" \\"
+    echo "    '\$ARGS.named' > \"$EMBY_CONFIG\""
+    echo
+    echo "  chmod 600 \"$EMBY_CONFIG\""
+  } >&2
+
+  return 1
+}
+
+main() {
+  local cmd="${1:-help}"
+
+  [[ "${1-}" ]] && shift
+
+  case "$cmd" in
+     help | -h | --help)
+      help "${1:-}" "$([[ "$cmd" == "-h" ]] && echo 1)"
+      return 0
+      ;;
+    scan|playing)
+      "$cmd" "$@"
+      return $?
+      ;;
+    -?*)
+      echo "Error: Invalid option \`$cmd'" >&2
+      return 1
+      ;;
+    *)
+      echo "Error: Invalid command \`${0##*/} $cmd'" >&2
+      return 1
+      ;;
+  esac
+}
+
+main "$@"
