@@ -70,13 +70,7 @@ help() {
       } else {
         exit
       }
-    }' "$0" |
-      { if [[ -t 1 ]]; then
-          sed -E "s/^([A-Z0-9][A-Z0-9 ]+)\$/$(tput bold)\\1$(tput sgr0)/"
-        else
-          cat
-        fi
-      }
+    }' "$0"
 }
 
 # Usage: emby scan <shows|movies|all>
