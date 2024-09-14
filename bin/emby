@@ -460,17 +460,18 @@ api() {
     set -- -G "$@"
   fi
 
-  curl --silent \
+  local response
+
+  response=$(curl --silent \
     --header "Accept: */*" \
     --header "Content-Type: application/json" \
     "$@" \
-    "${EMBY_API_URL%%/}/emby/$path?api_key=$EMBY_API_KEY" | {
-      if [[ "$*" =~ -G ]]; then
-        jq
-      else
-        cat
-      fi
-    }
+    "${EMBY_API_URL%%/}/emby/$path?api_key=$EMBY_API_KEY"
+  )
+
+  if ! jq . <<< "$response" 2> /dev/null; then
+    cat <<< "$response"
+  fi
 }
 
 EMBY_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/emby-api.json"
