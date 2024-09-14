@@ -13,9 +13,9 @@
 #
 # COMMANDS
 #   api     - make a request to the Emby API
-#   playing - show what's playing on Emby
+#   playing - show what's currently playing
 #   restart - restart Emby
-#   scan    - trigger library scans in Emby
+#   scan    - trigger library scans
 #
 # AUTHOR
 #   Joshua Priddle <jpriddle@me.com>
@@ -66,16 +66,36 @@ help() {
     }' "$0"
 }
 
-# Usage: emby scan <shows|movies|all>
+# Usage: emby scan [shows|movies|all]
 #
 # NAME
-#   emby scan -- trigger library scans in Emby
+#   emby scan -- trigger library scans
 #
 # SYNOPSIS
-#   emby scan <shows|movies|all> -- trigger library scans in Emby
+#   emby scan [shows|movies|all]
 #
 # DESCRIPTION
-#   Trigger library scans in Emby.
+#   Trigger library scans. By default, all libraries are scanned. You can
+#   limit to a specific library by passing it, e.g. `emby scan shows`.
+#
+# ALIASES
+#   These are all the same to scan movies and tvshows:
+#     emby scan
+#     emby scan all
+#     emby scan a
+#
+#   These are all the same to scan tvshows:
+#
+#     emby scan shows
+#     emby scan s
+#     emby scan tvshows
+#     emby scan tv
+#     emby scan t
+#
+#   These are all the same to scan movies:
+#     emby scan movies
+#     emby scan m
+#     emby scan mov
 scan() {
   if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
     help "${FUNCNAME[0]}" "$([[ "$1" == "-h" ]] && echo 1)"
@@ -108,7 +128,7 @@ scan() {
         echo "Triggered ${lib_type:0: -1} scan for library ID $id"
       done
       ;;
-    all)
+    all|a)
       scan movies
       scan shows
       ;;
@@ -152,16 +172,16 @@ _scan_api_request() {
   }'
 }
 
-# Usage: emby playing [--text|--json|--raw]
+# Usage: emby playing [--plain|--text|--json|--raw]
 #
 # NAME
-#   emby playing -- see what's playing on Emby
+#   emby playing -- show what's currently playing
 #
 # SYNOPSIS
-#   emby playing <options>
+#   emby playing [OPTIONS]
 #
 # DESCRIPTION
-#   See what's playing on Emby.
+#   Show what's currently playing.
 #
 # OPTIONS
 #   -p, --plain
@@ -173,7 +193,7 @@ _scan_api_request() {
 #   -j, --json
 #       Show results in JSON format. Note that the format differs from the
 #       standard Emby API payload -- use `--raw` to obtain the raw JSON
-#       payload from Emby.
+#       payload from the Emby API.
 #
 #   -r, --raw
 #       Show raw JSON payload from the Emby API.
@@ -476,13 +496,13 @@ api() {
 # Usage: emby restart
 #
 # NAME
-#   emby restart - make a request to the Emby API
+#   emby restart - restart Emby
 #
 # SYNOPSIS
-#   emby restart <PATH> [ARGS...]
+#   emby restart
 #
 # DESCRIPTION
-#   Make a request to the Emby API.
+#   Restart Emby.
 restart() {
   if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
     help "${FUNCNAME[0]}" "$([[ "$1" == "-h" ]] && echo 1)"
