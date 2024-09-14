@@ -12,10 +12,11 @@
 #   instance.
 #
 # COMMANDS
-#   playing - show what's playing on Emby
-#   scan    - trigger library scans in Emby
 #   api     - make a request to the Emby API
 #   help    - show help for emby and its subcommands
+#   playing - show what's playing on Emby
+#   restart - restart Emby
+#   scan    - trigger library scans in Emby
 #
 # AUTHOR
 #   Joshua Priddle <jpriddle@me.com>
@@ -86,14 +87,14 @@ help() {
 #   Trigger library scans in Emby.
 scan() {
   if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
-    help scan "$([[ "$1" == "-h" ]] && echo 1)"
+    help "${FUNCNAME[0]}" "$([[ "$1" == "-h" ]] && echo 1)"
     return 1
   fi
 
   local lib_type="${1-all}" lib_ids=() id
 
   case "$lib_type" in
-    tvshows|tv|t)
+    tvshows|tv|t|s)
       scan shows
       ;;
     mov|m)
@@ -120,9 +121,14 @@ scan() {
       scan movies
       scan shows
       ;;
-    *)
+    -*)
       echo "Error: Invalid option \`$lib_type'" >&2
-      help scan -h
+      help "${FUNCNAME[0]}" -h
+      return 1
+      ;;
+    *)
+      echo "Error: Invalid argument \`$lib_type'" >&2
+      help "${FUNCNAME[0]}" -h
       return 1
       ;;
   esac
@@ -182,7 +188,7 @@ _scan_api_request() {
 #       Show raw JSON payload from the Emby API.
 playing() {
   if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
-    help playing "$([[ "$1" == "-h" ]] && echo 1)"
+    help "${FUNCNAME[0]}" "$([[ "$1" == "-h" ]] && echo 1)"
     return 1
   fi
 
@@ -198,9 +204,14 @@ playing() {
       -r | --raw) fmt="raw"; shift;;
       -j | --json) fmt="json"; shift;;
       -t | --text) fmt="text"; shift;;
-      *)
+      -*)
         echo "Error: Invalid option '$1'" >&2
-        help playing -h
+        help "${FUNCNAME[0]}" -h
+        return 1
+        ;;
+      *)
+        echo "Error: Invalid argument '$1'" >&2
+        help "${FUNCNAME[0]}" -h
         return 1
         ;;
     esac
@@ -440,7 +451,7 @@ EOF
 #   Make a request to the Emby API.
 api() {
   if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
-    help api "$([[ "$1" == "-h" ]] && echo 1)"
+    help "${FUNCNAME[0]}" "$([[ "$1" == "-h" ]] && echo 1)"
     return 1
   fi
 
