@@ -13,7 +13,6 @@
 #
 # COMMANDS
 #   api     - make a request to the Emby API
-#   help    - show help for emby and its subcommands
 #   playing - show what's playing on Emby
 #   restart - restart Emby
 #   scan    - trigger library scans in Emby
@@ -35,22 +34,14 @@ fi
 
 set -euo pipefail
 
-# Usage: emby help [COMMAND]
-#
-# NAME
-#   emby help - show help for emby and its subcommands
-#
-# SYNOPSIS
-#   emby help [COMMAND]
-#
-# DESCRIPTION
-#   Prints documentation for emby commands.
 help() {
-  local cmd="$1" usage="${2:-}" pattern="^# Usage: ${0##*/}"
+  local cmd="${1:-}" usage="${2:-}" pattern="^# Usage: ${0##*/}"
 
   if [[ "$cmd" == "-h" ]]; then
     cmd=
     usage=1
+  elif [[ "$cmd" == "--help" ]]; then
+    cmd=
   fi
 
   [[ "$cmd" ]] && pattern="$pattern $cmd"
@@ -573,13 +564,13 @@ _configure_help() {
 }
 
 main() {
-  local cmd="${1:-help}"
+  local cmd="${1:---help}"
 
   [[ "${1-}" ]] && shift
 
   case "$cmd" in
-     help | -h | --help)
-      help "${1:-}" "$([[ "$cmd" == "-h" ]] && echo 1)"
+    -h | --help)
+      help "$cmd"
       return 0
       ;;
     scan|playing|restart|api)
