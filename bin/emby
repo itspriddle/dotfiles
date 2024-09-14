@@ -52,7 +52,7 @@ help() {
     usage=1
   fi
 
-  [[ "$cmd" ]] && pattern="$pattern $cmd "
+  [[ "$cmd" ]] && pattern="$pattern $cmd"
 
   if ! grep -q "$pattern" "$0"; then
     echo "Error: Invalid command \`${0##*/} $cmd'" >&2
@@ -471,6 +471,27 @@ api() {
   fi
 }
 
+# Usage: emby restart
+#
+# NAME
+#   emby restart - make a request to the Emby API
+#
+# SYNOPSIS
+#   emby restart <PATH> [ARGS...]
+#
+# DESCRIPTION
+#   Make a request to the Emby API.
+restart() {
+  if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
+    help "${FUNCNAME[0]}" "$([[ "$1" == "-h" ]] && echo 1)"
+    return 1
+  fi
+
+  _load_config || return 1
+
+  api "/System/Restart" -X POST
+}
+
 EMBY_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/emby-api.json"
 
 _read_config() {
@@ -550,7 +571,7 @@ main() {
       help "${1:-}" "$([[ "$cmd" == "-h" ]] && echo 1)"
       return 0
       ;;
-    scan|playing|api)
+    scan|playing|restart|api)
       "$cmd" "$@"
       return $?
       ;;
