@@ -14,6 +14,7 @@
 # COMMANDS
 #   playing - show what's playing on Emby
 #   scan    - trigger library scans in Emby
+#   api     - make a request to the Emby API
 #   help    - show help for emby and its subcommands
 #
 # AUTHOR
@@ -84,6 +85,11 @@ help() {
 # DESCRIPTION
 #   Trigger library scans in Emby.
 scan() {
+  if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
+    help scan "$([[ "$1" == "-h" ]] && echo 1)"
+    return 1
+  fi
+
   local lib_type="${1-all}" lib_ids=() id
 
   case "$lib_type" in
@@ -123,18 +129,9 @@ scan() {
 }
 
 _scan_list_libraries() {
-  local lib_type="$1" query
+  local lib_type="$1"
 
-  _load_config || return 1
-
-  local api_params=("api_key=$EMBY_API_KEY")
-
-  query="$(IFS='&'; echo "${api_params[*]}")"
-
-  curl -s -X GET \
-    -H "Accept: */*" \
-    -H "Content-Type: application/json" \
-    "${EMBY_API_URL%%/}/emby/Library/VirtualFolders?$query" |
+  api "/Library/VirtualFolders" |
     jq '.[] |
       select(.CollectionType == "movies" or .CollectionType == "tvshows") |
       {(.CollectionType): [.Id]}
@@ -147,25 +144,15 @@ _scan_list_libraries() {
 }
 
 _scan_api_request() {
-  local lib_id="$1" query
+  local lib_id="$1"
 
-  _load_config || return 1
-
-  local api_params=(
-    Recursive=true
-    MetadataRefreshMode=Default
-    ImageRefreshMode=Default
-    ReplaceAllMetadata=false
-    ReplaceAllImages=false
-    "api_key=$EMBY_API_KEY"
-  )
-
-  query="$(IFS='&'; echo "${api_params[*]}")"
-
-  curl -s -X POST \
-    -H "Accept: */*" \
-    -H "Content-Type: application/json" \
-    "${EMBY_API_URL%%/}/emby/Items/$lib_id/Refresh?$query"
+  api "/Items/$lib_id/Refresh" -X POST --data '{
+    Recursive: true,
+    MetadataRefreshMode: "Default",
+    ImageRefreshMode: "Default",
+    ReplaceAllMetadata: false,
+    ReplaceAllImages: false
+  }'
 }
 
 # Usage: emby playing [--text|--json|--raw]
@@ -194,6 +181,11 @@ _scan_api_request() {
 #   -r, --raw
 #       Show raw JSON payload from the Emby API.
 playing() {
+  if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
+    help playing "$([[ "$1" == "-h" ]] && echo 1)"
+    return 1
+  fi
+
   [[ -t 1 ]] && ANSI=1
 
   local fmt
@@ -224,14 +216,7 @@ playing() {
 
 # Get activity from Emby API
 _playing_get_activity() {
-  _load_config || return 1
-
-  curl --silent \
-    -H "Accept: */*" \
-    -H "Content-Type: application/json" \
-    -G \
-    -d "api_key=$EMBY_API_KEY" \
-    "${EMBY_API_URL%%/}/emby/Sessions"
+  api "/Sessions"
 }
 
 # Formats activity from Emby API.
@@ -446,7 +431,49 @@ _playing_jq() {
 EOF
 }
 
-EMBY_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/emby-api.json" \
+# Usage: emby api <PATH> [ARGS...]
+#
+# NAME
+#   emby api - make a request to the Emby API
+#
+# SYNOPSIS
+#   emby api <PATH> [ARGS...]
+#
+# DESCRIPTION
+#   Make a request to the Emby API.
+api() {
+  if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
+    help api "$([[ "$1" == "-h" ]] && echo 1)"
+    return 1
+  fi
+
+  _load_config || return 1
+
+  local path="${1-}"
+
+  [[ "${path:0:1}" = / ]] && path="${path:1}" # strip leading slash
+
+  shift
+
+  # assume GET
+  if [[ ! "$*" =~ -X|--request|-G|--get ]]; then
+    set -- -G "$@"
+  fi
+
+  curl --silent \
+    --header "Accept: */*" \
+    --header "Content-Type: application/json" \
+    "$@" \
+    "${EMBY_API_URL%%/}/emby/$path?api_key=$EMBY_API_KEY" | {
+      if [[ "$*" =~ -G ]]; then
+        jq
+      else
+        cat
+      fi
+    }
+}
+
+EMBY_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/emby-api.json"
 
 _read_config() {
   if ! type jq &> /dev/null; then
@@ -490,11 +517,11 @@ _load_config() {
     ret=1
   fi
 
+  export EMBY_CONFIG_LOADED=1
+
   if [[ "$ret" -ne 0 ]]; then
     _configure_help
   fi
-
-  export EMBY_CONFIG_LOADED=1
 
   return $ret
 }
@@ -525,7 +552,7 @@ main() {
       help "${1:-}" "$([[ "$cmd" == "-h" ]] && echo 1)"
       return 0
       ;;
-    scan|playing)
+    scan|playing|api)
       "$cmd" "$@"
       return $?
       ;;
