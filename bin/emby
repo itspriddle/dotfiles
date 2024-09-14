@@ -186,13 +186,15 @@ playing() {
     return 1
   fi
 
-  [[ -t 1 ]] && ANSI=1
+  local ansi=0
+
+  [[ -t 1 ]] && ansi=1
 
   local fmt
 
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
-      -p | --plain) ANSI=0; shift;;
+      -p | --plain) ansi=0; shift;;
       -r | --raw) fmt="raw"; shift;;
       -j | --json) fmt="json"; shift;;
       -t | --text) fmt="text"; shift;;
@@ -209,14 +211,7 @@ playing() {
     return 1
   fi
 
-  _playing_get_activity | _playing_format "${fmt:-text}"
-
-  unset ANSI
-}
-
-# Get activity from Emby API
-_playing_get_activity() {
-  api "/Sessions"
+  api "/Sessions" | _playing_format "${fmt:-text}" "$ansi"
 }
 
 # Formats activity from Emby API.
@@ -224,14 +219,16 @@ _playing_get_activity() {
 # $1 - format, "raw", "text", or "json"
 _playing_format() {
   local colorize="--monochrome-output"
+  local fmt="$1"
+  local ansi="${2:-}"
 
-  [[ "${ANSI:-}" = "1" ]] && colorize="--color-output"
+  [[ "${ansi:-}" = "1" ]] && colorize="--color-output"
 
   if [[ "$1" = "raw" ]]; then
     jq '. | map(select(. | has("NowPlayingItem")))'
   else
     jq "$colorize" \
-      --arg ansi "${ANSI:-}" \
+      --arg ansi "${ansi:-}" \
       --arg format "$1" \
       --raw-output "$(_playing_jq)"
   fi
