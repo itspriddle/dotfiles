@@ -16,6 +16,7 @@
 #   playing - show what's currently playing
 #   restart - restart Emby
 #   scan    - trigger library scans
+#   system  - show system information
 #
 # AUTHOR
 #   Joshua Priddle <jpriddle@me.com>
@@ -516,9 +517,34 @@ restart() {
     return 1
   fi
 
+  api /System/Restart -X POST
+}
+
+# Usage: emby system
+#
+# NAME
+#   emby system - show system information
+#
+# SYNOPSIS
+#   emby system
+#
+# DESCRIPTION
+#   Show system information.
+system() {
+  if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
+    help "${FUNCNAME[0]}" "$([[ "$1" == "-h" ]] && echo 1)"
+    return 1
+  fi
+
   _load_config || return 1
 
-  api /System/Restart -X POST
+  api /System/Info | jq --arg url "$EMBY_API_URL" -r '[
+    "Emby Version:     \(.Version)",
+    "Emby URL:         \($url)",
+    "Server Name:      \(.ServerName)",
+    "Operating System: \(.OperatingSystemDisplayName)",
+    "Update Available: \(if .HasUpdateAvailable then "Yes" else "No" end)"
+  ] | join("\n")'
 }
 
 EMBY_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/emby-api.json"
@@ -600,7 +626,7 @@ main() {
       help "$cmd"
       return 0
       ;;
-    scan|playing|restart|api)
+    api|playing|restart|scan|system)
       "$cmd" "$@"
       return $?
       ;;
