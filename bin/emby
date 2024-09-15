@@ -117,7 +117,7 @@ scan() {
 
       while IFS='' read -r line; do
         lib_ids+=("$line")
-      done < <(_scan_list_libraries "$lib_type")
+      done < <(_get_library_ids "$lib_type")
 
       if [[ ${#lib_ids[@]} -eq 0 ]]; then
         echo "No ${lib_type:0: -1} libraries found" >&2
@@ -146,19 +146,16 @@ scan() {
   esac
 }
 
-_scan_list_libraries() {
+_get_library_ids() {
   local lib_type="$1"
 
+  _get_libraries |
+    jq -r --arg type "$lib_type" 'select(.CollectionType == $type) | .Id'
+}
+
+_get_libraries() {
   api /Library/VirtualFolders |
-    jq '.[] |
-      select(.CollectionType == "movies" or .CollectionType == "tvshows") |
-      {(.CollectionType): [.Id]}
-    '|
-    jq -s '{
-      tvshows: (map(select(.tvshows) | .tvshows[]) | unique),
-      movies: (map(select(.movies) | .movies[]) | unique | reverse)
-    }' |
-    jq -r ".$lib_type | .[]"
+    jq '.[] | select(.CollectionType == "movies" or .CollectionType == "tvshows")'
 }
 
 _scan_api_request() {
