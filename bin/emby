@@ -82,6 +82,23 @@ help() {
 #   Trigger library scans. By default, all libraries are scanned. You can
 #   limit to a specific library by passing it, e.g. `emby scan shows`.
 #
+# OPTIONS
+#   -r, --recursive
+#   -R, --no-recursive
+#       Recursively scan directories. Default is true.
+#
+#   --metadata-refresh-mode <MODE>
+#       Metadata refresh mode. Default is "Default".
+#
+#   --image-refresh-mode <MODE>
+#       Image refresh mode. Default is "Default".
+#
+#   --replace-all-metadata
+#       Replace all metadata. Default is false.
+#
+#   --replace-all-images
+#       Replace all images. Default is false.
+#
 # ALIASES
 #   These are equivalent to scan all:
 #     emby scan
@@ -99,51 +116,92 @@ scan() {
 
   local lib_type="${1-all}" lib_ids=() line
 
-  case "$lib_type" in
-    shows|tv)
-      scan tvshows
-      ;;
-    movies|tvshows|music|all)
-      [[ "$lib_type" == "shows" ]] && lib_type="tvshows"
+  local target_types=()
 
-      while IFS='' read -r line; do
-        lib_ids+=("$line")
-      done < <(_get_library_ids "$lib_type")
+  local recursive=true
+  local metadata_refresh_mode=Default
+  local image_refresh_mode=Default
+  local replace_all_metadata=false
+  local replace_all_images=false
 
-      if [[ ${#lib_ids[@]} -eq 0 ]]; then
-        echo "No libraries found" >&2
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+      -r|--recursive)
+        recursive=true
+        shift
+        ;;
+      -R|--no-recursive)
+        recursive=false
+        ;;
+      --metadata-refresh-mode)
+        metadata_refresh_mode="$2"
+        shift 2
+        ;;
+      --image-refresh-mode)
+        image_refresh_mode="$2"
+        shift 2
+        ;;
+      --replace-all-metadata)
+        replace_all_metadata=true
+        shift
+        ;;
+      --replace-all-images)
+        replace_all_images=true
+        shift
+        ;;
+      -*)
+        echo "Error: Invalid option '$1'" >&2
         return 1
-      fi
+        ;;
+      shows|tv)
+        target_types+=("tvshows")
+        shift
+        ;;
+      movies|tvshows|music|all)
+        target_types+=("$1")
+        shift
+        ;;
+    esac
+  done
 
-      for line in "${lib_ids[@]}"; do
-        local id="${line%%|*}"
-        local lib_type="${line#*|}"
-        _scan_api_request "$id"
-        echo "Scanning for $lib_type in library ID $id"
-      done
-      ;;
-    -*)
-      echo "Error: Invalid option \`$lib_type'" >&2
-      help "${FUNCNAME[0]}" -h
-      return 1
-      ;;
-    *)
-      echo "Error: Invalid argument \`$lib_type'" >&2
-      help "${FUNCNAME[0]}" -h
-      return 1
-      ;;
-  esac
+  if [[ "${#target_types[@]}" -eq 0 ]]; then
+    echo "Error: choose a library type to scan." >&2
+    return 1
+  fi
+
+  while IFS='' read -r line; do
+    lib_ids+=("$line")
+  done < <(_get_library_ids "${target_types[@]}")
+
+  if [[ ${#lib_ids[@]} -eq 0 ]]; then
+    echo "No libraries found" >&2
+    return 1
+  fi
+
+  for line in "${lib_ids[@]}"; do
+    local id="${line%%|*}"
+    local lib_type="${line#*|}"
+    _scan_api_request "$id" \
+      "$recursive" \
+      "$metadata_refresh_mode" \
+      "$image_refresh_mode" \
+      "$replace_all_metadata" \
+      "$replace_all_images"
+    echo "Scanning for $lib_type in library ID $id"
+  done
 }
 
 _get_library_ids() {
   local lib_type="$1"
 
   _get_libraries |
-    jq -r --arg type "$lib_type" '
-      if $type == "all" then
+    jq -r --arg type "$*" '
+      . | ($type | split(" ")) as $types |
+
+      if ($types | index("all")) then
         .
       else
-        select(.CollectionType == $type)
+        . | select(.CollectionType | IN($types[]))
       end
 
       | "\(.Id)|\(.CollectionType)"
@@ -161,14 +219,30 @@ _get_libraries() {
 
 _scan_api_request() {
   local lib_id="$1"
+  local recursive="${2:-true}"
+  local metadata_refresh_mode="${3:-Default}"
+  local image_refresh_mode="${4:-Default}"
+  local replace_all_metadata="${5:-false}"
+  local replace_all_images="${6:-false}"
 
-  api "/Items/$lib_id/Refresh" -X POST --data '{
-    Recursive: true,
-    MetadataRefreshMode: "Default",
-    ImageRefreshMode: "Default",
-    ReplaceAllMetadata: false,
-    ReplaceAllImages: false
-  }'
+  local data
+
+  data=$(jq -n \
+    --argjson Recursive           "$recursive" \
+    --arg     MetadataRefreshMode "$metadata_refresh_mode" \
+    --arg     ImageRefreshMode    "$image_refresh_mode" \
+    --argjson ReplaceAllMetadata  "$replace_all_metadata" \
+    --argjson ReplaceAllImages    "$replace_all_images" \
+    '{
+      $Recursive,
+      $MetadataRefreshMode,
+      $ImageRefreshMode,
+      $ReplaceAllMetadata,
+      $ReplaceAllImages
+    }'
+  )
+
+  api "/Items/$lib_id/Refresh" -X POST --data "$data"
 }
 
 # Usage: emby playing [--plain|--text|--json|--raw]
