@@ -197,6 +197,9 @@ _scan_api_request() {
 #
 #   -r, --raw
 #       Show raw JSON payload from the Emby API.
+#
+#   -u <USER>, --user <USER>
+#       Filter results by user.
 playing() {
   if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
     help "${FUNCNAME[0]}" "$([[ "$1" == "-h" ]] && echo 1)"
@@ -207,7 +210,7 @@ playing() {
 
   [[ -t 1 ]] && ansi=1
 
-  local fmt
+  local fmt user
 
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
@@ -215,6 +218,18 @@ playing() {
       -r | --raw) fmt="raw"; shift;;
       -j | --json) fmt="json"; shift;;
       -t | --text) fmt="text"; shift;;
+      -u | --user)
+        shift
+
+        if [[ "$#" -eq 0 ]]; then
+          echo "Error: Missing argument for '$1'" >&2
+          return 1
+        fi
+
+        user="$1"
+
+        shift
+        ;;
       -*)
         echo "Error: Invalid option '$1'" >&2
         help "${FUNCNAME[0]}" -h
@@ -233,7 +248,13 @@ playing() {
     return 1
   fi
 
-  api /Sessions | _playing_format "${fmt:-text}" "$ansi"
+  api /Sessions | {
+    if [[ "${user-}" ]]; then
+      jq --arg user "$user" 'map(select(.UserName == $user))'
+    else
+      cat
+    fi
+  } | _playing_format "${fmt:-text}" "$ansi"
 }
 
 # Formats activity from Emby API.
@@ -400,6 +421,7 @@ _playing_jq() {
         name: $name,
         date: $date,
         ip_address: .RemoteEndPoint,
+        user: .UserName,
         device: .DeviceName,
         client: $client,
         media_type: .NowPlayingItem.Type,
@@ -425,7 +447,7 @@ _playing_jq() {
           "\(blue(bold("Name:")))      \(.name | wrap | trim)",
           "\(blue(bold("Duration:")))  \(.duration)",
           "\(blue(bold("Progress:")))  \(.progress_percent)% (\(.progress) watched - \(.remaining) remaining)",
-          "\(blue(bold("Player:")))    \(.client) (\(.device) @ \(.ip_address))",
+          "\(blue(bold("Player:")))    \(.client) (\(.device), \(.user)@\(.ip_address))",
           "\(blue(bold("Stream:")))    \(.stream)",
           "\(blue(bold("State:")))     \(.state)",
           "\(blue(bold("Air Date:")))  \("\(.date)T00:00:00Z" | fromdate | strftime("%b %-d, %Y"))",
