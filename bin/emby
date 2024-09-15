@@ -13,6 +13,7 @@
 #
 # COMMANDS
 #   api     - make a request to the Emby API
+#   devices - list devices
 #   playing - show what's currently playing
 #   restart - restart Emby
 #   scan    - trigger library scans
@@ -596,6 +597,31 @@ users() {
   api /Users | jq -r '.[] | "\(.Name) (ID: \(.Id), Admin: \(.Policy.IsAdministrator))"'
 }
 
+# Usage: emby devices
+#
+# NAME
+#   emby devices - list devices
+#
+# SYNOPSIS
+#   emby devices
+#
+# DESCRIPTION
+#   List devices.
+devices() {
+  if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
+    help "${FUNCNAME[0]}" "$([[ "$1" == "-h" ]] && echo 1)"
+    return 1
+  fi
+
+  api /Devices | jq -r '.Items | .[] | [
+    "Name: \(.Name)",
+    "IP Address: \(.IpAddress)",
+    "Last User: \(.LastUserName)",
+    "App: \(.AppName) (\(.AppVersion))",
+    "ID: \(.Id)\n"
+  ] | join("\n")'
+}
+
 EMBY_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/emby-api.json"
 
 _read_config() {
@@ -673,7 +699,7 @@ main() {
       help "$cmd"
       return 0
       ;;
-    api|playing|restart|scan|system|users)
+    api|devices|playing|restart|scan|system|users)
       "$cmd" "$@"
       return $?
       ;;
