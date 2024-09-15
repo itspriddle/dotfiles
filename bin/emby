@@ -592,7 +592,7 @@ _read_config() {
 }
 
 _load_config() {
-  if [[ "${EMBY_CONFIG_LOADED-}" ]]; then
+  if [[ "${EMBY_API_KEY-}" ]] && [[ "${EMBY_API_URL-}" ]]; then
     return 0
   fi
 
@@ -615,8 +615,6 @@ _load_config() {
     echo "Must set 'api_key' in $EMBY_CONFIG" >&2
     ret=1
   fi
-
-  export EMBY_CONFIG_LOADED=1
 
   if [[ "$ret" -ne 0 ]]; then
     _configure_help
