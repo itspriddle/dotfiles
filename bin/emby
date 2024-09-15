@@ -344,7 +344,11 @@ _playing_jq() {
     (seconds | tonumber % 3600 / 60 | floor) as $minutes |
     (seconds | tonumber % 60) as $seconds |
 
-    "\(zero_pad($hours)):\(zero_pad($minutes)):\(zero_pad($seconds))"
+    if $hours == 0 then
+      "\(zero_pad($minutes)):\(zero_pad($seconds))"
+    else
+      "\(zero_pad($hours)):\(zero_pad($minutes)):\(zero_pad($seconds))"
+    end
     ;
 
   def ticks_to_seconds(ticks):
@@ -362,13 +366,15 @@ _playing_jq() {
         if .NowPlayingItem.Type == "Episode" then
           "S\(zero_pad(.NowPlayingItem.ParentIndexNumber))E\(zero_pad(.NowPlayingItem.IndexNumber))"
         else
-          ""
+          null
         end
       ) as $episode_code |
 
       (
         if .NowPlayingItem.Type == "Episode" then
           "\(.NowPlayingItem.SeriesName) - \($episode_code) - \(.NowPlayingItem.Name)"
+        elif .NowPlayingItem.Type == "Audio" then
+          "\(.NowPlayingItem.AlbumArtist) - \(.NowPlayingItem.Name)"
         else
           .NowPlayingItem.Name
         end
@@ -411,8 +417,36 @@ _playing_jq() {
       ) as $client |
 
       (
-        (.NowPlayingItem.PremiereDate | split("T") | .[0])
+        if .NowPlayingItem.Type == "Audio" then
+          (.NowPlayingItem.DateCreated | split("T") | .[0])
+        else
+          (.NowPlayingItem.PremiereDate | split("T") | .[0])
+        end
       ) as $date |
+
+      (
+        if .NowPlayingItem.Type == "Audio" then
+          .NowPlayingItem.Album
+        else
+          null
+        end
+      ) as $album |
+
+      (
+        if .NowPlayingItem.Type == "Audio" then
+          .NowPlayingItem.AlbumArtist
+        else
+          null
+        end
+      ) as $album_artist |
+
+      (
+        if .NowPlayingItem.Type == "Audio" then
+          .NowPlayingItem.IndexNumber
+        else
+          null
+        end
+      ) as $album_track |
 
       (
         .PlayState.PlayMethod
@@ -437,7 +471,10 @@ _playing_jq() {
         remaining: $remaining,
         remaining_seconds: $remaining_seconds,
         episode_code: $episode_code,
-        stream: $stream
+        stream: $stream,
+        album: $album,
+        album_artist: $album_artist,
+        album_track: $album_track,
       }
     ) |
     if $format == "text" then
@@ -446,15 +483,40 @@ _playing_jq() {
           "\(bar)",
           "",
           "\(blue(bold("Name:")))      \(.name | wrap | trim)",
+
+          (if .media_type == "Audio" then
+            "\(blue(bold("Album:")))     \(.album)"
+          else
+            false
+          end),
+
+          (if .media_type == "Audio" then
+            "\(blue(bold("Track:")))     \(.album_track)"
+          else
+            false
+          end),
+
           "\(blue(bold("Duration:")))  \(.duration)",
-          "\(blue(bold("Progress:")))  \(.progress_percent)% (\(.progress) watched - \(.remaining) remaining)",
+          "\(blue(bold("Progress:")))  \(.progress_percent)% (\(.progress) \(if .media_type == "Audio" then "listened" else "watched" end) - \(.remaining) remaining)",
           "\(blue(bold("Player:")))    \(.client) (\(.device), \(.user)@\(.ip_address))",
           "\(blue(bold("Stream:")))    \(.stream)",
           "\(blue(bold("State:")))     \(.state)",
-          "\(blue(bold("Air Date:")))  \("\(.date)T00:00:00Z" | fromdate | strftime("%b %-d, %Y"))",
-          "\(blue(bold("Rating:")))    \(.rating)",
-          "\(blue(bold("Summary:")))   \(.summary | wrap | trim)"
-        ] | join("\n")
+          (if .media_type == "Audio" then
+            "\(blue(bold("Date:")))      \("\(.date)T00:00:00Z" | fromdate | strftime("%b %-d, %Y"))"
+          else
+            "\(blue(bold("Air Date:")))  \("\(.date)T00:00:00Z" | fromdate | strftime("%b %-d, %Y"))"
+          end),
+          (if .media_type == "Audio" then
+            false
+          else
+            "\(blue(bold("Rating:")))    \(.rating)"
+          end),
+          (if .media_type == "Audio" then
+            false
+          else
+            "\(blue(bold("Summary:")))   \(.summary | wrap | trim)"
+          end)
+        ] | map(select(.)) | join("\n")
       ) | join("\n\n")
     else
       .
