@@ -17,6 +17,7 @@
 #   restart - restart Emby
 #   scan    - trigger library scans
 #   system  - show system information
+#   users   - list users
 #
 # AUTHOR
 #   Joshua Priddle <jpriddle@me.com>
@@ -547,6 +548,25 @@ system() {
   ] | join("\n")'
 }
 
+# Usage: emby users
+#
+# NAME
+#   emby users - list users
+#
+# SYNOPSIS
+#   emby users
+#
+# DESCRIPTION
+#   List users.
+users() {
+  if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
+    help "${FUNCNAME[0]}" "$([[ "$1" == "-h" ]] && echo 1)"
+    return 1
+  fi
+
+  api /Users | jq -r '.[] | "\(.Name) (ID: \(.Id), Admin: \(.Policy.IsAdministrator))"'
+}
+
 EMBY_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/emby-api.json"
 
 _read_config() {
@@ -626,7 +646,7 @@ main() {
       help "$cmd"
       return 0
       ;;
-    api|playing|restart|scan|system)
+    api|playing|restart|scan|system|users)
       "$cmd" "$@"
       return $?
       ;;
