@@ -25,6 +25,7 @@
 #
 # SEE ALSO
 #   https://dev.emby.media/doc/restapi/index.html
+#   http://swagger.emby.media/?staticview=true
 
 # Enable debug mode
 if [[ "$DEBUG" ]]; then
@@ -148,7 +149,7 @@ scan() {
 _scan_list_libraries() {
   local lib_type="$1"
 
-  api "/Library/VirtualFolders" |
+  api /Library/VirtualFolders |
     jq '.[] |
       select(.CollectionType == "movies" or .CollectionType == "tvshows") |
       {(.CollectionType): [.Id]}
@@ -233,7 +234,7 @@ playing() {
     return 1
   fi
 
-  api "/Sessions" | _playing_format "${fmt:-text}" "$ansi"
+  api /Sessions | _playing_format "${fmt:-text}" "$ansi"
 }
 
 # Formats activity from Emby API.
@@ -519,7 +520,7 @@ restart() {
 
   _load_config || return 1
 
-  api "/System/Restart" -X POST
+  api /System/Restart -X POST
 }
 
 EMBY_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/emby-api.json"
