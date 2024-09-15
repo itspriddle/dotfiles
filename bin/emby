@@ -245,7 +245,7 @@ _playing_format() {
   [[ "${ansi:-}" = "1" ]] && colorize="--color-output"
 
   if [[ "$1" = "raw" ]]; then
-    jq '. | map(select(. | has("NowPlayingItem")))'
+    jq '. | map(select(has("NowPlayingItem")))'
   else
     jq "$colorize" \
       --arg ansi "${ansi:-}" \
