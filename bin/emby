@@ -196,6 +196,8 @@ _get_library_ids() {
 
   _get_libraries |
     jq -r --arg type "$*" '
+      def IN(s): . as $in | first(if (s == $in) then true else empty end);
+
       . | ($type | split(" ")) as $types |
 
       if ($types | index("all")) then
