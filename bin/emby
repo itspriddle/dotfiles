@@ -245,7 +245,7 @@ _scan_api_request() {
   api "/Items/$lib_id/Refresh" -X POST --data "$data"
 }
 
-# Usage: emby playing [--plain|--text|--json|--raw]
+# Usage: emby playing [--plain|--json|--raw|--user <USER>]
 #
 # NAME
 #   emby playing -- show what's currently playing
@@ -259,9 +259,6 @@ _scan_api_request() {
 # OPTIONS
 #   -p, --plain
 #       Don't colorize output.
-#
-#   -t, --text
-#       Show results in plain text. This is the default format.
 #
 #   -j, --json
 #       Show results in JSON format. Note that the format differs from the
@@ -283,14 +280,13 @@ playing() {
 
   [[ -t 1 ]] && ansi=1
 
-  local fmt user
+  local fmt=text user
 
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
       -p | --plain) ansi=0; shift;;
       -r | --raw) fmt="raw"; shift;;
       -j | --json) fmt="json"; shift;;
-      -t | --text) fmt="text"; shift;;
       -u | --user)
         shift
 
@@ -327,7 +323,7 @@ playing() {
     else
       cat
     fi
-  } | _playing_format "${fmt:-text}" "$ansi"
+  } | _playing_format "$fmt" "$ansi"
 }
 
 # Formats activity from Emby API.
