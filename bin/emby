@@ -472,6 +472,11 @@ api() {
 
   [[ "${path:0:1}" = / ]] && path="${path:1}" # strip leading slash
 
+  if [[ -z "$path" ]]; then
+    echo "Error: Missing API path" >&2
+    return 1
+  fi
+
   shift
 
   # assume GET
