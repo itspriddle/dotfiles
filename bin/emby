@@ -70,52 +70,40 @@ help() {
     }' "$0"
 }
 
-# Usage: emby scan [shows|movies|all]
+# Usage: emby scan [shows|movies|music|all]
 #
 # NAME
 #   emby scan -- trigger library scans
 #
 # SYNOPSIS
-#   emby scan [shows|movies|all]
+#   emby scan [shows|movies|music|all]
 #
 # DESCRIPTION
 #   Trigger library scans. By default, all libraries are scanned. You can
 #   limit to a specific library by passing it, e.g. `emby scan shows`.
 #
 # ALIASES
-#   These are all the same to scan movies and tvshows:
+#   These are equivalent to scan all:
 #     emby scan
 #     emby scan all
-#     emby scan a
 #
-#   These are all the same to scan tvshows:
-#
+#   These are all the same to scan shows:
 #     emby scan shows
-#     emby scan s
 #     emby scan tvshows
 #     emby scan tv
-#     emby scan t
-#
-#   These are all the same to scan movies:
-#     emby scan movies
-#     emby scan m
-#     emby scan mov
 scan() {
   if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
     help "${FUNCNAME[0]}" "$([[ "$1" == "-h" ]] && echo 1)"
     return 1
   fi
 
-  local lib_type="${1-all}" lib_ids=() id
+  local lib_type="${1-all}" lib_ids=() line
 
   case "$lib_type" in
-    tvshows|tv|t|s)
-      scan shows
+    shows|tv)
+      scan tvshows
       ;;
-    mov|m)
-      scan movies
-      ;;
-    movies|shows)
+    movies|tvshows|music|all)
       [[ "$lib_type" == "shows" ]] && lib_type="tvshows"
 
       while IFS='' read -r line; do
@@ -123,18 +111,16 @@ scan() {
       done < <(_get_library_ids "$lib_type")
 
       if [[ ${#lib_ids[@]} -eq 0 ]]; then
-        echo "No ${lib_type:0: -1} libraries found" >&2
+        echo "No libraries found" >&2
         return 1
       fi
 
-      for id in "${lib_ids[@]}"; do
+      for line in "${lib_ids[@]}"; do
+        local id="${line%%|*}"
+        local lib_type="${line#*|}"
         _scan_api_request "$id"
-        echo "Triggered ${lib_type:0: -1} scan for library ID $id"
+        echo "Scanning for $lib_type in library ID $id"
       done
-      ;;
-    all|a)
-      scan movies
-      scan shows
       ;;
     -*)
       echo "Error: Invalid option \`$lib_type'" >&2
@@ -153,12 +139,24 @@ _get_library_ids() {
   local lib_type="$1"
 
   _get_libraries |
-    jq -r --arg type "$lib_type" 'select(.CollectionType == $type) | .Id'
+    jq -r --arg type "$lib_type" '
+      if $type == "all" then
+        .
+      else
+        select(.CollectionType == $type)
+      end
+
+      | "\(.Id)|\(.CollectionType)"
+    '
 }
 
 _get_libraries() {
   api /Library/VirtualFolders |
-    jq '.[] | select(.CollectionType == "movies" or .CollectionType == "tvshows")'
+    jq '.[] | select(
+      .CollectionType == "movies" or
+      .CollectionType == "tvshows" or
+      .CollectionType == "music"
+      )'
 }
 
 _scan_api_request() {
