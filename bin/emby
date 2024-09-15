@@ -527,6 +527,8 @@ api() {
   if ! jq . <<< "$body" 2> /dev/null; then
     cat <<< "$body" | sed "s/&#39;/'/g"
   fi
+
+  [[ "$status" -ge 200 ]] && [[ "$status" -lt 300 ]]
 }
 
 # Usage: emby restart
