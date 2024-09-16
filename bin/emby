@@ -751,7 +751,7 @@ devices() {
   ] | join("\n")'
 }
 
-EMBY_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/emby-api.json"
+: "${EMBY_CONFIG:="${XDG_CONFIG_HOME:-$HOME/.config}/emby-api.json"}"
 
 _read_config() {
   if ! type jq &> /dev/null; then
