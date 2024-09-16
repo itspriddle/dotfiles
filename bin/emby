@@ -341,7 +341,8 @@ _playing_format() {
     jq "$colorize" \
       --arg ansi "${ansi:-}" \
       --arg format "$1" \
-      --raw-output "$(_playing_jq)"
+      --raw-output \
+      --from-file <(_playing_jq)
   fi
 }
 
