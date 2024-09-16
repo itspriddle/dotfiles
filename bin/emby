@@ -247,16 +247,20 @@ _scan_api_request() {
   api "/Items/$lib_id/Refresh" -X POST --data "$data"
 }
 
-# Usage: emby playing [--plain|--json|--raw|--user <USER>]
+# Usage: emby playing [--plain|--json|--raw] [USER...]
 #
 # NAME
 #   emby playing -- show what's currently playing
 #
 # SYNOPSIS
-#   emby playing [OPTIONS]
+#   emby playing [OPTIONS] [USER...]
 #
 # DESCRIPTION
-#   Show what's currently playing.
+#   Show what's currently playing. By default, activity for users is shown. To
+#   show activity for specific users, pass their names as arguments. I.e.
+#
+#     emby playing josh
+#     emby playing josh bob
 #
 # OPTIONS
 #   -p, --plain
@@ -269,9 +273,6 @@ _scan_api_request() {
 #
 #   -r, --raw
 #       Show raw JSON payload from the Emby API.
-#
-#   -u <USER>, --user <USER>
-#       Filter results by user.
 playing() {
   if [[ "${1-}" == "-h" ]] || [[ "${1-}" == "--help" ]]; then
     help "${FUNCNAME[0]}" "$([[ "$1" == "-h" ]] && echo 1)"
@@ -282,34 +283,20 @@ playing() {
 
   [[ -t 1 ]] && ansi=1
 
-  local fmt=text user
+  local fmt=text
 
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
       -p | --plain) ansi=0; shift;;
       -r | --raw) fmt="raw"; shift;;
       -j | --json) fmt="json"; shift;;
-      -u | --user)
-        shift
-
-        if [[ "$#" -eq 0 ]]; then
-          echo "Error: Missing argument for '$1'" >&2
-          return 1
-        fi
-
-        user="$1"
-
-        shift
-        ;;
       -*)
         echo "Error: Invalid option '$1'" >&2
         help "${FUNCNAME[0]}" -h
         return 1
         ;;
       *)
-        echo "Error: Invalid argument '$1'" >&2
-        help "${FUNCNAME[0]}" -h
-        return 1
+        break;
         ;;
     esac
   done
@@ -320,8 +307,18 @@ playing() {
   fi
 
   api /Sessions | {
-    if [[ "${user-}" ]]; then
-      jq --arg user "$user" 'map(select(.UserName == $user))'
+    if [[ "$#" -gt 0 ]]; then
+      jq --arg users "$*" '
+        def IN(s): . as $in | first(if (s == $in) then true else empty end);
+
+        . | ($users | split(" ")) as $usernames |
+
+        if ($usernames | length) > 0 then
+          map(select(.UserName | IN($usernames[])))
+        else
+          .
+        end
+      '
     else
       cat
     fi
