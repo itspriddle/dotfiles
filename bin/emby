@@ -436,7 +436,7 @@ _playing_jq() {
         if .NowPlayingItem.Type == "Episode" then
           "S\(zero_pad(.NowPlayingItem.ParentIndexNumber))E\(zero_pad(.NowPlayingItem.IndexNumber))"
         else
-          null
+          ""
         end
       ) as $episode_code |
 
@@ -498,7 +498,7 @@ _playing_jq() {
         if .NowPlayingItem.Type == "Audio" then
           .NowPlayingItem.Album
         else
-          null
+          ""
         end
       ) as $album |
 
@@ -506,7 +506,7 @@ _playing_jq() {
         if .NowPlayingItem.Type == "Audio" then
           .NowPlayingItem.AlbumArtist
         else
-          null
+          ""
         end
       ) as $album_artist |
 
@@ -514,7 +514,7 @@ _playing_jq() {
         if .NowPlayingItem.Type == "Audio" then
           .NowPlayingItem.IndexNumber
         else
-          null
+          ""
         end
       ) as $album_track |
 
