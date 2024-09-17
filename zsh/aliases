@@ -57,6 +57,7 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias battery-info='system_profiler -detailLevel mini SPPowerDataType'
   alias mkpassword='bashword'
   alias deluge-upload="$HOME/.dotfiles/share/linux/deluge/upload-torrent"
+  alias transmission-upload="$HOME/.dotfiles/share/linux/transmission/upload-torrent"
   alias set-audio-device="$HOME/.dotfiles/share/osx/utils/set-audio-device"
   alias backup-mac-to-syno="$HOME/.dotfiles/share/osx/utils/backup-mac-to-syno"
 
