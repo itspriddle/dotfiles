@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -e
+
+TRANSMISSION_RPC_URL="https://transmission.priddle.network/transmission/rpc"
+
+get_session() {
+  local response
+
+  response=$(curl --silent \
+    --write-out "%{json}%{header_json}" \
+    --output /dev/null \
+    "$TRANSMISSION_RPC_URL" |
+    jq -s add
+  )
+
+  response_code=$(jq -r .response_code <<< "$response")
+
+  if [[ $response_code -ne 409 ]]; then
+    echo "Unexpected response code: $response_code" >&2
+    return 1
+  fi
+
+  jq -r '."x-transmission-session-id"[0]' <<< "$response"
+}
+
+encode_file() {
+  local file="$1"
+
+  base64 -i "$file"
+}
+
+upload_file() {
+  local file="$1" session_id="$2" response
+
+  response=$(encode_file "$file" |
+    jq -nR '
+      .method = "torrent-add" |
+      .arguments.metainfo = input |
+      .arguments.paused = true
+    ' |
+    curl --silent \
+      --header "X-Transmission-Session-Id: $session_id" \
+      --data @- \
+      --write-out "%{json}%{header_json}" \
+      "$TRANSMISSION_RPC_URL" |
+    jq -s add
+  )
+
+  response_code="$(jq -r .response_code <<< "$response")"
+
+  if [[ $response_code -eq 200 ]]; then
+    echo "Uploaded \`$file' successfully"
+  else
+    echo "Unexpected response code: $response_code" >&2
+    return 1
+  fi
+}
+
+main() {
+  local file delete
+
+  if [[ "$#" -eq 0 ]]; then
+    echo "Usage: upload-torrent <file>..." >&2
+    return 1
+  elif [[ "$1" == "--help" ]]; then
+    echo "Upload a torrent file to Transmission" >&2
+    echo "Usage: upload-torrent <file>..." >&2
+    return 0
+  elif ! command -v jq &> /dev/null; then
+    echo "jq is required" >&2
+    return 1
+  fi
+
+  if [[ "$1" =~ ^(-d|--delete)$ ]]; then
+    delete=1
+    shift
+  fi
+
+  for file in "$@"; do
+    if [[ ! -f "$file" ]]; then
+      echo "File not found: $file" >&2
+      return 1
+    fi
+  done
+
+  for file in "$@"; do
+    upload_file "$file" "$(get_session)"
+  done
+
+  if [[ "$delete" ]]; then
+    printf "Deleted: "
+    rm -vf "$@"
+  fi
+}
+
+main "$@"
