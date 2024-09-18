@@ -384,7 +384,7 @@ _playing_jq() {
     (11) as $indent |
     (78 - $indent) as $length |
 
-    . | gsub("(?<line>.{1,\($length)})\\b(\\s+|$)"; "\(.line)\n\(" " * $indent // "")")
+    . | gsub("(?<line>.{1,\($length)})(\\s+|$)"; "\(.line)\n\(" " * $indent // "")")
     ;
 
   def round(decimal):
