@@ -567,14 +567,9 @@ _playing_jq() {
           "\(blue(bold("Duration:")))  \(.duration)",
           "\(blue(bold("Progress:")))  \(.progress_percent)% (\(.progress) \(if .media_type == "Audio" then "listened" else "watched" end) - \(.remaining) remaining)",
           "\(blue(bold("Player:")))    \(.client) (\(.device), \(.user)@\(.ip_address))",
-          "\(blue(bold("Stream:")))    \(.stream)",
-          "\(blue(bold("State:")))     \(.state)",
-          (if .media_type == "Audio" then
-            "\(blue(bold("Date:")))      \("\(.date)T00:00:00Z" | fromdate | strftime("%b %-d, %Y"))"
-          else
-            "\(blue(bold("Air Date:")))  \("\(.date)T00:00:00Z" | fromdate | strftime("%b %-d, %Y"))"
-          end),
-          (if .media_type == "Audio" then
+          "\(blue(bold("State:")))     \(.state) (\(.stream))",
+          "\(blue(bold("Date:")))      \("\(.date)T00:00:00Z" | fromdate | strftime("%b %-d, %Y"))",
+          (if .media_type == "Audio" or .rating == "None" then
             false
           else
             "\(blue(bold("Rating:")))    \(.rating)"
