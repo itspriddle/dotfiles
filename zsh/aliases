@@ -60,6 +60,7 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias transmission-upload="$HOME/.dotfiles/share/linux/transmission/upload-torrent"
   alias set-audio-device="$HOME/.dotfiles/share/osx/utils/set-audio-device"
   alias backup-mac-to-syno="$HOME/.dotfiles/share/osx/utils/backup-mac-to-syno"
+  alias opnsense-bandwidth="$HOME/.dotfiles/share/opnsense/bandwidth"
 
   # gh alias set --shell 'gist create-and-copy' 'gh gist create "$@" 2> /dev/null | tee /dev/tty | pbcopy'
   alias gist="gh gist create-and-copy"
