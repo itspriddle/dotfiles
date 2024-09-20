@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# path to ./api
+API_BIN=$(dirname "$0")/api
+
+target="${1:-daily}"
+
+case "$target" in
+  hourly|daily|monthly|yearly)
+    ;;
+  *)
+    echo "Usage: ${0##*/} hourly|daily|monthly|yearly" >&2
+    exit 1
+    ;;
+esac
+
+"$API_BIN" "vnstat/service/$target" | jq -r .response

@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+# Usage: api [options] <path>
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+: "${OPNSENSE_CONFIG:="${XDG_CONFIG_HOME:-$HOME/.config}/opnsense-api.json"}"
+
+_read_config() {
+  if ! type jq &> /dev/null; then
+    echo "Missing \`jq' command." >&2
+    return 1
+  fi
+
+  if [[ ! -r "$OPNSENSE_CONFIG" ]]; then
+    echo "Config '$OPNSENSE_CONFIG' doesn't exist" >&2
+    return 1
+  fi
+
+  jq -r 'to_entries |
+    map("OPNSENSE_\(.key | ascii_upcase)=\(.value | tostring)") |
+    .[]
+  ' "$OPNSENSE_CONFIG"
+}
+
+_load_config() {
+  if [[ "${OPNSENSE_KEY-}" ]] && [[ "${OPNSENSE_URL-}" ]] && [[ "${OPNSENSE_SECRET}" ]]; then
+    return 0
+  fi
+
+  for var in $(_read_config); do
+    case "${var%=*}" in
+      OPNSENSE_KEY|OPNSENSE_SECRET|OPNSENSE_URL)
+        export "${var?}"
+        ;;
+    esac
+  done
+
+  local ret=0
+
+  if [[ -z "${OPNSENSE_URL-}" ]]; then
+    echo "Must set 'url' in $OPNSENSE_CONFIG" >&2
+    ret=1
+  fi
+
+  if [[ -z "${OPNSENSE_KEY-}" ]]; then
+    echo "Must set 'key' in $OPNSENSE_CONFIG" >&2
+    ret=1
+  fi
+
+  if [[ -z "${OPNSENSE_SECRET-}" ]]; then
+    echo "Must set 'secret' in $OPNSENSE_CONFIG" >&2
+    ret=1
+  fi
+
+  if [[ "$ret" -ne 0 ]]; then
+    _configure_help
+  fi
+
+  return $ret
+}
+
+_configure_help() {
+  {
+    echo
+    echo "Create \`$OPNSENSE_CONFIG' with:"
+    echo
+    echo "  jq --null-input \\"
+    echo "    --arg key \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\" \\"
+    echo "    --arg secret \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\" \\"
+    echo "    --arg url \"https://opensense.mydomain.com\" \\"
+    echo "    '\$ARGS.named' > \"$OPNSENSE_CONFIG\""
+    echo
+    echo "  chmod 600 \"$OPNSENSE_CONFIG\""
+  } >&2
+
+  return 1
+}
+
+api() {
+  local path="${1-}"
+
+  if [[ -z "$path" ]]; then
+    echo "Missing path" >&2
+    return 1
+  fi
+
+  [[ "${1-}" ]] && shift
+
+  curl -s -u "$OPNSENSE_KEY:$OPNSENSE_SECRET" "$OPNSENSE_URL/api/$path" "$@"
+}
+
+main() {
+  _load_config || return 1
+
+  local cmd="${1:---help}"
+
+  [[ "${1-}" ]] && shift
+
+  case "$cmd" in
+    -h | --help)
+      sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+        awk -v f="${cmd//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+      return 1
+      ;;
+  esac
+
+  api "$cmd" "$@"
+}
+
+main "$@"
