@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+rsync -P --delete -auv /volume1/emby/movies /volume1/emby/tvshows /volume1/emby/backups
