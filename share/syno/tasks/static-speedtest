@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+PUBLIC=/volume1/docker/network.priddle.static/sites/network.priddle.static/public
+
+curl -s https://speedtest.priddle.network/api/speedtest/latest |
+  php -r '
+    $json = json_decode(file_get_contents("php://stdin"));
+    $out  = new stdClass;
+
+    $out->ping     = sprintf("%.1f Mbit/s", $json->data->ping);
+    $out->download = sprintf("%.1f Mbit/s", $json->data->download);
+    $out->upload   = sprintf("%.1f Mbit/s", $json->data->upload);
+
+    echo json_encode($out, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+  ' | tee "$PUBLIC/speedtest/latest.json"
