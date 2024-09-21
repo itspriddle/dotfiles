@@ -26,43 +26,48 @@ alias grm="git status --porcelain | awk '\$1 == \"D\" {print \$2}' | xargs git -
 alias gs='git status'
 alias gv='vim "+Ge :"'
 
-# ruby/rails
-alias rc='rails console'
-alias be='bundle exec'
-
-# GPG
-alias encrypt="gpg --armor --encrypt --recipient "
-alias decrypt="gpg --decrypt "
-
 # Others
 alias path='echo -e ${PATH//:/\\n}'
 alias rm='rm -iv'
 alias cp='cp -iv'
 alias mv='mv -iv'
-alias sh='env -i sh'
 alias grep='grep --color'
 alias dush='du -shc'
-alias wp="WP_CLI_DISABLE_AUTO_CHECK_UPDATE=1 PAGER=cat wp"
 alias gmt-date="date -u"
 alias weather="curl 'wttr.in/Clifton+Park+NY?n'"
-alias v="vv -a"
 alias random-string='LC_CTYPE=C LC_ALL=C tr -dc "[:alnum:]" < /dev/urandom | fold -w 50 | head -n 1'
-alias vman='MANPAGER="vim +MANPAGER --not-a-term -" man'
+
+type man &> /dev/null &&
+  alias vman='MANPAGER="vim +MANPAGER --not-a-term -" man'
+
+# TODO: syno loads this file before ~/.profile, so PATH isn't set yet...
+# type vv &> /dev/null &&
+  alias v="vv -a"
 
 # OS X
 if [ "${OSTYPE:0:6}" = "darwin" ]; then
+  # GPG
+  alias encrypt="gpg --armor --encrypt --recipient "
+  alias decrypt="gpg --decrypt "
+
+  alias wp="WP_CLI_DISABLE_AUTO_CHECK_UPDATE=1 PAGER=cat wp"
+  alias sh='env -i sh'
   alias flush-dns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder; sudo killall -HUP mDNSResponderHelper'
   alias df="df -Plh"
   alias eject-all="diskutil list | awk '/external/ { print \$1 }' | xargs -tn1 diskutil unmountDisk"
   alias battery-info='system_profiler -detailLevel mini SPPowerDataType'
-  alias mkpassword='bashword'
+
+  # Stuff only used on my Macs
   alias transmission-upload="$HOME/.dotfiles/share/transmission/upload-torrent"
   alias set-audio-device="$HOME/.dotfiles/share/osx/utils/set-audio-device"
   alias backup-mac-to-syno="$HOME/.dotfiles/share/osx/utils/backup-mac-to-syno"
   alias opnsense-bandwidth="$HOME/.dotfiles/share/opnsense/bandwidth"
-
   # gh alias set --shell 'gist create-and-copy' 'gh gist create "$@" 2> /dev/null | tee /dev/tty | pbcopy'
   alias gist="gh gist create-and-copy"
+
+  # ruby/rails
+  alias rc='rails console'
+  alias be='bundle exec'
 fi
 
 if [ "${OSTYPE:0:5}" = "linux" ] && [ -f /etc/rpi-issue ]; then
