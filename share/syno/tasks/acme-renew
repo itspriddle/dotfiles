@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+hc_ping() {
+  if [[ -z "${HC-}" ]]; then
+    return
+  fi
+
+  local path="${1-}"
+  local url="https://hc-ping.com/$HC"
+
+  [[ "$path" ]] && url="$url/$path"
+
+  curl -fsS -m 10 --retry 5 -o /dev/null "$url"
+}
+
+CONTAINER=network.priddle.scarif.acme
+
+# hc_ping start
+
+docker start "$CONTAINER"
+docker exec "$CONTAINER" acme.sh --cron && hc_ping
+docker stop "$CONTAINER"
