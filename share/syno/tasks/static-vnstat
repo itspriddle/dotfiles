@@ -1,4 +1,23 @@
 #!/usr/bin/env bash
 
-~/.dotfiles/share/opnsense/bandwidth-json \
-  > /volume1/docker/network.priddle.static/sites/network.priddle.static/public/vnstat/now.json
+DIR="/volume1/docker/network.priddle.static/sites/network.priddle.static/public/vnstat"
+BIN=~/.dotfiles/share/opnsense/bandwidth-json
+
+hourly=$("$BIN" hourly | tee "$DIR/hourly.json")
+daily=$("$BIN" daily | tee "$DIR/daily.json" "$DIR/now.json")
+monthly=$("$BIN" monthly | tee "$DIR/monthly.json")
+yearly=$("$BIN" yearly | tee "$DIR/yearly.json")
+
+jq -n \
+  --arg     fetched_at "$(date '+%F %T')" \
+  --argjson hourly     "$hourly" \
+  --argjson daily      "$daily" \
+  --argjson monthly    "$monthly" \
+  --argjson yearly     "$yearly" \
+  '{
+    $fetched_at,
+    hourly:  ($hourly | del(.fetched_at)),
+    daily:   ($daily | del(.fetched_at)),
+    monthly: ($monthly | del(.fetched_at)),
+    yearly:  ($yearly | del(.fetched_at))
+  }' | tee "$DIR/all.json"
