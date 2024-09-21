@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+BIN="$(dirname "$0")/bandwidth"
+
+JSON='{ "date": "%s", "time": "%s", "rx": "%s %s", "tx": "%s %s", "total": "%s %s", "rate": "%s %s" }'
+
+# 09/20/24     41.12 GiB |    7.16 GiB |   48.28 GiB |    7.02 Mbit/s
+"$BIN" | grep "$(date '+%m/%d/%y')" |
+  awk \
+    -v date="$(date '+%F')" \
+    -v time="$(date '+%T')" \
+    -v "template=$JSON" \
+    '{
+      printf template, date, time, $2, $3, $5, $6, $8, $9, $11, $12
+      printf "\n"
+    }'

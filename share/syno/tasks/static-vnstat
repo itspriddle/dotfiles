@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+~/.dotfiles/share/opnsense/bandwidth-json \
+  > /volume1/docker/network.priddle.static/sites/network.priddle.static/public/vnstat/now.json

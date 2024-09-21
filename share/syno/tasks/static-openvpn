@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+CONTAINER_NAME=network.priddle.transmission
+PUBLIC=/volume1/docker/network.priddle.static/sites/network.priddle.static/public
+
+(docker exec "$CONTAINER_NAME" dig -4 ch txt whoami.cloudflare +short @1.1.1.1 +time=10 2> /dev/null || echo UNKNOWN) |
+  tr -d '"' |
+  jq -Rn '. | .openvpn_ip = input' \
+  > "$PUBLIC/openvpn/vpn-ip.json"
+
+(dig -4 ch txt whoami.cloudflare +short @1.1.1.1 +time=10 2> /dev/null || echo UNKNOWN) |
+  tr -d '"' |
+  jq -Rn '. | .real_ip = input' \
+  > "$PUBLIC/openvpn/real-ip.json"
+
+jq -s add \
+  "$PUBLIC/openvpn/real-ip.json" \
+  "$PUBLIC/openvpn/vpn-ip.json" \
+  > "$PUBLIC/openvpn/ips.json"
