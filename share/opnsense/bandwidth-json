@@ -2,15 +2,55 @@
 
 BIN="$(dirname "$0")/bandwidth"
 
-JSON='{ "date": "%s", "time": "%s", "rx": "%s %s", "tx": "%s %s", "total": "%s %s", "rate": "%s %s" }'
+target="${1:-daily}"
+
+pattern=
+
+case "$target" in
+  hourly)
+    pattern="$(date '+%H'):00"
+    report_date="$(date '+%-l %p')"
+    ;;
+  daily)
+    pattern="$(date '+%m/%d/%y')"
+    report_date="$(date '+%b %-e, %Y')"
+    ;;
+  monthly)
+    pattern="$(date "+%b '%y")"
+    report_date="$(date '+%b %Y')"
+    ;;
+  yearly)
+    pattern="$(date '+%Y')"
+    report_date="$pattern"
+    ;;
+  *)
+    echo "Usage: ${0##*/} hourly|daily|monthly|yearly" >&2
+    exit 1
+    ;;
+esac
+
+# Sep '24
+
+JSON='{
+  "fetched_at": "%s",
+  "rx": "%s %s",
+  "tx": "%s %s",
+  "total": "%s %s",
+  "rate": "%s %s",
+  "type": "%s",
+  "report_date": "%s"
+}'
 
 # 09/20/24     41.12 GiB |    7.16 GiB |   48.28 GiB |    7.02 Mbit/s
-"$BIN" | grep "$(date '+%m/%d/%y')" |
+"$BIN" "$target" |
+  grep "$pattern" |
+  sed "s/ '/'/" |
   awk \
-    -v date="$(date '+%F')" \
-    -v time="$(date '+%T')" \
-    -v "template=$JSON" \
+    -v type="$target" \
+    -v fetched_at="$(date '+%F %T')" \
+    -v template="$JSON" \
+    -v report_date="$report_date" \
     '{
-      printf template, date, time, $2, $3, $5, $6, $8, $9, $11, $12
+      printf template, fetched_at, $2, $3, $5, $6, $8, $9, $11, $12, type, report_date
       printf "\n"
     }'
