@@ -643,6 +643,8 @@ api() {
     "${EMBY_API_URL%%/}/emby/$path"
   )
 
+  # TODO: handle binary responses
+
   status=$(sed -n '$p' <<< "$response")
   body=$(sed '$d' <<< "$response")
 
