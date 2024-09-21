@@ -105,14 +105,16 @@ if s:platform == 'macos'
   Plug 'jwalton512/vim-blade'
   Plug 'itspriddle/applescript.vim'
 
+  if isdirectory(expand(s:vimhome . '/plugged/vim-notebook'))
+    call plug#(s:vimhome . '/plugged/vim-notebook')
+  endif
+endif
+
+if s:platform == 'macos' || s:platform =~# '^linux-synology'
   " Git integration
   Plug 'tpope/vim-git'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-rhubarb'
-
-  if isdirectory(expand(s:vimhome . '/plugged/vim-notebook'))
-    call plug#(s:vimhome . '/plugged/vim-notebook')
-  endif
 endif
 
 " Syntax
