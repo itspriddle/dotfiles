@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 0 ]]; then
+  echo "Specify one or more files"
+  exit 1
+fi
+
+for arg in "$@"; do
+  if [[ -d "$arg" ]]; then
+    sudo chmod 775 "$arg"
+  elif [[ -f "$arg" ]]; then
+    sudo chmod 644 "$arg"
+  fi
+
+  sudo chown emby:users "$arg"
+  sudo touch "$arg"
+done
