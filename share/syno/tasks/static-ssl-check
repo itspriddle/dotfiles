@@ -16,7 +16,7 @@ check_cert() {
     --arg domain "$domain" \
     --arg expiry "$expiry" \
     '{
-      "\($domain)": ($expiry | strptime("%b %d %H:%M:%S %Y %Z") | strftime("%F %TZ%z"))
+      "\($domain)": ($expiry | strptime("%b %d %H:%M:%S %Y %Z") | strftime("%FT%T.000%z"))
     }'
 }
 
