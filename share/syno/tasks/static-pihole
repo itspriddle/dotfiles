@@ -8,10 +8,12 @@ mkdir -p "$FEEDS/pihole"
 API=~/.dotfiles/share/pihole/api
 
 { "$API" dns1.priddle.network summaryRaw |
+  jq '.xgravity_updated_at = (.gravity_last_updated.absolute | todate)' |
     jq -n --arg d dns1.priddle.network '{ "\($d)": input }' |
     tee "$FEEDS/pihole/dns1.json.tmp"
 
   "$API" dns2.priddle.network summaryRaw |
+    jq '.xgravity_updated_at = (.gravity_last_updated.absolute | todate)' |
     jq -n --arg d dns2.priddle.network '{ "\($d)": input }' |
     tee "$FEEDS/pihole/dns2.json.tmp"
 } |
