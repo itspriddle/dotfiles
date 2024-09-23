@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 ~/.dotfiles/share/syno/tasks/static-dhcp-leases
 ~/.dotfiles/share/syno/tasks/static-healthchecks
 ~/.dotfiles/share/syno/tasks/static-openvpn
