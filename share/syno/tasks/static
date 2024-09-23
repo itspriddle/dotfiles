@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+~/.dotfiles/share/syno/tasks/static-dhcp-leases
+~/.dotfiles/share/syno/tasks/static-openvpn
+~/.dotfiles/share/syno/tasks/static-speedtest
+~/.dotfiles/share/syno/tasks/static-ssl-check
+~/.dotfiles/share/syno/tasks/static-vnstat
