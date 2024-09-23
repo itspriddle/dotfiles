@@ -8,4 +8,5 @@
 ~/.dotfiles/share/syno/tasks/static-speedtest
 ~/.dotfiles/share/syno/tasks/static-ssl-check
 ~/.dotfiles/share/syno/tasks/static-syno
+~/.dotfiles/share/syno/tasks/static-transmission
 ~/.dotfiles/share/syno/tasks/static-vnstat

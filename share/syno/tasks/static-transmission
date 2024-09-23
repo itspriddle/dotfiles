@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+FEEDS=/volume1/docker/network.priddle.home/public/feeds/transmission
+
+[[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
+
+rm -f "$FEEDS/up"
+
+~/.dotfiles/share/transmission/stats |
+  jq --arg fetched_at "$(date '+%F %T')" \
+    '. | .fetched_at = $fetched_at' |
+    tee "$FEEDS/stats.json.tmp"
+
+mv -f "$FEEDS/stats.json.tmp" "$FEEDS/stats.json"
+
+touch "$FEEDS/up"
