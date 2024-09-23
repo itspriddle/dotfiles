@@ -14,4 +14,6 @@ FEEDS=/volume1/docker/network.priddle.home/public/feeds
     }
   ]' |
     jq -s add |
-    tee "$FEEDS/dhcp/leases.json"
+    tee "$FEEDS/dhcp/leases.json.tmp"
+
+mv -f "$FEEDS/dhcp/leases.json.tmp" "$FEEDS/dhcp/leases.json"
