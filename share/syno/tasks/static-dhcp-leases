@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+FEEDS=/volume1/docker/network.priddle.home/public/feeds
+
+~/.dotfiles/share/opnsense/api dhcpv4/leases/searchLease |
+  jq '.rows[] | [
+     {
+      hostname: (if (.hostname | tostring) != "" then "\(.hostname).priddle.network" else null end),
+      mac,
+      address,
+      type,
+      status,
+      description: (if (.descr | tostring) != "" then .descr else null end)
+    }
+  ]' |
+    jq -s add |
+    tee "$FEEDS/dhcp/leases.json"
