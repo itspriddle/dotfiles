@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+FEEDS=/volume1/docker/network.priddle.home/public/feeds/prowlarr
+
+[[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
+
+~/.dotfiles/share/prowlarr/api indexerstats |
+  jq --arg fetched_at "$(date '+%F %T')" \
+  '.indexers[] |
+    reduce (to_entries[] | select(.key | startswith("number"))) as {$key, $value} ({}; .[$key] += $value) |
+    .fetched_at = $fetched_at
+  ' |
+  tee "$FEEDS/stats.json.tmp"
+
+mv -f "$FEEDS/stats.json.tmp" "$FEEDS/stats.json"
+
+touch "$FEEDS/up"
