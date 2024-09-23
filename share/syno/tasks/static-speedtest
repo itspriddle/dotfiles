@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
 
-FEEDS=/volume1/docker/network.priddle.home/public/feeds
+FEEDS=/volume1/docker/network.priddle.home/public/feeds/speedtest
+NOW="$(date '+%Y%m%d%H%I%S')"
 
 curl -s https://speedtest.priddle.network/api/speedtest/latest |
   php -r '
     $json = json_decode(file_get_contents("php://stdin"));
     $out  = new stdClass;
 
-    $out->ping       = sprintf("%.1f Mbit/s", $json->data->ping);
+    $out->ping       = sprintf("%.1f ms", $json->data->ping);
     $out->download   = sprintf("%.1f Mbit/s", $json->data->download);
     $out->upload     = sprintf("%.1f Mbit/s", $json->data->upload);
     $out->fetched_at = date("Y-m-d H:i:s");
 
     echo json_encode($out, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     echo "\n";
-  ' | tee "$FEEDS/speedtest/latest.json.tmp"
+  ' | tee "$FEEDS/latest.json.tmp"
 
-mv -f "$FEEDS/speedtest/latest.json.tmp" "$FEEDS/speedtest/latest.json"
+mv -f "$FEEDS/latest.json.tmp" "$FEEDS/latest.json"
