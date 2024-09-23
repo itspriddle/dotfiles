@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
+fi
+
+set -e
+
+CONTAINER="network.priddle.transmission"
+
+notify() {
+  slack-notify --webhook-url "https://slack.priddle.network" "$@"
+}
+
+transmission_running() {
+  sudo docker ps | grep -q "$CONTAINER"
+}
+
+stop_transmission() {
+  sudo docker stop "$CONTAINER"
+}
+
+if ! transmission_running; then
+  if [[ ! -f ~/.transmission-notified ]]; then
+    touch ~/.transmission-notified
+    notify "Transmission is not running!"
+  fi
+  exit 1
+else
+  rm -f ~/.transmission-notified
+fi
+
+real_ip=$(dig @1.1.1.1 ch txt whoami.cloudflare +short +tries=5 +time=10 | tr -d '"')
+
+openvpn_ip=$(sudo docker exec -t "$CONTAINER" dig @1.1.1.1 ch txt whoami.cloudflare +short +tries=5 +time=10 | tr -d '"')
+
+if [[ "$real_ip" == "$openvpn_ip" ]]; then
+  stop_transmission
+
+  notify \
+    --channel "#transmission" \
+    --color "F1AEB5" \
+    --pretext "Transmission IP is the same as our real IP! Transmission is now shutdown" \
+    --field "OpenVPN IP|$openvpn_ip" \
+    --field "Real IP|$real_ip"
+
+  touch ~/.transmission-notified
+
+  exit 1
+fi
