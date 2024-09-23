@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+check_cert() {
+  local domain="$1"
+  local port="${2:-443}"
+  local expiry
+
+  expiry=$(echo | openssl s_client \
+    -servername "$domain" \
+    -connect "$domain:$port" 2>/dev/null |
+    openssl x509 -noout -enddate |
+    sed 's/.*=//'
+  )
+
+  jq -Rn \
+    --arg domain "$domain" \
+    --arg expiry "$expiry" \
+    '{
+      "\($domain)": ($expiry | strptime("%b %d %H:%M:%S %Y %Z") | strftime("%F %TZ%z"))
+    }'
+}
+
+FEEDS=/volume1/docker/network.priddle.home/public/feeds
+
+{ check_cert router.priddle.network    | tee "$FEEDS/ssl/router.json"
+  check_cert dns1.priddle.network      | tee "$FEEDS/ssl/dns1.json"
+  check_cert dns2.priddle.network      | tee "$FEEDS/ssl/dns2.json"
+  check_cert scarif.priddle.network    | tee "$FEEDS/ssl/scarif.json"
+  check_cert emby.priddle.network 8920 | tee "$FEEDS/ssl/emby.json"
+
+  jq '
+    .["*.priddle.network"] = .["scarif.priddle.network"] |
+      del(.["scarif.priddle.network"])
+  ' "$FEEDS/ssl/scarif.json" | tee "$FEEDS/ssl/star.json"
+} |
+  jq -s add |
+  tee "$FEEDS/ssl/status.json"
