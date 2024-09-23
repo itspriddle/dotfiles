@@ -1,19 +1,42 @@
 #!/usr/bin/env bash
 
 CONTAINER_NAME=network.priddle.transmission
-FEEDS=/volume1/docker/network.priddle.home/public/feeds
+FEEDS=/volume1/docker/network.priddle.home/public/feeds/openvpn
 
-(docker exec "$CONTAINER_NAME" dig -4 ch txt whoami.cloudflare +short @1.1.1.1 +time=10 2> /dev/null || echo UNKNOWN) |
-  tr -d '"' |
-  jq -Rn '. | .openvpn_ip = input' \
-  > "$FEEDS/openvpn/vpn-ip.json"
+NOW="$(date '+%F %T')"
+TIME="$(date '+%-l:%m %p')"
 
-(dig -4 ch txt whoami.cloudflare +short @1.1.1.1 +time=10 2> /dev/null || echo UNKNOWN) |
-  tr -d '"' |
-  jq -Rn '. | .real_ip = input' \
-  > "$FEEDS/openvpn/real-ip.json"
+openvpn_ip() {
+  docker exec "$CONTAINER_NAME" dig -4 ch txt whoami.cloudflare +short @1.1.1.1 +time=10 2> /dev/null || echo UNKNOWN
+}
 
-jq -s add \
-  "$FEEDS/openvpn/real-ip.json" \
-  "$FEEDS/openvpn/vpn-ip.json" \
-  > "$FEEDS/openvpn/ips.json"
+real_ip() {
+  dig -4 ch txt whoami.cloudflare +short @1.1.1.1 +time=10 2> /dev/null || echo UNKNOWN
+}
+
+rm -f "$FEEDS/up"
+
+{
+  openvpn_ip |
+    tr -d '"' |
+    jq -Rn --arg now "$NOW" --arg time "$TIME" '. | .openvpn_ip = input | .updated_at = $now | .updated_time = $time' |
+    tee "$FEEDS/vpn-ip.json.tmp"
+
+  real_ip |
+    tr -d '"' |
+    jq -Rn --arg now "$NOW" --arg time "$TIME" '. | .real_ip = input | .updated_at = $now | .updated_time = $time' |
+    tee "$FEEDS/real-ip.json.tmp"
+} |
+  jq -s add |
+  tee "$FEEDS/ips.json.tmp"
+
+mv -f "$FEEDS/real-ip.json.tmp" "$FEEDS/real-ip.json"
+mv -f "$FEEDS/vpn-ip.json.tmp" "$FEEDS/vpn-ip.json"
+mv -f "$FEEDS/ips.json.tmp" "$FEEDS/ips.json"
+
+REAL_IP="$(jq .real_ip "$FEEDS/ips.json")"
+OPENVPN_IP="$(jq .openvpn_ip "$FEEDS/ips.json")"
+
+if [[ "$OPENVPN_IP" != UNKNOWN ]] && [[ "$OPENVPN_IP" != "$REAL_IP" ]]; then
+  touch "$FEEDS/up"
+fi
