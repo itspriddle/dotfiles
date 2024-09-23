@@ -1,0 +1,124 @@
+#!/usr/bin/env bash
+# Usage: api [options] <path>
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+: "${PIHOLE_CONFIG:="${XDG_CONFIG_HOME:-$HOME/.config}/pihole-api.json"}"
+
+_read_config() {
+  local domain="$1"
+
+  if ! type jq &> /dev/null; then
+    echo "Missing \`jq' command." >&2
+    return 1
+  fi
+
+  if [[ ! -r "$PIHOLE_CONFIG" ]]; then
+    echo "Config '$PIHOLE_CONFIG' doesn't exist" >&2
+    return 1
+  fi
+
+  jq -r --arg domain "$domain" '
+  .[$domain] | to_entries |
+    map("PIHOLE_\(.key | ascii_upcase)=\(.value | tostring)") |
+    .[]
+  ' "$PIHOLE_CONFIG"
+}
+
+_load_config() {
+  local domain="$1"
+
+  if [[ "${PIHOLE_KEY-}" ]] && [[ "${PIHOLE_URL-}" ]]; then
+    return 0
+  fi
+
+  for var in $(_read_config "$domain"); do
+    case "${var%=*}" in
+      PIHOLE_KEY|PIHOLE_SECRET|PIHOLE_URL)
+        export "${var?}"
+        ;;
+    esac
+  done
+
+  local ret=0
+
+  if [[ -z "${PIHOLE_URL-}" ]]; then
+    echo "Must set 'url' in $PIHOLE_CONFIG" >&2
+    ret=1
+  fi
+
+  if [[ -z "${PIHOLE_KEY-}" ]]; then
+    echo "Must set 'key' in $PIHOLE_CONFIG" >&2
+    ret=1
+  fi
+
+  if [[ "$ret" -ne 0 ]]; then
+    _configure_help
+  fi
+
+  return $ret
+}
+
+_configure_help() {
+  {
+    echo
+    echo "Create \`$PIHOLE_CONFIG' with:"
+    echo
+    echo "  jq --null-input \\"
+    echo "    --arg key \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\" \\"
+    echo "    --arg url \"https://opensense.mydomain.com\" \\"
+    echo "    '\$ARGS.named' > \"$PIHOLE_CONFIG\""
+    echo
+    echo "  chmod 600 \"$PIHOLE_CONFIG\""
+  } >&2
+
+  return 1
+}
+
+api() {
+  local path="${1-}"
+
+  if [[ -z "$path" ]]; then
+    echo "Missing path" >&2
+    return 1
+  fi
+
+  [[ "${1-}" ]] && shift
+
+  curl -s "$PIHOLE_URL/admin/api.php?$cmd&auth=$PIHOLE_KEY" "$@"
+}
+
+main() {
+  local domain="${1-}"
+
+  if [[ -z "$domain" ]]; then
+    echo "Must specify domain" >&2
+    return 1
+  fi
+
+  shift
+
+  _load_config "$domain" || return 1
+
+  local cmd="${1:---help}"
+
+  [[ "${1-}" ]] && shift
+
+  case "$cmd" in
+    -h | --help)
+      sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+        awk -v f="${cmd//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+      return 1
+      ;;
+  esac
+
+  api "$cmd" "$@"
+}
+
+main "$@"
