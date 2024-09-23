@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+
+FEEDS=/volume1/docker/network.priddle.home/public/feeds
+mkdir -p "$FEEDS/pihole"
+
+API=~/.dotfiles/share/pihole/api
+
+{ "$API" dns1.priddle.network summaryRaw |
+    jq -n --arg d dns1.priddle.network '{ "\($d)": input }' |
+    tee "$FEEDS/pihole/dns1.json.tmp"
+
+  "$API" dns2.priddle.network summaryRaw |
+    jq -n --arg d dns2.priddle.network '{ "\($d)": input }' |
+    tee "$FEEDS/pihole/dns2.json.tmp"
+} |
+  jq -s add |
+  tee "$FEEDS/pihole/all.json.tmp"
+
+mv "$FEEDS/pihole/dns1.json.tmp" "$FEEDS/pihole/dns1.json"
+mv "$FEEDS/pihole/dns2.json.tmp" "$FEEDS/pihole/dns2.json"
+mv "$FEEDS/pihole/all.json.tmp" "$FEEDS/pihole/all.json"
