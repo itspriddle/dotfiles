@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PUBLIC=/volume1/docker/network.priddle.static/sites/network.priddle.static/public
+FEEDS=/volume1/docker/network.priddle.home/public/feeds
 
 curl -s https://speedtest.priddle.network/api/speedtest/latest |
   php -r '
@@ -14,4 +14,4 @@ curl -s https://speedtest.priddle.network/api/speedtest/latest |
 
     echo json_encode($out, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     echo "\n";
-  ' | tee "$PUBLIC/speedtest/latest.json"
+  ' | tee "$FEEDS/speedtest/latest.json"

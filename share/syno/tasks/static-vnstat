@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-DIR="/volume1/docker/network.priddle.static/sites/network.priddle.static/public/vnstat"
+FEEDS=/volume1/docker/network.priddle.home/public/feeds
+DIR="$FEEDS/vnstat"
 BIN=~/.dotfiles/share/opnsense/bandwidth-json
 
 hourly=$("$BIN" hourly | tee "$DIR/hourly.json")
