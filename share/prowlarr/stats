@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+API=$(dirname "$0")/api
+
+"$API" indexerstats |
+  jq --arg fetched_at "$(date '+%F %T')" '.indexers[]
+    | reduce (to_entries[] | select(.key | startswith("number"))) as {$key, $value} ({}; .[$key] += $value)
+    | .fetched_at = $fetched_at
+  '
