@@ -6,6 +6,8 @@ if [[ "$DEBUG" ]]; then
   set -x
 fi
 
+set -euo pipefail
+
 check_cert() {
   local domain="$1"
   local port="${2:-443}"

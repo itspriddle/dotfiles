@@ -6,6 +6,8 @@ if [[ "$DEBUG" ]]; then
   set -x
 fi
 
+set -euo pipefail
+
 FEEDS=/volume1/docker/network.priddle.home/public/feeds/vnstat
 
 [[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"

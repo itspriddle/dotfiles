@@ -6,7 +6,7 @@ if [[ "$DEBUG" ]]; then
   set -x
 fi
 
-set -e
+set -euo pipefail
 
 FEEDS=/volume1/docker/network.priddle.home/public/feeds/healthchecks
 
