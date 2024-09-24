@@ -14,19 +14,8 @@ FEEDS=/volume1/docker/network.priddle.home/public/feeds/transmission
 
 rm -f "$FEEDS/up"
 
-API=~/.dotfiles/share/transmission/api
-
-SESSION=$("$API" 2> /dev/null || true)
-
-"$API" --session="$SESSION" -d '{"method": "session-stats"}' |
-  jq --arg fetched_at "$(date '+%F %T')" '{
-    $fetched_at,
-    total_torrents: .arguments.torrentCount,
-    leeching_torrents: (.arguments.torrentCount - .arguments.activeTorrentCount),
-    active_torrents: .arguments.activeTorrentCount,
-    download_speed: .arguments.downloadSpeed,
-    upload_speed: .arguments.uploadSpeed
-  }' | tee "$FEEDS/stats.json.tmp"
+~/.dotfiles/share/transmission/stats |
+ tee "$FEEDS/stats.json.tmp"
 
 mv -f "$FEEDS/stats.json.tmp" "$FEEDS/stats.json"
 
