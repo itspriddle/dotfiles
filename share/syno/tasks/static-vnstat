@@ -10,8 +10,6 @@ FEEDS=/volume1/docker/network.priddle.home/public/feeds/vnstat
 
 [[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
 
-BIN=~/.dotfiles/share/opnsense/bandwidth-json
-
 FHOUR="$(date '+%F-%H')00"
 FDAY="$(date '+%F')"
 FMONTH="$(date '+%Y-%m')"
@@ -41,24 +39,12 @@ for f in "${HOURLY_FILES[@]}" "${DAILY_FILES[@]}" "${MONTHLY_FILES[@]}" "${YEARL
   mkdir -p "$(dirname "$f")"
 done
 
-hourly=$("$BIN" hourly | tee "${HOURLY_FILES[@]}")
-daily=$("$BIN" daily | tee "${DAILY_FILES[@]}")
-monthly=$("$BIN" monthly | tee "${MONTHLY_FILES[@]}")
-yearly=$("$BIN" yearly | tee "${YEARLY_FILES[@]}")
+STATS="$(~/.dotfiles/share/opnsense/vnstat | tee "$FEEDS/now.json.tmp")"
 
-jq -n \
-  --arg     fetched_at "$(date '+%F %T')" \
-  --argjson hourly     "$hourly" \
-  --argjson daily      "$daily" \
-  --argjson monthly    "$monthly" \
-  --argjson yearly     "$yearly" \
-  '{
-    $fetched_at,
-    hourly:  ($hourly | del(.fetched_at)),
-    daily:   ($daily | del(.fetched_at)),
-    monthly: ($monthly | del(.fetched_at)),
-    yearly:  ($yearly | del(.fetched_at))
-  }' | tee "$FEEDS/now.json.tmp"
+jq .hourly <<< "$STATS" | tee "${HOURLY_FILES[@]}"
+jq .daily <<< "$STATS" | tee "${DAILY_FILES[@]}"
+jq .monthly <<< "$STATS" | tee "${MONTHLY_FILES[@]}"
+jq .yearly <<< "$STATS" | tee "${YEARLY_FILES[@]}"
 
 for f in "$FEEDS/now.json.tmp" "${HOURLY_FILES[@]}" "${DAILY_FILES[@]}" "${MONTHLY_FILES[@]}" "${YEARLY_FILES[@]}"; do
   mv -f "$f" "${f%%.tmp}"

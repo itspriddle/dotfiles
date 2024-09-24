@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+BIN="$(dirname "$0")/bandwidth-json"
+
+hourly=$("$BIN" hourly)
+daily=$("$BIN" daily)
+monthly=$("$BIN" monthly)
+yearly=$("$BIN" yearly)
+
+jq -n \
+  --arg     fetched_at "$(date '+%F %T')" \
+  --argjson hourly     "$hourly" \
+  --argjson daily      "$daily" \
+  --argjson monthly    "$monthly" \
+  --argjson yearly     "$yearly" \
+  '{
+    $fetched_at,
+    $hourly,
+    $daily,
+    $monthly,
+    $yearly
+  }'
