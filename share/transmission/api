@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+TRANSMISSION_RPC_URL="https://transmission.priddle.network/transmission/rpc"
+
+api() {
+  local response response_code session
+
+  if [[ -n "${1-}" ]]; then
+    session="$1"
+    shift
+    set -- --header "X-Transmission-Session-Id: $session" "$@"
+  else
+    shift
+  fi
+
+  response=$(curl --silent \
+    --write-out '\n{"__response_code": %{response_code}, "__session": "%header{x-transmission-session-id}"}' \
+    --header "Content-Type: application/json" \
+    "$@" \
+    "$TRANSMISSION_RPC_URL"
+  )
+
+  if grep -q '<p>' <<< "$response"; then
+    response="{\"output\": \"$(sed '$d' <<< "$response" | sed 's,",\\",g')\"} $(tail -1 <<< "$response")"
+  fi
+
+  response=$(jq -s add <<< "$response")
+
+  response_code=$(jq -r .__response_code <<< "$response")
+  session=$(jq -r .__session <<< "$response")
+
+  case "$response_code" in
+    409)
+      echo "Try again with --session=" >&2
+      echo "$session"
+      return 1
+      ;;
+  esac
+
+  jq . <<< "$response"
+}
+
+main() {
+  local session=
+
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+      --session=*)
+        session="${1#*=}"
+        shift
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  api "$session" "$@"
+}
+
+main "$@"
