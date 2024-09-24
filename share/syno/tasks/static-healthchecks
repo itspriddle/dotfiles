@@ -12,6 +12,7 @@ CHECKS=(
   dns2.acme
   scarif.acme
   scarif.openvpn
+  scarif.static
 )
 
 for hc in "${CHECKS[@]}"; do
