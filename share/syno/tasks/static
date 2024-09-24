@@ -13,6 +13,7 @@ set -euo pipefail
 # script
 #~/.dotfiles/share/syno/tasks/static-healthchecks
 ~/.dotfiles/share/syno/tasks/static-openvpn
+~/.dotfiles/share/syno/tasks/static-opnsense
 ~/.dotfiles/share/syno/tasks/static-pihole
 ~/.dotfiles/share/syno/tasks/static-prowlarr
 ~/.dotfiles/share/syno/tasks/static-speedtest
