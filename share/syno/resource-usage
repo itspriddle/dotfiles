@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+VOLUME=/volume1
+
+# df -h /volume1
+# Filesystem              Size  Used Avail Use% Mounted on
+# /dev/mapper/cachedev_0   39T   16T   23T  41% /volume1
+
+RAW_USAGE="$(df -h "$VOLUME" | grep "$VOLUME")"
+
+VOLUME_SIZE=$(awk '{ print $2 }' <<< "$RAW_USAGE" | sed -E 's/(G|T)/ \1B/')
+VOLUME_USED=$(awk '{ print $3 }' <<< "$RAW_USAGE" | sed -E 's/(G|T)/ \1B/')
+VOLUME_AVAILABLE=$(awk '{ print $4 }' <<< "$RAW_USAGE" | sed -E 's/(G|T)/ \1B/')
+VOLUME_USED_PERCENT=$(awk '{ print $5 }' <<< "$RAW_USAGE")
+
+# TODO: i'm certain this breaks when uptime is < 24h
+# 02:10:19 up 92 days ...
+RAW_UPTIME=$(uptime)
+UPTIME=$(awk '{ printf "%s", $3 }' <<< "$RAW_UPTIME")
+
+MEMORY_USED=$(free | grep Mem | awk '{ printf "%.2f%%\n", (100 - ($6/$2 * 100.0)) }')
+
+CPU_USED=$( grep cpu /proc/stat |
+  tail -1 |
+  awk '{ printf "%.2f%%\n", (100 - ($5*100)/($2+$3+$4+$5+$6+$7+$8+$9+$10)) }'
+)
+
+jq -n \
+  --arg fetched_at "$(date '+%F %T')" \
+  --arg uptime "$UPTIME days" \
+  --arg volume_path "$VOLUME" \
+  --arg volume_size "$VOLUME_SIZE" \
+  --arg volume_used "$VOLUME_USED" \
+  --arg volume_used_percent "$VOLUME_USED_PERCENT" \
+  --arg volume_available "$VOLUME_AVAILABLE" \
+  --arg memory_used_percent "$MEMORY_USED" \
+  --arg cpu_used_percent "$CPU_USED" \
+  '{
+    $fetched_at,
+    $uptime,
+    $volume_path,
+    $volume_size,
+    $volume_used,
+    $volume_used_percent,
+    $volume_available,
+    $memory_used_percent,
+    $cpu_used_percent
+  }'
