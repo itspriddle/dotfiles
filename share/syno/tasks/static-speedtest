@@ -3,6 +3,8 @@
 FEEDS=/volume1/docker/network.priddle.home/public/feeds/speedtest
 NOW="$(date '+%Y%m%d%H%I%S')"
 
+[[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
+
 curl -s https://speedtest.priddle.network/api/speedtest/latest |
   php -r '
     $json = json_decode(file_get_contents("php://stdin"));

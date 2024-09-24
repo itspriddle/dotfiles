@@ -20,26 +20,23 @@ check_cert() {
     }'
 }
 
-FEEDS=/volume1/docker/network.priddle.home/public/feeds
+FEEDS=/volume1/docker/network.priddle.home/public/feeds/ssl
 
-{ check_cert router.priddle.network    | tee "$FEEDS/ssl/router.json.tmp"
-  check_cert dns1.priddle.network      | tee "$FEEDS/ssl/dns1.json.tmp"
-  check_cert dns2.priddle.network      | tee "$FEEDS/ssl/dns2.json.tmp"
-  check_cert scarif.priddle.network    | tee "$FEEDS/ssl/scarif.json.tmp"
-  check_cert emby.priddle.network 8920 | tee "$FEEDS/ssl/emby.json.tmp"
+[[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
 
-  jq '
+{
+  check_cert router.priddle.network
+  check_cert dns1.priddle.network
+  check_cert dns2.priddle.network
+  check_cert emby.priddle.network 8920
+
+  # This is a wildcard
+  check_cert scarif.priddle.network | jq '
     .["*.priddle.network"] = .["scarif.priddle.network"] |
       del(.["scarif.priddle.network"])
-  ' "$FEEDS/ssl/scarif.json.tmp" | tee "$FEEDS/ssl/star.json.tmp"
+  '
 } |
   jq -s add |
-  tee "$FEEDS/ssl/status.json.tmp"
+  tee "$FEEDS/status.json.tmp"
 
-mv -f "$FEEDS/ssl/router.json.tmp" "$FEEDS/ssl/router.json"
-mv -f "$FEEDS/ssl/dns1.json.tmp" "$FEEDS/ssl/dns1.json"
-mv -f "$FEEDS/ssl/dns2.json.tmp" "$FEEDS/ssl/dns2.json"
-mv -f "$FEEDS/ssl/scarif.json.tmp" "$FEEDS/ssl/scarif.json"
-mv -f "$FEEDS/ssl/emby.json.tmp" "$FEEDS/ssl/emby.json"
-mv -f "$FEEDS/ssl/star.json.tmp" "$FEEDS/ssl/star.json"
-mv -f "$FEEDS/ssl/status.json.tmp" "$FEEDS/ssl/status.json"
+mv -f "$FEEDS/status.json.tmp" "$FEEDS/status.json"

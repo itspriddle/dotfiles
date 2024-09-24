@@ -3,6 +3,8 @@
 CONTAINER_NAME=network.priddle.transmission
 FEEDS=/volume1/docker/network.priddle.home/public/feeds/openvpn
 
+[[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
+
 NOW="$(date '+%F %T')"
 TIME="$(date '+%-l:%m %p')"
 
