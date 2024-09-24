@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
-set -e
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
 
 ~/.dotfiles/share/syno/tasks/static-dhcp-leases
 ~/.dotfiles/share/syno/tasks/static-healthchecks

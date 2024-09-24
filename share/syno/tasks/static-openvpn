@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
 CONTAINER=network.priddle.transmission
 FEEDS=/volume1/docker/network.priddle.home/public/feeds/openvpn
 
