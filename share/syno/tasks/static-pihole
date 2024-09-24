@@ -2,24 +2,20 @@
 
 set -e
 
-FEEDS=/volume1/docker/network.priddle.home/public/feeds
-mkdir -p "$FEEDS/pihole"
+FEEDS=/volume1/docker/network.priddle.home/public/feeds/pihole
 
-API=~/.dotfiles/share/pihole/api
+[[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
 
-{ "$API" dns1.priddle.network summaryRaw |
-  jq '.xgravity_updated_at = (.gravity_last_updated.absolute | todate)' |
-    jq -n --arg d dns1.priddle.network '{ "\($d)": input }' |
-    tee "$FEEDS/pihole/dns1.json.tmp"
 
-  "$API" dns2.priddle.network summaryRaw |
-    jq '.xgravity_updated_at = (.gravity_last_updated.absolute | todate)' |
-    jq -n --arg d dns2.priddle.network '{ "\($d)": input }' |
-    tee "$FEEDS/pihole/dns2.json.tmp"
-} |
-  jq -s add |
-  tee "$FEEDS/pihole/all.json.tmp"
+SUBS=()
+while IFS='' read -r line; do SUBS+=("$line"); done < <(jq -r 'to_entries[] | .key' ~/.config/pihole-api.json)
 
-mv "$FEEDS/pihole/dns1.json.tmp" "$FEEDS/pihole/dns1.json"
-mv "$FEEDS/pihole/dns2.json.tmp" "$FEEDS/pihole/dns2.json"
-mv "$FEEDS/pihole/all.json.tmp" "$FEEDS/pihole/all.json"
+for sub in "${SUBS[@]}"; do
+  ~/.dotfiles/share/pihole/api "$sub" summaryRaw |
+    jq --arg sub "$sub" '
+      .xgravity_updated_at = (.gravity_last_updated.absolute | todate) |
+      { "\($sub)": . }
+    '
+done | jq -s add | tee "$FEEDS/all.json.tmp"
+
+mv "$FEEDS/all.json.tmp" "$FEEDS/all.json"
