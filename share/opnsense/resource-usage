@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+API="$(dirname "$0")/api"
+
+"$API" diagnostics/activity/getActivity | jq '
+  def round(dec): dec as $dec | . * pow(10; $dec) | (. + 0.5 | floor) | . / pow(10; $dec);
+
+  .
+  | (.headers[2] | gsub(".* (?<cpu>[0-9.]+)% idle.*"; .cpu)) as $cpu_idle
+  | (.headers[3] | gsub(".*Mem: (?<mem>.+) Active,.*"; .mem)) as $mem_active
+  | {
+      cpu_idle: ($cpu_idle | tonumber),
+      cpu_usage: (100 - ($cpu_idle | tonumber) | round(2)),
+      memory_usage: $mem_active
+    }
+  '

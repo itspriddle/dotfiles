@@ -8,17 +8,6 @@ fi
 
 FEEDS=/volume1/docker/network.priddle.home/public/feeds/opnsense
 
-~/.dotfiles/share/opnsense/api diagnostics/activity/getActivity | jq '
-  def round(dec): dec as $dec | . * pow(10; $dec) | (. + 0.5 | floor) | . / pow(10; $dec);
-
-  .
-  | (.headers[2] | gsub(".* (?<cpu>[0-9.]+)% idle.*"; .cpu)) as $cpu_idle
-  | (.headers[3] | gsub(".*Mem: (?<mem>.+) Active,.*"; .mem)) as $mem_active
-  | {
-      cpu_idle: ($cpu_idle | tonumber),
-      cpu_usage: (100 - ($cpu_idle | tonumber) | round(2)),
-      memory_usage: $mem_active
-    }
-  ' | tee "$FEEDS/status.json.tmp"
+~/.dotfiles/share/opnsense/resource-usage | tee "$FEEDS/status.json.tmp"
 
 mv -f "$FEEDS/status.json.tmp" "$FEEDS/status.json"
