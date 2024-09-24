@@ -5,17 +5,25 @@ FEEDS=/volume1/docker/network.priddle.home/public/feeds/dhcp
 [[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
 
 ~/.dotfiles/share/opnsense/api dhcpv4/leases/searchLease |
-  jq '.rows[] | [
-     {
-      hostname: (if (.hostname | tostring) != "" then "\(.hostname).priddle.network" else null end),
-      mac,
-      address,
-      type,
-      status,
-      description: (if (.descr | tostring) != "" then .descr else null end)
-    }
-  ]' |
-    jq -s add |
-    tee "$FEEDS/dhcp/leases.json.tmp"
+  jq --arg domain priddle.network '.rows | map({
+    mac,
+    address,
+    type,
+    status,
+    hostname: (
+      if (.hostname | tostring) != "" then
+        "\(.hostname).\($domain)"
+      else
+        null
+      end
+    ),
+    description: (
+      if (.descr | tostring) != "" then
+        .descr
+      else
+        null
+      end
+    )
+  })' | tee "$FEEDS/leases.json.tmp"
 
-mv -f "$FEEDS/dhcp/leases.json.tmp" "$FEEDS/dhcp/leases.json"
+mv -f "$FEEDS/leases.json.tmp" "$FEEDS/leases.json"
