@@ -29,6 +29,9 @@ FEEDS=/volume1/docker/network.priddle.home/public/feeds/ssl
   check_cert dns1.priddle.network
   check_cert dns2.priddle.network
   check_cert emby.priddle.network 8920
+  check_cert josh.fail
+  check_cert priddle.xyz
+  check_cert recipes.priddle.xyz
 
   # This is a wildcard
   check_cert scarif.priddle.network | jq '
