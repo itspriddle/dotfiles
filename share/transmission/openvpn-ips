@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+CONTAINER=network.priddle.transmission
+
+NOW="$(date '+%F %T')"
+TIME="$(date '+%-l:%M %p')"
+
+DIG=(dig -4 ch txt whoami.cloudflare +short @1.1.1.1 +time=10)
+
+sanitize() {
+  tr -d '"'
+}
+
+openvpn_ip() {
+  (docker exec "$CONTAINER" "${DIG[@]}" 2> /dev/null || echo UNKNOWN) | sanitize
+}
+
+real_ip() {
+  ("${DIG[@]}" 2> /dev/null || echo UNKNOWN) | sanitize
+}
+
+for cmd in openvpn_ip real_ip; do
+  "$cmd" |
+    jq -Rn \
+      --arg type "$cmd" \
+      --arg now "$NOW" \
+      --arg time "$TIME" '
+        .
+        | .[$type] = input
+        | .updated_at = $now
+        | .updated_time = $time
+      '
+done | jq -s add
