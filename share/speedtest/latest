@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+curl -s https://speedtest.priddle.network/api/speedtest/latest |
+  jq --arg fetched_at "$(date '+%F %T')" '
+    def fmt: . | tostring | gsub("(?<n>\\d+\\.\\d\\d).*"; .n);
+
+    {
+      ping: "\(.data.ping | fmt) ms",
+      download: "\(.data.download | fmt) Mbit/s",
+      upload: "\(.data.upload | fmt) Mbit/s",
+      last_run_at: (.data.created_at | split(".") | first | gsub("T"; " ")),
+      $fetched_at,
+    }
+  '

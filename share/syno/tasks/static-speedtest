@@ -10,17 +10,7 @@ FEEDS=/volume1/docker/network.priddle.home/public/feeds/speedtest
 
 [[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
 
-curl -s https://speedtest.priddle.network/api/speedtest/latest |
-  jq --arg fetched_at "$(date '+%F %T')" '
-    def fmt: . | tostring | gsub("(?<n>\\d+\\.\\d\\d).*"; .n);
-
-    {
-      ping: "\(.data.ping | fmt) ms",
-      download: "\(.data.download | fmt) Mbit/s",
-      upload: "\(.data.upload | fmt) Mbit/s",
-      last_run_at: (.data.created_at | split(".") | first | gsub("T"; " ")),
-      $fetched_at,
-    }
-  ' | tee "$FEEDS/latest.json.tmp"
+~/.dotfiles/share/speedtest/latest |
+  tee "$FEEDS/latest.json.tmp"
 
 mv -f "$FEEDS/latest.json.tmp" "$FEEDS/latest.json"
