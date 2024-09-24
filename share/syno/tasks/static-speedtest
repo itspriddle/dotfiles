@@ -10,20 +10,17 @@ FEEDS=/volume1/docker/network.priddle.home/public/feeds/speedtest
 
 [[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
 
-# shellcheck disable=SC2016
 curl -s https://speedtest.priddle.network/api/speedtest/latest |
-  php -r '
-    $json = json_decode(file_get_contents("php://stdin"));
-    $out  = new stdClass;
+  jq --arg fetched_at "$(date '+%F %T')" '
+    def fmt: . | tostring | gsub("(?<n>\\d+\\.\\d\\d).*"; .n);
 
-    $out->ping        = sprintf("%.1f ms", $json->data->ping);
-    $out->download    = sprintf("%.1f Mbit/s", $json->data->download);
-    $out->upload      = sprintf("%.1f Mbit/s", $json->data->upload);
-    $out->fetched_at  = date("Y-m-d H:i:s");
-    $out->last_run_at = DateTimeImmutable::createFromFormat("Y-m-d\TH:i:s.000000P", $json->data->created_at)->format("Y-m-d H:i:s");
-
-    echo json_encode($out, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
-    echo "\n";
+    {
+      ping: "\(.data.ping | fmt) ms",
+      download: "\(.data.download | fmt) Mbit/s",
+      upload: "\(.data.upload | fmt) Mbit/s",
+      last_run_at: (.data.created_at | split(".") | first | gsub("T"; " ")),
+      $fetched_at,
+    }
   ' | tee "$FEEDS/latest.json.tmp"
 
 mv -f "$FEEDS/latest.json.tmp" "$FEEDS/latest.json"
