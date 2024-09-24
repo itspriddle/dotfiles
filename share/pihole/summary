@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+API="$(dirname "$0")/api"
+
+SUBS=()
+
+while IFS='' read -r line; do
+  SUBS+=("$line")
+done < <(jq -r 'to_entries[] | .key' ~/.config/pihole-api.json)
+
+for sub in "${SUBS[@]}"; do
+  "$API" "$sub" summaryRaw |
+    jq --arg sub "$sub" '
+      .xgravity_updated_at = (.gravity_last_updated.absolute | todate)
+      | { "\($sub)": . }
+    '
+done | jq -s add

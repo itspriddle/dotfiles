@@ -10,18 +10,6 @@ set -e
 
 FEEDS=/volume1/docker/network.priddle.home/public/feeds/pihole
 
-[[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
-
-
-SUBS=()
-while IFS='' read -r line; do SUBS+=("$line"); done < <(jq -r 'to_entries[] | .key' ~/.config/pihole-api.json)
-
-for sub in "${SUBS[@]}"; do
-  ~/.dotfiles/share/pihole/api "$sub" summaryRaw |
-    jq --arg sub "$sub" '
-      .xgravity_updated_at = (.gravity_last_updated.absolute | todate) |
-      { "\($sub)": . }
-    '
-done | jq -s add | tee "$FEEDS/all.json.tmp"
+~/.dotfiles/share/pihole/summary | tee "$FEEDS/all.json.tmp"
 
 mv "$FEEDS/all.json.tmp" "$FEEDS/all.json"
