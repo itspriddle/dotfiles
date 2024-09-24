@@ -1,39 +1,39 @@
 #!/usr/bin/env bash
 
-CONTAINER_NAME=network.priddle.transmission
+CONTAINER=network.priddle.transmission
 FEEDS=/volume1/docker/network.priddle.home/public/feeds/openvpn
 
 [[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
 
 NOW="$(date '+%F %T')"
-TIME="$(date '+%-l:%m %p')"
+TIME="$(date '+%-l:%M %p')"
+
+DIG=(dig -4 ch txt whoami.cloudflare +short @1.1.1.1 +time=10)
+
+sanitize() {
+  tr -d '"'
+}
 
 openvpn_ip() {
-  docker exec "$CONTAINER_NAME" dig -4 ch txt whoami.cloudflare +short @1.1.1.1 +time=10 2> /dev/null || echo UNKNOWN
+  (docker exec "$CONTAINER" "${DIG[@]}" 2> /dev/null || echo UNKNOWN) | sanitize
 }
 
 real_ip() {
-  dig -4 ch txt whoami.cloudflare +short @1.1.1.1 +time=10 2> /dev/null || echo UNKNOWN
+  ("${DIG[@]}" 2> /dev/null || echo UNKNOWN) | sanitize
 }
 
 rm -f "$FEEDS/up"
 
-{
-  openvpn_ip |
-    tr -d '"' |
-    jq -Rn --arg now "$NOW" --arg time "$TIME" '. | .openvpn_ip = input | .updated_at = $now | .updated_time = $time' |
-    tee "$FEEDS/vpn-ip.json.tmp"
+for cmd in openvpn_ip real_ip; do
+  "$cmd" |
+    jq -Rn \
+      --arg type "$cmd" \
+      --arg now "$NOW" \
+      --arg time "$TIME" '
+        . | .[$type] = input | .updated_at = $now | .updated_time = $time
+      '
+done | jq -s add | tee "$FEEDS/ips.json.tmp"
 
-  real_ip |
-    tr -d '"' |
-    jq -Rn --arg now "$NOW" --arg time "$TIME" '. | .real_ip = input | .updated_at = $now | .updated_time = $time' |
-    tee "$FEEDS/real-ip.json.tmp"
-} |
-  jq -s add |
-  tee "$FEEDS/ips.json.tmp"
-
-mv -f "$FEEDS/real-ip.json.tmp" "$FEEDS/real-ip.json"
-mv -f "$FEEDS/vpn-ip.json.tmp" "$FEEDS/vpn-ip.json"
 mv -f "$FEEDS/ips.json.tmp" "$FEEDS/ips.json"
 
 REAL_IP="$(jq .real_ip "$FEEDS/ips.json")"
