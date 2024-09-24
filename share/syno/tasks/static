@@ -9,7 +9,9 @@ fi
 set -euo pipefail
 
 ~/.dotfiles/share/syno/tasks/static-dhcp-leases
-~/.dotfiles/share/syno/tasks/static-healthchecks
+# This comes last inside the Synology Task so it pulls the HC for this mains
+# script
+#~/.dotfiles/share/syno/tasks/static-healthchecks
 ~/.dotfiles/share/syno/tasks/static-openvpn
 ~/.dotfiles/share/syno/tasks/static-pihole
 ~/.dotfiles/share/syno/tasks/static-prowlarr
