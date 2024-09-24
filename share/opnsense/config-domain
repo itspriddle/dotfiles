@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+jq -r '
+  .url
+  | gsub("https://"; "")
+  | split(".")[-2:]
+  | join(".")
+' ~/.config/opnsense-api.json

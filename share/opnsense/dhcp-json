@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+API_BIN="$(dirname "$0")"
+
+"$API_BIN/api" dhcpv4/leases/searchLease |
+  jq --arg domain "$("$API_BIN/config-domain")" '
+    .rows
+    | map({
+      mac,
+      address,
+      type,
+      status,
+      hostname: (
+        if (.hostname | tostring) != "" then
+          "\(.hostname).\($domain)"
+        else
+          null
+        end
+      ),
+      description: (
+        if (.descr | tostring) != "" then
+          .descr
+        else
+          null
+        end
+      )
+    })
+  '
