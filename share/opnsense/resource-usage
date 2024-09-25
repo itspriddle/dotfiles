@@ -16,6 +16,7 @@ API="$(dirname "$0")/api"
   | (.headers[0] | gsub(".* up (?<up>[^ ]+).*"; .up) | split("+")) as $uptime
   | (.headers[2] | gsub(".* (?<cpu>[0-9.]+)% idle.*"; .cpu)) as $cpu_idle
   | (.headers[3] | gsub(".*Mem: (?<mem>.+) Active,.*"; .mem)) as $mem_active
+  | (.headers[3] | gsub(".*Mem:.*, (?<mem>.+) Free.*"; .mem)) as $mem_free
   | {
       uptime: (
         if ($uptime[0] | tonumber) > 0 then
@@ -30,6 +31,7 @@ API="$(dirname "$0")/api"
       ),
       cpu_idle: ($cpu_idle | tonumber),
       cpu_usage: (100 - ($cpu_idle | tonumber) | fmt),
-      memory_usage: $mem_active
+      memory_usage: $mem_active,
+      memory_free: $mem_free
     }
   '
