@@ -8,7 +8,7 @@ fi
 
 set -euo pipefail
 
-API="$(dirname "$0")/api"
+API="$(dirname "$0")/pihole-api"
 
 SUBS=()
 
