@@ -10,7 +10,7 @@ set -euo pipefail
 
 curl -s https://speedtest.priddle.network/api/speedtest/latest |
   jq --arg fetched_at "$(date '+%F %T')" '
-    def fmt: . | tostring | gsub("(?<n>\\d+\\.\\d\\d).*"; .n);
+    def fmt: . | tostring | gsub("(?<n>\\d+)\\..*"; .n);
 
     {
       ping: "\(.data.ping | fmt) ms",
