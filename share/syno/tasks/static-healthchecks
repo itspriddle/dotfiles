@@ -12,25 +12,28 @@ FEEDS=/volume1/docker/network.priddle.home/public/feeds/healthchecks
 
 [[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
 
-CHECKS=(
-  dns1.acme
-  dns1.ubnt
-  dns2.acme
-  scarif.acme
-  scarif.openvpn
-  scarif.static
+CHECKS=$(~/.dotfiles/share/healthchecks.io/ping --list |
+  jq .checks |
+  tee "$FEEDS/all.json.tmp"
 )
 
-for hc in "${CHECKS[@]}"; do
-  curl -s "https://static.priddle.network/api/healthchecks/$hc" |
-    jq . |
-    tee "$FEEDS/$hc.json.tmp"
+mv -f "$FEEDS/all.json.tmp" "$FEEDS/all.json"
 
-  mv -f "$FEEDS/$hc.json.tmp" "$FEEDS/$hc.json"
+SLUGS=()
 
-  if [[ "$(jq -r .status "$FEEDS/$hc.json")" =~ ^(up|grace)$ ]]; then
-    touch "$FEEDS/$hc.up"
+while IFS='' read -r line; do
+  SLUGS+=("$line")
+done < <(jq -r '.[] | .slug' <<< "$CHECKS")
+
+for slug in "${SLUGS[@]}"; do
+  jq --arg slug "$slug" '.[] | select(.slug == $slug)' <<< "$CHECKS" |
+    tee "$FEEDS/$slug.json.tmp"
+
+  if [[ "$(jq -r .status "$FEEDS/$slug.json.tmp")" =~ ^(up|grace)$ ]]; then
+    touch "$FEEDS/$slug.up"
   else
-    rm -f "$FEEDS/$hc.up"
+    rm -f "$FEEDS/$slug.up"
   fi
+
+  mv -f "$FEEDS/$slug.json.tmp" "$FEEDS/$slug.json"
 done
