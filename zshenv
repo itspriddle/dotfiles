@@ -90,6 +90,10 @@ elif [ "${OSTYPE:0:5}" = linux ]; then
 
   # Ubuntu's /etc/zshrc tries to initialize completion, skip it
   [ "$ZSH_VERSION" ] && skip_global_compinit=1
+
+  if [ -f /etc/rpi-issue ]; then
+    export PATH="$HOME/.dotfiles/opt/rpi-scripts/bin:$PATH"
+  fi
 fi
 
 # FZF

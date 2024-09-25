@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cat /sys/firmware/devicetree/base/model | sed 's/\x0//g'
+echo
