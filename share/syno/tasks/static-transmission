@@ -14,7 +14,7 @@ FEEDS=/volume1/docker/network.priddle.home/public/feeds/transmission
 
 rm -f "$FEEDS/up"
 
-~/.dotfiles/share/transmission/stats |
+~/.dotfiles/opt/transmission-cli/bin/transmission-stats |
  tee "$FEEDS/stats.json.tmp"
 
 mv -f "$FEEDS/stats.json.tmp" "$FEEDS/stats.json"

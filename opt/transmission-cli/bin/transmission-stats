@@ -8,7 +8,7 @@ fi
 
 set -euo pipefail
 
-API=~/.dotfiles/share/transmission/api
+API=~/.dotfiles/opt/transmission-cli/bin/transmission-api
 
 SESSION=$("$API" 2> /dev/null || true)
 
