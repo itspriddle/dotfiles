@@ -40,7 +40,7 @@ _load_config() {
 
   for var in $(_read_config "$domain"); do
     case "${var%=*}" in
-      PIHOLE_KEY|PIHOLE_SECRET|PIHOLE_URL)
+      PIHOLE_KEY|PIHOLE_URL)
         export "${var?}"
         ;;
     esac
