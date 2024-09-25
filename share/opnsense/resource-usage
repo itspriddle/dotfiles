@@ -9,7 +9,7 @@ fi
 API="$(dirname "$0")/api"
 
 "$API" diagnostics/activity/getActivity | jq '
-  def round(dec): dec as $dec | . * pow(10; $dec) | (. + 0.5 | floor) | . / pow(10; $dec);
+  def fmt: . | tostring | gsub("(?<n>\\d+\\.\\d).*"; .n) | tonumber;
   def plural(word): if . == 1 then "\(.) \(word)" else "\(.) \(word)s" end;
 
   .
@@ -29,7 +29,7 @@ API="$(dirname "$0")/api"
         end
       ),
       cpu_idle: ($cpu_idle | tonumber),
-      cpu_usage: (100 - ($cpu_idle | tonumber) | round(2)),
+      cpu_usage: (100 - ($cpu_idle | tonumber) | fmt),
       memory_usage: $mem_active
     }
   '
