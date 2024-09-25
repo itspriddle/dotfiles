@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+CONTAINER=network.priddle.wifi1.ubnt
+
+SSH_TARGET=admin@wifi1.priddle.network
+
+docker start "$CONTAINER" > /dev/null
+
+docker exec \
+  -e "SSHPASS=${SSHPASS:-secret}" \
+  -i "$CONTAINER" \
+  /bin/sh -c \
+  "sshpass -e ssh -o StrictHostKeyChecking=no $SSH_TARGET 'cat | sh'" \
+  < ~/.dotfiles/share/ubnt/ubnt-cron.sh
+
+docker stop "$CONTAINER" > /dev/null
+
+~/.dotfiles/share/healthchecks.io/ping scarif-ubnt-cleaner
