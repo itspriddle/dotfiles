@@ -12,7 +12,7 @@ FEEDS=/volume1/docker/network.priddle.home/public/feeds/speedtest
 
 [[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
 
-~/.dotfiles/share/speedtest/latest |
+~/.dotfiles/opt/speedtest-tracker/bin/speedtest-tracker-latest |
   tee "$FEEDS/latest.json.tmp"
 
 mv -f "$FEEDS/latest.json.tmp" "$FEEDS/latest.json"
