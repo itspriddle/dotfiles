@@ -10,11 +10,24 @@ API="$(dirname "$0")/api"
 
 "$API" diagnostics/activity/getActivity | jq '
   def round(dec): dec as $dec | . * pow(10; $dec) | (. + 0.5 | floor) | . / pow(10; $dec);
+  def plural(word): if . == 1 then "\(.) \(word)" else "\(.) \(word)s" end;
 
   .
+  | (.headers[0] | gsub(".* up (?<up>[^ ]+).*"; .up) | split("+")) as $uptime
   | (.headers[2] | gsub(".* (?<cpu>[0-9.]+)% idle.*"; .cpu)) as $cpu_idle
   | (.headers[3] | gsub(".*Mem: (?<mem>.+) Active,.*"; .mem)) as $mem_active
   | {
+      uptime: (
+        if ($uptime[0] | tonumber) > 0 then
+          $uptime[0] | tonumber | plural("day")
+        elif ($uptime[1] | split(":")[0] | tonumber) > 0 then
+          $uptime[1] | split(":") | first | tonumber | plural("hour")
+        elif ($uptime[1] | split(":")[1] | tonumber) > 0 then
+          $uptime[1] | split(":")[1] | tonumber | plural("min")
+        else
+          $uptime[1] | split(":")[2] | tonumber | plural("sec")
+        end
+      ),
       cpu_idle: ($cpu_idle | tonumber),
       cpu_usage: (100 - ($cpu_idle | tonumber) | round(2)),
       memory_usage: $mem_active
