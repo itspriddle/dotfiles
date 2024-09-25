@@ -41,7 +41,7 @@ for f in "${HOURLY_FILES[@]}" "${DAILY_FILES[@]}" "${MONTHLY_FILES[@]}" "${YEARL
   mkdir -p "$(dirname "$f")"
 done
 
-STATS="$(~/.dotfiles/opt/opnsense-cli/bin/opnsense-vnstat | tee "$FEEDS/now.json.tmp")"
+STATS="$(opnsense-vnstat | tee "$FEEDS/now.json.tmp")"
 
 jq .hourly <<< "$STATS" | tee "${HOURLY_FILES[@]}"
 jq .daily <<< "$STATS" | tee "${DAILY_FILES[@]}"

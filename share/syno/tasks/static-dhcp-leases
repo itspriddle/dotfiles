@@ -12,7 +12,6 @@ FEEDS=/volume1/docker/network.priddle.home/public/feeds/dhcp
 
 [[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
 
-~/.dotfiles/opt/opnsense-cli/bin/opnsense-dhcp-json |
-  tee "$FEEDS/leases.json.tmp"
+opnsense-dhcp-json | tee "$FEEDS/leases.json.tmp"
 
 mv -f "$FEEDS/leases.json.tmp" "$FEEDS/leases.json"

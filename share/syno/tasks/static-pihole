@@ -10,6 +10,6 @@ set -euo pipefail
 
 FEEDS=/volume1/docker/network.priddle.home/public/feeds/pihole
 
-~/.dotfiles/opt/pihole-cli/bin/pihole-summary | tee "$FEEDS/all.json.tmp"
+pihole-summary | tee "$FEEDS/all.json.tmp"
 
 mv "$FEEDS/all.json.tmp" "$FEEDS/all.json"

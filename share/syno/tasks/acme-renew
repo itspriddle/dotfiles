@@ -7,6 +7,6 @@ CONTAINER=network.priddle.scarif.acme
 docker start "$CONTAINER"
 
 docker exec "$CONTAINER" acme.sh --cron &&
-  ~/.dotfiles/share/healthchecks.io/ping scarif-acme
+  healthchecks scarif-acme
 
 docker stop "$CONTAINER"

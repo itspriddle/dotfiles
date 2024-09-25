@@ -15,7 +15,7 @@ FEEDS=/volume1/docker/network.priddle.home/public/feeds/openvpn
 
 rm -f "$FEEDS/up"
 
-~/.dotfiles/opt/transmission-cli/bin/transmission-openvpn-ips |
+transmission-openvpn-ips |
   tee "$FEEDS/ips.json.tmp"
 
 mv -f "$FEEDS/ips.json.tmp" "$FEEDS/ips.json"

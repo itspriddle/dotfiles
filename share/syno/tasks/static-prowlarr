@@ -12,8 +12,7 @@ FEEDS=/volume1/docker/network.priddle.home/public/feeds/prowlarr
 
 [[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
 
-~/.dotfiles/opt/prowlarr-cli/bin/prowlarr-stats |
-  tee "$FEEDS/stats.json.tmp"
+prowlarr-stats | tee "$FEEDS/stats.json.tmp"
 
 mv -f "$FEEDS/stats.json.tmp" "$FEEDS/stats.json"
 
