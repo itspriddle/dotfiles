@@ -10,6 +10,7 @@ set -euo pipefail
 
 FEEDS=/volume1/docker/network.priddle.home/public/feeds/opnsense
 
-~/.dotfiles/share/opnsense/resource-usage | tee "$FEEDS/status.json.tmp"
+~/.dotfiles/opt/opnsense-cli/bin/opnsense-resource-usage |
+  tee "$FEEDS/status.json.tmp"
 
 mv -f "$FEEDS/status.json.tmp" "$FEEDS/status.json"

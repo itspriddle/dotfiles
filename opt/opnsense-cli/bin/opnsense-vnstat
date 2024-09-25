@@ -6,7 +6,7 @@ if [[ "$DEBUG" ]]; then
   set -x
 fi
 
-BIN="$(dirname "$0")/bandwidth-json"
+BIN="$(dirname "$0")/opnsense-bandwidth-json"
 
 hourly=$("$BIN" hourly)
 daily=$("$BIN" daily)

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # path to ./api
-API_BIN=$(dirname "$0")/api
+API_BIN=$(dirname "$0")/opnsense-api
 
 target="${1:-daily}"
 
