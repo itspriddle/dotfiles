@@ -57,7 +57,7 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias battery-info='system_profiler -detailLevel mini SPPowerDataType'
 
   # Stuff only used on my Macs
-  alias transmission-upload="$HOME/.dotfiles/share/transmission/upload-torrent"
+  alias transmission-upload="$HOME/.dotfiles/opt/transmission-cli/bin/transmission-upload-torrent"
   alias opnsense-bandwidth="$HOME/.dotfiles/share/opnsense/bandwidth"
 
   # ruby/rails
