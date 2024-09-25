@@ -23,4 +23,4 @@ docker exec \
 
 docker stop "$CONTAINER" > /dev/null
 
-~/.dotfiles/share/healthchecks.io/ping scarif-ubnt-cleaner
+~/.dotfiles/opt/healthchecks-cli/bin/healthchecks scarif-ubnt-cleaner

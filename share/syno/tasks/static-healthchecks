@@ -12,7 +12,7 @@ FEEDS=/volume1/docker/network.priddle.home/public/feeds/healthchecks
 
 [[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
 
-CHECKS=$(~/.dotfiles/share/healthchecks.io/ping --list |
+CHECKS=$(~/.dotfiles/opt/healthchecks-cli/bin/healthchecks --list |
   jq .checks |
   tee "$FEEDS/all.json.tmp"
 )
