@@ -52,18 +52,13 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
 
   alias wp="WP_CLI_DISABLE_AUTO_CHECK_UPDATE=1 PAGER=cat wp"
   alias sh='env -i sh'
-  alias flush-dns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder; sudo killall -HUP mDNSResponderHelper'
   alias df="df -Plh"
   alias eject-all="diskutil list | awk '/external/ { print \$1 }' | xargs -tn1 diskutil unmountDisk"
   alias battery-info='system_profiler -detailLevel mini SPPowerDataType'
 
   # Stuff only used on my Macs
   alias transmission-upload="$HOME/.dotfiles/share/transmission/upload-torrent"
-  alias set-audio-device="$HOME/.dotfiles/share/osx/utils/set-audio-device"
-  alias backup-mac-to-syno="$HOME/.dotfiles/share/osx/utils/backup-mac-to-syno"
   alias opnsense-bandwidth="$HOME/.dotfiles/share/opnsense/bandwidth"
-  # gh alias set --shell 'gist create-and-copy' 'gh gist create "$@" 2> /dev/null | tee /dev/tty | pbcopy'
-  alias gist="gh gist create-and-copy"
 
   # ruby/rails
   alias rc='rails console'

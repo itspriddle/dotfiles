@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if ! gh alias list 2> /dev/null | grep -q '^gist create-and-copy:'; then
+  echo "Run \`gh alias set --shell 'gist create-and-copy' 'gh gist create \"\$@\" 2> /dev/null | tee /dev/tty | pbcopy'"
+  exit 1
+fi
+
+gh gist create-and-copy "$@"
