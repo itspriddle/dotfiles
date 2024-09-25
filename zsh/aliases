@@ -58,7 +58,7 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
 
   # Stuff only used on my Macs
   alias transmission-upload="$HOME/.dotfiles/opt/transmission-cli/bin/transmission-upload-torrent"
-  alias opnsense-bandwidth="$HOME/.dotfiles/share/opnsense/bandwidth"
+  alias opnsense-bandwidth="$HOME/.dotfiles/opt/opnsense-cli/bin/opnsense-bandwidth"
 
   # ruby/rails
   alias rc='rails console'
