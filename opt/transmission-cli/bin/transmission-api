@@ -28,7 +28,7 @@ api() {
     "$TRANSMISSION_RPC_URL"
   )
 
-  if grep -q '<p>' <<< "$response"; then
+  if grep -q '<h1>' <<< "$response"; then
     response="{\"output\": \"$(sed '$d' <<< "$response" | sed 's,",\\",g')\"} $(tail -1 <<< "$response")"
   fi
 

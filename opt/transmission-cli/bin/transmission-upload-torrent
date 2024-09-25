@@ -8,26 +8,12 @@ fi
 
 set -e
 
-TRANSMISSION_RPC_URL="https://transmission.priddle.network/transmission/rpc"
+API="$(dirname "$0")/transmission-api"
 
 get_session() {
   local response
 
-  response=$(curl --silent \
-    --write-out "%{json}%{header_json}" \
-    --output /dev/null \
-    "$TRANSMISSION_RPC_URL" |
-    jq -s add
-  )
-
-  response_code=$(jq -r .response_code <<< "$response")
-
-  if [[ $response_code -ne 409 ]]; then
-    echo "Unexpected response code: $response_code" >&2
-    return 1
-  fi
-
-  jq -r '."x-transmission-session-id"[0]' <<< "$response"
+  "$API" 2> /dev/null
 }
 
 encode_file() {
@@ -45,15 +31,10 @@ upload_file() {
       .arguments.metainfo = input |
       .arguments.paused = true
     ' |
-    curl --silent \
-      --header "X-Transmission-Session-Id: $session_id" \
-      --data @- \
-      --write-out "%{json}%{header_json}" \
-      "$TRANSMISSION_RPC_URL" |
-    jq -s add
+      "$API" --session="$session_id" -d @-
   )
 
-  response_code="$(jq -r .response_code <<< "$response")"
+  response_code="$(jq -r .__response_code <<< "$response")"
 
   if [[ $response_code -eq 200 ]]; then
     echo "Uploaded \`$file' successfully"
