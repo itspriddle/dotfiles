@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+# Usage: ping [options] <slug>
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+: "${HC_CONFIG:="${XDG_CONFIG_HOME:-$HOME/.config}/healthchecks-io.json"}"
+
+_read_config() {
+  if ! type jq &> /dev/null; then
+    echo "Missing \`jq' command." >&2
+    return 1
+  fi
+
+  if [[ ! -r "$HC_CONFIG" ]]; then
+    echo "Config '$HC_CONFIG' doesn't exist" >&2
+    return 1
+  fi
+
+  jq -r '
+    to_entries
+    | map("HC_\(.key | ascii_upcase)=\(.value | tostring)")
+    | .[]
+  ' "$HC_CONFIG"
+}
+
+_load_config() {
+  if [[ "${HC_PING_KEY-}" ]]; then
+    return 0
+  fi
+
+  for var in $(_read_config); do
+    case "${var%=*}" in
+      HC_PING_KEY|HC_API_KEY)
+        export "${var?}"
+        ;;
+    esac
+  done
+
+  local ret=0
+
+  if [[ -z "${HC_PING_KEY-}" ]]; then
+    echo "Must set 'ping_key' in $HC_CONFIG" >&2
+    ret=1
+  fi
+
+  if [[ -z "${HC_API_KEY-}" ]]; then
+    echo "Must set 'api_key' in $HC_CONFIG" >&2
+    ret=1
+  fi
+
+  if [[ "$ret" -ne 0 ]]; then
+    _configure_help
+  fi
+
+  return $ret
+}
+
+_configure_help() {
+  {
+    echo
+    echo "Create \`$HC_CONFIG' with:"
+    echo
+    echo "  jq --null-input \\"
+    echo "    --arg ping_key \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\" \\"
+    echo "    --arg api_key \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\" \\"
+    echo "    '\$ARGS.named' > \"$HC_CONFIG\""
+    echo
+    echo "  chmod 600 \"$HC_CONFIG\""
+  } >&2
+
+  return 1
+}
+
+hcping() {
+  local slug="$1"
+  shift
+
+  curl -fsS -m 10 --retry 5 -o /dev/null "https://hc-ping.com/$HC_PING_KEY/$slug" "$@"
+}
+
+main() {
+  local slug list
+
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+      -h | --help)
+        sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+          awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+        return 1
+        ;;
+      --list|-l)
+        shift
+        _load_config || return 1
+        curl -fsS -H "X-API-KEY: $HC_API_KEY" https://healthchecks.io/api/v3/checks/ | jq .
+        return 0
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  if [[ "$#" -eq 0 ]]; then
+    echo "Must specify slug" >&2
+    return 1
+  fi
+
+  _load_config || return 1
+
+  hcping "$@"
+}
+
+main "$@"
