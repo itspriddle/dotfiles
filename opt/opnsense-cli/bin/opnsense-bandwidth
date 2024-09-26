@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# path to ./api
-API_BIN=$(dirname "$0")/opnsense-api
-
 target="${1:-daily}"
 
 case "$target" in
@@ -14,4 +11,4 @@ case "$target" in
     ;;
 esac
 
-"$API_BIN" "vnstat/service/$target" | jq -r .response
+opnsense-api "vnstat/service/$target" | jq -r .response

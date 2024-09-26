@@ -6,9 +6,7 @@ if [[ "$DEBUG" ]]; then
   set -x
 fi
 
-API="$(dirname "$0")/opnsense-api"
-
-"$API" diagnostics/activity/getActivity | jq '
+opnsense-api diagnostics/activity/getActivity | jq '
   def fmt: . | tostring | gsub("(?<n>\\d+\\.\\d).*"; .n) | tonumber;
   def plural(word): if . == 1 then "\(.) \(word)" else "\(.) \(word)s" end;
 

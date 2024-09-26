@@ -8,11 +8,9 @@ fi
 
 set -euo pipefail
 
-API=~/.dotfiles/opt/transmission-cli/bin/transmission-api
+SESSION=$(transmission-api 2> /dev/null || true)
 
-SESSION=$("$API" 2> /dev/null || true)
-
-"$API" --session="$SESSION" -d '{"method": "session-stats"}' |
+transmission-api --session="$SESSION" -d '{"method": "session-stats"}' |
   jq --arg fetched_at "$(date '+%F %T')" '{
     $fetched_at,
     total_torrents: .arguments.torrentCount,

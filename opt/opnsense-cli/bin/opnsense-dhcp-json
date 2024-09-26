@@ -8,10 +8,8 @@ fi
 
 set -euo pipefail
 
-API_BIN="$(dirname "$0")"
-
-"$API_BIN/opnsense-api" dhcpv4/leases/searchLease |
-  jq --arg domain "$("$API_BIN/opnsense-config-domain")" '
+opnsense-api dhcpv4/leases/searchLease |
+  jq --arg domain "$(opnsense-config-domain)" '
     .rows
     | map({
       mac,

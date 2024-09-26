@@ -6,12 +6,10 @@ if [[ "$DEBUG" ]]; then
   set -x
 fi
 
-BIN="$(dirname "$0")/opnsense-bandwidth-json"
-
-hourly=$("$BIN" hourly)
-daily=$("$BIN" daily)
-monthly=$("$BIN" monthly)
-yearly=$("$BIN" yearly)
+hourly=$(opnsense-bandwidth-json hourly)
+daily=$(opnsense-bandwidth-json daily)
+monthly=$(opnsense-bandwidth-json monthly)
+yearly=$(opnsense-bandwidth-json yearly)
 
 jq -n \
   --arg     fetched_at "$(date '+%F %T')" \

@@ -8,8 +8,6 @@ fi
 
 set -euo pipefail
 
-API="$(dirname "$0")/pihole-api"
-
 SUBS=()
 
 while IFS='' read -r line; do
@@ -17,7 +15,7 @@ while IFS='' read -r line; do
 done < <(jq -r 'to_entries[] | .key' ~/.config/pihole-api.json)
 
 for sub in "${SUBS[@]}"; do
-  "$API" "$sub" summaryRaw |
+  pihole-api "$sub" summaryRaw |
     jq --arg sub "$sub" '
       .xgravity_updated_at = (.gravity_last_updated.absolute | todate)
       | { "\($sub)": . }

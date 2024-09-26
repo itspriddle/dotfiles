@@ -8,12 +8,10 @@ fi
 
 set -e
 
-API="$(dirname "$0")/transmission-api"
-
 get_session() {
   local response
 
-  "$API" 2> /dev/null
+  transmission-api 2> /dev/null
 }
 
 encode_file() {
@@ -31,7 +29,7 @@ upload_file() {
       .arguments.metainfo = input |
       .arguments.paused = true
     ' |
-      "$API" --session="$session_id" -d @-
+      transmission-api --session="$session_id" -d @-
   )
 
   response_code="$(jq -r .__response_code <<< "$response")"

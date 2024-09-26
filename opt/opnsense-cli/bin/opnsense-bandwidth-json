@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-BIN="$(dirname "$0")/opnsense-bandwidth"
-
 target="${1:-daily}"
 
 pattern=
@@ -42,7 +40,7 @@ JSON='{
 }'
 
 # 09/20/24     41.12 GiB |    7.16 GiB |   48.28 GiB |    7.02 Mbit/s
-"$BIN" "$target" |
+opnsense-bandwidth "$target" |
   grep "$pattern" |
   sed "s/ '/'/" |
   awk \
