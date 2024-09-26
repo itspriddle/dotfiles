@@ -7,7 +7,7 @@
     <string>xyz.priddle.set-amphatamine-work-hours.plist</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/Users/priddle/.dotfiles/bin/amphetamine</string>
+      <string>/Users/priddle/.dotfiles/opt/macos-scripts/bin/amphetamine</string>
       <string>on</string>
       <string>8h</string>
     </array>

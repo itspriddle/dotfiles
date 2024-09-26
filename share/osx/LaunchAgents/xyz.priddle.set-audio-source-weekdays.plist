@@ -7,7 +7,7 @@
     <string>xyz.priddle.set-audio-source-weekdays.plist</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/Users/priddle/.dotfiles/share/osx/utils/set-audio-device</string>
+      <string>/Users/priddle/.dotfiles/opt/macos-scripts/bin/set-audio-device</string>
       <string>studio</string>
     </array>
     <key>StartCalendarInterval</key>
