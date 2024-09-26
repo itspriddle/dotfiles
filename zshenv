@@ -33,7 +33,7 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
     export HOMEBREW_REPOSITORY="/opt/homebrew"
     export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
     export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
-    export PATH="$HOME/.dotfiles/bin:$HOME/.dotfiles/opt/macos-scripts/bin:$HOME/.dotfiles/opt/pihole-cli/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin:/bin"
+    export PATH="$HOME/.dotfiles/bin:$HOME/.dotfiles/opt/macos-scripts/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin:/bin"
   fi
 
   # Disable emoji when installing packages with Homebrew
