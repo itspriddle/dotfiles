@@ -10,6 +10,7 @@
 #   viscosity disconnect "My VPN"   Disconnect from the VPN named "My VPN"
 #   viscosity status                Show connection status for all VPNs
 #   viscosity status "My VPN"       Show connection status of the VPN named "My VPN"
+#   viscosity remember-username     Remember username (but not password)
 #   viscosity help                  Show this help message
 
 if [[ "${DEBUG}" ]]; then
@@ -19,7 +20,12 @@ fi
 
 case "${1}" in
   ""|-h|--help|help)
-    sed -ne '/^#/!q;s/.\{1,2\}//;1d;p' < "${0}"
+    sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+      awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+    exit
+    ;;
+  remember-username)
+    defaults write com.viscosityvpn.Viscosity RememberUsername -bool true
     exit
     ;;
   connect|disconnect)

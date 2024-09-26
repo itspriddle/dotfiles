@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-defaults write com.viscosityvpn.Viscosity RememberUsername -bool true
