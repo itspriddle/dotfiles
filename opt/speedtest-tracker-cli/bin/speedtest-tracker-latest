@@ -8,7 +8,9 @@ fi
 
 set -euo pipefail
 
-curl -s https://speedtest.priddle.network/api/speedtest/latest |
+URL="$(jq -r '.url' ~/.config/speedtest-tracker-api.json)"
+
+curl -s "$URL/api/speedtest/latest" |
   jq --arg fetched_at "$(date '+%F %T')" '
     def fmt: . | tostring | gsub("(?<n>\\d+)\\..*"; .n);
 

@@ -8,7 +8,7 @@ fi
 
 set -euo pipefail
 
-TRANSMISSION_RPC_URL="https://transmission.priddle.network/transmission/rpc"
+TRANSMISSION_RPC_URL="$(jq -r .url ~/.config/transmission-api.json)/transmission/rpc"
 
 api() {
   local response response_code session
