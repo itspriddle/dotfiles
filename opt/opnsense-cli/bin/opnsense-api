@@ -73,7 +73,7 @@ _configure_help() {
     echo "  jq --null-input \\"
     echo "    --arg key \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\" \\"
     echo "    --arg secret \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\" \\"
-    echo "    --arg url \"https://opensense.mydomain.com\" \\"
+    echo "    --arg url \"https://opnsense.mydomain.com\" \\"
     echo "    '\$ARGS.named' > \"$OPNSENSE_CONFIG\""
     echo
     echo "  chmod 600 \"$OPNSENSE_CONFIG\""
