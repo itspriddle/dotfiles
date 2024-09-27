@@ -15,5 +15,5 @@ jq --null-input \
 ## Installation
 
 ```
-ln -s bin/healthchecks /usr/local/bin
+ln -s "$PWD/bin/healthchecks" /usr/local/bin
 ```

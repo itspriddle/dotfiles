@@ -15,5 +15,5 @@ jq --null-input \
 ## Installation
 
 ```
-ln -s bin/emby /usr/local/bin
+ln -s "$PWD/bin/emby" /usr/local/bin
 ```

@@ -15,5 +15,5 @@ chmod 600 ~/.config/speedtest-tracker-api.json
 ## Installation
 
 ```
-ln -s bin/* /usr/local/bin
+ln -s "$PWD/bin/"* /usr/local/bin
 ```

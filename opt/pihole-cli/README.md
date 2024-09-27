@@ -23,5 +23,5 @@ chmod 600 ~/.config/pihole-api.json
 ## Installation
 
 ```
-ln -s bin/* /usr/local/bin
+ln -s "$PWD/bin/"* /usr/local/bin
 ```

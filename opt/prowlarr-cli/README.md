@@ -16,5 +16,5 @@ chmod 600 ~/.config/prowlarr-api-api.json
 ## Installation
 
 ```
-ln -s bin/* /usr/local/bin
+ln -s "$PWD/bin/"* /usr/local/bin
 ```

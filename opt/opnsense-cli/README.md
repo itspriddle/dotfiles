@@ -17,5 +17,5 @@ chmod 600 ~/.config/opnsense-api.json
 ## Installation
 
 ```
-ln -s bin/* /usr/local/bin
+ln -s "$PWD/bin/"* /usr/local/bin
 ```
