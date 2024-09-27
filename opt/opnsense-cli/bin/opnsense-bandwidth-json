@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+
 target="${1:-daily}"
 
 pattern=
@@ -27,28 +34,36 @@ case "$target" in
     ;;
 esac
 
-# Sep '24
-
-JSON='{
-  "fetched_at": "%s",
-  "rx": "%s %s",
-  "tx": "%s %s",
-  "total": "%s %s",
-  "rate": "%s %s",
-  "type": "%s",
-  "report_date": "%s"
-}'
-
-# 09/20/24     41.12 GiB |    7.16 GiB |   48.28 GiB |    7.02 Mbit/s
-opnsense-bandwidth "$target" |
-  grep "$pattern" |
+output=$( opnsense-bandwidth "$target" |
+  { if [[ "$target" == hourly ]]; then
+      awk -v pattern="$(date '+%m/%d/%y')" '$0 ~ pattern { f=1 } f'
+    else
+      cat
+    fi
+  } |
+  grep -- "$pattern" |
   sed "s/ '/'/" |
-  awk \
-    -v type="$target" \
-    -v fetched_at="$(date '+%F %T')" \
-    -v template="$JSON" \
-    -v report_date="$report_date" \
-    '{
-      printf template, fetched_at, $2, $3, $5, $6, $8, $9, $11, $12, type, report_date
-      printf "\n"
+  jq -nR \
+    --arg fetched_at "$(date '+%F %T')" \
+    --arg type "$target" \
+    --arg report_date "$report_date" \
+    '
+    (inputs | gsub("^\\s+|\\s+$";"") | split(" +"; "")) as $input
+
+    | {
+      fetched_at:  $fetched_at,
+      rx:          $input[1:3] | join(" "),
+      tx:          $input[4:6] | join(" "),
+      total:       $input[7:9] | join(" "),
+      rate:        $input[10:12] | join(" "),
+      type:        $type,
+      report_date: $report_date
     }'
+)
+
+if [[ "$output" ]]; then
+  cat <<< "$output"
+else
+  echo '{}'
+  exit 4
+fi

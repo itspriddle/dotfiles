@@ -49,5 +49,9 @@ jq .monthly <<< "$STATS" | tee "${MONTHLY_FILES[@]}"
 jq .yearly <<< "$STATS" | tee "${YEARLY_FILES[@]}"
 
 for f in "$FEEDS/now.json.tmp" "${HOURLY_FILES[@]}" "${DAILY_FILES[@]}" "${MONTHLY_FILES[@]}" "${YEARLY_FILES[@]}"; do
-  mv -f "$f" "${f%%.tmp}"
+  if [[ "$(< "$f")" == "{}" ]]; then
+    rm -f "$f"
+  else
+    mv -f "$f" "${f%%.tmp}"
+  fi
 done
