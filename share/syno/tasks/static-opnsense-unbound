@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+FEEDS=/volume1/docker/network.priddle.home/public/feeds/opnsense/unbound
+
+[[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
+
+opnsense-unbound-totals | tee "$FEEDS/all.json.tmp"
+
+mv "$FEEDS/all.json.tmp" "$FEEDS/all.json"
