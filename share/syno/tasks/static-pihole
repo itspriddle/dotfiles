@@ -10,6 +10,8 @@ set -euo pipefail
 
 FEEDS=/volume1/docker/network.priddle.home/public/feeds/pihole
 
+[[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"
+
 pihole-summary | tee "$FEEDS/all.json.tmp"
 
 mv "$FEEDS/all.json.tmp" "$FEEDS/all.json"
