@@ -10,13 +10,13 @@ mkdir ~/.config
       --arg domain "pihole.mydomain.com" \
       --arg url "https://pihole.mydomain.com" \
       --arg key "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
-      '{ $domain: { $url, $key }'
+      '{ $domain: { $url, $key } }'
   jq --null-input \
       --arg domain "pihole2.mydomain.com" \
       --arg url "https://pihole2.mydomain.com" \
       --arg key "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
-      '{ $domain: { $url, $key }'
-} > ~/.config/pihole-api.json
+      '{ $domain: { $url, $key } }'
+} | jq -s add > ~/.config/pihole-api.json
 chmod 600 ~/.config/pihole-api.json
 ```
 
