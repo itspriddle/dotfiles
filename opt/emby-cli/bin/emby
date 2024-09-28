@@ -530,7 +530,7 @@ _playing_jq() {
         media_type: .NowPlayingItem.Type,
         rating: (.NowPlayingItem.OfficialRating // "None"),
         state: (if .PlayState.IsPaused then "Paused" else "Playing" end),
-        summary: .NowPlayingItem.Overview | normalize_whitespace,
+        summary: .NowPlayingItem.Overview | tostring | normalize_whitespace,
         progress_percent: $progress_percent,
         progress_seconds: $progress_seconds,
         progress: $progress,
