@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+opnsense-api unbound/overview/totals/0 |
+  jq '{
+    total:            .total,
+    passed:           .passed,
+    resolved:         .resolved.total,
+    resolved_percent: .resolved.pcnt | tonumber,
+    local:            .local.total,
+    local_percent:    .local.pcnt | tonumber,
+    blocked:          .blocked.total,
+    blocked_percent:  .blocked.pcnt | tonumber
+  }'
