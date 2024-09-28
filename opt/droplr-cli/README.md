@@ -5,7 +5,7 @@ Bash CLI for uploading files to Droplr.
 ## Configuration
 
 ```
-mkdir = ~/.config
+mkdir ~/.config
 echo -n 'droplrusername:droplrpass' | base64 > ~/.config/droplr-upload.base64
 ```
 

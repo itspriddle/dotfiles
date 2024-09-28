@@ -5,7 +5,7 @@ Bash CLI for working with Emby media servers.
 ## Configuration
 
 ```
-mkdir = ~/.config
+mkdir ~/.config
 jq --null-input \
   --arg api_key "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
   --arg api_url "http://emby.local:8096" \

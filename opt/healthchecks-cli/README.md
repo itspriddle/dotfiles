@@ -5,7 +5,7 @@ Bash CLI for working with <https://healthchecks.io>.
 ## Configuration
 
 ```
-mkdir = ~/.config
+mkdir ~/.config
 jq --null-input \
   --arg ping_key "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
   --arg api_url "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \

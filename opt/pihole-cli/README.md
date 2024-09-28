@@ -5,7 +5,7 @@ Bash CLI for working Pi-hole instances.
 ## Configuration
 
 ```
-mkdir = ~/.config
+mkdir ~/.config
 { jq --null-input \
       --arg domain "pihole.mydomain.com" \
       --arg url "https://pihole.mydomain.com" \

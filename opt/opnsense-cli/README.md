@@ -5,7 +5,7 @@ Bash CLI for working OPNsense firewalls.
 ## Configuration
 
 ```
-mkdir = ~/.config
+mkdir ~/.config
 jq --null-input \
   --arg key "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
   --arg secret "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \

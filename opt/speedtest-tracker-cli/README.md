@@ -5,7 +5,7 @@ Bash CLI for working speedtest-tracker instances.
 ## Configuration
 
 ```
-mkdir = ~/.config
+mkdir ~/.config
 jq --null-input \
   --arg url "https://prowlarr.mydomain.com" \
   '$ARGS.named' > ~/.config/speedtest-tracker-api.json

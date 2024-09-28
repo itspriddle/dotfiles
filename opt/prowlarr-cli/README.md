@@ -5,7 +5,7 @@ Bash CLI for working Prowlarr instances.
 ## Configuration
 
 ```
-mkdir = ~/.config
+mkdir ~/.config
 jq --null-input \
   --arg key "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
   --arg url "https://prowlarr.mydomain.com" \
