@@ -12,7 +12,7 @@ set -euo pipefail
 IFACE=igb0
 
 vnstat() {
-  ssh vnstat.router.priddle.network -q "$@"
+  ssh -q vnstat.router.priddle.network vnstat -i "$IFACE" --json "$@"
 }
 
 hourly() {
@@ -90,7 +90,7 @@ total() {
 }
 
 traffic() {
-  vnstat traffic
+  vnstat --traffic
 }
 
 traffic_report() {
