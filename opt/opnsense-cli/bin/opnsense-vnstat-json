@@ -95,13 +95,37 @@ traffic() {
 
 traffic_report() {
   traffic |
-    jq '
-    {
-      rx: .rx.bytespersecond,
-      tx: .tx.bytespersecond,
-    }
-    ' |
-    format_report traffic
+    jq  \
+      --arg fetched_at "$(date '+%F %T')" \
+      '
+      def round:
+        . | tostring | gsub("(?<n>\\d+\\.\\d\\d?).*"; .n) | tonumber
+        ;
+
+      # this is different than the other...
+      def bytesToHuman:
+        (. | tonumber) as $bytes |
+
+        ($bytes / 125 | round) as $kbps |
+
+        if $kbps > 1000 then
+          "\($bytes / 125000 | round) Mbit/s"
+        else
+          "\($kbps) kbit/s"
+        end
+        ;
+
+      {
+        rx: .rx.bytespersecond | bytesToHuman,
+        rx_bytes: .rx.bytespersecond,
+        tx: .tx.bytespersecond | bytesToHuman,
+        tx_bytes: .tx.bytespersecond,
+        total: (.rx.bytespersecond + .tx.bytespersecond | bytesToHuman),
+        total_bytes: (.rx.bytespersecond + .tx.bytespersecond),
+        type: "traffic",
+        $fetched_at
+      }
+      '
 }
 
 usage_report() {
@@ -144,12 +168,12 @@ format_report() {
       ;
 
     {
-      rx: .rx,
-      tx: .tx,
-      total: (.rx + .tx),
-      rx_human: .rx | bytesToHuman,
-      tx_human: .tx | bytesToHuman,
-      total_human: (.rx + .tx | bytesToHuman),
+      rx: .rx | bytesToHuman,
+      rx_bytes: .rx,
+      tx: .tx | bytesToHuman,
+      tx_bytes: .tx,
+      total: (.rx + .tx | bytesToHuman),
+      total_bytes: (.rx + .tx),
       timestamp: .timestamp,
       type: $report_type,
       $fetched_at

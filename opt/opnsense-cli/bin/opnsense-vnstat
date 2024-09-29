@@ -6,10 +6,11 @@ if [[ "$DEBUG" ]]; then
   set -x
 fi
 
-hourly=$(opnsense-bandwidth-json hourly)
-daily=$(opnsense-bandwidth-json daily)
-monthly=$(opnsense-bandwidth-json monthly)
-yearly=$(opnsense-bandwidth-json yearly)
+hourly=$(opnsense-vnstat-json hourly)
+daily=$(opnsense-vnstat-json daily)
+monthly=$(opnsense-vnstat-json monthly)
+yearly=$(opnsense-vnstat-json yearly)
+total=$(opnsense-vnstat-json total)
 
 jq -n \
   --arg     fetched_at "$(date '+%F %T')" \
@@ -17,10 +18,12 @@ jq -n \
   --argjson daily      "$daily" \
   --argjson monthly    "$monthly" \
   --argjson yearly     "$yearly" \
+  --argjson total      "$total" \
   '{
     $fetched_at,
     $hourly,
     $daily,
     $monthly,
-    $yearly
+    $yearly,
+    $total
   }'
