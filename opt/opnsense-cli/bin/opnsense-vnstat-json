@@ -1,0 +1,217 @@
+#!/usr/bin/env bash
+# Usage: opnsense-vnstat-json [options] [traffic|total|hourly|daily|monthly|yearly]
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+IFACE=igb0
+
+vnstat() {
+  ssh vnstat.router.priddle.network -q "$@"
+}
+
+hourly() {
+  vnstat | jq \
+    --arg iface "$IFACE" \
+    --arg year "$YEAR" \
+    --arg month "$MONTH" \
+    --arg day "$DAY" \
+    --arg hour "$HOUR" \
+    '.interfaces[]
+    | select(.name == $iface)
+    | .traffic.hour[]
+    | select(
+      .date.year == ($year | tonumber) and
+      .date.month == ($month | tonumber) and
+      .date.day == ($day | tonumber) and
+      .time.hour == ($hour | tonumber) and
+      .time.minute == 0
+    )
+    '
+}
+
+daily() {
+  vnstat | jq \
+    --arg iface "$IFACE" \
+    --arg year "$YEAR" \
+    --arg month "$MONTH" \
+    --arg day "$DAY" \
+    '.interfaces[]
+    | select(.name == $iface)
+    | .traffic.day[]
+    | select(
+      .date.year == ($year | tonumber) and
+      .date.month == ($month | tonumber) and
+      .date.day == ($day | tonumber)
+    )
+    '
+}
+
+monthly() {
+  vnstat | jq \
+    --arg iface "$IFACE" \
+    --arg year "$YEAR" \
+    --arg month "$MONTH" \
+    '.interfaces[]
+    | select(.name == $iface)
+    | .traffic.month[]
+    | select(
+      .date.year == ($year | tonumber) and
+      .date.month == ($month | tonumber)
+    )
+    '
+}
+
+yearly() {
+  vnstat | jq \
+    --arg iface "$IFACE" \
+    --arg year "$YEAR" \
+    '.interfaces[]
+    | select(.name == $iface)
+    | .traffic.year[]
+    | select(
+      .date.year == ($year | tonumber)
+    )
+    '
+}
+
+total() {
+  vnstat | jq \
+    --arg iface "$IFACE" \
+    '.interfaces[]
+    | select(.name == $iface)
+    | .traffic.total
+    '
+}
+
+traffic() {
+  vnstat traffic
+}
+
+traffic_report() {
+  traffic |
+    jq '
+    {
+      rx: .rx.bytespersecond,
+      tx: .tx.bytespersecond,
+    }
+    ' |
+    format_report traffic
+}
+
+usage_report() {
+  YEAR="${YEAR:-$(date +%Y)}"
+  MONTH="${MONTH:-$(date +%m)}"
+  DAY="${DAY:-$(date +%d)}"
+  HOUR="${HOUR:-$(date +%-k)}"
+
+  local target="$1"
+
+  "$target" | format_report "$target"
+}
+
+format_report() {
+  local target="$1"
+
+  jq \
+    --arg report_type "$target" \
+    --arg fetched_at "$(date '+%F %T')" \
+    '
+    def round:
+      . | tostring | gsub("(?<n>\\d+\\.\\d\\d?).*"; .n) | tonumber
+      ;
+
+    def bytesToHuman:
+      (. | tonumber) as $bytes |
+      1024 as $p |
+
+      if ($bytes > pow($p; 4)) then
+        "\(($bytes / pow($p; 4) | round)) TiB"
+      elif ($bytes > pow($p; 3)) then
+        "\(($bytes / pow($p; 3) | round)) GiB"
+      elif ($bytes > pow($p; 2)) then
+        "\(($bytes / pow($p; 2) | round)) MiB"
+      elif ($bytes > $p) then
+        "\(($bytes / $p | round)) kB"
+      else
+        "\($bytes) B"
+      end
+      ;
+
+    {
+      rx: .rx,
+      tx: .tx,
+      total: (.rx + .tx),
+      rx_human: .rx | bytesToHuman,
+      tx_human: .tx | bytesToHuman,
+      total_human: (.rx + .tx | bytesToHuman),
+      timestamp: .timestamp,
+      type: $report_type,
+      $fetched_at
+    }
+    '
+}
+
+main() {
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+      --year=*)
+        YEAR="${1##*=}"
+        shift
+        ;;
+      --month=*)
+        MONTH="${1##*=}"
+        shift
+        ;;
+      --day=*)
+        DAY="${1##*=}"
+        shift
+        ;;
+      --hour=*)
+        HOUR="${1##*=}"
+        shift
+        ;;
+      # Not supported on back end yet
+      # --iface=*)
+      #   IFACE="${1##*=}"
+      #   shift
+      #   ;;
+      -h | --help)
+        sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+          awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+        return 1
+        ;;
+      -*)
+        echo "Invalid option" >&2
+        return 1
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  local target="${1:-daily}"
+
+  [[ "$#" -gt 0 ]] && shift
+
+  case "$target" in
+    total|hourly|daily|monthly|yearly)
+      usage_report "$target"
+      ;;
+    traffic)
+      traffic_report
+      ;;
+    *)
+      echo "Invalid argument" >&2
+      return 1
+      ;;
+  esac
+}
+
+main "$@"
