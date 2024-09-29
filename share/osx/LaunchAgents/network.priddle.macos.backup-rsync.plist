@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>network.priddle.macos.backup-rsync.plist</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/Users/priddle/.dotfiles/opt/macos-scripts/bin/backup-mac-to-syno</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <array>
+      <dict>
+        <key>Hour</key>
+        <integer>20</integer>
+        <key>Minute</key>
+        <integer>4</integer>
+      </dict>
+    </array>
+    <key>UserName</key>
+    <string>priddle</string>
+  </dict>
+</plist>
