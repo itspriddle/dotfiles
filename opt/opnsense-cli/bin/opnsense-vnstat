@@ -12,7 +12,7 @@ set -euo pipefail
 IFACE=igb0
 
 _vnstat() {
-  ssh -q vnstat.router.priddle.network vnstat -i "$IFACE" --json "$@"
+  ssh -q vnstat.router.priddle.network vnstat -i "$IFACE" "$@"
 }
 
 _vnstat "$@"
