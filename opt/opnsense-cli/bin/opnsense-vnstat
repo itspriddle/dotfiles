@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Usage: opnsense-vnstat-json [options] [traffic|total|hourly|daily|monthly|yearly]
 
 # Enable debug mode
 if [[ "$DEBUG" ]]; then
@@ -6,24 +7,12 @@ if [[ "$DEBUG" ]]; then
   set -x
 fi
 
-hourly=$(opnsense-vnstat-json hourly)
-daily=$(opnsense-vnstat-json daily)
-monthly=$(opnsense-vnstat-json monthly)
-yearly=$(opnsense-vnstat-json yearly)
-total=$(opnsense-vnstat-json total)
+set -euo pipefail
 
-jq -n \
-  --arg     fetched_at "$(date '+%F %T')" \
-  --argjson hourly     "$hourly" \
-  --argjson daily      "$daily" \
-  --argjson monthly    "$monthly" \
-  --argjson yearly     "$yearly" \
-  --argjson total      "$total" \
-  '{
-    $fetched_at,
-    $hourly,
-    $daily,
-    $monthly,
-    $yearly,
-    $total
-  }'
+IFACE=igb0
+
+_vnstat() {
+  ssh -q vnstat.router.priddle.network vnstat -i "$IFACE" --json "$@"
+}
+
+_vnstat "$@"

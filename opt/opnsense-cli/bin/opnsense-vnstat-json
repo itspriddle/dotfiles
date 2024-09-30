@@ -11,12 +11,12 @@ set -euo pipefail
 
 IFACE=igb0
 
-vnstat() {
+_vnstat() {
   ssh -q vnstat.router.priddle.network vnstat -i "$IFACE" --json "$@"
 }
 
 hourly() {
-  vnstat | jq \
+  _vnstat | jq \
     --arg iface "$IFACE" \
     --arg year "$YEAR" \
     --arg month "$MONTH" \
@@ -36,7 +36,7 @@ hourly() {
 }
 
 daily() {
-  vnstat | jq \
+  _vnstat | jq \
     --arg iface "$IFACE" \
     --arg year "$YEAR" \
     --arg month "$MONTH" \
@@ -53,7 +53,7 @@ daily() {
 }
 
 monthly() {
-  vnstat | jq \
+  _vnstat | jq \
     --arg iface "$IFACE" \
     --arg year "$YEAR" \
     --arg month "$MONTH" \
@@ -68,7 +68,7 @@ monthly() {
 }
 
 yearly() {
-  vnstat | jq \
+  _vnstat | jq \
     --arg iface "$IFACE" \
     --arg year "$YEAR" \
     '.interfaces[]
@@ -81,7 +81,7 @@ yearly() {
 }
 
 total() {
-  vnstat | jq \
+  _vnstat | jq \
     --arg iface "$IFACE" \
     '.interfaces[]
     | select(.name == $iface)
@@ -90,7 +90,7 @@ total() {
 }
 
 traffic() {
-  vnstat --traffic
+  _vnstat --traffic
 }
 
 traffic_report() {
@@ -129,11 +129,6 @@ traffic_report() {
 }
 
 usage_report() {
-  YEAR="${YEAR:-$(date +%Y)}"
-  MONTH="${MONTH:-$(date +%m)}"
-  DAY="${DAY:-$(date +%d)}"
-  HOUR="${HOUR:-$(date +%-k)}"
-
   local target="$1"
 
   "$target" | format_report "$target"
@@ -181,6 +176,26 @@ format_report() {
     '
 }
 
+all() {
+  jq -n \
+    --arg     fetched_at "$(date '+%F %T')" \
+    --argjson hourly     "$(hourly)" \
+    --argjson daily      "$(daily)" \
+    --argjson monthly    "$(monthly)" \
+    --argjson yearly     "$(yearly)" \
+    --argjson total      "$(total)" \
+    --argjson traffic    "$(traffic)" \
+    '{
+      $fetched_at,
+      $hourly,
+      $daily,
+      $monthly,
+      $yearly,
+      $total,
+      $traffic
+    }'
+}
+
 main() {
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
@@ -220,6 +235,11 @@ main() {
     esac
   done
 
+  YEAR="${YEAR:-$(date +%Y)}"
+  MONTH="${MONTH:-$(date +%m)}"
+  DAY="${DAY:-$(date +%d)}"
+  HOUR="${HOUR:-$(date +%-k)}"
+
   local target="${1:-daily}"
 
   [[ "$#" -gt 0 ]] && shift
@@ -230,6 +250,9 @@ main() {
       ;;
     traffic)
       traffic_report
+      ;;
+    all)
+      all
       ;;
     *)
       echo "Invalid argument" >&2
