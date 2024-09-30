@@ -1,0 +1,33 @@
+#!/usr/bin/env php
+<?php
+
+$cli = getenv('SSH_ORIGINAL_COMMAND');
+
+$args = preg_split("/\s+/", trim($cli));
+
+if ($args[0] == "vnstat") {
+	unset($args[0]);
+}
+
+$vnstat_args = [];
+
+if (!in_array("-i", $args) && !in_array("--iface", $args)) {
+	$vnstat_args[] = "--iface";
+	$vnstat_args[] = "igb0";
+}
+
+foreach ($args as $i => $a) {
+	if (!empty($a)) {
+		if (!preg_match("/^[a-z0-9\-]+/", $a)) {
+			echo "Bad argument\n";
+			exit(1);
+		}
+		$vnstat_args[] = $a;
+	}
+}
+
+$cmd = "vnstat " . escapeshellcmd(join(" ", $vnstat_args));
+
+$out = shell_exec($cmd);
+
+echo "$out";
