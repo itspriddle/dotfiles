@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+get_session() {
+  transmission-api 2> /dev/null
+}
+
+show() {
+  local session_id="$1" response
+
+  response=$(jq -n '
+    .method = "session-get" |
+    .arguments.fields = ["alt-speed-enabled"]
+  ' | transmission-api --session="$session_id" -d @-
+  )
+
+  response_code="$(jq -r .__response_code <<< "$response")"
+
+  if [[ $response_code -eq 200 ]]; then
+    local enabled
+
+    enabled=$(jq -r '.arguments."alt-speed-enabled"' <<< "$response")
+
+    if [[ "$enabled" == "true" ]]; then
+      echo "alt-speed is enabled"
+    else
+      echo "alt-speed is disabled"
+    fi
+  else
+    echo "Unexpected response code: $response_code" >&2
+    return 1
+  fi
+}
+
+toggle() {
+  local enabled="$1" session_id="$2" response
+
+  response=$(jq -n --arg enabled "$enabled" '
+      .method = "session-set" |
+      .arguments."alt-speed-enabled" = ($enabled | test("true"; "i"))
+    ' |
+    transmission-api --session="$session_id" -d @-
+  )
+
+  response_code="$(jq -r .__response_code <<< "$response")"
+
+  if [[ $response_code -eq 200 ]]; then
+    if [[ "$enabled" == "true" ]]; then
+      echo "Enabled alt-speed"
+    else
+      echo "Disabled alt-speed"
+    fi
+  else
+    echo "Unexpected response code: $response_code" >&2
+    return 1
+  fi
+}
+
+main() {
+  local cmd="${1:-show}"
+
+  case "$cmd" in
+    show)
+      show "$(get_session)"
+      return
+      ;;
+    on|true)
+      toggle true "$(get_session)"
+      ;;
+    off|false)
+      toggle false "$(get_session)"
+      ;;
+    *)
+      echo "Invalid argument: $cmd" >&2
+      return 1
+      ;;
+  esac
+}
+
+main "$@"
