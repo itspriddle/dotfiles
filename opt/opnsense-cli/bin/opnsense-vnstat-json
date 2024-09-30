@@ -9,7 +9,7 @@ fi
 
 set -euo pipefail
 
-IFACE=igb0
+IFACE="${IFACE:-igb0}"
 
 _vnstat() {
   ssh -q vnstat.router.priddle.network vnstat -i "$IFACE" --json "$@"
@@ -215,11 +215,10 @@ main() {
         HOUR="${1##*=}"
         shift
         ;;
-      # Not supported on back end yet
-      # --iface=*)
-      #   IFACE="${1##*=}"
-      #   shift
-      #   ;;
+      --iface=*)
+        IFACE="${1##*=}"
+        shift
+        ;;
       -h | --help)
         sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
           awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
