@@ -486,9 +486,9 @@ _playing_jq() {
 
       (
         if .NowPlayingItem.Type == "Audio" then
-          (.NowPlayingItem.DateCreated | split("T") | .[0])
+          (.NowPlayingItem.ProductionYear // "Unknown") | tostring
         else
-          (.NowPlayingItem.PremiereDate | split("T") | .[0])
+          "\(.NowPlayingItem.PremiereDate | split("T") | .[0])T00:00:00Z" | fromdate | strftime("%b %-d, %Y")
         end
       ) as $date |
 
@@ -568,7 +568,7 @@ _playing_jq() {
           "\(blue(bold("Progress:")))  \(.progress_percent)% (\(.progress) \(if .media_type == "Audio" then "listened" else "watched" end) - \(.remaining) remaining)",
           "\(blue(bold("Player:")))    \(.client) (\(.device), \(.user)@\(.ip_address))",
           "\(blue(bold("State:")))     \(.state) (\(.stream))",
-          "\(blue(bold("Date:")))      \("\(.date)T00:00:00Z" | fromdate | strftime("%b %-d, %Y"))",
+          "\(blue(bold("Date:")))      \(.date)",
           (if .media_type == "Audio" or .rating == "None" then
             false
           else
