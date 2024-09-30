@@ -41,16 +41,14 @@ for f in "${HOURLY_FILES[@]}" "${DAILY_FILES[@]}" "${MONTHLY_FILES[@]}" "${YEARL
   mkdir -p "$(dirname "$f")"
 done
 
-STATS="$(opnsense-vnstat | tee "$FEEDS/now.json.tmp")"
+STATS="$(opnsense-vnstat-json all | tee "$FEEDS/now.json.tmp")"
 
 jq .hourly <<< "$STATS" | tee "${HOURLY_FILES[@]}"
 jq .daily <<< "$STATS" | tee "${DAILY_FILES[@]}"
 jq .monthly <<< "$STATS" | tee "${MONTHLY_FILES[@]}"
 jq .yearly <<< "$STATS" | tee "${YEARLY_FILES[@]}"
 jq .total <<< "$STATS" | tee "$FEEDS/total.json.tmp"
-
-opnsense-vnstat-json traffic |
-  tee "$FEEDS/traffic.json.tmp"
+jq .traffic <<< "$STATS" | tee "$FEEDS/traffic.json.tmp"
 
 for f in "$FEEDS/total.json.tmp" "$FEEDS/traffic.json.tmp" "$FEEDS/now.json.tmp" "${HOURLY_FILES[@]}" "${DAILY_FILES[@]}" "${MONTHLY_FILES[@]}" "${YEARLY_FILES[@]}"; do
   if [[ "$(< "$f")" == "{}" ]]; then
