@@ -179,12 +179,12 @@ format_report() {
 all() {
   jq -n \
     --arg     fetched_at "$(date '+%F %T')" \
-    --argjson hourly     "$(hourly)" \
-    --argjson daily      "$(daily)" \
-    --argjson monthly    "$(monthly)" \
-    --argjson yearly     "$(yearly)" \
-    --argjson total      "$(total)" \
-    --argjson traffic    "$(traffic)" \
+    --argjson hourly     "$(usage_report hourly)" \
+    --argjson daily      "$(usage_report daily)" \
+    --argjson monthly    "$(usage_report monthly)" \
+    --argjson yearly     "$(usage_report yearly)" \
+    --argjson total      "$(usage_report total)" \
+    --argjson traffic    "$(traffic_report traffic)" \
     '{
       $fetched_at,
       $hourly,
