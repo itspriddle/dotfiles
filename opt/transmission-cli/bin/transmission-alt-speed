@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Usage: transmission-alt-speed [options] [show|on|off]
 
 # Enable debug mode
 if [[ "$DEBUG" ]]; then
@@ -8,17 +9,13 @@ fi
 
 set -euo pipefail
 
-get_session() {
-  transmission-api 2> /dev/null
-}
-
 show() {
-  local session_id="$1" response
+  local response
 
   response=$(jq -n '
     .method = "session-get" |
     .arguments.fields = ["alt-speed-enabled"]
-  ' | transmission-api --session="$session_id" -d @-
+    ' | transmission-api --auto-session -d @-
   )
 
   response_code="$(jq -r .__response_code <<< "$response")"
@@ -40,13 +37,12 @@ show() {
 }
 
 toggle() {
-  local enabled="$1" session_id="$2" response
+  local enabled="$1" response
 
   response=$(jq -n --arg enabled "$enabled" '
-      .method = "session-set" |
-      .arguments."alt-speed-enabled" = ($enabled | test("true"; "i"))
-    ' |
-    transmission-api --session="$session_id" -d @-
+    .method = "session-set" |
+    .arguments."alt-speed-enabled" = ($enabled | test("true"; "i"))
+    ' | transmission-api --auto-session -d @-
   )
 
   response_code="$(jq -r .__response_code <<< "$response")"
@@ -68,14 +64,19 @@ main() {
 
   case "$cmd" in
     show)
-      show "$(get_session)"
+      show
       return
       ;;
     on|true)
-      toggle true "$(get_session)"
+      toggle true
       ;;
     off|false)
-      toggle false "$(get_session)"
+      toggle false
+      ;;
+    -h|--help)
+      sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+        awk -v f="${cmd//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+      return 1
       ;;
     *)
       echo "Invalid argument: $cmd" >&2

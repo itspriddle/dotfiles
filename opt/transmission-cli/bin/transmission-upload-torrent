@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Usage: transmission-upload-torrent [-d|--delete] <file>...
 
 # Enable debug mode
 if [[ "$DEBUG" ]]; then
@@ -8,12 +9,6 @@ fi
 
 set -e
 
-get_session() {
-  local response
-
-  transmission-api 2> /dev/null
-}
-
 encode_file() {
   local file="$1"
 
@@ -21,15 +16,14 @@ encode_file() {
 }
 
 upload_file() {
-  local file="$1" session_id="$2" response
+  local file="$1" response
 
   response=$(encode_file "$file" |
     jq -nR '
       .method = "torrent-add" |
       .arguments.metainfo = input |
       .arguments.paused = true
-    ' |
-      transmission-api --session="$session_id" -d @-
+    ' | transmission-api --auto-session -d @-
   )
 
   response_code="$(jq -r .__response_code <<< "$response")"
@@ -48,10 +42,10 @@ main() {
   if [[ "$#" -eq 0 ]]; then
     echo "Usage: upload-torrent <file>..." >&2
     return 1
-  elif [[ "$1" == "--help" ]]; then
-    echo "Upload a torrent file to Transmission" >&2
-    echo "Usage: upload-torrent <file>..." >&2
-    return 0
+  elif [[ "$1" =~ ^(-h|--help)$ ]]; then
+    sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+      awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+    return 1
   elif ! command -v jq &> /dev/null; then
     echo "jq is required" >&2
     return 1
@@ -70,7 +64,7 @@ main() {
   done
 
   for file in "$@"; do
-    upload_file "$file" "$(get_session)"
+    upload_file "$file"
   done
 
   if [[ "$delete" ]]; then

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Usage: transmission-stats
 
 # Enable debug mode
 if [[ "$DEBUG" ]]; then
@@ -8,14 +9,25 @@ fi
 
 set -euo pipefail
 
-SESSION=$(transmission-api 2> /dev/null || true)
+main() {
+  if [[ "${1-}" =~ ^(-h|--help)$ ]]; then
+    sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+      awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+    return 1
+  elif ! command -v jq &> /dev/null; then
+    echo "jq is required" >&2
+    return 1
+  fi
 
-transmission-api --session="$SESSION" -d '{"method": "session-stats"}' |
-  jq --arg fetched_at "$(date '+%F %T')" '{
-    $fetched_at,
-    total_torrents: .arguments.torrentCount,
-    leeching_torrents: (.arguments.torrentCount - .arguments.activeTorrentCount),
-    active_torrents: .arguments.activeTorrentCount,
-    download_speed: .arguments.downloadSpeed,
-    upload_speed: .arguments.uploadSpeed
-  }'
+  transmission-api --auto-session -d '{"method": "session-stats"}' |
+    jq --arg fetched_at "$(date '+%F %T')" '{
+      $fetched_at,
+      total_torrents: .arguments.torrentCount,
+      leeching_torrents: (.arguments.torrentCount - .arguments.activeTorrentCount),
+      active_torrents: .arguments.activeTorrentCount,
+      download_speed: .arguments.downloadSpeed,
+      upload_speed: .arguments.uploadSpeed
+    }'
+}
+
+main "$@"

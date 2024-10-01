@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Usage: transmission-api [options] <path> [curl options]
 
 # Enable debug mode
 if [[ "$DEBUG" ]]; then
@@ -8,7 +9,7 @@ fi
 
 set -euo pipefail
 
-TRANSMISSION_RPC_URL="$(jq -r .url ~/.config/transmission-api.json)/transmission/rpc"
+TRANSMISSION_RPC_URL="${TRANSMISSION_RPC_URL:-$(jq -r .url ~/.config/transmission-api.json)/transmission/rpc}"
 
 api() {
   local response response_code session
@@ -35,6 +36,7 @@ api() {
   response=$(jq -s add <<< "$response")
 
   response_code=$(jq -r .__response_code <<< "$response")
+
   session=$(jq -r .__session <<< "$response")
 
   case "$response_code" in
@@ -49,13 +51,22 @@ api() {
 }
 
 main() {
-  local session=
+  local auto_session=
 
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
+      -a|--auto-session)
+        shift
+        auto_session=1
+        ;;
       --session=*)
         session="${1#*=}"
         shift
+        ;;
+      -h|--help)
+        sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+          awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+        return 1
         ;;
       *)
         break
@@ -63,7 +74,12 @@ main() {
     esac
   done
 
-  api "$session" "$@"
+  if ! command -v jq &> /dev/null; then
+    echo "jq is required" >&2
+    return 1
+  fi
+
+  api "${auto_session//1/$(api 2>/dev/null || true)}" "$@"
 }
 
 main "$@"
