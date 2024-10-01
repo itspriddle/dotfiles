@@ -369,48 +369,40 @@ _playing_jq() {
     ;
 
   def trim:
-    . |
-      gsub("^(\\n+|\\s+)"; "") |
-      gsub("(\\n|\\s+)$"; "")
+    .
+    | gsub("^(\\n+|\\s+)"; "")
+    | gsub("(\\n|\\s+)$"; "")
     ;
 
   def normalize_whitespace:
-    . |
-      gsub("\\s+"; " ") |
-      trim
+    .
+    | gsub("\\s+"; " ")
+    | trim
     ;
 
   def wrap:
-    (11) as $indent |
-    (78 - $indent) as $length |
-
-    . | gsub("(?<line>.{1,\($length)})(\\s+|$)"; "\(.line)\n\(" " * $indent // "")")
+    (11) as $indent
+    | (78 - $indent) as $length
+    | .
+    | gsub("(?<line>.{1,\($length)})(\\s+|$)"; "\(.line)\n\(" " * $indent // "")")
     ;
 
   def round(decimal):
-    (decimal | tostring | split(".")) as $fields |
-    ($fields[0] | tonumber) as $integer |
-    ("0.\($fields[1] // 0)" | tonumber) as $decimal |
-
-    if $decimal >= 0.5 then
-      $integer + 1
-    else
-      $integer
-    end
+    (decimal | tostring | split(".")) as $fields
+    | ($fields[0] | tonumber) as $integer
+    | ("0.\($fields[1] // 0)" | tonumber) as $decimal
+    | if $decimal >= 0.5 then $integer + 1 else $integer end
     ;
 
   def zero_pad(i):
-    if i != "" and (i | tonumber) < 10 then
-      "0\(i)"
-    else
-      "\(i)"
-    end
+    if i != "" and (i | tonumber) < 10 then "0\(i)" else "\(i)" end
     ;
 
   def seconds_to_time(seconds):
-    (seconds | tonumber / 3600 | floor) as $hours |
-    (seconds | tonumber % 3600 / 60 | floor) as $minutes |
-    (seconds | tonumber % 60) as $seconds |
+    (seconds | tonumber / 3600 | floor) as $hours
+    | (seconds | tonumber % 3600 / 60 | floor) as $minutes
+    | (seconds | tonumber % 60) as $seconds
+    |
 
     if $hours == 0 then
       "\(zero_pad($minutes)):\(zero_pad($seconds))"
@@ -424,113 +416,60 @@ _playing_jq() {
     ;
 
   def ip_to_decimal(ip):
-    (ip | split(".") | map(tonumber)) as $octets |
-    ($octets[0] * pow(256; 3)) + ($octets[1] * pow(256; 2)) + ($octets[2] * 256) + $octets[3]
+    (ip | split(".") | map(tonumber)) as $octets
+    | ($octets[0] * pow(256; 3)) + ($octets[1] * pow(256; 2)) + ($octets[2] * 256) + $octets[3]
     ;
 
   def map_now_playing:
-    . | sort_by(ip_to_decimal(.RemoteEndPoint)) | map(
-      (
-        if .NowPlayingItem.Type == "Episode" then
-          "S\(zero_pad(.NowPlayingItem.ParentIndexNumber))E\(zero_pad(.NowPlayingItem.IndexNumber))"
+    .
+    | sort_by(ip_to_decimal(.RemoteEndPoint))
+    | map(
+      .NowPlayingItem as $npi
+      | (
+        if $npi.Type == "Episode" then
+          "S\(zero_pad($npi.ParentIndexNumber))E\(zero_pad($npi.IndexNumber))"
         else
           ""
         end
-      ) as $episode_code |
+      ) as $episode_code
 
-      (
-        if .NowPlayingItem.Type == "Episode" then
-          "\(.NowPlayingItem.SeriesName) - \($episode_code) - \(.NowPlayingItem.Name)"
-        elif .NowPlayingItem.Type == "Audio" then
-          "\(.NowPlayingItem.AlbumArtist) - \(.NowPlayingItem.Name)"
+      | (
+        if $npi.Type == "Episode" then
+          "\($npi.SeriesName) - \($episode_code) - \($npi.Name)"
+        elif $npi.Type == "Audio" then
+          "\($npi.AlbumArtist) - \($npi.Name)"
         else
-          .NowPlayingItem.Name
+          $npi.Name
         end
-      ) as $name |
+      ) as $name
 
-      (
-        ticks_to_seconds(.NowPlayingItem.RunTimeTicks)
-      ) as $duration_seconds |
-
-      (
-        seconds_to_time($duration_seconds)
-      ) as $duration |
-
-      (
-        ticks_to_seconds(.PlayState.PositionTicks)
-      ) as $progress_seconds |
-
-      (
-        seconds_to_time($progress_seconds)
-      ) as $progress |
-
-      (
-        round($progress_seconds / $duration_seconds * 100)
-      ) as $progress_percent |
-
-      (
-        round($duration_seconds - $progress_seconds)
-      ) as $remaining_seconds |
-
-      (
-        seconds_to_time($remaining_seconds)
-      ) as $remaining |
-
-      (
-        if .Client | test("Infuse") then
-          "Infuse"
+      | (
+        if $npi.Type == "Audio" then
+          ($npi.ProductionYear // "Unknown") | tostring
         else
-          .Client
+          "\($npi.PremiereDate | split("T") | .[0])T00:00:00Z" | fromdate | strftime("%b %-d, %Y")
         end
-      ) as $client |
+      ) as $date
 
-      (
-        if .NowPlayingItem.Type == "Audio" then
-          (.NowPlayingItem.ProductionYear // "Unknown") | tostring
-        else
-          "\(.NowPlayingItem.PremiereDate | split("T") | .[0])T00:00:00Z" | fromdate | strftime("%b %-d, %Y")
-        end
-      ) as $date |
+      | ticks_to_seconds($npi.RunTimeTicks) as $duration_seconds
+      | seconds_to_time($duration_seconds) as $duration
+      | ticks_to_seconds(.PlayState.PositionTicks) as $progress_seconds
+      | seconds_to_time($progress_seconds) as $progress
+      | round($progress_seconds / $duration_seconds * 100) as $progress_percent
+      | round($duration_seconds - $progress_seconds) as $remaining_seconds
+      | seconds_to_time($remaining_seconds) as $remaining
 
-      (
-        if .NowPlayingItem.Type == "Audio" then
-          .NowPlayingItem.Album
-        else
-          ""
-        end
-      ) as $album |
-
-      (
-        if .NowPlayingItem.Type == "Audio" then
-          .NowPlayingItem.AlbumArtist
-        else
-          ""
-        end
-      ) as $album_artist |
-
-      (
-        if .NowPlayingItem.Type == "Audio" then
-          .NowPlayingItem.IndexNumber
-        else
-          ""
-        end
-      ) as $album_track |
-
-      (
-        .PlayState.PlayMethod
-      ) as $stream |
-
-      {
+      | {
         name: $name,
         date: $date,
         ip_address: .RemoteEndPoint,
         user: .UserName,
         device: .DeviceName,
-        client: $client,
-        media_type: .NowPlayingItem.Type,
-        rating: (.NowPlayingItem.OfficialRating // "None"),
+        client: (if .Client | test("Infuse") then "Infuse" else .Client end),
+        media_type: $npi.Type,
+        rating: ($npi.OfficialRating // "None"),
         state: (if .PlayState.IsPaused then "Paused" else "Playing" end),
-        summary: .NowPlayingItem.Overview | tostring | normalize_whitespace,
+        summary: $npi.Overview | tostring | normalize_whitespace,
         progress_percent: $progress_percent,
         progress_seconds: $progress_seconds,
         progress: $progress,
@@ -539,10 +478,10 @@ _playing_jq() {
         remaining: $remaining,
         remaining_seconds: $remaining_seconds,
         episode_code: $episode_code,
-        stream: $stream,
-        album: $album,
-        album_artist: $album_artist,
-        album_track: $album_track,
+        stream: .PlayState.PlayMethod,
+        album: (if $npi.Type == "Audio" then $npi.Album else "" end),
+        album_artist: (if $npi.Type == "Audio" then $npi.AlbumArtist else "" end),
+        album_track: (if $npi.Type == "Audio" then $npi.IndexNumber else "" end)
       }
     ) |
     if $format == "text" then
