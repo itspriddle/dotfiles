@@ -4,19 +4,73 @@ set -euo pipefail
 
 CONTAINER=network.priddle.scarif.acme
 
-docker start "$CONTAINER"
+SYNO_NGINX_RELOAD=1
 
-docker exec "$CONTAINER" acme.sh --cron &&
-  healthchecks scarif-acme
+_log() {
+  local ts
 
-[[ ! -d "/volume1/docker/$CONTAINER/_out" ]] &&
-  sudo mkdir "/volume1/docker/$CONTAINER/_out"
+  ts=$(TZ=UTC date '+%a %b %e %H:%M:%S %Z %Y')
 
-docker exec "$CONTAINER" acme.sh \
-  --install-cert \
-  -d '*.priddle.network' \
-  --cert-file /acme.sh/_out/star.priddle.network/cert.pem \
-  --key-file /acme.sh/_out/star.priddle.network/key.pem \
-  --fullchain-file /acme.sh/_out/star.priddle.network/fullchain.pem
+  printf -- "%s ====> %s\n" "[$ts] acme-renew:" "$1" >&2
+}
 
-docker stop "$CONTAINER"
+install_cert() {
+  local domain="$1"
+  local cert="${domain//\*/star}"
+  local base_dir="/volume1/docker/$CONTAINER/_out"
+  local install_dir="$base_dir/$cert"
+
+  if [[ ! -d "$base_dir" ]]; then
+    sudo mkdir "$base_dir"
+  fi
+
+  if [[ ! -d "$install_dir" ]]; then
+    sudo mkdir "$install_dir"
+  fi
+
+  docker exec "$CONTAINER" acme.sh \
+    --install-cert \
+    -d "$domain" \
+    --cert-file "/acme.sh/_out/$cert/cert.pem" \
+    --key-file "/acme.sh/_out/$cert/key.pem" \
+    --fullchain-file "/acme.sh/_out/$cert/fullchain.pem"
+
+  _log "Installed $domain cert to \`$install_dir'"
+}
+
+healthchecks scarif-acme/start
+
+_log "Starting Docker container $CONTAINER"
+docker start "$CONTAINER" > /dev/null
+
+if [[ "${FORCE:-}" == 1 ]]; then
+  _log "Forcing renewal"
+
+  docker exec "$CONTAINER" acme.sh --cron --force
+else
+  docker exec "$CONTAINER" acme.sh --cron
+fi
+
+_log "Starting manual cert installation"
+
+install_cert '*.priddle.network'
+install_cert '*.scarif.priddle.network'
+
+_log "End manual cert installation"
+
+_log "Stopping Docker container $CONTAINER"
+docker stop "$CONTAINER" > /dev/null
+
+if [[ "$SYNO_NGINX_RELOAD" == 1 ]]; then
+  _log "Checking Synology nginx config"
+
+  if sudo nginx -t &> /dev/null; then
+    _log "Synology nginx config is valid, reloading it"
+    sudo nginx -s reload 2>/dev/null
+  else
+    _log "Synology nginx config error"
+    exit 1
+  fi
+fi
+
+healthchecks scarif-acme
