@@ -9,4 +9,14 @@ docker start "$CONTAINER"
 docker exec "$CONTAINER" acme.sh --cron &&
   healthchecks scarif-acme
 
+[[ ! -d "/volume1/docker/$CONTAINER/_out" ]] &&
+  sudo mkdir "/volume1/docker/$CONTAINER/_out"
+
+docker exec "$CONTAINER" acme.sh \
+  --install-cert \
+  -d '*.priddle.network' \
+  --cert-file /acme.sh/_out/star.priddle.network/cert.pem \
+  --key-file /acme.sh/_out/star.priddle.network/key.pem \
+  --fullchain-file /acme.sh/_out/star.priddle.network/fullchain.pem
+
 docker stop "$CONTAINER"
