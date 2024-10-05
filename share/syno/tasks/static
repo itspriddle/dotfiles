@@ -10,10 +10,6 @@ set -euo pipefail
 
 export PATH="$HOME/.dotfiles/share/syno/tasks:$PATH"
 
-# This comes last inside the Synology Task so it pulls the HC for this main
-# script
-# static-healthchecks
-
 static-dhcp-leases
 static-openvpn
 static-opnsense
@@ -25,3 +21,8 @@ static-ssl-check
 static-syno
 static-transmission
 static-vnstat
+
+healthchecks scarif-static-generator
+
+# This comes last so we know the status of the healthcheck above
+static-healthchecks
