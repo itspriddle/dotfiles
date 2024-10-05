@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-CONTAINER=network.priddle.scarif.acme
-
 SYNO_NGINX_RELOAD=1
+
+ACME_ROOT="/usr/local/share/acme.sh"
 
 _log() {
   local ts
@@ -17,7 +17,7 @@ _log() {
 install_cert() {
   local domain="$1"
   local cert="${domain//\*/star}"
-  local base_dir="/volume1/docker/$CONTAINER/_out"
+  local base_dir="/usr/local/etc/ssl"
   local install_dir="$base_dir/$cert"
 
   if [[ ! -d "$base_dir" ]]; then
@@ -28,27 +28,30 @@ install_cert() {
     sudo mkdir "$install_dir"
   fi
 
-  docker exec "$CONTAINER" acme.sh \
+  sudo "$ACME_ROOT/acme.sh" \
+    --home "$ACME_ROOT" \
     --install-cert \
     -d "$domain" \
-    --cert-file "/acme.sh/_out/$cert/cert.pem" \
-    --key-file "/acme.sh/_out/$cert/key.pem" \
-    --fullchain-file "/acme.sh/_out/$cert/fullchain.pem"
+    --cert-file "$install_dir/cert.pem" \
+    --key-file "$install_dir/key.pem" \
+    --fullchain-file "$install_dir/fullchain.pem"
 
   _log "Installed $domain cert to \`$install_dir'"
 }
 
 healthchecks scarif-acme/start
 
-_log "Starting Docker container $CONTAINER"
-docker start "$CONTAINER" > /dev/null
-
 if [[ "${FORCE:-}" == 1 ]]; then
   _log "Forcing renewal"
 
-  docker exec "$CONTAINER" acme.sh --cron --force
+  sudo "$ACME_ROOT/acme.sh" \
+    --home "$ACME_ROOT" \
+    --cron \
+    --force
 else
-  docker exec "$CONTAINER" acme.sh --cron
+  sudo "$ACME_ROOT/acme.sh" \
+    --home "$ACME_ROOT" \
+    --cron
 fi
 
 _log "Starting manual cert installation"
@@ -57,9 +60,6 @@ install_cert '*.priddle.network'
 install_cert '*.scarif.priddle.network'
 
 _log "End manual cert installation"
-
-_log "Stopping Docker container $CONTAINER"
-docker stop "$CONTAINER" > /dev/null
 
 if [[ "$SYNO_NGINX_RELOAD" == 1 ]]; then
   _log "Checking Synology nginx config"
