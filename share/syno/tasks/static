@@ -10,6 +10,8 @@ set -euo pipefail
 
 export PATH="$HOME/.dotfiles/share/syno/tasks:$PATH"
 
+healthchecks scarif-static-generator/start
+
 static-dhcp-leases
 static-openvpn
 static-opnsense
