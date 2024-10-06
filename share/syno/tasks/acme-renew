@@ -39,6 +39,9 @@ install_cert() {
   _log "Installed $domain cert to \`$install_dir'"
 }
 
+# Needed for acme.sh to deploy correctly
+export SYNO_LOCAL_HOSTNAME=1
+
 healthchecks scarif-acme/start
 
 if [[ "${FORCE:-}" == 1 ]]; then
