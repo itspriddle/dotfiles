@@ -6,6 +6,8 @@ SYNO_NGINX_RELOAD=1
 
 ACME_ROOT="/usr/local/share/acme.sh"
 
+export HC_CONFIG=/var/services/homes/priddle/.config/healthchecks-io.json
+
 _log() {
   local ts
 
