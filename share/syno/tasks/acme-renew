@@ -49,12 +49,12 @@ healthchecks scarif-acme/start
 if [[ "${FORCE:-}" == 1 ]]; then
   _log "Forcing renewal"
 
-  sudo "$ACME_ROOT/acme.sh" \
+  sudo -E "$ACME_ROOT/acme.sh" \
     --home "$ACME_ROOT" \
     --cron \
     --force
 else
-  sudo "$ACME_ROOT/acme.sh" \
+  sudo -E "$ACME_ROOT/acme.sh" \
     --home "$ACME_ROOT" \
     --cron
 fi
