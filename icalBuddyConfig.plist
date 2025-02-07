@@ -5,7 +5,7 @@
     <key>constantArguments</key>
     <dict>
       <key>includeCals</key>
-      <string>Work,Dev Team,US Holidays,Anniversaries</string>
+      <string>Work,Dev Team,US Holidays,Anniversaries,WHG</string>
     </dict>
   </dict>
 </plist>
