@@ -4,8 +4,8 @@ setlocal commentstring=//\ %s
 " Show invisibles since PHP code often uses hard tabs
 setlocal list
 
-" Use hard-tabs to place nicely with most of the world
-setlocal tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab
+" Use soft-tabs with 4 spaces
+setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 
 " Check syntax
 nnoremap <leader>l :!php -l %<cr>
