@@ -63,6 +63,9 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   # ruby/rails
   alias rc='rails console'
   alias be='bundle exec'
+
+  # laravel
+  alias art='php artisan'
 fi
 
 # vim: ft=zsh
