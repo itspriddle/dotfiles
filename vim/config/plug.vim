@@ -104,6 +104,8 @@ if s:platform == 'macos'
   Plug 'elixir-editors/vim-elixir'
   Plug 'jwalton512/vim-blade'
   Plug 'itspriddle/applescript.vim'
+  Plug 'noahfrederick/vim-composer'
+  Plug 'noahfrederick/vim-laravel'
 
   if isdirectory(expand(s:vimhome . '/plugged/vim-notebook'))
     call plug#(s:vimhome . '/plugged/vim-notebook')
