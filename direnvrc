@@ -55,10 +55,6 @@ use_homebrew_php() {
     PATH_add "$optdir/sbin"
     MANPATH_add "$optdir/share/man"
 
-    if [[ -d "$HOME/.dotfiles/share/php" ]]; then
-      export PHP_INI_SCAN_DIR="$HOME/.dotfiles/share/php"
-    fi
-
     # Set the composer home directory, so that we can have multiple versions of
     # global packages installed. Not sure I actually need it, so commented out
     # for now.
