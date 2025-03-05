@@ -49,6 +49,11 @@ set tags=./.tags;
 "   h    - Disable hlsearch when viminfo file is loaded (eg when vim loads, default is set)
 set viminfo=!,'250,<50,s10,h
 
+" Shell
+if executable('/bin/bash')
+  set shell=/bin/bash
+endif
+
 " }}}
 
 " Viewing/Editing {{{
