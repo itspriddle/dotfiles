@@ -15,3 +15,9 @@ nmap <buffer> gf <Plug>(composer-find)
 
 " Insert use statement
 nmap <buffer> gu <Plug>(composer-use)
+
+" Open or create the associated file in a horizontal split
+nnoremap <buffer> <leader>s :AS<cr>
+
+" Open or create the associated file in a vertical split
+nnoremap <buffer> <leader>v :AV<cr>
