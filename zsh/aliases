@@ -66,6 +66,10 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
 
   # laravel
   alias art='php artisan'
+
+  # script/ to rule them all
+  alias sc='script/console'
+  alias st='script/test'
 fi
 
 # vim: ft=zsh
