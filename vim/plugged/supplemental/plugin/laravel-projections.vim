@@ -19,6 +19,8 @@ function! s:projectionist_detect()
     return
   endif
 
+  let b:projectionist[b:composer_root][0]["*"] = {}
+
   let json = readfile(s:projection_path)
   let projections = projectionist#json_parse(json)
   call projectionist#append(b:composer_root, projections)
