@@ -1,0 +1,290 @@
+{
+    "*": {
+        "start": "php artisan tinker"
+    },
+    "*.php": {
+        "template": [
+            "<?php",
+            "",
+            "declare(strict_types=1);",
+            ""
+        ]
+    },
+    "config/*.php": {
+        "type": "config",
+        "template": [
+            "<?php",
+            "",
+            "declare(strict_types=1);",
+            "",
+            "return [",
+            "    //",
+            "];"
+        ]
+    },
+    "config/app.php": {
+        "type": "config"
+    },
+    "docs/*.md": {
+        "type": "doc",
+        "template": [
+            "# {}",
+            "",
+            ""
+        ]
+    },
+    "README.md": {
+        "type": "doc"
+    },
+    "app/*.php": {
+      "template": [
+           "<?php",
+           "",
+           "declare(strict_types=1);",
+           "",
+           "namespace App\\{dirname|backslash};",
+           "",
+           "class {basename}",
+           "{open}",
+           "    //",
+           "{close}"
+      ]
+    },
+    "app/Broadcasting/*.php": {
+        "type": "broadcast",
+        "alternate": "tests/Feature/Broadcasting/{}Test.php"
+    },
+    "app/Casts/*.php": {
+        "type": "cast",
+        "alternate": "tests/Unit/Casts/{}Test.php"
+    },
+    "app/Console/Commands/*.php": {
+        "type": "command",
+        "alternate": "tests/Feature/Console/Commands/{}Test.php"
+    },
+    "app/Enums/*.php": {
+        "type": "enum"
+    },
+    "app/Events/*.php": {
+        "type": "event",
+        "alternate": "tests/Feature/Events/{}Test.php"
+    },
+    "app/Exceptions/*.php": {
+        "type": "exception"
+    },
+    "app/Facades/*.php": {
+        "type": "facade"
+    },
+    "app/Http/Controllers/*.php": {
+        "type": "controller",
+        "alternate": "tests/Feature/Http/Controllers/{}Test.php"
+    },
+    "app/Http/Middleware/*.php": {
+        "type": "middleware",
+        "alternate": "tests/Feature/Http/Middleware/{}Test.php"
+    },
+    "app/Http/Requests/*.php": {
+        "type": "requests",
+        "alternate": "tests/Feature/Http/Requests/{}Test.php"
+    },
+    "app/Http/Resources/*.php": {
+        "type": "resource",
+        "alternate": "tests/Feature/Http/Resources/{}Test.php"
+    },
+    "app/Jobs/*.php": {
+        "type": "job",
+        "alternate": "tests/Feature/Jobs/{}Test.php"
+    },
+    "app/Livewire/*.php": {
+        "type": "livewire"
+    },
+    "app/Mail/*.php": {
+        "type": "mail",
+        "alternate": "tests/Feature/Mail/{}Test.php"
+    },
+    "app/Models/*.php": {
+        "type": "model",
+        "alternate": "tests/Unit/Models/{}Test.php"
+    },
+    "app/Listeners/*.php": {
+        "type": "listener"
+    },
+    "app/Notifications/*.php": {
+        "type": "notification",
+        "alternate": "tests/Feature/Notifications/{}Test.php"
+    },
+    "app/Observers/*.php": {
+        "type": "observer",
+        "alternate": "tests/Unit/Observers/{}Test.php"
+    },
+    "app/Policies/*.php": {
+        "type": "policy",
+        "alternate": "tests/Feature/Policies/{}Test.php"
+    },
+    "app/Providers/*.php": {
+        "type": "provider"
+    },
+    "app/Providers/AppServiceProvider.php": {
+        "type": "provider"
+    },
+    "app/Repositories/*.php": {
+        "type": "repository",
+        "alternate": "tests/Unit/Repositories/{}Test.php"
+    },
+    "app/Rules/*.php": {
+        "type": "rule"
+    },
+    "app/Scopes/*.php": {
+        "type": "scope",
+        "alternate": "tests/Unit/Scopes/{}Test.php"
+    },
+    "app/Services/*.php": {
+        "type": "service",
+        "alternate": "tests/Unit/Services/{}Test.php"
+    },
+    "app/Traits/*.php": {
+        "type": "trait"
+    },
+    "database/factories/*.php": {
+        "type": "factory"
+    },
+    "database/migrations/*.php": {
+        "type": "migration"
+    },
+    "database/seeders/*.php": {
+        "type": "seeder"
+    },
+    "database/seeders/DatabaseSeeder.php": {
+        "type": "seeder"
+    },
+    "routes/*.php": {
+        "type": "routes",
+        "alternate": "bootstrap/app.php"
+    },
+    "routes/web.php": {
+        "type": "routes",
+        "alternate": "bootstrap/app.php"
+    },
+    "test/Feature/Console/Commands/*Test.php": {
+        "type": "test",
+        "alternate": "app/Console/Commands/{}.php"
+    },
+    "test/Feature/Events/*Test.php": {
+        "type": "test",
+        "alternate": "app/Events/{}.php"
+    },
+    "tests/Feature/Http/Controllers/*Test.php": {
+        "type": "test",
+        "alternate": "app/Http/Controllers/{}.php"
+    },
+    "tests/Feature/Http/Middleware/*Test.php": {
+        "type": "test",
+        "alternate": "app/Http/Middleware/{}.php"
+    },
+    "tests/Feature/Http/Requests/*Test.php": {
+        "type": "test",
+        "alternate": "app/Http/Requests/{}.php"
+    },
+    "tests/Feature/Http/Resources/*Test.php": {
+        "type": "test",
+        "alternate": "app/Http/Resources/{}.php"
+    },
+    "tests/Feature/Jobs/*Test.php": {
+        "type": "test",
+        "alternate": "app/Jobs/{}.php"
+    },
+    "tests/Feature/Mail/*Test.php": {
+        "type": "test",
+        "alternate": "app/Mail/{}.php"
+    },
+    "tests/Unit/Models/*Test.php": {
+        "type": "test",
+        "alternate": "app/Models/{}.php",
+        "dispatch": "pest {file}"
+    },
+    "tests/Unit/Repositories/*Test.php": {
+        "type": "test",
+        "alternate": "app/Repositories/{}.php"
+    },
+    "tests/Feature/Notifications/*Test.php": {
+        "type": "test",
+        "alternate": "app/Notifications/{}.php"
+    },
+    "tests/features/Listeners/*Test.php": {
+        "type": "test",
+        "alternate": "app/Listeners/{}.php"
+    },
+    "tests/Unit/Observers/*Test.php": {
+        "type": "test",
+        "alternate": "app/Observers/{}.php"
+    },
+    "tests/*Test.php": {
+        "type": "test",
+        "dispatch": "pest {file}"
+    },
+    ".github/workflows/*.yml": {
+        "type": "workflow"
+    },
+    ".github/workflows/ci.yml": {
+        "type": "workflow"
+    },
+    "package.json": {
+        "type": "npm",
+        "alternate": "package-lock.json",
+        "make": "npm install"
+    },
+    "package-lock.json": {
+        "type": "npmlock",
+        "alternate": "package.json"
+    },
+    "vite.config.js": {
+        "type": "viteconfig"
+    },
+    "tailwind.config.js": {
+        "type": "tailwindconfig"
+    },
+    "resources/css/app.css": {
+        "type": "css"
+    },
+    "resources/css/*.css": {
+        "type": "css"
+    },
+    "resources/js/app.js": {
+        "type": "js"
+    },
+    "resources/js/*.js": {
+        "type": "js"
+    },
+    "resources/views/*.blade.php": {
+        "type": "view"
+    },
+    "script/*": {
+        "type": "script",
+        "template": [
+          "#!/usr/bin/env bash",
+          "# Usage: {snakecase|hyphenate}",
+          "#",
+          "# NAME",
+          "#   {snakecase|hyphenate} -- It does something",
+          "#",
+          "# OPTIONS",
+          "#   -h, --help",
+          "#     Print this help message and exit.",
+          "",
+          "if [[ \"$DEBUG\" ]]; then",
+          "  export PS4='+ [${open}BASH_SOURCE##*/{close}:${open}LINENO{close}] '",
+          "  set -x",
+          "fi",
+          "",
+          "set -euo pipefail",
+          "",
+          "if [[ \"${open}1:-{close}\" = \"-h\" ]] || [[ \"${1:-{close}\" = \"--help\" ]]; then",
+          "  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < \"$0\" |",
+          "    awk -v f=\"${open}1//-/{close}\" 'f == \"h\" && $1 == \"Usage:\" {open} print; exit {close}; f != \"h\"'",
+          "  exit 1",
+          "fi",
+          "",
+          "echo \"I'm in danger!\""
+        ]
+    }
+}
