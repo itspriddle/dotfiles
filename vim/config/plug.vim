@@ -100,7 +100,7 @@ if s:platform == 'macos'
   Plug 'jwalton512/vim-blade'
   Plug 'itspriddle/applescript.vim'
   Plug 'noahfrederick/vim-composer'
-  Plug 'noahfrederick/vim-laravel'
+  " Plug 'noahfrederick/vim-laravel'
   Plug 'yaegassy/nette-neon.vim'
 
   if isdirectory(expand(s:vimhome . '/plugged/vim-notebook'))
