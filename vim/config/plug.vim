@@ -121,6 +121,7 @@ Plug 'plasticboy/vim-markdown', { 'as': 'vim-markdown-plasticboy' }
 
 " My stuff
 call plug#(s:vimhome . '/plugged/supplemental')
+call plug#(s:vimhome . '/plugged/vim-laravel-projections')
 
 let g:plug_url_format = 'git@github.com:%s.git'
 
