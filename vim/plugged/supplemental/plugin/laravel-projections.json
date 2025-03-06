@@ -1,6 +1,6 @@
 {
     "*": {
-        "start": "php artisan tinker"
+        "console": "php artisan tinker"
     },
     "*.php": {
         "template": [
@@ -67,7 +67,10 @@
     },
     "app/Events/*.php": {
         "type": "event",
-        "alternate": "tests/Feature/Events/{}Test.php"
+        "alternate": "tests/Feature/Events/{}Test.php",
+        "related": [
+          "app/Listeners/{}.php"
+        ]
     },
     "app/Exceptions/*.php": {
         "type": "exception"
@@ -104,10 +107,19 @@
     },
     "app/Models/*.php": {
         "type": "model",
-        "alternate": "tests/Unit/Models/{}Test.php"
+        "alternate": "tests/Unit/Models/{}Test.php",
+        "related": [
+          "app/Policies/{}Policy.php",
+          "database/factories/{}Factory.php",
+          "database/seeders/{}Seeder.php",
+          "tests/Unit/Models/{}Test.php"
+        ]
     },
     "app/Listeners/*.php": {
-        "type": "listener"
+        "type": "listener",
+        "related": [
+          "app/Events/{}.php"
+        ]
     },
     "app/Notifications/*.php": {
         "type": "notification",
@@ -158,11 +170,11 @@
         "type": "seeder"
     },
     "routes/*.php": {
-        "type": "routes",
+        "type": "route",
         "alternate": "bootstrap/app.php"
     },
     "routes/web.php": {
-        "type": "routes",
+        "type": "route",
         "alternate": "bootstrap/app.php"
     },
     "test/Feature/Console/Commands/*Test.php": {
@@ -255,6 +267,18 @@
     "resources/js/*.js": {
         "type": "js"
     },
+    "lang/*.php": {
+        "type": "lang",
+        "template": [
+            "<?php",
+            "",
+            "declare(strict_types=1);",
+            "",
+            "return [",
+            "    //",
+            "];"
+        ]
+    },
     "resources/views/*.blade.php": {
         "type": "view"
     },
@@ -286,5 +310,15 @@
           "",
           "echo \"I'm in danger!\""
         ]
+    },
+    "composer.json": {
+        "type": "composer",
+        "alternate": "composer.lock",
+        "make": "composer install --no-ansi --no-progress --no-interaction"
+    },
+    "composer.lock": {
+        "type": "composerlock",
+        "alternate": "composer.json",
+        "make": "composer install --no-ansi --no-progress --no-interaction"
     }
 }
