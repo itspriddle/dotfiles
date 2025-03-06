@@ -2,6 +2,14 @@
     "*": {
         "console": "php artisan tinker"
     },
+    ".env.*": {
+      "type": "dotenv",
+      "alternate": ".env"
+    },
+    ".env": {
+      "type": "dotenv",
+      "alternate": ".env.example"
+    },
     "*.php": {
         "template": [
             "<?php",
@@ -247,7 +255,8 @@
     },
     "package-lock.json": {
         "type": "npmlock",
-        "alternate": "package.json"
+        "alternate": "package.json",
+        "make": "npm install"
     },
     "vite.config.js": {
         "type": "viteconfig"
