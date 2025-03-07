@@ -14,7 +14,7 @@ nnoremap <leader>l :!php -l %<cr>
 nmap <buffer> gf <Plug>(composer-find)
 
 " Insert use statement
-nmap <buffer> gu <Plug>(composer-use)
+nmap <buffer> gF <Plug>(composer-use)
 
 " Open or create the associated file in a horizontal split
 nnoremap <buffer> <leader>s :AS<cr>
