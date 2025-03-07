@@ -153,10 +153,12 @@
         "type": "factory"
     },
     "database/migrations/*.php": {
-        "type": "migration"
+        "type": "migration",
+        "make": "NO_COLOR=1 php artisan migrate --path=database/migrations/{file|basename}"
     },
     "database/seeders/*.php": {
-        "type": "seeder"
+        "type": "seeder",
+        "make": "NO_COLOR=1 php artisan db:seed Database\\\\Seeders\\\\{backslash}"
     },
     "database/seeders/DatabaseSeeder.php": {
         "type": "seeder"
@@ -178,7 +180,8 @@
     },
     "tests/*Test.php": {
         "type": "test",
-        "dispatch": "php artisan test {file}"
+        "make": "NO_COLOR=1 php artisan test {file}",
+        "dispatch": "NO_COLOR=1 php artisan test {file}"
     },
     ".github/workflows/*.yml": {
         "type": "workflow"
@@ -260,13 +263,12 @@
         ]
     },
     "composer.json": {
-        "type": "composer",
         "alternate": "composer.lock",
-        "make": "composer install --no-ansi --no-progress --no-interaction"
+        "make": "NO_COLOR=1 composer install --no-progress --no-interaction"
     },
     "composer.lock": {
         "alternate": "composer.json",
-        "make": "composer install --no-ansi --no-progress --no-interaction"
+        "make": "NO_COLOR=1 composer install --no-progress --no-interaction"
     },
     "storage/logs/*.log": {
         "type": "log"

@@ -8,8 +8,7 @@ else
   let g:laravel_projections = 1
 endif
 
-let s:projection_path = resolve(expand('<sfile>:p:h') . '/laravel-projections.json')
-let s:json = readfile(s:projection_path)
+let s:json = readfile(resolve(expand('<sfile>:p:h') . '/laravel-projections.json'))
 let s:projections = projectionist#json_parse(s:json)
 
 if !exists('g:projectionist_heuristics')
