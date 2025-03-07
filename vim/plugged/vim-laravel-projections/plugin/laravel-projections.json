@@ -154,11 +154,13 @@
     },
     "database/migrations/*.php": {
         "type": "migration",
-        "make": "NO_COLOR=1 php artisan migrate --path=database/migrations/{file|basename}"
+        "make": "NO_COLOR=1 php artisan migrate --path=database/migrations/{file|basename}",
+        "dispatch": "NO_COLOR=1 php artisan migrate"
     },
     "database/seeders/*.php": {
         "type": "seeder",
-        "make": "NO_COLOR=1 php artisan db:seed Database\\\\Seeders\\\\{backslash}"
+        "make": "NO_COLOR=1 php artisan db:seed Database\\\\Seeders\\\\{backslash}",
+        "dispatch": "NO_COLOR=1 php artisan db:seed"
     },
     "database/seeders/DatabaseSeeder.php": {
         "type": "seeder"

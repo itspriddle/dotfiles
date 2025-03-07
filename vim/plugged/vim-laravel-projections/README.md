@@ -28,6 +28,8 @@
 - `:Email <arg>` - Open the given mail.
 - `:Emiddleware <arg>` - Open the given middleware.
 - `:Emigration <arg>` - Open the given DB migration.
+    - Call `:Make` while editing a migration file to run `php artisan migrate` via Dispatch for that specific migration.
+    - Call `:Dispatch` while editing a migration file to run `php artisan migrate` via Dispatch for all migrations.
 - `:Emodel [arg]` - Open the given model.
     - Call `:Emodel` without arguments from inside a factory, seeder, observer, policy, or Unit test to open the model for the current file.
 - `:Enotification <arg>` - Open the given notification.
@@ -44,10 +46,12 @@
 - `:Escope <arg>` - Open the given scope.
 - `:Escript <arg>` - Open the given script.
 - `:Eseeder [arg]` - Open the given seeder. With no argument provided, opens `DatabaseSeeder`.
+    - Call `:Make` while editing a seeder file to run `php artisan db:seed` via Dispatch for that specific seeder.
+    - Call `:Dispatch` while editing a seeder file to run `php artisan seed` via Dispatch for the default `DatabaseSeeder`.
 - `:Eservice <arg>` - Open the given service.
 - `:Etailwind` - Open the Tailwind CSS configuration file.
 - `:Etest <arg>` - Open the given test.
-    - Call `:Dispatch` while editing a test file to run the test with `php artisan test {file}` via Dispatch.
+    - Call `:Dispatch` or `:Make` while editing a test file to run the test with `php artisan test {file}` via Dispatch.
 - `:Etrait <arg>` - Open the given trait.
 - `:Eview <arg>` - Open the given view.
 - `:Evite` - Open the Vite configuration file.
