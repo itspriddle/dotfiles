@@ -21,3 +21,7 @@ nnoremap <buffer> <leader>s :AS<cr>
 
 " Open or create the associated file in a vertical split
 nnoremap <buffer> <leader>v :AV<cr>
+
+command! PHPStan Dispatch phpstan analyze --no-progress %
+command! Pint Dispatch pint --test --format=txt --verbose %
+command! Pest Dispatch pest %
