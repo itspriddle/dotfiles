@@ -9,26 +9,11 @@ else
 endif
 
 let s:projection_path = resolve(expand('<sfile>:p:h') . '/laravel-projections.json')
+let s:json = readfile(s:projection_path)
+let s:projections = projectionist#json_parse(s:json)
 
-function! s:projectionist_detect()
-  if get(b:, 'composer_root', '') == '' || empty(get(b:, 'projectionist'))
-    return
-  endif
+if !exists('g:projectionist_heuristics')
+  let g:projectionist_heuristics = {}
+endif
 
-  if !filereadable(b:composer_root.'/artisan')
-    return
-  endif
-
-  " Remove vim-composer's projections, we'll set our own
-  call filter(b:projectionist[b:composer_root], {_, v -> !has_key(v, "*")})
-
-  let json = readfile(s:projection_path)
-  let projections = projectionist#json_parse(json)
-
-  call projectionist#append(b:composer_root, projections)
-endfunction
-
-augroup laravel_projections
-  autocmd!
-  autocmd User ProjectionistDetect call s:projectionist_detect()
-augroup END
+let g:projectionist_heuristics["artisan"] = s:projections

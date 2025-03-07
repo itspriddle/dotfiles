@@ -1,8 +1,9 @@
 {
     "*": {
-        "console": "php artisan tinker"
+        "console": "php artisan tinker",
+        "dispatch": "composer install"
     },
-    ".env.*": {
+    "**/.env.*": {
       "type": "dotenv",
       "alternate": ".env"
     },
@@ -45,6 +46,10 @@
         "type": "doc"
     },
     "app/*.php": {
+      "alternate": [
+        "tests/Unit/{}Test.php",
+        "tests/Feature/{}Test.php"
+      ],
       "template": [
            "<?php",
            "",
@@ -59,26 +64,19 @@
       ]
     },
     "app/Broadcasting/*.php": {
-        "type": "broadcast",
-        "alternate": "tests/Feature/Broadcasting/{}Test.php"
+        "type": "broadcast"
     },
     "app/Casts/*.php": {
-        "type": "cast",
-        "alternate": "tests/Unit/Casts/{}Test.php"
+        "type": "cast"
     },
     "app/Console/Commands/*.php": {
-        "type": "command",
-        "alternate": "tests/Feature/Console/Commands/{}Test.php"
+        "type": "command"
     },
     "app/Enums/*.php": {
         "type": "enum"
     },
     "app/Events/*.php": {
-        "type": "event",
-        "alternate": "tests/Feature/Events/{}Test.php",
-        "related": [
-          "app/Listeners/{}.php"
-        ]
+        "type": "event"
     },
     "app/Exceptions/*.php": {
         "type": "exception"
@@ -87,59 +85,48 @@
         "type": "facade"
     },
     "app/Http/Controllers/*.php": {
-        "type": "controller",
-        "alternate": "tests/Feature/Http/Controllers/{}Test.php"
+        "type": "controller"
     },
     "app/Http/Middleware/*.php": {
-        "type": "middleware",
-        "alternate": "tests/Feature/Http/Middleware/{}Test.php"
+        "type": "middleware"
     },
     "app/Http/Requests/*.php": {
-        "type": "requests",
-        "alternate": "tests/Feature/Http/Requests/{}Test.php"
+        "type": "request"
     },
     "app/Http/Resources/*.php": {
-        "type": "resource",
-        "alternate": "tests/Feature/Http/Resources/{}Test.php"
+        "type": "resource"
     },
     "app/Jobs/*.php": {
-        "type": "job",
-        "alternate": "tests/Feature/Jobs/{}Test.php"
+        "type": "job"
     },
     "app/Livewire/*.php": {
         "type": "livewire"
     },
     "app/Mail/*.php": {
-        "type": "mail",
-        "alternate": "tests/Feature/Mail/{}Test.php"
+        "type": "mail"
     },
     "app/Models/*.php": {
         "type": "model",
-        "alternate": "tests/Unit/Models/{}Test.php",
         "related": [
+          "app/Observers/{}Observer.php",
           "app/Policies/{}Policy.php",
           "database/factories/{}Factory.php",
           "database/seeders/{}Seeder.php",
-          "tests/Unit/Models/{}Test.php"
+          "tests/Unit/Models/{}Test.php",
+          "tests/Feature/Models/{}Test.php"
         ]
     },
     "app/Listeners/*.php": {
-        "type": "listener",
-        "related": [
-          "app/Events/{}.php"
-        ]
+        "type": "listener"
     },
     "app/Notifications/*.php": {
-        "type": "notification",
-        "alternate": "tests/Feature/Notifications/{}Test.php"
+        "type": "notification"
     },
     "app/Observers/*.php": {
-        "type": "observer",
-        "alternate": "tests/Unit/Observers/{}Test.php"
+        "type": "observer"
     },
     "app/Policies/*.php": {
-        "type": "policy",
-        "alternate": "tests/Feature/Policies/{}Test.php"
+        "type": "policy"
     },
     "app/Providers/*.php": {
         "type": "provider"
@@ -148,19 +135,16 @@
         "type": "provider"
     },
     "app/Repositories/*.php": {
-        "type": "repository",
-        "alternate": "tests/Unit/Repositories/{}Test.php"
+        "type": "repository"
     },
     "app/Rules/*.php": {
         "type": "rule"
     },
     "app/Scopes/*.php": {
-        "type": "scope",
-        "alternate": "tests/Unit/Scopes/{}Test.php"
+        "type": "scope"
     },
     "app/Services/*.php": {
-        "type": "service",
-        "alternate": "tests/Unit/Services/{}Test.php"
+        "type": "service"
     },
     "app/Traits/*.php": {
         "type": "trait"
@@ -182,65 +166,19 @@
         "alternate": "bootstrap/app.php"
     },
     "routes/web.php": {
-        "type": "route",
-        "alternate": "bootstrap/app.php"
+        "type": "route"
     },
-    "test/Feature/Console/Commands/*Test.php": {
+    "tests/Unit/*Test.php": {
         "type": "test",
-        "alternate": "app/Console/Commands/{}.php"
+        "alternate": "app/{}.php"
     },
-    "test/Feature/Events/*Test.php": {
+    "tests/Feature/*Test.php": {
         "type": "test",
-        "alternate": "app/Events/{}.php"
-    },
-    "tests/Feature/Http/Controllers/*Test.php": {
-        "type": "test",
-        "alternate": "app/Http/Controllers/{}.php"
-    },
-    "tests/Feature/Http/Middleware/*Test.php": {
-        "type": "test",
-        "alternate": "app/Http/Middleware/{}.php"
-    },
-    "tests/Feature/Http/Requests/*Test.php": {
-        "type": "test",
-        "alternate": "app/Http/Requests/{}.php"
-    },
-    "tests/Feature/Http/Resources/*Test.php": {
-        "type": "test",
-        "alternate": "app/Http/Resources/{}.php"
-    },
-    "tests/Feature/Jobs/*Test.php": {
-        "type": "test",
-        "alternate": "app/Jobs/{}.php"
-    },
-    "tests/Feature/Mail/*Test.php": {
-        "type": "test",
-        "alternate": "app/Mail/{}.php"
-    },
-    "tests/Unit/Models/*Test.php": {
-        "type": "test",
-        "alternate": "app/Models/{}.php",
-        "dispatch": "pest {file}"
-    },
-    "tests/Unit/Repositories/*Test.php": {
-        "type": "test",
-        "alternate": "app/Repositories/{}.php"
-    },
-    "tests/Feature/Notifications/*Test.php": {
-        "type": "test",
-        "alternate": "app/Notifications/{}.php"
-    },
-    "tests/features/Listeners/*Test.php": {
-        "type": "test",
-        "alternate": "app/Listeners/{}.php"
-    },
-    "tests/Unit/Observers/*Test.php": {
-        "type": "test",
-        "alternate": "app/Observers/{}.php"
+        "alternate": "app/{}.php"
     },
     "tests/*Test.php": {
         "type": "test",
-        "dispatch": "pest {file}"
+        "dispatch": "php artisan test {file}"
     },
     ".github/workflows/*.yml": {
         "type": "workflow"
@@ -254,15 +192,16 @@
         "make": "npm install"
     },
     "package-lock.json": {
-        "type": "npmlock",
         "alternate": "package.json",
         "make": "npm install"
     },
     "vite.config.js": {
-        "type": "viteconfig"
+        "type": "vite",
+        "make": "npm run build",
+        "start": "npm run dev"
     },
     "tailwind.config.js": {
-        "type": "tailwindconfig"
+        "type": "tailwind"
     },
     "resources/css/app.css": {
         "type": "css"
@@ -326,8 +265,10 @@
         "make": "composer install --no-ansi --no-progress --no-interaction"
     },
     "composer.lock": {
-        "type": "composerlock",
         "alternate": "composer.json",
         "make": "composer install --no-ansi --no-progress --no-interaction"
+    },
+    "storage/logs/*.log": {
+        "type": "log"
     }
 }
