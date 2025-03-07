@@ -130,6 +130,7 @@ Plug 'itspriddle/vim-stripper'
 if s:platform == 'macos'
   Plug 'itspriddle/vim-jekyll'
   Plug 'itspriddle/vim-marked'
+  Plug 'itspriddle/vim-laravel-projections'
 endif
 
 if executable('shellcheck')
