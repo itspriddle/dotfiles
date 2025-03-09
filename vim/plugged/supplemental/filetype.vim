@@ -4,10 +4,10 @@ endif
 
 augroup filetypedetect
   " Enable syntax highlighting for Brewfiles
-  autocmd BufNewFile,BufRead Brewfile,.Brewfile setfiletype ruby
+  autocmd BufNewFile,BufRead {.,}Brewfile setfiletype ruby
 
   " Enable syntax highlighting for my.cnf files
-  autocmd BufNewFile,BufRead my.cnf,.my.cnf setfiletype dosini
+  autocmd BufNewFile,BufRead {.,}my.cnf setfiletype dosini
 
   " Enable syntax highlighting for ~/.aws/config
   autocmd BufNewFile,BufRead ~/.aws/config setfiletype dosini
@@ -16,7 +16,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead secrets.yml.enc.[0-9]\+ setfiletype yaml
 
   " Direnv/dotenv
-  autocmd BufNewFile,BufRead .envrc,envrc,.direnvrc,direnvrc,.envrc.*,.env.*
+  autocmd BufNewFile,BufRead {.,}envrc,{,.}direnvrc,.env{rc,}.*
     \ let g:is_bash = 1 |
     \ let b:is_bash = 1 |
     \ setfiletype sh |
