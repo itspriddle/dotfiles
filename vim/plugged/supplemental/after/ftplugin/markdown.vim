@@ -28,3 +28,11 @@ command! -buffer -range=% MarkdownPreview
 if expand('%:p:h') =~ '/work/notebook'
   let b:StripperStripOnSave = 0
 endif
+
+let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe') .
+  \ '|silent! nunmap <buffer> <leader>mv' .
+  \ '|silent! nunmap <buffer> <leader>mq' .
+  \ '|silent! vunmap <buffer> <leader>mv' .
+  \ '|delcommand MarkdownPreview' .
+  \ '|delcommand MarkdownFixup' .
+  \ '|setlocal spell< textwidth<'

@@ -26,4 +26,10 @@ endif
 " set regexpengine=1
 
 " Check syntax
-nnoremap <leader>l :!ruby -c %<cr>
+nnoremap <buffer> <leader>l :!ruby -c %<cr>
+
+let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe') .
+  \ '|silent! nunmap <buffer> <leader>l' .
+  \ '|silent! nunmap <buffer> <leader>s' .
+  \ '|silent! nunmap <buffer> <leader>v' .
+  \ '|unlet b:start b:dispatch'

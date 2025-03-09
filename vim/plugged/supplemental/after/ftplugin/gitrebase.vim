@@ -14,3 +14,10 @@ vnoremap <buffer> <silent> R :Reword<cr>
 vnoremap <buffer> <silent> E :Edit<cr>
 vnoremap <buffer> <silent> S :Squash<cr>
 vnoremap <buffer> <silent> F :Fixup<cr>
+
+let b:undo_ftplugin = get(b:, "undo_ftplugin", "exe") .
+  \ "|silent! nunmap <buffer> <silent> P" .
+  \ "|silent! nunmap <buffer> <silent> R" .
+  \ "|silent! nunmap <buffer> <silent> E" .
+  \ "|silent! nunmap <buffer> <silent> S" .
+  \ "|silent! nunmap <buffer> <silent> F"

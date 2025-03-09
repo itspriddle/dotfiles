@@ -11,8 +11,10 @@
 setlocal formatoptions=jcroql
 
 " Run shellcheck and open quickfix list
-map <leader>d :ShellCheck!<cr>
-map <leader>l :LShellCheck!<cr>
+noremap <buffer> <leader>d :ShellCheck!<cr>
+noremap <buffer> <leader>l :LShellCheck!<cr>
 
 let b:undo_ftplugin = get(b:, "undo_ftplugin", "exe") .
-  \ "|setlocal formatoptions< |unmap <leader>d"
+  \ "|setlocal formatoptions< " .
+  \ "|execute 'unmap <buffer> <leader>d'" .
+  \ "|execute 'unmap <buffer> <leader>l'"
