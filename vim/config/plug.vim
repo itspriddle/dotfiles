@@ -36,6 +36,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'yssl/QFEnter', { 'for': 'qf' }
 Plug 'fcpg/vim-altscreen'
 Plug 'jszakmeister/vim-togglecursor'
+Plug 'tpope/vim-dispatch'
 
 if s:platform == 'macos'
   Plug 'tpope/vim-projectionist'
@@ -82,7 +83,6 @@ if s:platform == 'macos'
 
   " Testing
   " Plug 'janko-m/vim-test'
-  Plug 'tpope/vim-dispatch'
 
   " Syntax
   Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
