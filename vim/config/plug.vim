@@ -40,7 +40,6 @@ Plug 'jszakmeister/vim-togglecursor'
 if s:platform == 'macos'
   Plug 'tpope/vim-projectionist'
   Plug 'tpope/vim-scriptease'
-  Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
   Plug 'junegunn/vim-peekaboo'
   Plug 'github/copilot.vim'
 endif
