@@ -13,6 +13,7 @@ nnoremap <buffer> <leader>l :!php -l %<cr>
 " Go to definition
 " nmap <buffer> gf <Plug>(composer-find)
 nnoremap <buffer> gf :<C-u>execute composer#autoload#find()<CR>
+nnoremap <buffer> <C-]> :<C-u>execute composer#autoload#find()<CR>
 
 " Insert use statement
 nnoremap <buffer> gF <Plug>(composer-use)
@@ -52,6 +53,7 @@ let b:undo_ftplugin = get(b:, "undo_ftplugin", "exe") .
   \ "|setlocal commentstring< list< tabstop< shiftwidth< softtabstop< expandtab<" .
   \ "|execute 'unmap <buffer> <leader>l'" .
   \ "|execute 'unmap <buffer> gf'" .
+  \ "|execute 'unmap <buffer> <C-]>'" .
   \ "|execute 'unmap <buffer> gF'" .
   \ "|execute 'unmap <buffer> <leader>s'" .
   \ "|execute 'unmap <buffer> <leader>v'" .
