@@ -16,6 +16,7 @@ elseif has('mac')
   let s:platform = 'macos'
 elseif filereadable('/etc/rpi-issue')
   let s:platform = 'linux-rpi'
+  let g:plug_shallow = 1
 elseif filereadable('/etc/lsb-release')
   let s:platform = 'linux-ubuntu'
 elseif filereadable('/etc/centos-release')
