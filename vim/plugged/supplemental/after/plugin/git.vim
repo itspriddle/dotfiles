@@ -7,7 +7,7 @@ augroup ft_git
   autocmd!
 
   " Hard-tabs on gitconfig files
-  autocmd FileType gitconfig setl noexpandtab
+  autocmd FileType gitconfig setlocal noexpandtab
 
   " Replace GitHub issue/pull/commit URLS with Markdown shorthand syntax
   "
