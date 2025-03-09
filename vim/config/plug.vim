@@ -102,10 +102,6 @@ if s:platform == 'macos'
   Plug 'noahfrederick/vim-composer'
   " Plug 'noahfrederick/vim-laravel'
   Plug 'yaegassy/nette-neon.vim'
-
-  if isdirectory(expand(s:vimhome . '/plugged/vim-notebook'))
-    call plug#(s:vimhome . '/plugged/vim-notebook')
-  endif
 endif
 
 if s:platform == 'macos' || s:platform =~# '^linux-synology'
