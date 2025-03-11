@@ -53,6 +53,12 @@ zstyle ":completion:*" list-colors ""
     ))
   fi
 
+  if [[ -f "$HOME/.ssh/known_hosts" ]]; then
+    _ssh_hosts+=($(
+      awk '/^[^#]/ { gsub("\\[", "", $1); gsub("]:2222", "", $1); print $1 }' ~/.ssh/known_hosts | sort | uniq
+    ))
+  fi
+
   # ssh host completion
   zstyle ':completion:*:(ssh|scp):*:hosts' hosts $_ssh_hosts
 
