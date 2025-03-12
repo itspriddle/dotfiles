@@ -193,6 +193,23 @@ let g:peekaboo_prefix	= "<leader>"
 "
 let g:PHP_noArrowMatching = 1
 
+" Use "traditional" switch indentation. Not:
+"
+"     switch ($foo) {
+"     case 1:
+"         break;
+"     default:
+"     }
+"
+" But rather:
+"
+"     switch ($foo) {
+"         case 1:
+"             break;
+"         default:
+"     }
+let g:PHP_vintage_case_default_indent = 1
+
 " }}}
 
 " vim-rsi {{{
