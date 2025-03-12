@@ -1,13 +1,3 @@
-" Disable indentation for ->; I don't want
-"     $foo = $bar()->baz()
-"                  ->qux();
-"
-" I do want
-"     $foo = $bar()->baz()
-"         ->qux();
-"
-let b:PHP_noArrowMatching = 1
-
 " Use // for comments with vim-commentary
 setlocal commentstring=//\ %s
 

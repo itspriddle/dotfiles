@@ -181,6 +181,20 @@ let g:peekaboo_prefix	= "<leader>"
 
 " }}}
 
+" vim-php {{{
+
+" Disable indentation for ->; I don't want
+"     $foo = $bar()->baz()
+"                  ->qux();
+"
+" I do want
+"     $foo = $bar()->baz()
+"         ->qux();
+"
+let g:PHP_noArrowMatching = 1
+
+" }}}
+
 " vim-rsi {{{
 
 " Disable meta maps, causes a jump to back to insert mode if `<ESC>b` is
