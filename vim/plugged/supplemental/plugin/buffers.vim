@@ -9,6 +9,6 @@ augroup all_buffers
   " Remember last location in file
   autocmd BufReadPost *
     \ if line("'\"") > 0 && line ("'\"") <= line("$") && &ft !~# "commit" |
-    \   exe "normal! g'\"" |
+    \   exe "normal! g`\"" |
     \ endif
 augroup END
