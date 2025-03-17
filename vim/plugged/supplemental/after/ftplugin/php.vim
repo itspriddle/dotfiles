@@ -75,6 +75,10 @@ function! s:Pest(args) abort
 endfunction
 command! -buffer -complete=file -nargs=* Pest call s:Pest(<q-args>)
 
+nnoremap <buffer> <leader>p :Pint!<cr>
+
+nnoremap <buffer> <leader>P :PHPStan<cr>
+
 let b:undo_ftplugin = get(b:, "undo_ftplugin", "exe") .
   \ "|setlocal commentstring< list< tabstop< shiftwidth< softtabstop< expandtab<" .
   \ "|execute 'unmap <buffer> <leader>l'" .
@@ -86,6 +90,8 @@ let b:undo_ftplugin = get(b:, "undo_ftplugin", "exe") .
   \ "|execute 'unmap <buffer> gF'" .
   \ "|execute 'unmap <buffer> <leader>s'" .
   \ "|execute 'unmap <buffer> <leader>v'" .
+  \ "|execute 'unmap <buffer> <leader>p'" .
+  \ "|execute 'unmap <buffer> <leader>P'" .
   \ "|delcommand Pint" .
   \ "|delcommand PHPStan" .
   \ "|delcommand Pest"
