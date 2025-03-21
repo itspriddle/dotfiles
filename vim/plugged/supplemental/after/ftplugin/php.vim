@@ -54,7 +54,7 @@ function! s:Pint(args, bang) abort
   let l:args = (empty(a:args) ? expand("%") : a:args)
 
   if a:bang
-    execute "Dispatch pint --format=txt --verbose" l:args
+    execute "Dispatch! pint --format=txt --verbose" l:args
   else
     execute "Dispatch pint --test --format=txt --verbose" l:args
   endif
