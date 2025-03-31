@@ -2,6 +2,7 @@ if exists("did_load_filetypes")
   finish
 endif
 
+
 augroup filetypedetect
   " Enable syntax highlighting for Brewfiles
   autocmd BufNewFile,BufRead {.,}Brewfile setfiletype ruby
@@ -21,4 +22,11 @@ augroup filetypedetect
     \ let b:is_bash = 1 |
     \ setfiletype sh |
     \ unlet g:is_bash
+
+  " Match files opened by `gh pr create --editor`
+  autocmd BufNewFile,Bufread */[0-9]\+.md
+    \ if getline(line('$') - 3) == "------------------------ >8 ------------------------" |
+    \  setfiletype pullrequest |
+    \ endif
 augroup END
+
