@@ -109,7 +109,7 @@ fi
 if command -v fzf > /dev/null; then
   # FZF_ALT_C_COMMAND= source <(fzf --zsh)
 
-  export FZF_DEFAULT_OPTS="--color=16 --pointer='›' --prompt='› ' --no-mouse --color fg:-1,fg+:4,hl:5,hl+:5,bg:-1,bg+:-1,prompt:5,info:3,pointer:5,border:0 --bind=ctrl-u:half-page-up,ctrl-d:half-page-down --tiebreak=end,length,index --style full --height ~100%"
+  export FZF_DEFAULT_OPTS="--color=16 --pointer='›' --prompt='› ' --no-mouse --color fg:-1,fg+:4,hl:5,hl+:5,bg:-1,bg+:-1,prompt:5,info:3,pointer:5,border:0 --bind=ctrl-u:half-page-up,ctrl-d:half-page-down --tiebreak=end,length,index --style full --height ~100% --min-height 5+"
   # export FZF_DEFAULT_COMMAND="rg --follow --hidden --files --sort-files --glob '!.git'"
   export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
 
