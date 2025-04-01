@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 if [ $# -ne 3 ]; then
-  echo "Usage: $(basename $0) R G B"
+  echo "Usage: $(basename "$0") R G B"
   exit 1
 fi
 
-printf "#%02X%02X%02X" $*
+printf "#%02X%02X%02X\n" "$@"

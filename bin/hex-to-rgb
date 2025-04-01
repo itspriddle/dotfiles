@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ $# -eq 3 ]; then
-  printf "%d, %d, %d" $*
+  printf "%d, %d, %d" "$@"
   [ -t 1 ] && echo
 elif [ $# -eq 1 ]; then
   dec="${1###}"
@@ -9,6 +9,6 @@ elif [ $# -eq 1 ]; then
 
   [ -t 1 ] && echo
 else
-  echo "Usage: $(basename $0) [0xR 0xG 0xB] | [#hexcode]"
+  echo "Usage: $(basename "$0") [0xR 0xG 0xB] | [#hexcode]"
   exit 1
 fi
