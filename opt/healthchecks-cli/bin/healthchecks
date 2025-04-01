@@ -85,7 +85,7 @@ hcping() {
 }
 
 main() {
-  local slug list
+  local slug
 
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
