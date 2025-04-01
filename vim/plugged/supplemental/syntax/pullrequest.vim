@@ -22,8 +22,8 @@ syn match pullreqCommitMessage contained                  "^\s*\zs.*"
 syn match pullreqBranchInfo    contained                  "\S\+:\S\+"
 
 syn region pullreqBranchInfoLine contained transparent start="^Requesting a pull" end="$"             contains=pullreqBranchInfo
-syn region pullreqMessage        keepend               start="^."                 end="^\ze# [-]* >8" contains=@Markdown,@Spell                                   nextgroup=pullreqMetadata
-syn region pullreqMetadata       fold                  start="^# [-]* >8 [-]*$"   end="\%$"           contains=pullreqMetaHeader,pullreqSha,pullreqBranchInfoLine
+syn region pullreqMessage        keepend               start="^."                 end="^\ze[-]* >8" contains=@Markdown,@Spell                                   nextgroup=pullreqMetadata
+syn region pullreqMetadata       fold                  start="^[-]* >8 [-]*$"   end="\%$"           contains=pullreqMetaHeader,pullreqSha,pullreqBranchInfoLine
 syn match  pullreqFirstLine      skipnl                "\%^[^#].*"                                    contains=pullreqSummary                                     nextgroup=pullreqBlank
 
 hi def link pullreqBlank         Error
