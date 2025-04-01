@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-PATH="/opt/cv/bin:$PATH" vcgencmd measure_temp | egrep -o '[0-9\.]+'
+PATH="/opt/cv/bin:$PATH" vcgencmd measure_temp | grep -E -o '[0-9\.]+'
