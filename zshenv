@@ -107,17 +107,35 @@ fi
 
 # FZF
 if command -v fzf > /dev/null; then
-  # FZF_ALT_C_COMMAND= source <(fzf --zsh)
+  # Old
+  # --color gutter:1,marker:3,prompt:5,info:3,pointer:5,border:0
+  export FZF_DEFAULT_OPTS="
+    --pointer '›'
+    --prompt '› '
+    --no-mouse
+    --marker-multi-line ' › '
+    --marker '› '
+    --scrollbar '❚'
+    --color 16
+    --color fg:-1,fg+:4
+    --color hl:5,hl+:5
+    --color bg:-1,bg+:-1,header-bg:-1
+    --color border:0
+    --color info:10
+    --bind ctrl-u:half-page-up,ctrl-d:half-page-down
+    --bind change:first
+    --tiebreak end,length,index
+    --style full
+    --height ~100%
+    --min-height 5+
+  "
 
-  export FZF_DEFAULT_OPTS="--color=16 --pointer='›' --prompt='› ' --no-mouse --color fg:-1,fg+:4,hl:5,hl+:5,bg:-1,bg+:-1,prompt:5,info:3,pointer:5,border:0 --bind=ctrl-u:half-page-up,ctrl-d:half-page-down --tiebreak=end,length,index --style full --height ~100% --min-height 5+"
-  # export FZF_DEFAULT_COMMAND="rg --follow --hidden --files --sort-files --glob '!.git'"
-  export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
+  # export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
+  export FZF_DEFAULT_COMMAND="rg --follow --hidden --files --sort-files --glob '!.git'"
 
-  # export FZF_CTRL_R_OPTS='--no-sort --exact'
-  # export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-
-  # export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-
+  export FZF_CTRL_T_OPTS="--layout=default"
+  export FZF_CTRL_R_OPTS="--layout=default"
+  export FZF_COMPLETION_OPTS="--layout=default"
 fi
 
 # slack-notify
