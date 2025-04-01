@@ -72,6 +72,7 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   # script/ to rule them all
   alias sc='script/console'
   alias st='script/test'
+  alias sr='script/reset'
 fi
 
 # vim: ft=zsh
