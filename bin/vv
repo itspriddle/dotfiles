@@ -81,7 +81,7 @@ if [[ ${size} -gt 0 ]]; then
 
   while IFS=$'\n' read -r line; do
     files+=("${line/#~/$HOME}")
-  done < <(printf "%s\\n" "${candidates[@]}" | "$fzf" --height ${height} -d -m -q "$*")
+  done < <(printf "%s\\n" "${candidates[@]}" | "$fzf" -d -m -q "$*")
 
   if [[ ${#files[@]} -gt 0 ]]; then
     exec "vim" "-O" "${files[@]}"
