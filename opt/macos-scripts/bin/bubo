@@ -3,16 +3,17 @@
 #
 # Runs `brew update` and `brew outdated`
 
-[ "$DEBUG" ] && set -x
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
+fi
 
 set -e
 
 # Print help text and exit.
 if [[ "${1:-}" =~ ^(-h|--help)$ ]]; then
-  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" | awk -v flag="${1}" '
-    { help = help $0 "\n" } /^[Uu]sage: / { if (flag == "-h") usage = $0 "\n" }
-    END { out = usage ? usage : help; gsub(/^\n*|\n*$/, "", out); print out }
-  '
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
   exit 1
 fi
 
@@ -21,7 +22,7 @@ if ! type brew &> /dev/null; then
   exit 1
 fi
 
-cd $(brew --repository)
+cd "$(brew --repository)"
 
 current_sha=$(git rev-parse HEAD)
 
@@ -29,9 +30,9 @@ brew update
 
 new_sha=$(git rev-parse HEAD)
 
-if [ "${current_sha}" != "${new_sha}" ]; then
+if [ "$current_sha" != "$new_sha" ]; then
   echo -e "\n\033[34m==>\033[0m \033[01mgit diff\033[0m"
-  git log ${current_sha}..${new_sha}
+  git log "${current_sha}..${new_sha}"
 fi
 
 outdated=$(brew outdated --verbose)
