@@ -166,26 +166,13 @@ if command -v composer > /dev/null; then
 fi
 
 # Ruby
-if [ -f ~/.ruby-version ]; then
+if [ -f ~/.ruby-version ] && [ -f "$HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh" ]; then
   RUBY_VERSION="$(< ~/.ruby-version)"
   export RUBY_VERSION
 
-  if [ -f /opt/homebrew/opt/chruby/share/chruby/chruby.sh ]; then
-    source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+  source "$HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh"
 
-    chruby "$RUBY_VERSION"
-  else
-    lib_version="${RUBY_VERSION%%?}0"
-    ruby_home="$HOME/.rubies/ruby-$RUBY_VERSION"
-
-    if [ -d "$ruby_home" ]; then
-      export PATH="$HOME/.gem/ruby/$lib_version/bin:$ruby_home/bin:$PATH"
-
-      export GEM_HOME="$HOME/.gem/ruby/$lib_version"
-      export GEM_PATH="$GEM_HOME:$ruby_home/lib/ruby/gems/$lib_version"
-    fi
-    unset lib_version ruby_home
-  fi
+  chruby "$RUBY_VERSION"
 fi
 
 unset shell
