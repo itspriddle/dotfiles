@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+if [[ "$1" == "--paths" ]]; then
+  jq -r '[
+    path(..)
+    | map(
+      select(type == "string" and (test("[^a-zA-Z0-9_]") or test("^[0-9]"))) |= "[\"" + . + "\"]"
+    )
+    | map(
+      select(type == "number") |= "[]"
+    )
+    | join(".")
+  ]
+  | sort | unique | .[] | split(".[") | join("[") | "." + .
+  '
+  exit
+fi
+
+input="$1"
+
+if [[ -z "$input" ]]; then
+  echo "Must specify a file"
+  exit 1
+fi
+
+if [[ ! -f "$input" ]]; then
+  echo "File not found: $input"
+  exit 1
+fi
+
+"$0" --paths < "$input" | fzf \
+  --prompt 'jq › ' \
+  --no-sort \
+  --ghost '  filter by keys above and press enter' \
+  --preview 'arg={q}; jq -C "${arg:-.}" '"$input" \
+  --preview-window left \
+  --preview-label "{q}" \
+  --bind "result:transform-preview-label(arg={q}; echo \"jq \${arg:-.} $input\")" \
+  --bind "ctrl-p:preview-half-page-up,ctrl-n:preview-half-page-down" \
+  --bind "tab:replace-query,enter:replace-query"
