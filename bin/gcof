@@ -76,7 +76,7 @@ choose() {
   local rendered
   rendered="$(render)" || return 1
   #--multi --bind "ctrl-d:execute-silent(git branch -D {+1})+reload(\"$0\" --static)"
-  fzf --ansi <<<"$rendered"
+  fzf --multi --bind "ctrl-d:execute-silent(git branch -D {+1})+reload(\"$0\" --static)" <<<"$rendered"
 }
 
 selected="$(choose)"
