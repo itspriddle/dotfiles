@@ -151,10 +151,7 @@ if [ "$shell" ]; then
   command -v direnv > /dev/null && eval "$(direnv hook "$shell")"
 
   # jarvis
-  command -v jarvis > /dev/null && eval "$(jarvis init --shell "$shell" -)"
-
-  # a2d
-  command -v a2d > /dev/null && eval "$(a2d init --shell "$shell" -)"
+  # command -v jarvis > /dev/null && eval "$(jarvis init --shell "$shell" -)"
 
   # tat
   command -v tat > /dev/null && eval "$(tat --completions "$shell")"
