@@ -22,7 +22,6 @@ alias gd='git diff'
 alias gdc='git diff --cached'
 alias gcomp-='git checkout "$(git symbolic-ref refs/remotes/origin/head | sed "s@^refs/remotes/origin/@@")"; git pull; git checkout -'
 alias gcomp='git checkout "$(git symbolic-ref refs/remotes/origin/head | sed "s@^refs/remotes/origin/@@")"; git pull'
-alias gcof='gh branch'
 alias grm="git status --porcelain | awk '\$1 == \"D\" {print \$2}' | xargs git --git-dir=\$(git rev-parse --git-dir) rm --ignore-unmatch"
 alias gs='git status'
 alias gv='vim "+Ge :"'

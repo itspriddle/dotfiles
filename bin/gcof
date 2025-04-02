@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+set -e
+
+help() {
+  cat <<EOF
+Usage: gcof
+
+Displays an interactive branch switcher that lists local branches in relation
+to the pull requests in the repository. The selected branch is checked out.
+
+With \`--static\`, print a non-interactive list of branches.
+
+Dependencies: fzf
+
+Based on http://github.com/mislav/gh-branch
+EOF
+# You can also select multiple branches with Tab and press Ctrl-D to delete them.
+}
+
+static=
+while [ $# -gt 0 ]; do
+  case "$1" in
+  -h|--help)
+    help
+    exit 0
+    ;;
+  --static)
+    static=1
+    ;;
+  *)
+    help >&2
+    exit 1
+    ;;
+  esac
+  shift
+done
+
+branch_info() {
+  git for-each-ref 'refs/heads/**' --format='%(refname:short)%09%(committerdate:unix)%09%(committerdate:relative)%09%(contents:lines=1)%09%(HEAD)'
+}
+
+find_pr() {
+  local head_branch rest
+  while IFS=$'\t' read -r head_branch rest; do
+    if [ "$1" = "$head_branch" ]; then
+      printf "\t%s" "$rest"
+      break
+    fi
+  done
+}
+
+render() {
+  local branches branch timeago current subject
+  branches="$(branch_info)" || return 1
+  sort -k2 -r <<<"$branches" | while IFS=$'\t' read -r branch _ timeago subject current _; do
+    [ "$current" = "*" ] && continue
+    printf "%s\t%s\t%s\n" "$branch" "$timeago" "$subject"
+  done | tableize
+}
+
+tableize() {
+  column -t -s$'\t'
+}
+
+if [ -n "$static" ]; then
+  render
+  exit 0
+fi
+
+if ! type -p fzf >/dev/null; then
+  echo "error: install \`fzf\` to use this command" >&2
+  exit 1
+fi
+
+choose() {
+  local rendered
+  rendered="$(render)" || return 1
+  #--multi --bind "ctrl-d:execute-silent(git branch -D {+1})+reload(\"$0\" --static)"
+  fzf --ansi <<<"$rendered"
+}
+
+selected="$(choose)"
+[ -n "$selected" ] || exit 1
+git checkout "${selected%% *}"
