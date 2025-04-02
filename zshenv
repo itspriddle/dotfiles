@@ -109,6 +109,13 @@ fi
 if command -v fzf > /dev/null; then
   # Old
   # --color gutter:1,marker:3,prompt:5,info:3,pointer:5,border:0
+  # --tiebreak end,length,index
+  #
+  # Solarized light
+  #   --color border:7
+  #
+  # Solarized Dark
+  #   --color border:0
   export FZF_DEFAULT_OPTS="
     --pointer '›'
     --prompt '› '
@@ -124,10 +131,9 @@ if command -v fzf > /dev/null; then
     --color info:10
     --bind ctrl-u:half-page-up,ctrl-d:half-page-down
     --bind change:first
-    --tiebreak end,length,index
     --style full
     --height ~100%
-    --min-height 5+
+    --min-height 10+
   "
 
   # export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
@@ -138,8 +144,11 @@ if command -v fzf > /dev/null; then
     --bind 'ctrl-v:become(vim {} < /dev/tty > /dev/tty)'
   "
 
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
   export FZF_CTRL_R_OPTS="
     --layout default
+    --bind tab:first,shift-tab:last
   "
 
   export FZF_COMPLETION_OPTS="
