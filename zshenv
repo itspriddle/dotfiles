@@ -147,6 +147,11 @@ if command -v fzf > /dev/null; then
   "
 fi
 
+# jq colors (solarized dark)
+if command -v jq > /dev/null; then
+  export JQ_COLORS="0;02:0;35:0;35:0;36:0;92:1;39:1;39:1;34"
+fi
+
 # slack-notify
 if command -v slack-notify > /dev/null; then
   export SLACK_WEBHOOK_URL="https://slack.priddle.network"
