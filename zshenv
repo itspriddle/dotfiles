@@ -134,15 +134,16 @@ if command -v fzf > /dev/null; then
   export FZF_DEFAULT_COMMAND="rg --follow --hidden --files --sort-files --glob '!.git'"
 
   export FZF_CTRL_T_OPTS="
+    --layout default
     --bind 'ctrl-v:become(vim {} < /dev/tty > /dev/tty)'
   "
 
   export FZF_CTRL_R_OPTS="
-    --layout=default
+    --layout default
   "
 
   export FZF_COMPLETION_OPTS="
-    --layout=default
+    --layout default
   "
 fi
 
