@@ -45,6 +45,8 @@ type man &> /dev/null &&
 # type vv &> /dev/null &&
   alias v="vv -a"
 
+type fzf &> /dev/null && alias vf='vim $(fzf)'
+
 # OS X
 if [ "${OSTYPE:0:6}" = "darwin" ]; then
   # GPG
