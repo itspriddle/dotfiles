@@ -64,17 +64,11 @@ Plug 'editorconfig/editorconfig-vim'
 " File browsing/search
 Plug 'jeetsukumaran/vim-filebeagle'
 
-if executable('fzf')
-  for fzf_dir in ['/opt/homebrew', '/usr/local', expand('~/local')]
-    if isdirectory(fzf_dir . '/opt/fzf')
-      Plug printf('%s/opt/fzf', fzf_dir)
-      break
-    endif
-  endfor
-
-  unlet fzf_dir
+if s:platform == 'macos'
+  Plug 'junegunn/fzf'
+else
+  Plug 'junegunn/fzf', { 'do': './install --all' }
 endif
-
 
 if s:platform == 'macos'
   " ctags integration

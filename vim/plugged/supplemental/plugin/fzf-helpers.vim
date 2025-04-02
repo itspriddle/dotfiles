@@ -8,6 +8,9 @@ else
   let g:_fzf_helpers = 1
 endif
 
+" Defaults from fzf.vim (the one that ships with FZF)
+let s:fzf_layout = get(g:, 'fzf_layout', { 'window': { 'width': 0.9, 'height': 0.6 } })
+
 function! s:format_buffer(b)
   let name = bufname(a:b)
   let name = empty(name) ? '[No Name]' : fnamemodify(name, ":~:.")
@@ -35,30 +38,35 @@ function! s:handler(lines)
   execute get(s:default_action, a:lines[0], 'e') a:lines[1]
 endfunction
 
-command! FZFBuffers call fzf#run({
-  \   'down':    20,
+  " let short = fnamemodify(getcwd(), ':~:.')
+command! FZF call fzf#run(extend(fzf#wrap('FZF', {
+  \   'options': '--prompt=" › " --expect='.join(keys(s:default_action), ','),
+  \ }), s:fzf_layout))
+
+command! FZFBuffers call fzf#run(extend({
   \   'source':  s:list_buffers(),
-  \   'options': '--prompt="buffers> " --expect='.join(keys(s:default_action), ','),
+  \   'options': '--prompt="buffers › " --expect='.join(keys(s:default_action), ','),
   \   'sink*':   function("s:handler")
-  \ })
+  \ }, s:fzf_layout))
 
 function! s:mru_files(cwd)
   let mru = filter(copy(v:oldfiles), 'filereadable(fnamemodify(v:val, ":p"))')
 
   if a:cwd
-    let mru = filter(mru, 'fnamemodify(v:val, ":p") =~# "^".getcwd()')
-    return map(mru, "substitute(fnamemodify(v:val, ':p'), '^'.getcwd().'/', '', '')")
+    let l:cwd = getcwd()
+    let mru = filter(mru, 'fnamemodify(v:val, ":p") =~# "^".l:cwd')
+    return map(mru, "substitute(fnamemodify(v:val, ':p'), '^'.l:cwd.'/', '', '')")
   else
     return mru
   endif
 endfunction
 
-command! -bang FZFMRU call fzf#run({
-  \   'down':    20,
+command! -bang FZFMRU call fzf#run(extend({
   \   'source':  s:mru_files(<q-bang> == ""),
-  \   'options': '--prompt="mru> " --expect='.join(keys(s:default_action), ','),
+  \   'options': '--prompt="mru › " --expect='.join(keys(s:default_action), ','),
   \   'sink*':   function("s:handler")
-  \ })
+  \ }, s:fzf_layout))
+
 
 function! s:tags_sink(line)
   let parts = split(a:line, '\t\zs')
@@ -77,12 +85,11 @@ function! s:tags()
     call system('ctags -R')
   endif
 
-  call fzf#run({
-  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
-  \            '| grep -v -a ^!',
-  \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
-  \ 'down':    '40%',
-  \ 'sink':    function('s:tags_sink')})
+  call fzf#run(extend({
+    \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+    \            '| grep -v -a ^!',
+    \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
+    \ 'sink':    function('s:tags_sink')}, s:fzf_layout))
 endfunction
 
 command! Tags call s:tags()

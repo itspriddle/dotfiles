@@ -15,7 +15,9 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 " Note this is the fzf.vim shipped with fzf itself, not the separate fzf.vim
 " project
 
-let g:fzf_layout = { "down": 20 }
+let g:fzf_layout = {}
+" let g:fzf_layout.window = { 'width': 0.7, 'height': 0.5 }
+let g:fzf_layout.down = '15'
 
 noremap <silent> <expr> <c-p> (&ft == "qf" ? ":" : ":FZF")."\<cr>"
 noremap <c-b> :echoerr "Use `<leader>b`!"<cr>
