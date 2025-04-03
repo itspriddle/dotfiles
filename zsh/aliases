@@ -67,9 +67,6 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias rc='rails console'
   alias be='bundle exec'
 
-  # laravel
-  alias art='php artisan'
-
   # script/ to rule them all
   alias sc='script/console'
   alias st='script/test'

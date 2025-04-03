@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+list() {
+  php artisan list --raw | awk '{
+    desc = ""
+
+    for (i = 2; i <= NF; i++) {
+      desc = desc $i " "
+    }
+
+    printf "%s\t%s\n", $1, desc
+  }'
+}
+
+render() {
+  local commands
+
+  commands="$(list)" || return 1
+
+  sort -k1 <<< "$commands" | while IFS=$'\t' read -r command desc; do
+    printf "%s\t%s\n" "$command" "$desc"
+  done | tableize
+}
+
+tableize() {
+  column -t -s$'\t'
+}
+
+choose() {
+  local rendered fzf_args=()
+
+  fzf_args+=(--tiebreak=begin,index)
+  fzf_args+=(--preview-window hidden)
+  fzf_args+=(--bind "?:preview(php artisan help --ansi {1})")
+  fzf_args+=(--bind "esc:hide-preview,focus:hide-preview")
+  fzf_args+=(--bind "enter:become(art {1})")
+
+  # fzf_args+=(--bind "enter:change-query(art {})print({1})+accept")
+
+  rendered="$(render)" || return 1
+
+  # if [[ $# -gt 0 ]]; then
+  #   fzf_args+=(--query="$@")
+  # fi
+
+  fzf "${fzf_args[@]}" <<< "$rendered"
+}
+
+if [[ ! -f artisan ]]; then
+  echo "artisan not found, is \`$PWD' a Laravel project?" >&2
+  exit 1
+fi
+
+if [[ $# -gt 0 ]]; then
+  php artisan "$@"
+  exit $?
+fi
+
+choose
