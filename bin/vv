@@ -73,11 +73,12 @@ size=${#candidates[@]}
 if [[ ${size} -gt 0 ]]; then
   [[ ${size} -gt 20 ]] && size=20
 
-  height=$((2 + size)) # 2 extra rows for FZF prompt
   files=()
 
   fzf="fzf-tmux"
   [[ ! -x "$fzf" ]] && fzf=fzf
+
+  export FZF_DEFAULT_OPTS="--tiebreak=end,length,index $FZF_DEFAULT_OPTS"
 
   while IFS=$'\n' read -r line; do
     files+=("${line/#~/$HOME}")
