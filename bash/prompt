@@ -26,7 +26,7 @@ _josh_prompt_command() {
 
   pat="$(printf '/*%.0s' {1..3})"
   cwd="${PWD/$HOME/~}"
-  tmp="${cwd%$pat}"
+  tmp="${cwd%"$pat"}"
 
   if [ "${#tmp}" -gt 0 ] && [ "$tmp" != "$cwd" ]; then
     prompt_cwd="$(printf "%s" "${cwd:${#tmp}+1}")"

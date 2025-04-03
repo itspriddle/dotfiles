@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  ci:
+    name: Run test suite
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run shellcheck
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh extension install itspriddle/gh-shellcheck
+          gh shellcheck

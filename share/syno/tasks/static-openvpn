@@ -8,7 +8,6 @@ fi
 
 set -euo pipefail
 
-CONTAINER=network.priddle.transmission
 FEEDS=/volume1/docker/network.priddle.home/public/feeds/openvpn
 
 [[ ! -d "$FEEDS" ]] && mkdir "$FEEDS"

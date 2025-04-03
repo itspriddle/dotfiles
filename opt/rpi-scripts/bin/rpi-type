@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-cat /sys/firmware/devicetree/base/model | sed 's/\x0//g'
+sed 's/\x0//g' < /sys/firmware/devicetree/base/model
 echo
