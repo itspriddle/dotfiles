@@ -16,8 +16,8 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 " project
 
 let g:fzf_layout = {}
-" let g:fzf_layout.window = { 'width': 0.7, 'height': 0.5 }
-let g:fzf_layout.down = '15'
+let g:fzf_layout.window = { 'width': 0.7, 'height': 0.5 }
+" let g:fzf_layout.down = '15'
 
 noremap <silent> <expr> <c-p> (&ft == "qf" ? ":" : ":FZF")."\<cr>"
 noremap <c-b> :echoerr "Use `<leader>b`!"<cr>
