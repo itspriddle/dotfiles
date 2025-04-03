@@ -47,6 +47,11 @@ type man &> /dev/null &&
 
 type fzf &> /dev/null && alias vf='vim $(fzf)'
 
+if type lcars &> /dev/null; then
+  alias lc='lcars'
+  alias lcr='lcars db:reset'
+fi
+
 # OS X
 if [ "${OSTYPE:0:6}" = "darwin" ]; then
   # GPG
