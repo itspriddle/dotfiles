@@ -31,6 +31,7 @@ fi
 "$0" --paths < "$input" | fzf \
   --prompt 'jq › ' \
   --no-sort \
+  --height 100% \
   --ghost '  filter by keys above and press enter' \
   --preview 'arg={q}; jq -C "${arg:-.}" '"$input" \
   --preview-window left \
