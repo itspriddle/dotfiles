@@ -50,6 +50,7 @@ type fzf &> /dev/null && alias vf='vim $(fzf)'
 if type lcars &> /dev/null; then
   alias lc='lcars'
   alias lcr='lcars db:reset'
+  alias lcd='lcars docs'
 fi
 
 # OS X
