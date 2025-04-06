@@ -70,7 +70,7 @@
 	prq              = !gh prq --push --copy --open
 	pre              = !gh pre --copy --open
 	pru              = !gh pr view --json url --jq .url
-	prb              = "!f() { gh pr view --web \"$@\" 2> /dev/null; }; f"
+	prb              = "!f() { gh pr view --web \"$@\" 2> /dev/null || gh browse &> /dev/null; }; f"
 	todo             = grep -wniI -e TODO -e FIXME
 	last-committer   = !git --no-pager log --pretty="%an" --no-merges -1
 	last-subject     = !git --no-pager log --pretty="%s" -1
