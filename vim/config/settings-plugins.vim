@@ -64,6 +64,13 @@ nmap co yo
 
 " }}}
 
+" vim-blade {{{
+
+" Highlight @props
+let g:blade_custom_directives = ['props']
+
+" }}}
+
 " vim-easy-align {{{
 
 " Allow aligning stuff that is commented out
