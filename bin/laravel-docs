@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+
+DOCS=(
+  artisan
+  authentication
+  authorization
+  billing
+  blade
+  broadcasting
+  cache
+  cashier-paddle
+  collections
+  concurrency
+  configuration
+  console-tests
+  container
+  context
+  contracts
+  contributions
+  controllers
+  csrf
+  database-testing
+  database
+  deployment
+  documentation
+  dusk
+  eloquent-collections
+  eloquent-factories
+  eloquent-mutators
+  eloquent-relationships
+  eloquent-resources
+  eloquent-serialization
+  eloquent
+  encryption
+  envoy
+  errors
+  events
+  facades
+  filesystem
+  folio
+  fortify
+  frontend
+  hashing
+  helpers
+  homestead
+  horizon
+  http-client
+  http-tests
+  installation
+  license
+  lifecycle
+  localization
+  logging
+  mail
+  middleware
+  migrations
+  mix
+  mocking
+  mongodb
+  notifications
+  octane
+  packages
+  pagination
+  passport
+  passwords
+  pennant
+  pint
+  precognition
+  processes
+  prompts
+  providers
+  pulse
+  queries
+  queues
+  rate-limiting
+  readme
+  redirects
+  redis
+  releases
+  requests
+  responses
+  reverb
+  routing
+  sail
+  sanctum
+  scheduling
+  scout
+  seeding
+  session
+  socialite
+  starter-kits
+  strings
+  structure
+  telescope
+  testing
+  upgrade
+  urls
+  valet
+  validation
+  verification
+  views
+  vite
+)
+
+open_page() {
+  open "https://laravel.com/docs/12.x/$1"
+}
+
+if [[ $# -eq 1 ]]; then
+  open_page "$1"
+else
+  fzf --bind "enter:become(open 'https://laravel.com/docs/12.x/{1}')" <<< "$(printf '%s\n' "${DOCS[@]}")"
+fi
