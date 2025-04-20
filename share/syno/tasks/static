@@ -16,7 +16,7 @@ static-dhcp-leases
 static-openvpn
 static-opnsense
 static-opnsense-unbound
-static-pihole
+# static-pihole
 static-prowlarr
 static-speedtest
 static-ssl-check
