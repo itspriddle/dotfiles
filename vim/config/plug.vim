@@ -116,14 +116,14 @@ let g:plug_url_format = 'git@github.com:%s.git'
 
 Plug 'itspriddle/vim-stripper'
 
+if executable('shellcheck')
+  Plug 'itspriddle/vim-shellcheck'
+endif
+
 if s:platform == 'macos'
   Plug 'itspriddle/vim-jekyll'
   Plug 'itspriddle/vim-marked'
-  Plug 'itspriddle/vim-laravel-projections'
-endif
-
-if executable('shellcheck')
-  Plug 'itspriddle/vim-shellcheck'
+  Plug 'built-fast/vim-laravel-projections'
 endif
 
 unlet g:plug_url_format
