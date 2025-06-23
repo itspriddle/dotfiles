@@ -29,6 +29,7 @@ tableize() {
 choose() {
   local rendered fzf_args=()
 
+  # shellcheck disable=SC2054
   fzf_args+=(--tiebreak=begin,index)
   fzf_args+=(--preview-window hidden)
   fzf_args+=(--bind "?:preview(php artisan help --ansi {1})")
