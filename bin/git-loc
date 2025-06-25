@@ -59,7 +59,7 @@ for arg in "${@:-${PWD}}"; do
     name="${arg%%/}: "
   fi
 
-  printf "${name}%d\\n" $(
+  printf "${name}%d\\n" "$(
     git grep --cached -Ile "" -- "${arg}" |
       xargs -I{} cat {} |
       sed -E '
@@ -69,5 +69,5 @@ for arg in "${@:-${PWD}}"; do
         /^__END__/q
       ' |
       wc -l
-  )
+  )"
 done
