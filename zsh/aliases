@@ -84,6 +84,7 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
 
   # PHP/Laravel
   alias pp='pest --parallel'
+  alias tlog='tail -f storage/logs/laravel.log'
 fi
 
 # vim: ft=zsh
