@@ -26,7 +26,7 @@ endif
 
 function! s:open_url(url, launch)
   if a:launch
-    call netrw#BrowseX(a:url, netrw#CheckIfRemote())
+    call netrw#os#Open(a:url)
   else
     let @+ = a:url
     echo a:url
