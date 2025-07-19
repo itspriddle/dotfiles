@@ -1,0 +1,15 @@
+# copy these to ~/.config/gh/config.yml
+co: pr checkout
+extension home: '!open https://github.com/topics/gh-extension'
+extension install-defaults: |
+  !echo "Installing extensions...";
+  gh extension install dlvhdr/gh-dash;
+  gh extension install mislav/gh-branch;
+  gh extension install seachicken/gh-poi;
+  gh extension install cschleiden/gh-actionlint;
+  (cd ~/work/gh-shellcheck && gh extension install .);
+  (cd ~/work/gh-prq && gh extension install .);
+gist create-and-copy: '!gh gist create "$@" 2> /dev/null | tee /dev/tty | pbcopy'
+pr url: pr view --json url --jq .url
+repo default-branch: repo view --json defaultBranchRef --jq .defaultBranchRef.name
+repo settings: browse --settings
