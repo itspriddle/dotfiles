@@ -1,0 +1,39 @@
+{
+  "vim/config/plug.vim": {
+    "type": "plugs"
+  },
+  "bin/*": {
+    "template": [
+      "#!/usr/bin/env bash",
+      "# Usage: {snakecase|hyphenate} [options]",
+      "#",
+      "# NAME",
+      "#   {snakecase|hyphenate} -- It does something",
+      "#",
+      "# SYNOPSIS",
+      "#   {snakecase|hyphenate}",
+      "#",
+      "# DESCRIPTION",
+      "#   {snakecase|hyphenate} does something, alright. Good or bad, who knows?",
+      "#",
+      "# OPTIONS",
+      "#   -h, --help",
+      "#     Print this help message and exit",
+      "",
+      "if [[ \"$DEBUG\" ]]; then",
+      "  export PS4='+ [${open}BASH_SOURCE##*/{close}:$LINENO] '",
+      "  set -x",
+      "fi",
+      "",
+      "set -euo pipefail",
+      "",
+      "if [[ \"${open}1:-{close}\" =~ ^(-h|--help)$ ]]; then",
+      "  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < \"$0\" |",
+      "    awk -v f=\"${open}1//-/{close}\" 'f == \"h\" && $1 == \"Usage:\" {open} print; exit {close}; f != \"h\"'",
+      "  exit 1",
+      "fi",
+      "",
+      "echo \"I'm in danger!\""
+    ]
+  }
+}
