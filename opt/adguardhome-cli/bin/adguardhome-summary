@@ -17,8 +17,15 @@ done < <(jq -r 'to_entries[] | .key' ~/.config/adguardhome-api.json)
 for sub in "${SUBS[@]}"; do
   adguardhome-api "$sub" control/stats |
     jq --arg sub "$sub" '
+      def round(decimal):
+        (decimal | tostring | split(".")) as $fields
+        | ($fields[0] | tonumber) as $integer
+        | ("0.\($fields[1] // 0)" | tonumber) as $decimal
+        | if $decimal >= 0.5 then $integer + 1 else $integer end
+      ;
+
       {
-        avg_processing_time: .avg_processing_time,
+        avg_processing_time: "\(round(.avg_processing_time * 1000)) ms",
         query_count: .num_dns_queries,
         blocked_count: .num_blocked_filtering,
       }
