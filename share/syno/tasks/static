@@ -12,11 +12,11 @@ export PATH="$HOME/.dotfiles/share/syno/tasks:$PATH"
 
 healthchecks scarif-static-generator/start
 
+static-adguardhome
 static-dhcp-leases
 static-openvpn
 static-opnsense
 static-opnsense-unbound
-# static-pihole
 static-prowlarr
 static-speedtest
 static-ssl-check
