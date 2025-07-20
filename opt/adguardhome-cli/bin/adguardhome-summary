@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+SUBS=()
+
+while IFS='' read -r line; do
+  SUBS+=("$line")
+done < <(jq -r 'to_entries[] | .key' ~/.config/adguardhome-api.json)
+
+for sub in "${SUBS[@]}"; do
+  adguardhome-api "$sub" control/stats |
+    jq --arg sub "$sub" '
+      {
+        avg_processing_time: .avg_processing_time,
+        query_count: .num_dns_queries,
+        blocked_count: .num_blocked_filtering,
+      }
+      | { "\($sub)": . }
+    '
+done | jq -s add

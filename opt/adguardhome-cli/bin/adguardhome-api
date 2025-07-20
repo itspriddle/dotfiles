@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+# Usage: api [options] <path>
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+: "${ADGUARDHOME_CONFIG:="${XDG_CONFIG_HOME:-$HOME/.config}/adguardhome-api.json"}"
+
+_read_config() {
+  local domain="$1"
+
+  if ! type jq &> /dev/null; then
+    echo "Missing \`jq' command." >&2
+    return 1
+  fi
+
+  if [[ ! -r "$ADGUARDHOME_CONFIG" ]]; then
+    echo "Config '$ADGUARDHOME_CONFIG' doesn't exist" >&2
+    return 1
+  fi
+
+  jq -r --arg domain "$domain" '
+  .[$domain] | to_entries |
+    map("ADGUARDHOME_\(.key | ascii_upcase)=\(.value | tostring)") |
+    .[]
+  ' "$ADGUARDHOME_CONFIG"
+}
+
+_load_config() {
+  local domain="$1"
+
+  if [[ "${ADGUARDHOME_USERNAME-}" ]] && [[ "${ADGUARDHOME_PASSWORD-}" ]] && [[ "${ADGUARDHOME_URL-}" ]]; then
+    return 0
+  fi
+
+  for var in $(_read_config "$domain"); do
+    case "${var%%=*}" in
+      ADGUARDHOME_USERNAME|ADGUARDHOME_PASSWORD|ADGUARDHOME_URL)
+        export "${var?}"
+        ;;
+    esac
+  done
+
+  local ret=0
+
+  if [[ -z "${ADGUARDHOME_URL-}" ]]; then
+    echo "Must set 'url' in $ADGUARDHOME_CONFIG" >&2
+    ret=1
+  fi
+
+  if [[ -z "${ADGUARDHOME_USERNAME-}" ]]; then
+    echo "Must set 'username' in $ADGUARDHOME_CONFIG" >&2
+    ret=1
+  fi
+
+  if [[ -z "${ADGUARDHOME_PASSWORD-}" ]]; then
+    echo "Must set 'password' in $ADGUARDHOME_CONFIG" >&2
+    ret=1
+  fi
+
+  if [[ "$ret" -ne 0 ]]; then
+    _configure_help
+  fi
+
+  return $ret
+}
+
+_configure_help() {
+  {
+    echo
+    echo "Create \`$ADGUARDHOME_CONFIG' with:"
+    echo
+    echo "  jq --null-input \\"
+    echo "    --arg username \"admin\" \\"
+    echo "    --arg password \"your_password\" \\"
+    echo "    --arg url \"https://adguard.mydomain.com\" \\"
+    echo "    '\$ARGS.named' > \"$ADGUARDHOME_CONFIG\""
+    echo
+    echo "  chmod 600 \"$ADGUARDHOME_CONFIG\""
+  } >&2
+
+  return 1
+}
+
+api() {
+  local path="${1-}" auth_header
+
+  if [[ -z "$path" ]]; then
+    echo "Missing path" >&2
+    return 1
+  fi
+
+  [[ "${1-}" ]] && shift
+
+  auth_header="Authorization: Basic $(echo -n "${ADGUARDHOME_USERNAME}:${ADGUARDHOME_PASSWORD}" | base64)"
+
+  curl -s -H "$auth_header" "$ADGUARDHOME_URL/$path" "$@"
+}
+
+main() {
+  local domain="${1-}"
+
+  if [[ -z "$domain" ]]; then
+    echo "Must specify domain" >&2
+    return 1
+  fi
+
+  shift
+
+  _load_config "$domain" || return 1
+
+  local cmd="${1:---help}"
+
+  [[ "${1-}" ]] && shift
+
+  case "$cmd" in
+    -h | --help)
+      sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+        awk -v f="${cmd//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+      return 1
+      ;;
+  esac
+
+  api "$cmd" "$@"
+}
+
+main "$@"
