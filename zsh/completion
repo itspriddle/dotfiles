@@ -1,3 +1,7 @@
+if [[ -d /opt/homebrew/share/zsh/site-functions ]]; then
+  fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+fi
+
 # Some systems' /etc/zshrc might have called this already
 if ! type compinit &> /dev/null; then
   autoload -U compinit
