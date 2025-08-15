@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
-# Usage: standup [options]
+# Usage: standup
 #
 # NAME
-#   standup -- It does something
+#   standup -- Generate a standup summary from my Linear activity
 #
 # SYNOPSIS
 #   standup
 #
 # DESCRIPTION
-#   standup does something, alright. Good or bad, who knows?
+#   standup generates a brief standup summary from my Linear activity
+#   using the linear-server MCP.
 #
 # OPTIONS
 #   -h, --help
