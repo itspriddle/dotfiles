@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# Usage: standup [options]
+#
+# NAME
+#   standup -- It does something
+#
+# SYNOPSIS
+#   standup
+#
+# DESCRIPTION
+#   standup does something, alright. Good or bad, who knows?
+#
+# OPTIONS
+#   -h, --help
+#     Print this help message and exit
+
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+if [[ "${1:-}" =~ ^(-h|--help)$ ]]; then
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+  exit 1
+fi
+
+tools='mcp__linear-server__get_issue,mcp__linear-server__list_my_issues,mcp__linear-server__list_issues'
+
+prompt() {
+  cat <<EOF
+Generate a brief standup summary from my Linear activity using linear-server
+MCP. Look at issues I worked on yesterday and what I have planned for today.
+
+Output ONLY in this exact format with no additional text, explanation, or
+preamble/header, ONLY the Y and T sections:
+
+Y:
+- item 1
+- item 2
+
+T:
+- item 1
+- item 2
+
+Where Y: is what I completed/worked on yesterday and T: is what I plan to work
+on today. Keep items concise (one line each), focus on actual work done rather
+than just listing issue titles, and include key technical details when
+relevant (e.g., "Fixed domain registration security issue - ensured new
+registrations are automatically locked" rather than just "worked on DEV-132").
+Do not include the issue numbers or links in the output.
+
+If you have issues with permissions explain to me how to correct them. If the
+Linear MCP tool is not setup, explain I need to run
+\`claude mcp add --transport sse linear-server https://mcp.linear.app/sse\`
+
+I am calling you with:
+
+prompt | claude -p --allowedTools '$tools'
+EOF
+}
+
+prompt | claude --model sonnet --print --allowedTools "$tools"
