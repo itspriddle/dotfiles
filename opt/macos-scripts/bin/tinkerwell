@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Usage: tinkerwell [-h|--help] [path]
+#
+# NAME
+#   tinkerwell -- Opens Tinkerwell in the specified Laravel project (PWD by
+#   default)
+#
+# SYNOPSIS
+#   tinkerwell
+#
+# DESCRIPTION
+#   tinkerwell opens Tinkerwell in the specified Laravel project (PWD by
+#   default).
+#
+# OPTIONS
+#   -h, --help
+#     Print this help message and exit
+
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+if [[ "${1:-}" =~ ^(-h|--help)$ ]]; then
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="${1//-/}" 'f == "h" && $1 == "Usage:" { print; exit }; f != "h"'
+  exit 1
+fi
+
+if [ $# -eq 0 ] || [ "$1" = "." ]; then
+  TW_PATH="$(pwd)"
+else
+  TW_PATH="$1"
+fi
+
+if [ ! -f "$TW_PATH/artisan" ]; then
+  echo "The specified path is not a Laravel project (artisan file not found)." >&2
+  exit 1
+fi
+
+TW_PATH="$(echo -n "$TW_PATH" | base64)"
+
+open "tinkerwell://?cwd=$TW_PATH"
