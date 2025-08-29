@@ -81,7 +81,7 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
 
   # Robots
   alias claude='claude --model sonnet'
-  alias ccusage='npx ccusage@latest'
+  alias ccusage='npx --yes ccusage@latest'
 
   # PHP/Laravel
   alias pp='pest --parallel'
