@@ -6,6 +6,7 @@ PARTS = \
 	ruby-version screenrc tmux.d tmux.conf vim zshenv zshrc
 
 LINKS = $(addprefix $(HOME)/., $(PARTS))
+PREFIX ?= /usr/local
 
 install: $(LINKS) ## install all dotfiles to $HOME
 .PHONY: install
@@ -20,6 +21,28 @@ setup-raspberry-pi: ## setup dotfiles for a Raspberry Pi
 uninstall: ## uninstall dotfiles (if they are symlinks)
 	-for i in $(LINKS); do test -L $$i && rm -vf $$i; done
 .PHONY: uninstall
+
+install-opt: ## install binaries from opt/PACKAGE/bin/* to PREFIX/bin (usage: make install-opt PACKAGE or make install-opt NAME=PACKAGE)
+	$(eval PACKAGE := $(or $(NAME),$(filter-out install-opt,$(MAKECMDGOALS))))
+	@if [ -z "$(PACKAGE)" ]; then \
+		echo "Error: Package name required. Usage: make install-opt PACKAGE or make install-opt NAME=PACKAGE"; \
+		exit 1; \
+	fi
+	@if [ ! -d "opt/$(PACKAGE)/bin" ]; then \
+		echo "Error: opt/$(PACKAGE)/bin directory not found"; \
+		exit 1; \
+	fi
+	@mkdir -p $(PREFIX)/bin
+	@if [ -n "$$(ls -A opt/$(PACKAGE)/bin/ 2>/dev/null)" ]; then \
+		ln -sf $(abspath opt/$(PACKAGE))/bin/* $(PREFIX)/bin/; \
+	else \
+		echo "No files found in opt/$(PACKAGE)/bin/"; \
+	fi
+.PHONY: install-opt
+
+# Prevent make from treating package names as targets
+%:
+	@:
 
 $(LINKS):
 	ln -s $(abspath $(@:$(HOME)/.%=%)) $@
