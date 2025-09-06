@@ -65,6 +65,7 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias df="df -Plh"
   alias eject-all="diskutil list | awk '/external/ { print \$1 }' | xargs -tn1 diskutil unmountDisk"
   alias battery-info='system_profiler -detailLevel mini SPPowerDataType'
+  alias transmission-ips="ssh scarif.priddle.network 'PATH=\"\$HOME/local/bin:/usr/local/bin:\$PATH\"; transmission-openvpn-ips' | jq '{real_ip, openvpn_ip}'"
 
   # Stuff only used on my Macs
   alias transmission-upload="$HOME/.dotfiles/opt/transmission-cli/bin/transmission-upload-torrent"
