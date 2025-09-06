@@ -67,7 +67,8 @@
 	root             = rev-parse --show-toplevel
 	strip-whitepsace = !git ls-files | xargs perl -i -pe 's/[\\t ]+$//g'
 	showf            = show --format=fuller
-	prq              = !gh prq --push --copy --open
+	prq              = !gh prq --push --copy --open --body ''
+	prql						 = !gh prq --push --copy --open --body \"\" --title \"$(git log -1 --format=%s)\"
 	pre              = !gh pre --copy --open
 	pru              = !gh pr view --json url --jq .url
 	prb              = "!f() { gh pr view --web \"$@\" 2> /dev/null || gh browse &> /dev/null; }; f"
@@ -78,7 +79,7 @@
 	last-pull-sha    = !"git reflog | awk '/: pull / { if (l == 1) { print $1; exit }; l+=1 }'"
 	first-commit     = commit --allow-empty -m 'First commit'
 	ls-files-tree    = "!f() { git ls-files \"$@\" | tree --fromfile . ; }; f"
-	default-branch   = "!f() { git config --get init.defaultBranch || echo master; }; f"
+	default-branch   = !gh repo view --json defaultBranchRef --jq .defaultBranchRef.name
 
 [advice]
 	statusHints        = false
