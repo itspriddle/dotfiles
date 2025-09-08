@@ -25,7 +25,7 @@ try {
             $type = $failure->getAttribute('type');
 
             // Extract line number from "at tests/Unit/Models/AccountTest.php:16" pattern
-            if (preg_match('/at ([^:]+):(\d+)/', $failureText, $matches)) {
+            if (preg_match('/at ([^:]+):(\d+)$/', $failureText, $matches)) {
                 $file = explode('::', $testcase->getAttribute('file'))[0];
                 $line = $matches[2];
                 $column = 0;
