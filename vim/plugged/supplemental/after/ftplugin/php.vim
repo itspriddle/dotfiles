@@ -8,7 +8,38 @@ setlocal list
 setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 
 " Check syntax
-nnoremap <buffer> <leader>l :!php -l %<cr>
+nnoremap <buffer> <leader>l :<C-u>call <SID>RunCompiler('php')<CR>
+
+function! s:RunCompiler(program) abort
+  let old_compiler = get(b:, 'current_compiler', '')
+  let old_makeprg = &l:makeprg
+  let old_errorformat = &l:errorformat
+
+  try
+    silent! execute 'compiler' a:program
+    silent! execute 'make' expand('%')
+
+    " let l:results = systemlist(&l:makeprg . ' '. expand('%') . '')
+
+    " execute 'silent' 'cgetexpr' "l:results"
+
+    " if qf list has anything in it, open it
+    if len(getqflist()) > 0
+      " only open if it's not already open
+      if empty(filter(range(1, winnr('$')), 'getwinvar(v:val, "&buftype") ==# "quickfix"'))
+        silent! execute 'botright copen'
+      endif
+    else
+      silent! execute 'cclose'
+    end
+
+    redraw!
+  finally
+    let b:current_compiler = old_compiler
+    let &l:makeprg = old_makeprg
+    let &l:errorformat = old_errorformat
+  endtry
+endfunction
 
 function! s:ComposerFind() abort
   let class = composer#autoload#find()
@@ -77,7 +108,8 @@ command! -buffer -complete=file -nargs=* Pest call s:Pest(<q-args>)
 
 nnoremap <buffer> <leader>p :Pint!<cr>
 
-nnoremap <buffer> <leader>P :PHPStan<cr>
+" nnoremap <buffer> <leader>P :PHPStan<cr>
+nnoremap <buffer> <leader>P :<C-u>call <SID>RunCompiler('phpstan')<CR>
 
 let b:undo_ftplugin = get(b:, "undo_ftplugin", "exe") .
   \ "|setlocal commentstring< list< tabstop< shiftwidth< softtabstop< expandtab<" .
