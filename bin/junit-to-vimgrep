@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+$xml = file_get_contents('php://stdin');
+
+if ($xml === false) {
+    exit(1);
+}
+
+try {
+    $doc = new DOMDocument();
+    $doc->loadXML($xml);
+
+    $xpath = new DOMXPath($doc);
+    $failures = $xpath->query('//testcase[failure]');
+
+    foreach ($failures as $testcase) {
+        $testName = $testcase->getAttribute('name');
+        $failure = $testcase->getElementsByTagName('failure')->item(0);
+
+        if ($failure) {
+            $failureText = $failure->textContent;
+            $type = $failure->getAttribute('type');
+
+            // Extract line number from "at tests/Unit/Models/AccountTest.php:16" pattern
+            if (preg_match('/at ([^:]+):(\d+)/', $failureText, $matches)) {
+                $file = explode('::', $testcase->getAttribute('file'))[0];
+                $line = $matches[2];
+                $column = 0;
+                // $error = substr($failureText, strlen($testName));
+                $error = explode("\n", substr($failureText, strlen($testName)))[0];
+
+                echo "$file:$line:$column:$testName - $error\n";
+            }
+        }
+    }
+} catch (Exception $e) {
+    exit(1);
+}
