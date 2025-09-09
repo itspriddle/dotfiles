@@ -54,12 +54,18 @@ Plug 'tpope/vim-rsi'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-characterize'
-Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'editorconfig/editorconfig-vim'
+
+" Comments
+try
+  packadd comment
+catch
+  Plug 'tpope/vim-commentary'
+endtry
 
 " File browsing/search
 Plug 'jeetsukumaran/vim-filebeagle'
