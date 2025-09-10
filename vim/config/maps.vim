@@ -54,4 +54,8 @@ map <C-w>T :exe "tabnew +" . line(".") . " %"<cr>
 " ^w Q to close the current tab page
 map <C-w>Q :tabclose<cr>
 
+" Copy the full path of the current file to the clipboard
+nnoremap <leader>c :let @+ = expand('%')<CR>:echo "Path copied: " . @+<CR>
+nnoremap <leader>C :let @+ = expand('%:p')<CR>:echo "Path copied: " . @+<CR>
+
 " vim:ft=vim:ts=2:sw=2:sts=2:et:fdm=marker
