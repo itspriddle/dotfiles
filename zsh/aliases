@@ -79,6 +79,7 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias sc='script/console'
   alias st='script/test'
   alias sr='script/reset'
+  alias deploy='script/deploy'
 
   # Robots
   alias claude='claude --model sonnet'
