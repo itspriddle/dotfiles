@@ -5,40 +5,35 @@ autoload -Uz add-zsh-hook
 zstyle ':vcs_info:*'      enable git
 zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
-zstyle ':vcs_info:git*:*' unstagedstr "+" # %u
-zstyle ':vcs_info:git*:*' stagedstr "*"  # %c
-zstyle ':vcs_info:git*'   actionformats "%b %c%u|%a"
-zstyle ':vcs_info:git*'   formats       "%b %c%u"
+zstyle ':vcs_info:git*:*' unstagedstr   "%F{red}•%f"     # %u below
+zstyle ':vcs_info:git*:*' stagedstr     "%F{green}•%f"   # %c below
+zstyle ':vcs_info:git*'   actionformats "%F{magenta}%a:%f%F{green}%b%f %u%c"
+zstyle ':vcs_info:git*'   formats       "%F{green}%b%f %u%c"
+
+_josh_prompt_vcs_info() {
+  vcs_info 2> /dev/null
+
+  if [[ -n "${vcs_info_msg_0_}" ]]; then
+    echo " %F{green}(%f${vcs_info_msg_0_%% }%F{green})%f"
+  fi
+}
 
 _josh_prompt_precmd() {
-  local git_prompt="" user_format="%n@" host_prompt="" host_format="%M" dir_prompt git_info
+  local git_prompt user_format="${${USER:#priddle1}:+%n@}" host_prompt="" host_format="%m" dir_prompt
 
-  # if [[ -n $SSH_CONNECTION ]] && [[ -z $TMUX ]]; then
   if [[ -n $SSH_CONNECTION ]]; then
-    [[ $HOST =~ (\.local|\.lan|\.priddle\.network)$ ]] && host_format="%m"
-
-    host_prompt="%{$fg_bold[yellow]%}${user_format}${host_format}%{$reset_color%} "
+    host_prompt="%F{yellow}${user_format}${host_format}%f:"
   fi
 
   if [[ $TERM == xterm* ]]; then
     print -Pn "\\e]0;${SSH_CONNECTION:+${user_format}${host_format}:}%~\\a"
   fi
 
-  vcs_info 2> /dev/null
+  git_prompt="$(_josh_prompt_vcs_info)"
 
-  if [[ -n $vcs_info_msg_0_ ]]; then
-    # Strip space from " |"
-    git_info="${vcs_info_msg_0_// |/|}"
+  dir_prompt="%F{blue}%3~%f"
 
-    # Strip trailing space
-    git_info="${git_info%\ }"
-
-    git_prompt=" %{$fg_bold[green]%}(${git_info})%{$reset_color%}"
-  fi
-
-  dir_prompt="%{$fg_bold[blue]%}%3~%{$reset_color%}"
-
-  PS1="${host_prompt}${dir_prompt}${git_prompt} %# "
+  PS1="%B${host_prompt}${dir_prompt}${git_prompt}%b %# "
 }
 
 add-zsh-hook precmd _josh_prompt_precmd
