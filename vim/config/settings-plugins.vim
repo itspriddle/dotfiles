@@ -38,17 +38,17 @@ let g:qfenter_keymap.topen = ['<C-t>']
 
 " }}}
 
-" simple-ag.vim {{{
+" simple-rg.vim {{{
 
-" Opens command line with `:Ag `, results go to Quickfix
-noremap <leader>f :Ag<space>
+" Opens command line with `:Rg `, results go to Quickfix
+noremap <leader>f :Rg<space>
 
-" Opens command line with `:LAg `, results go to Location List
-noremap <leader>F :LAg<space>
+" Opens command line with `:LRg `, results go to Location List
+noremap <leader>F :LRg<space>
 
 " Use ripgrep if available
 if executable("rg")
-  let g:simple_ag_command = "rg --max-columns-preview --max-columns 5000 -H --no-heading --sort-files --vimgrep %s"
+  let g:simple_rg_command = "rg --max-columns-preview --max-columns 5000 -H --no-heading --sort-files --vimgrep %s"
 endif
 
 " }}}
