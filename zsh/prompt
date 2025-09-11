@@ -19,7 +19,7 @@ _josh_prompt_vcs_info() {
 }
 
 _josh_prompt_precmd() {
-  local git_prompt user_format="${${USER:#priddle1}:+%n@}" host_prompt="" host_format="%m" dir_prompt
+  local git_prompt user_format="${${USER:#priddle}:+%n@}" host_prompt="" host_format="%m" dir_prompt
 
   if [[ -n $SSH_CONNECTION ]]; then
     host_prompt="%F{yellow}${user_format}${host_format}%f:"
