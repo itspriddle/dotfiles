@@ -2,7 +2,7 @@ function! s:run(open, qf, args) abort
   let old_errorformat = &errorformat
   let files = empty(a:args) ? expand('%:S') : join(a:args)
   let cmd = 'composer exec -- phpstan analyse --no-progress --error-format=raw ' . files
-  let &errorformat='%f:%l:%m,%-G%.%#'
+  let &errorformat = '%f:%l:%m,%-G%.%#'
 
   try
     execute "silent" (a:qf ? "cgetexpr" : "lgetexpr") "system(cmd)"
@@ -28,6 +28,8 @@ function! s:run(open, qf, args) abort
     endif
 
     redraw!
+
+    echo title
   finally
     let &errorformat = old_errorformat
   endtry
@@ -36,8 +38,13 @@ endfunction
 command! -buffer -bang -complete=file -nargs=* PHPStan call s:run(<bang>1, 1, <q-args>)
 command! -buffer -bang -complete=file -nargs=* LPHPStan call s:run(<bang>1, 0, <q-args>)
 
-nnoremap <buffer> <leader>P :PHPStan<CR>
+if !get(g:, "phpstan_no_mappings", 0) && !hasmapto('b', '<leader>P')
+  nnoremap <buffer> <leader>P :PHPStan<CR>
+
+  let b:undo_ftplugin = get(b:, "undo_ftplugin", "exe") .
+    \ "|execute 'unmap <buffer> <leader>P'"
+endif
 
 let b:undo_ftplugin = get(b:, "undo_ftplugin", "exe") .
-  \ "|execute 'unmap <buffer> <leader>P'" .
   \ "|delcommand PHPStan"
+  \ "|delcommand LPHPStan"
