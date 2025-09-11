@@ -14,11 +14,12 @@ try {
     $doc->loadXML($xml);
 
     $xpath = new DOMXPath($doc);
-    $failures = $xpath->query('//testcase[failure]');
+    $failures = $xpath->query('//testcase[failure or error]');
 
     foreach ($failures as $testcase) {
         $testName = $testcase->getAttribute('name');
         $failure = $testcase->getElementsByTagName('failure')->item(0);
+        $failure ??= $testcase->getElementsByTagName('error')->item(0);
 
         if ($failure) {
             $failureText = $failure->textContent;
@@ -32,7 +33,7 @@ try {
                 // $error = substr($failureText, strlen($testName));
                 $error = explode("\n", substr($failureText, strlen($testName)))[0];
 
-                echo "$file:$line:$column:$testName - $error\n";
+                echo "$file:$line:$column:$error\n";
             }
         }
     }
