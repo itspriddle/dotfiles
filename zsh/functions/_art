@@ -1,0 +1,2 @@
+#compdef art
+_artisan "$@"
