@@ -14,9 +14,9 @@ endif
 command! -nargs=* -range=% Gist
   \ let b:gist_filename = expand('%:t') |
   \ if &bt != 'nofile' && len(b:gist_filename) |
-  \   let b:gist_args = '-f %' |
+  \   let b:gist_args = '-f '.b:gist_filename |
   \ else |
   \   let b:gist_args = '' |
   \ endif |
-  \ exe '<line1>,<line2>w !gh gist create '.b:gist_args.' <args>' |
+  \ exe '<line1>,<line2>w !gh gist create '.b:gist_args.' <args> 2> /dev/null' |
   \ unlet b:gist_filename b:gist_args
