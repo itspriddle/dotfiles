@@ -1,12 +1,6 @@
 let g:ruby_space_errors = 1
 let g:ruby_operators    = 1
 
-" Open or create the associated file in a horizontal split
-noremap <buffer> <leader>s :AS<cr>
-
-" Open or create the associated file in a vertical split
-noremap <buffer> <leader>v :AV<cr>
-
 " Setup Dispatch's `:Start` to open the given file in IRB
 let b:start = 'irb -r "%:p"'
 
