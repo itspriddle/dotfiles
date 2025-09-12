@@ -10,8 +10,6 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 # "$": something stashed
 # export GIT_PS1_SHOWSTASHSTATE=1
 
-source "${BASH_SOURCE%/*}/git-prompt.sh"
-
 _josh_prompt_command() {
   local blue green yellow reset git host pat cwd tmp prompt_cwd
 
@@ -23,11 +21,11 @@ _josh_prompt_command() {
   git="$(__git_ps1 " ${green}(%s)${reset}" 2> /dev/null)"
 
   if [ "$SSH_CONNECTION" ]; then
-    host="${yellow}\\u@\\h${reset}:"
+    host="${yellow}\\u@\\H${reset} "
   fi
 
   pat="$(printf '/*%.0s' {1..3})"
-  cwd="${PWD/$HOME/\~}"
+  cwd="${PWD/$HOME/~}"
   tmp="${cwd%"$pat"}"
 
   if [ "${#tmp}" -gt 0 ] && [ "$tmp" != "$cwd" ]; then
