@@ -53,6 +53,7 @@ if type lcars &> /dev/null; then
   alias lcr='lcars db:reset'
   alias lcd='lcars docs'
   alias lcq='lcars quote'
+  alias jqf='lcars exec -- bash "$(lcars --root)/contrib/lcars-util:jqf"'
 fi
 
 # OS X
