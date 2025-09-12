@@ -195,11 +195,6 @@ if [ -f ~/.ruby-version ] && [ -f "$HOMEBREW_PREFIX/opt/chruby/share/chruby/chru
   chruby "$RUBY_VERSION"
 fi
 
-# ripgrep
-if command -v rg > /dev/null && [ -f "$HOME/.ripgreprc" ]; then
-  export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
-fi
-
 unset shell
 
 # vim: ft=zsh
