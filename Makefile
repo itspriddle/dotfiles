@@ -40,6 +40,10 @@ install-opt: ## install binaries from opt/PACKAGE/bin/* to PREFIX/bin (usage: ma
 	fi
 .PHONY: install-opt
 
+test:
+	gh shellcheck -e SC1090,SC1091 -- :tmux.d :opt/graveyard
+.PHONY: test
+
 # Prevent make from treating package names as targets
 %:
 	@:
