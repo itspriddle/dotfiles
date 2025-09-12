@@ -6,16 +6,16 @@ zstyle ':vcs_info:*'      enable git
 zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
 zstyle ':vcs_info:git*:*' unstagedstr   "%F{magenta}•%f"  # %u below
-zstyle ':vcs_info:git*:*' stagedstr     "%F{green}•%f"    # %c below
-zstyle ':vcs_info:git*'   actionformats "%F{magenta}%a:%f%F{green}%b%f %u%c"
-zstyle ':vcs_info:git*'   formats       "%F{green}%b%f %u%c"
+zstyle ':vcs_info:git*:*' stagedstr     "%F{cyan}•%f"    # %c below
+zstyle ':vcs_info:git*'   actionformats "%F{cyan}%a:%f%F{cyan}%b%f %u%c"
+zstyle ':vcs_info:git*'   formats       "%F{cyan}%b%f %u%c"
 # zstyle ':vcs_info:git*'   formats       "%F{cyan}%7<<%i%<< %f%F{green}%b%f %u%c"
 
 _josh_prompt_vcs_info() {
   vcs_info 2> /dev/null
 
-  if [[ -n "${vcs_info_msg_0_}" ]]; then
-    echo " %F{green}(%f${vcs_info_msg_0_%% }%F{green})%f"
+  if [[ -n "${vcs_info_msg_0_%% }" ]]; then
+    echo " %F{cyan}(%f${vcs_info_msg_0_%% }%F{cyan})%f"
   fi
 }
 
@@ -23,7 +23,7 @@ _josh_prompt_precmd() {
   local git_prompt user_format="${${USER:#priddle}:+%n@}" host_prompt="" host_format="%m" dir_prompt
 
   if [[ -n $SSH_CONNECTION ]]; then
-    host_prompt="%F{yellow}${user_format}${host_format}%f:"
+    host_prompt="%B%F{yellow}${user_format}${host_format}%f:%b"
   fi
 
   if [[ $TERM == xterm* ]]; then
@@ -32,9 +32,11 @@ _josh_prompt_precmd() {
 
   git_prompt="$(_josh_prompt_vcs_info)"
 
-  dir_prompt="%F{blue}%3~%f"
+  dir_prompt="%B%F{blue}%3~%f%b"
 
-  PS1="%B${host_prompt}${dir_prompt}${git_prompt}%b %(!.#.%%) "
+  local ret_prompt=""
+
+  PS1="${host_prompt}${dir_prompt}${git_prompt} %(!.#.%%) "
 }
 
 add-zsh-hook precmd _josh_prompt_precmd
