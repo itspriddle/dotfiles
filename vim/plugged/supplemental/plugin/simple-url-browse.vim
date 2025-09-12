@@ -18,6 +18,9 @@
 " Note that `gx` in visual mode will use the default `<Plug>NetrwBrowseXVis`
 " plugin command.
 
+" Not neeeded anymore?
+finish
+
 if &cp || exists("g:simple_url_browse_loaded") && g:simple_url_browse_loaded
   finish
 else
@@ -34,10 +37,19 @@ let s:regex = '\(http\|https\|ftp\)://[a-zA-Z0-9][a-zA-Z0-9_-]*\(\.[a-zA-Z0-9][a
 "
 " Returns nothing.
 function! s:browse()
+  if !exists('g:loaded_netrw')
+    runtime! autoload/netrw.vim
+    runtime! autoload/netrw/os.vim
+  endif
+
   let url = matchstr(expand("<cWORD>"), s:regex)
 
   if url != ""
-    call netrw#BrowseX(url, netrw#CheckIfRemote())
+    if has('patch-9.1.1485') && exists('*netrw#os#Open')
+      call netrw#os#Open(url)
+    elseif exists('*netrw#BrowseX') && exists('*netrw#CheckIfRemote')
+      call netrw#BrowseX(url, netrw#CheckIfRemote())
+    endif
   else
     exe "normal \<Plug>NetrwBrowseX"
   endif
