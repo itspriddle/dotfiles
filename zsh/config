@@ -9,10 +9,6 @@ if [[ "${OSTYPE:0:6}" = darwin ]]; then
   source /etc/zshrc
 fi
 
-# makes color constants available
-autoload -U colors
-colors
-
 fpath=(~/.dotfiles/zsh/functions $fpath)
 
 autoload -U ~/.dotfiles/zsh/functions/*(:t)
@@ -28,13 +24,6 @@ setopt LOCAL_OPTIONS
 
 # Allow functions to work with traps
 setopt LOCAL_TRAPS
-
-# Make cd push the old directory onto the directory stack.
-setopt AUTO_PUSHD
-
-# Exchanges the meanings of `+' and `-' when used with a number to specify a
-# directory in the stack.
-setopt PUSHD_MINUS
 
 # Leave =/&; out of WORDCHARS so ^W acts more nicely
 # Default: *?_-.[]~=/&;!#$%^(){}<>
