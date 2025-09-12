@@ -5,10 +5,11 @@ autoload -Uz add-zsh-hook
 zstyle ':vcs_info:*'      enable git
 zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
-zstyle ':vcs_info:git*:*' unstagedstr   "%F{red}•%f"     # %u below
-zstyle ':vcs_info:git*:*' stagedstr     "%F{green}•%f"   # %c below
+zstyle ':vcs_info:git*:*' unstagedstr   "%F{magenta}•%f"  # %u below
+zstyle ':vcs_info:git*:*' stagedstr     "%F{green}•%f"    # %c below
 zstyle ':vcs_info:git*'   actionformats "%F{magenta}%a:%f%F{green}%b%f %u%c"
 zstyle ':vcs_info:git*'   formats       "%F{green}%b%f %u%c"
+# zstyle ':vcs_info:git*'   formats       "%F{cyan}%7<<%i%<< %f%F{green}%b%f %u%c"
 
 _josh_prompt_vcs_info() {
   vcs_info 2> /dev/null
@@ -33,7 +34,7 @@ _josh_prompt_precmd() {
 
   dir_prompt="%F{blue}%3~%f"
 
-  PS1="%B${host_prompt}${dir_prompt}${git_prompt}%b %# "
+  PS1="%B${host_prompt}${dir_prompt}${git_prompt}%b %(!.#.%%) "
 }
 
 add-zsh-hook precmd _josh_prompt_precmd
