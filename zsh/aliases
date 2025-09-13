@@ -88,7 +88,10 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
 
   # PHP/Laravel
   alias pp='pest --parallel'
+  alias stan='phpstan analyze'
   alias tlog='tail -f storage/logs/laravel.log'
+  alias lcars="$HOME/work/lcars/bin/lcars"
+  alias lroutes="php artisan route:list"
 fi
 
 # vim: ft=zsh
