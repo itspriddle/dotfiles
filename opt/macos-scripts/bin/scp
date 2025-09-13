@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ "$*" == *scarif*.priddle.network* ]]; then
+  exec /usr/bin/scp -O "$@"
+else
+  exec /usr/bin/scp "$@"
+fi
