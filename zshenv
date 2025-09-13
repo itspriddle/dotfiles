@@ -8,7 +8,7 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export TERM="xterm-256color"
 
-export PATH="$HOME/.dotfiles/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin:/bin"
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin:/bin"
 
 if [ "${OSTYPE:0:6}" = darwin ]; then
   if [ "$ZSH_VERSION" ]; then
@@ -33,7 +33,7 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
     export HOMEBREW_REPOSITORY="/opt/homebrew"
     export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
     export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
-    export PATH="$HOME/.dotfiles/bin:$HOME/.dotfiles/opt/macos-scripts/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin:/bin"
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
   fi
 
   # Disable emoji when installing packages with Homebrew
@@ -74,14 +74,8 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   # "Ex": bold blue, dir writable to others no sticky
   export LSCOLORS=ExGxFxDxCxDxDxBxBxExEx
 
-  # Herd injected PHP binary.
-  export PATH="$HOME/Library/Application Support/Herd/bin:$PATH"
-
-  # Herd injected PHP 8.4 configuration.
-  export HERD_PHP_84_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/84/"
-
-  # Herd injected PHP 8.3 configuration.
-  export HERD_PHP_83_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/83/"
+  # Final macOS paths
+  export PATH="$HOME/.dotfiles/opt/macos-scripts/bin:$PATH"
 elif [ "${OSTYPE:0:5}" = linux ]; then
   # Disable weird keyboard bindkey behavior on Ubuntu/Debian
   if [ -f /etc/debian_version ]; then
@@ -166,21 +160,31 @@ if command -v slack-notify > /dev/null; then
   export SLACK_WEBHOOK_URL="https://slack.priddle.network"
 fi
 
-[ "$BASH_VERSION" ] && shell="bash"
-[ "$ZSH_VERSION" ]  && shell="zsh"
+# Direnv
+if command -v direnv > /dev/null; then
+  eval "$(direnv hook "${ZSH_VERSION+zsh}${BASH_VERSION+bash}")"
+fi
 
-if [ "$shell" ]; then
-  # Direnv
-  command -v direnv > /dev/null && eval "$(direnv hook "$shell")"
-
-  # jarvis
-  # command -v jarvis > /dev/null && eval "$(jarvis init --shell "$shell" -)"
-
-  # tat
-  command -v tat > /dev/null && eval "$(tat --completions "$shell")"
+# tat
+if command -v tat > /dev/null; then
+  eval "$(tat --completions "${ZSH_VERSION+zsh}${BASH_VERSION+bash}")"
 fi
 
 # PHP
+if [ "${OSTYPE:0:6}" = darwin ] && [ -d "$HOME/Library/Application Support/Herd" ]; then
+  # Herd injected PHP binary.
+  export PATH="$HOME/Library/Application Support/Herd/bin:$PATH"
+
+  # Herd injected PHP 8.5 configuration.
+  export HERD_PHP_84_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/84/:$HOME/.dotfiles/share/php/"
+
+  # Herd injected PHP 8.4 configuration.
+  export HERD_PHP_84_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/84/:$HOME/.dotfiles/share/php/"
+
+  # Herd injected PHP 8.3 configuration.
+  export HERD_PHP_83_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/83/:$HOME/.dotfiles/share/php/"
+fi
+
 if command -v composer > /dev/null; then
   export PATH="$HOME/.composer/vendor/bin:$PATH"
 fi
@@ -195,6 +199,7 @@ if [ -f ~/.ruby-version ] && [ -f "$HOMEBREW_PREFIX/opt/chruby/share/chruby/chru
   chruby "$RUBY_VERSION"
 fi
 
-unset shell
+# And my bin takes top priority
+export PATH="$HOME/.dotfiles/bin:$PATH"
 
-# vim: ft=zsh
+# vim: ft=bash
