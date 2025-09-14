@@ -59,7 +59,7 @@ zstyle ":completion:*" list-colors ""
 
   if [[ -f "$HOME/.ssh/known_hosts" ]]; then
     _ssh_hosts+=($(
-      awk '/^[^#]/ { gsub("\\[", "", $1); gsub("]:2222", "", $1); print $1 }' ~/.ssh/known_hosts | sort | uniq
+      awk '/^[^#]/ { gsub("\\[", "", $1); gsub("]:[0-9]+", "", $1); print $1 }' ~/.ssh/known_hosts | sort | uniq
     ))
   fi
 
