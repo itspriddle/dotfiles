@@ -20,5 +20,6 @@ let b:EditorConfig_disable = 1
 
 let b:undo_ftplugin = get(b:, "undo_ftplugin", "exe") .
   \ "|setlocal formatoptions< " .
-  \ "|execute 'unmap <buffer> <leader>d'" .
+  \ "|execute 'unmap <buffer> m<cr>'" .
+  \ "|execute 'unmap <buffer> <leader>L'" .
   \ "|execute 'unmap <buffer> <leader>l'"
