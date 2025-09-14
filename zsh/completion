@@ -88,4 +88,11 @@ zstyle ':completion:*:killall:*' command 'ps -u $USER -o comm'
 # Ignore completion on some files when there's an ambiguous match
 zstyle ':completion:*:*:*:*:*files' ignored-patterns 'appspec.yml'
 
+# [Shift-Tab] - move through the completion menu backwards
+if [[ -n "${terminfo[kcbt]}" ]]; then
+  bindkey -M emacs "${terminfo[kcbt]}" reverse-menu-complete
+  bindkey -M viins "${terminfo[kcbt]}" reverse-menu-complete
+  bindkey -M vicmd "${terminfo[kcbt]}" reverse-menu-complete
+fi
+
 # vim: ft=zsh
