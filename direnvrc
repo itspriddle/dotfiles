@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# shellcheck shell=bash
 # Changes the current ruby version.
 #
 # Usage in .envrc:
@@ -148,8 +148,8 @@ use_herd_php() {
 
   PATH_add "$shim_dir/php$number/bin"
 
-  if [[ -d "vendor/bin" ]]; then
-    PATH_add "vendor/bin"
+  if [[ -d vendor/bin ]]; then
+    PATH_add vendor/bin
   fi
 
   log_status "using Herd PHP $version shim at ${target_shim/$HOME/\~}"
