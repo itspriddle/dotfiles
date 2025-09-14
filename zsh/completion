@@ -14,6 +14,9 @@ setopt AUTO_LIST
 # Don't beep on an ambiguous completion.
 setopt NO_LIST_BEEP
 
+setopt COMPLETE_IN_WORD
+setopt ALWAYS_TO_END
+
 # Cache completions
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$HOME/.zcompcache"
@@ -38,7 +41,7 @@ zstyle ":completion:*:default" list-colors \
 #   "di=0;34;27:ln=0;36;27:so=0;35;27:pi=33;27:ex=0;32;27:bd=0;33;" \
 #   "27:cd=0;33;27:su=0;31;27:sg=0;31;27:tw=0;34;27:ow=0;34;27:"
 
-zstyle ":completion:*" list-colors ""
+# zstyle ":completion:*" list-colors ""
 
 # ssh/ping host completion
 {
