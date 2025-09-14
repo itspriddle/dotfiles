@@ -62,15 +62,6 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey '\e[A' history-beginning-search-backward-end
 bindkey '\e[B' history-beginning-search-forward-end
 
-# Make `history` behave more like bash
-history() {
-  if (( $# )); then
-    builtin history $*
-  else
-    builtin history 1
-  fi
-}
-
 if [[ -d /opt/homebrew ]]; then
   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=236"
   source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh

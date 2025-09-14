@@ -1,0 +1,8 @@
+# Make `history` behave more like bash
+if (( $# )); then
+  builtin fc $*
+else
+  builtin fc -l -i 1
+fi
+
+# vim: ft=zsh
