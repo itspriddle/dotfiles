@@ -29,7 +29,7 @@
       "",
       "if [[ \"${open}1:-{close}\" =~ ^(-h|--help)$ ]]; then",
       "  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < \"$0\" |",
-      "    awk -v f=\"${open}1//-/{close}\" 'f == \"h\" && $1 == \"Usage:\" {open} print; exit {close}; f != \"h\"'",
+      "    awk -v f=\"${open}1#-h{close}\" '!f && /^Usage:/ || u {open} u=!/^\s*(eg:)?$/; if (!u) exit {close} u || f'",
       "  exit 1",
       "fi",
       "",
