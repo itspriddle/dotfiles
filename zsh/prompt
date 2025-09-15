@@ -2,14 +2,13 @@
 autoload -Uz vcs_info
 autoload -Uz add-zsh-hook
 
-zstyle ':vcs_info:*'      enable git
-zstyle ':vcs_info:git*:*' get-revision true
-zstyle ':vcs_info:git*:*' check-for-changes true
-zstyle ':vcs_info:git*:*' unstagedstr   "%F{magenta}•%f"  # %u below
-zstyle ':vcs_info:git*:*' stagedstr     "%F{cyan}•%f"    # %c below
-zstyle ':vcs_info:git*'   actionformats "%F{cyan}%a:%f%F{cyan}%b%f %u%c"
-zstyle ':vcs_info:git*'   formats       "%F{cyan}%b%f %u%c"
-# zstyle ':vcs_info:git*'   formats       "%F{cyan}%7<<%i%<< %f%F{green}%b%f %u%c"
+zstyle ':vcs_info:*'     enable git
+zstyle ':vcs_info:git:*' get-revision true
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' unstagedstr   "%F{magenta}•%f"  # %u below
+zstyle ':vcs_info:git:*' stagedstr     "%F{cyan}•%f"     # %c below
+zstyle ':vcs_info:git:*' actionformats "%F{yellow}%a:%f%F{cyan}%b:%y<<%i%<<%f %u%c"
+zstyle ':vcs_info:git:*' formats                      "%F{cyan}%b:%7<<%i%<<%f %u%c"
 
 _josh_prompt_vcs_info() {
   vcs_info 2> /dev/null
@@ -20,7 +19,13 @@ _josh_prompt_vcs_info() {
 }
 
 _josh_prompt_precmd() {
-  local git_prompt user_format="${${USER:#priddle}:+%n@}" host_prompt="" host_format="%m" dir_prompt
+  local git_prompt
+  local user_format="${${USER:#priddle}:+%n@}"
+  local host_prompt=""
+  local host_format="%m"
+  local job_prompt="%(1j.%F{24}[%j]%f .)%f"
+  local dir_prompt="%B%F{blue}%3~%f%b"
+  # local dir_prompt="%B%F{blue}$(shrink-path -f)%f%b"
 
   if [[ -n $SSH_CONNECTION ]]; then
     host_prompt="%B%F{yellow}${user_format}${host_format}%f:%b"
@@ -32,11 +37,7 @@ _josh_prompt_precmd() {
 
   git_prompt="$(_josh_prompt_vcs_info)"
 
-  dir_prompt="%B%F{blue}%3~%f%b"
-
-  local ret_prompt=""
-
-  PS1="${host_prompt}${dir_prompt}${git_prompt} %(!.#.%%) "
+  PROMPT="${job_prompt}${host_prompt}${dir_prompt}${git_prompt} %(!.#.%%) "
 }
 
 add-zsh-hook precmd _josh_prompt_precmd
