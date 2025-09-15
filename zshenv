@@ -165,6 +165,10 @@ if command -v direnv > /dev/null; then
   eval "$(direnv hook "${ZSH_VERSION+zsh}${BASH_VERSION+bash}")"
 fi
 
+if [ "$ZSH_VERSION" ]; then
+  export ZSHZ_TILDE=1
+fi
+
 # tat
 if command -v tat > /dev/null; then
   eval "$(tat --completions "${ZSH_VERSION+zsh}${BASH_VERSION+bash}")"
