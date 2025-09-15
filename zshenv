@@ -182,6 +182,11 @@ if command -v direnv > /dev/null; then
   eval "$(direnv hook "${ZSH_VERSION+zsh}${BASH_VERSION+bash}")"
 fi
 
+# Ripgrep
+if command -v rg > /dev/null && [ -f "$HOME/.ripgreprc" ]; then
+  export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+fi
+
 if [ "$ZSH_VERSION" ]; then
   export ZSHZ_TILDE=1
 fi
