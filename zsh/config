@@ -14,7 +14,7 @@ fpath=(~/.dotfiles/zsh/functions $fpath)
 autoload -U ~/.dotfiles/zsh/functions/*(:t)
 
 # Don't run all background jobs at a lower priority
-setopt NO_BGNICE
+setopt NO_BG_NICE
 
 # Don't send the HUP signal to running jobs when the shell exits
 setopt NO_HUP
