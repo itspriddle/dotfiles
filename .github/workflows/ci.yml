@@ -16,11 +16,11 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Run shellcheck
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh extension install itspriddle/gh-shellcheck
-          gh shellcheck -e SC1090,SC1091 -- :tmux.d :opt/graveyard
+          make test
