@@ -74,6 +74,11 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   # "Ex": bold blue, dir writable to others no sticky
   export LSCOLORS=ExGxFxDxCxDxDxBxBxExEx
 
+  # `grep` colors
+  #
+  # 1;35 : bold magenta
+  export GREP_COLOR='1;35'
+
   # Final macOS paths
   export PATH="$HOME/.dotfiles/opt/macos-scripts/bin:$PATH"
 elif [ "${OSTYPE:0:5}" = linux ]; then
@@ -90,6 +95,18 @@ elif [ "${OSTYPE:0:5}" = linux ]; then
 
   # CentOS uses an override flag
   export USER_LS_COLORS="$LS_COLORS"
+
+  # `grep` colors
+  #
+  # ms=01;35   : (bold magenta) match selected for highlighting
+  # mc=01;35   : (bold magenta) match selected for highlighting (continued)
+  # sl=        : selected line
+  # cx=        : context line
+  # fn=35      : file name
+  # ln=32      : line number
+  # bn=32      : byte offset
+  # se=36      : separator
+  export GREP_COLORS='ms=01;35:mc=01;35:sl=:cx=:fn=35:ln=32:bn=32:se=36'
 
   # Ubuntu's /etc/zshrc tries to initialize completion, skip it
   [ "$ZSH_VERSION" ] && skip_global_compinit=1
