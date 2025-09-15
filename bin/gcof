@@ -42,26 +42,22 @@ while [ $# -gt 0 ]; do
 done
 
 branch_info() {
-  git for-each-ref 'refs/heads/**' --format='%(refname:short)%09%(committerdate:unix)%09%(committerdate:relative)%09%(contents:lines=1)%09%(HEAD)'
-}
-
-find_pr() {
-  local head_branch rest
-  while IFS=$'\t' read -r head_branch rest; do
-    if [ "$1" = "$head_branch" ]; then
-      printf "\t%s" "$rest"
-      break
-    fi
-  done
+  git for-each-ref 'refs/heads/**' \
+    --sort=-committerdate \
+    --sort=-HEAD \
+    --format=$'%(HEAD) %(color:yellow)%(refname:short) %(color:cyan)(%(committerdate:relative))\t%(color:reset)%(subject)' \
+    --color=always
 }
 
 render() {
-  local branches branch timeago current subject
+  local branches line
   branches="$(branch_info)" || return 1
-  sort -k2 -r <<<"$branches" | while IFS=$'\t' read -r branch _ timeago subject current _; do
-    [ "$current" = "*" ] && continue
-    printf "%s\t%s\t%s\n" "$branch" "$timeago" "$subject"
-  done | tableize
+
+  echo 'ALT-D to delete selected branch(es)'
+
+  while IFS= read -r line; do
+    printf "%s\n" "$line"
+  done <<< "$branches" | tableize
 }
 
 tableize() {
@@ -78,11 +74,34 @@ if ! type -p fzf >/dev/null; then
   exit 1
 fi
 
+_fzf() {
+  local preview_cmd=$'git log --color=always --oneline --graph --date=short --format="%C(cyan)%cd%C(reset)%C(auto) %h%d %s" $(cut -c3- <<< {} | cut -d" " -f1) --'
+
+  fzf \
+    --ansi \
+    --layout reverse \
+    --multi \
+    --tmux 90%,70% \
+    --border \
+    --no-separator \
+    --header-border horizontal \
+    --border-label 'Branches ' \
+    --header-lines 1 \
+    --border-label-pos 1 \
+    --no-hscroll \
+    --color 'label:blue,hl:underline,hl+:underline' \
+    --preview-window 'down,border-top,40%' \
+    --bind 'ctrl-/:change-preview-window(down,50%|hidden|)' \
+    --bind "alt-d:execute-silent(git branch -D {+1})+reload(\"$0\" --static)" \
+    --preview "$preview_cmd" |
+      sed 's/^\* //' |
+      awk '{ print $1 }'
+}
+
 choose() {
   local rendered
   rendered="$(render)" || return 1
-  #--multi --bind "ctrl-d:execute-silent(git branch -D {+1})+reload(\"$0\" --static)"
-  fzf --multi --bind "ctrl-d:execute-silent(git branch -D {+1})+reload(\"$0\" --static)" <<<"$rendered"
+  _fzf <<< "$rendered"
 }
 
 selected="$(choose)"
