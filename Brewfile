@@ -18,12 +18,16 @@ brew "ruby-install"
 
 # PHP/WP
 brew "php"
-brew "shivammathur/php/php@7.4"
+brew "shivammathur/php/php@8.3"
+brew "shivammathur/extensions/redis@8.3"
 brew "mysql"
 brew "wp-cli"
 brew "composer"
 
 # Utilities
+brew "1password-cli"
+brew "ccusage"
+brew "claude"
 brew "direnv"
 # brew "exiftool"
 brew "fzf"
