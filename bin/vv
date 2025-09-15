@@ -76,16 +76,15 @@ if [[ ${size} -gt 0 ]]; then
   files=()
 
   fzf="fzf-tmux"
-  [[ ! -x "$fzf" ]] && fzf=fzf
 
-  export FZF_DEFAULT_OPTS="--tiebreak=end,length,index $FZF_DEFAULT_OPTS"
+  [[ ! -x "$fzf" ]] && fzf=fzf
 
   while IFS=$'\n' read -r line; do
     files+=("${line/#~/$HOME}")
   done < <(printf "%s\\n" "${candidates[@]}" | "$fzf" -d -m -q "$*")
 
   if [[ ${#files[@]} -gt 0 ]]; then
-    exec "vim" "-O" "${files[@]}"
+    exec -a vim vim -O "${files[@]}"
   else
     exit 1
   fi
