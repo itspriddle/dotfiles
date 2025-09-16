@@ -130,7 +130,6 @@ if command -v fzf > /dev/null; then
   export FZF_DEFAULT_OPTS="
     --pointer '›'
     --prompt '› '
-    --no-mouse
     --marker-multi-line ' › '
     --marker '› '
     --scrollbar '❚'
@@ -139,7 +138,7 @@ if command -v fzf > /dev/null; then
     --color hl:5,hl+:5
     --color bg:-1,bg+:-1,header-bg:-1
     --color border:0
-    --color info:10
+    --color info:5
     --bind ctrl-u:half-page-up,ctrl-d:half-page-down
     --bind change:first
     --style full
