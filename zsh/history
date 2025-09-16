@@ -63,7 +63,7 @@ bindkey '\e[A' history-beginning-search-backward-end
 bindkey '\e[B' history-beginning-search-forward-end
 
 if [[ -d /opt/homebrew ]]; then
-  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=236"
+  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=242"
   source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
