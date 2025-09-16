@@ -1,109 +1,169 @@
 #!/usr/bin/env bash
+# Usage: gcof [options]
+#
+# NAME
+#   gcof -- interactive git branch checkout and viewer using fzf
+#
+# SYNOPSIS
+#   gcof
+#
+# DESCRIPTION
+#   gcof is a utility that helps you interactively switch between git branches
+#   using fzf. It displays a list of local branches along with their recent
+#   commit messages and relative commit dates. You can select a branch to
+#   check it out, or delete branches using alt-backspace.
+#
+#   Press `@` to toggle the commit preview pane, and use alt-up/alt-down to
+#   scroll through the commit history of the selected branch.
+#
+# OPTIONS
+#   -h, --help
+#     Print this help message and exit
+
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE[0]##*/}:${LINENO}${FUNCNAME[0]:+:${FUNCNAME[0]}()}] '
+  set -x
+fi
+
 set -e
 
-help() {
-  cat <<EOF
-Usage: gcof
+if ! type -p fzf >/dev/null; then
+  echo "error: install \`fzf' to use this command" >&2
+  exit 1
+fi
 
-Displays an interactive branch switcher that lists local branches in relation
-to the pull requests in the repository. The selected branch is checked out.
-
-With \`--static\`, print a non-interactive list of branches.
-
-Dependencies: fzf
-
-Based on http://github.com/mislav/gh-branch
-EOF
-# You can also select multiple branches with Tab and press Ctrl-D to delete them.
+list_commits() {
+  git log \
+    --color=always \
+    --oneline \
+    --graph \
+    --date=short \
+    --format="%C(red)%h%C(reset) %s %C(green)(%cr)%C(reset)%C(auto)" \
+    "$@"
 }
 
-static=
-while [ $# -gt 0 ]; do
-  case "$1" in
-  -h|--help)
-    help
-    exit 0
-    ;;
-  --static)
-    static=1
-    ;;
-  *)
-    if [[ "$#" == 1 ]]; then
-      git checkout "$1"
-      exit 1
-    else
-      echo "error: unknown argument: $1" >&2
-      help >&2
-      exit 1
-    fi
-    ;;
-  esac
-  shift
-done
-
-branch_info() {
+list_branches() {
   git for-each-ref 'refs/heads/**' \
     --sort=-committerdate \
     --sort=-HEAD \
-    --format=$'%(HEAD) %(color:yellow)%(refname:short) %(color:cyan)(%(committerdate:relative))\t%(color:reset)%(subject)' \
+    --format=$'%(color:magenta)%(HEAD)%(color:reset) %(color:cyan)%(refname:short)\t%(color:reset)%(subject) %(color:green)(%(committerdate:relative))' \
     --color=always
 }
 
-render() {
-  local branches line
-  branches="$(branch_info)" || return 1
+delete_branch() {
+  local branch="$1"
 
-  echo 'ALT-D to delete selected branch(es)'
+  if [[ "$branch" == "*" ]]; then
+    echo "error: cannot delete the current branch" >&2
+    return 1
+  fi
 
-  while IFS= read -r line; do
-    printf "%s\n" "$line"
-  done <<< "$branches" | tableize
+  git branch -D "$branch"
+}
+
+show_help() {
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="${1#-h}" '!f && /^Usage:/ || u { u=!/^s*(eg:)?$/; if (!u) exit } u || f'
 }
 
 tableize() {
   column -t -s$'\t'
 }
 
-if [ -n "$static" ]; then
-  render
-  exit 0
-fi
-
-if ! type -p fzf >/dev/null; then
-  echo "error: install \`fzf\` to use this command" >&2
-  exit 1
-fi
-
-_fzf() {
-  local preview_cmd=$'git log --color=always --oneline --graph --date=short --format="%C(cyan)%cd%C(reset)%C(auto) %h%d %s" $(cut -c3- <<< {} | cut -d" " -f1) --'
-
-  fzf \
-    --ansi \
-    --layout reverse \
-    --multi \
-    --tmux 90%,70% \
-    --border \
-    --no-separator \
-    --header-border horizontal \
-    --border-label 'Branches ' \
-    --header-lines 1 \
-    --border-label-pos 1 \
-    --no-hscroll \
-    --color 'label:blue,hl:underline,hl+:underline' \
-    --preview-window 'down,border-top,40%' \
-    --bind 'ctrl-/:change-preview-window(down,50%|hidden|)' \
-    --bind "alt-d:execute-silent(git branch -D {+1})+reload(\"$0\" --static)" \
-    --preview "$preview_cmd" |
-      sed 's/^\* //' |
-      awk '{ print $1 }'
-}
-
 choose() {
   local rendered
+
   rendered="$(render)" || return 1
+
   _fzf <<< "$rendered"
 }
 
-selected="$(choose)"
-[ -n "$selected" ] || exit 1
-git checkout "${selected%% *}"
+render() {
+  list_branches | tableize
+}
+
+_fzf() {
+  # shellcheck disable=SC2016
+  fzf \
+    --ansi \
+    --bind '?:transform:[[ $FZF_PREVIEW_LABEL = *scrolls* ]] &&
+      echo "change-list-label(  Branches  )+change-preview-label(  Commits  )" ||
+      echo "change-list-label(  Branches (alt-backspace deletes)  )+change-preview-label(  Commits (alt-down/alt-up scrolls)  )"' \
+    --bind '@:change-preview-window(right,40%|down,40%|hidden)+transform:
+      [[ $FZF_PREVIEW_LABEL = *scrolls* ]] &&
+        echo "change-preview-label(  Commits (alt-down/alt-up scrolls  )" ||
+        echo "change-preview-label(  Commits  )"' \
+    --bind "ctrl-r:reload(\"$0\" -b)" \
+    --bind 'alt-/:toggle-preview-wrap+toggle-wrap' \
+    --bind "alt-backspace:execute-silent(\"$0\" -d {1})+reload(\"$0\" -b)" \
+    --bind 'alt-down:preview-page-down' \
+    --bind 'alt-up:preview-page-up' \
+    --bind 'load:up' \
+    --style full \
+    --border rounded \
+    --prompt '› ' \
+    --border-label '  Git Branches  ' \
+    --border-label-pos -5 \
+    --color 'label:blue:bold,info:regular:magenta:bold,pointer:magenta' \
+    --ghost '  esc to quit, @ to toggle commits, alt-backspace to delete' \
+    --list-label '  Branches  ' \
+    --no-sort \
+    --no-multi \
+    --preview "[[ \"\${FZF_PREVIEW_LINES-0}\" -gt 0 ]] && \"$0\" -c \$(cut -c3- <<< {} | cut -d' ' -f1)" \
+    --preview-border rounded \
+    --preview-label '  Commits  ' \
+    --preview-window hidden \
+      | sed 's/^\* //' | awk '{ print $1 }'
+}
+
+main() {
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+    -h|--help)
+      show_help "$1"
+      return 0
+      ;;
+    -b)
+      shift
+      render
+      return $?
+      ;;
+    -c)
+      shift
+      list_commits "$@"
+      return $?
+      ;;
+    -d)
+      shift
+      delete_branch "$@"
+      return $?
+      ;;
+    -)
+      break
+      ;;
+    --)
+      break
+      ;;
+    -*)
+      echo "error: unknown argument: $1" >&2
+      show_help -h >&2
+      return 1
+      ;;
+    esac
+  done
+
+  if [[ "$#" -gt 0 ]]; then
+    git checkout "$@"
+    return $?
+  fi
+
+  local selected
+
+  selected="$(choose)"
+
+  [[ -n "$selected" ]] || return 1
+
+  git checkout "$selected"
+}
+
+main "$@"
