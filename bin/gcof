@@ -98,7 +98,6 @@ _fzf() {
     --bind "alt-backspace:execute-silent(\"$0\" -d {1})+reload(\"$0\" -b)" \
     --bind 'alt-down:preview-page-down' \
     --bind 'alt-up:preview-page-up' \
-    --bind 'load:up' \
     --style full \
     --border rounded \
     --prompt '› ' \
