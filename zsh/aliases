@@ -51,7 +51,7 @@ if type lcars &> /dev/null; then
   alias lc='lcars'
   alias lcr='lcars db:reset'
   alias lcd='lcars docs'
-  alias lcq='lcars quote'
+  alias lcq='lcars exec -- bash "$(lcars --root)/contrib/lcars-fun:quote"'
   alias jqf='lcars exec -- bash "$(lcars --root)/contrib/lcars-util:jqf"'
 fi
 
@@ -79,6 +79,8 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   # script/ to rule them all
   alias sc='script/console'
   alias st='script/test'
+  alias stb='script/test backend'
+  alias stf='script/test frontend'
   alias sr='script/reset'
   alias deploy='script/deploy'
 
