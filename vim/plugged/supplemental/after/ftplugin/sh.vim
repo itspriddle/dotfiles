@@ -18,8 +18,14 @@ noremap <buffer> m<cr> :ShellCheck!<cr>
 " Disable EditorConfig for shell scripts
 let b:EditorConfig_disable = 1
 
+setlocal shiftwidth=2
+setlocal tabstop=2
+setlocal softtabstop=2
+setlocal expandtab
+
 let b:undo_ftplugin = get(b:, "undo_ftplugin", "exe") .
   \ "|setlocal formatoptions< " .
+  \ "|setlocal shiftwidth< tabstop< softtabstop< expandtab<" .
   \ "|execute 'unmap <buffer> m<cr>'" .
   \ "|execute 'unmap <buffer> <leader>L'" .
   \ "|execute 'unmap <buffer> <leader>l'"
