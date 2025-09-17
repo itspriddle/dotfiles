@@ -32,6 +32,7 @@ endif
 " Core/editor
 Plug 'tpope/vim-sensible'
 Plug 'lifepillar/vim-solarized8'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'tpope/vim-unimpaired'
 Plug 'itchyny/lightline.vim'
 Plug 'yssl/QFEnter', { 'for': 'qf' }
