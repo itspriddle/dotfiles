@@ -50,6 +50,7 @@ endif
 " Unix
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-rsi'
+Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
 
 " Editing
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }

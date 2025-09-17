@@ -229,6 +229,12 @@ let g:rsi_no_meta = 1
 
 " }}}
 
+" vim-shfmt {{{
+
+let g:shfmt_extra_args = '-i 2 -sr -ci -s'
+
+" }}}
+
 " vim-unimpaired {{{
 
 " Open insert mode with 'paste'
