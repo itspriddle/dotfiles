@@ -14,3 +14,6 @@
 # @raycast.author Josh Priddle
 
 bashword | tee >(pbcopy)
+
+# Close Raycast window
+echo "tell application \"System Events\" to key code 53" | osascript
