@@ -59,6 +59,9 @@ augroup set_lightline_for_solarized
     \   elseif expand("<amatch>") =~ '^catppuccin' |
     \     let g:lightline.colorscheme = 'catppuccin' |
     \     runtime autoload/lightline/colorscheme/catppuccin.vim |
+    \   elseif expand("<amatch>") == 'onedark' |
+    \     let g:lightline.colorscheme = 'onedark' |
+    \     runtime autoload/lightline/colorscheme/onedark.vim |
     \   endif |
     \   call lightline#init() |
     \   call lightline#colorscheme() |
