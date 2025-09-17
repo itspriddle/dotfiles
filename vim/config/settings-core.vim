@@ -10,6 +10,12 @@ set termguicolors
 set t_Co=256
 colorscheme solarized8
 
+" SGR underlines don't render right on the macos Tahoe terminal, so disable
+" them. For some reason, using an underline dims the color too, so things like
+" `hi SpellBad` look bad. We can disable them and things Just Work™. Vim will
+" still draw them somehow.
+set t_8u=
+
 " Allow UTF8 chars
 set encoding=utf-8
 
