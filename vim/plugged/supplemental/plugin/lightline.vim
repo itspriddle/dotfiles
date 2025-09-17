@@ -1,12 +1,10 @@
 " Lightline.vim settings
 
-if &t_Co != ''
-  let g:solarized_termcolors = &t_Co
-endif
+let s:theme_map = { 'solarized8': 'solarized' }
 
 " Use the solarized theme and enable custom component logic
 let g:lightline = {
-  \   "colorscheme": "solarized" ,
+  \   "colorscheme": get(s:theme_map, g:colors_name, 'solarized'),
   \   "component_function": {
   \     "filename": "g:josh_lightline.filename",
   \     "modified": "g:josh_lightline.modified",
@@ -55,8 +53,12 @@ augroup set_lightline_for_solarized
 
   autocmd ColorScheme *
     \ if !has('vim_starting') |
-    \   if expand("<amatch>") =~ '^solarized8\?' |
+    \   if expand("<amatch>") =~ '^solarized8\?$' |
+    \     let g:lightline.colorscheme = 'solarized' |
     \     runtime autoload/lightline/colorscheme/solarized.vim |
+    \   elseif expand("<amatch>") =~ '^catppuccin' |
+    \     let g:lightline.colorscheme = 'catppuccin' |
+    \     runtime autoload/lightline/colorscheme/catppuccin.vim |
     \   endif |
     \   call lightline#init() |
     \   call lightline#colorscheme() |
