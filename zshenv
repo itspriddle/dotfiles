@@ -137,7 +137,7 @@ if command -v fzf > /dev/null; then
     --color fg:-1,fg+:4
     --color hl:5,hl+:5
     --color bg:-1,bg+:-1,header-bg:-1
-    --color border:0
+    --color border:0:dim
     --color info:5
     --bind ctrl-u:half-page-up,ctrl-d:half-page-down
     --bind change:first
