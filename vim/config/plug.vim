@@ -32,17 +32,18 @@ endif
 " Core/editor
 Plug 'tpope/vim-sensible'
 Plug 'lifepillar/vim-solarized8'
-Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'joshdick/onedark.vim'
+Plug 'catppuccin/nvim', { 'as': 'vim-catppuccin' }
 Plug 'tpope/vim-unimpaired'
 Plug 'itchyny/lightline.vim'
 Plug 'yssl/QFEnter', { 'for': 'qf' }
 Plug 'fcpg/vim-altscreen'
 Plug 'jszakmeister/vim-togglecursor'
 Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-scriptease'
 
 if s:platform == 'macos'
-  Plug 'tpope/vim-projectionist'
-  Plug 'tpope/vim-scriptease'
   Plug 'junegunn/vim-peekaboo'
   Plug 'github/copilot.vim'
 endif
@@ -53,7 +54,7 @@ Plug 'tpope/vim-rsi'
 Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
 
 " Editing
-Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-endwise'
@@ -79,31 +80,27 @@ else
 endif
 
 if s:platform == 'macos'
-  " ctags integration
-  " if executable("ctags") && (has('job') || (has('nvim') && exists('*jobwait')))
-  "   Plug 'ludovicchabant/vim-gutentags'
-  " endif
-
-  " Testing
-  " Plug 'janko-m/vim-test'
-
   " Syntax
-  Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
   Plug 'hail2u/vim-css3-syntax'
   Plug 'othree/html5.vim'
-  Plug 'itspriddle/vim-jquery'
   Plug 'markcornick/vim-bats'
   Plug 'tpope/vim-liquid'
   Plug 'tpope/vim-rails'
   Plug 'tpope/vim-rake'
   Plug 'tpope/vim-haml'
   Plug 'vim-ruby/vim-ruby'
-  Plug 'elixir-editors/vim-elixir'
   Plug 'jwalton512/vim-blade'
   Plug 'itspriddle/applescript.vim'
   Plug 'noahfrederick/vim-composer'
   " Plug 'noahfrederick/vim-laravel'
-  Plug 'yaegassy/nette-neon.vim'
+
+  " Plug 'yaegassy/nette-neon.vim'
+  Plug 'itspriddle/nette-neon.vim', { 'as': 'josh-nette-neon.vim', 'branch': 'feature/commentstring' }
+
+  " Unused
+  " Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
+  " Plug 'elixir-editors/vim-elixir'
+  " Plug 'itspriddle/vim-jquery'
 endif
 
 if s:platform == 'macos' || s:platform =~# '^linux-synology'
