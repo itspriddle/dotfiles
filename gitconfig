@@ -1,6 +1,7 @@
 [user]
 	name  = Josh Priddle
 	email = jpriddle@me.com
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF4LsgFuqYLjfCqCd73SuOoK358dlTzg2W0BuT2qdnm5
 
 [color]
 	ui = auto
@@ -49,18 +50,14 @@
 	amend            = !git commit --amend --date=\"$(date)\" -C HEAD
 	branch-name      = rev-parse --abbrev-ref HEAD
 	copy-last-sha    = !git last-sha | tr -d '\n' | pbcopy
-	full-log         = log --format=fuller
 	last-sha         = rev-parse --short HEAD
 	lg               = log --graph --abbrev-commit --date=relative
-	man              = help --man
 	msg              = commit --allow-empty -m
 	pa               = add --patch
 	pending          = !git --no-pager log @{u}.. && echo
 	undo             = reset --soft HEAD^
-	unstage          = reset HEAD -- ...
+	unstage          = reset HEAD --
 	prune-branches   = !git branch --merged | grep -E -v '^(master|main)$' | grep -v "\\\\*" | xargs -n 1 git branch -d
-	fetch-pr         = "!f() { git fetch origin refs/pull/$1/head:pr/$1; } ; f"
-	recent-branches  = for-each-ref --count=10 --sort=-committerdate --format=\"%(refname:short)\" refs/heads/
 	fixup            = "!f() { git commit $* --fixup HEAD; }; f"
 	browse           = "!f() { if command -v git-browse >/dev/null; then git-browse \"$@\"; else gh browse \"$@\" > /dev/null; fi }; f"
 	pulls            = browse -- pulls
@@ -80,10 +77,10 @@
 	first-commit     = commit --allow-empty -m 'First commit'
 	ls-files-tree    = "!f() { git ls-files \"$@\" | tree --fromfile . ; }; f"
 	default-branch   = !gh repo view --json defaultBranchRef --jq .defaultBranchRef.name
+	check-signature  = "!f() { [ \"$(git log -1 --format='%G?' \"$@\")\" = G ] && echo good || echo bad; }; f"
 
 [advice]
-	statusHints        = false
-	pushNonFastForward = false
+	statusHints = false
 
 [rebase]
 	autosquash = true
@@ -96,6 +93,7 @@
 [status]
 	short = true
 	branch = true
+	showUntrackedFiles = all
 
 [include]
 	path = ~/.gitconfig.local
@@ -110,4 +108,22 @@
 	httpd = webrick
 	browser = open
 
-; vim:ft=gitconfig
+[man]
+	viewer = vim
+
+[man "vim"]
+	cmd = "f() { [ -t 1 ] && MANPAGER=\"vim +MANPAGER --not-a-term -\" man \"$@\" || man \"$@\"; }; f"
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers
+
+[commit]
+	gpgsign = true
+
+[tag]
+	gpgsign = true
+
+; vim:ft=gitconfig list
