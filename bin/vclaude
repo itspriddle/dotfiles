@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Usage: vclaude [options]
+#
+# NAME
+#   vclaude -- Opens a tmux session with vim and claude code side by side
+#
+# SYNOPSIS
+#   vclaude
+#
+# DESCRIPTION
+#   vclaude opens a new tmux session with vim on the left and claude code on
+#   the right.
+#
+# OPTIONS
+#   -h, --help
+#     Print this help message and exit
+
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE[0]##*/}:${LINENO}${FUNCNAME[0]:+:${FUNCNAME[0]}()}] '
+  set -x
+fi
+
+set -euo pipefail
+
+if [[ "${1:-}" =~ ^(-h|--help)$ ]]; then
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="${1#-h}" '!f && /^Usage:/ || u { u=!/^s*(eg:)?$/; if (!u) exit } u || f'
+  exit 1
+fi
+
+tmux new-session \; split-window -h -p 40 \; send-keys -t 1 'vim' C-m \; send-keys -t 2 'claude' C-m
