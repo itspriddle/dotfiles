@@ -126,11 +126,11 @@ scan() {
 
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
-      -r|--recursive)
+      -r | --recursive)
         recursive=true
         shift
         ;;
-      -R|--no-recursive)
+      -R | --no-recursive)
         recursive=false
         ;;
       --metadata-refresh-mode)
@@ -153,11 +153,11 @@ scan() {
         echo "Error: Invalid option '$1'" >&2
         return 1
         ;;
-      shows|tv)
+      shows | tv)
         target_types+=("tvshows")
         shift
         ;;
-      movies|tvshows|music|all)
+      movies | tvshows | music | all)
         target_types+=("$1")
         shift
         ;;
@@ -229,13 +229,14 @@ _scan_api_request() {
 
   local data
 
-  data=$(jq -n \
-    --argjson Recursive           "$recursive" \
-    --arg     MetadataRefreshMode "$metadata_refresh_mode" \
-    --arg     ImageRefreshMode    "$image_refresh_mode" \
-    --argjson ReplaceAllMetadata  "$replace_all_metadata" \
-    --argjson ReplaceAllImages    "$replace_all_images" \
-    '{
+  data=$(
+    jq -n \
+      --argjson Recursive "$recursive" \
+      --arg MetadataRefreshMode "$metadata_refresh_mode" \
+      --arg ImageRefreshMode "$image_refresh_mode" \
+      --argjson ReplaceAllMetadata "$replace_all_metadata" \
+      --argjson ReplaceAllImages "$replace_all_images" \
+      '{
       $Recursive,
       $MetadataRefreshMode,
       $ImageRefreshMode,
@@ -287,21 +288,30 @@ playing() {
 
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
-      -p | --plain) ansi=0; shift;;
-      -r | --raw) fmt="raw"; shift;;
-      -j | --json) fmt="json"; shift;;
+      -p | --plain)
+        ansi=0
+        shift
+        ;;
+      -r | --raw)
+        fmt="raw"
+        shift
+        ;;
+      -j | --json)
+        fmt="json"
+        shift
+        ;;
       -*)
         echo "Error: Invalid option '$1'" >&2
         help "${FUNCNAME[0]}" -h
         return 1
         ;;
       *)
-        break;
+        break
         ;;
     esac
   done
 
-  if ! type jq &>/dev/null; then
+  if ! type jq &> /dev/null; then
     echo "${0##*/}: Error, jq not found!" >&2
     return 1
   fi
@@ -347,7 +357,7 @@ _playing_format() {
 }
 
 _playing_jq() {
-  cat <<'EOF'
+  cat << 'EOF'
   def ansi(code; str):
     if $ansi == "1" then
       "\u001B[\(code)m\(str)\u001B[0m"
@@ -573,13 +583,14 @@ api() {
 
   local response status body
 
-  response=$(curl --silent \
-    --write-out "\n%{http_code}" \
-    --header "X-Emby-Token: $EMBY_API_KEY" \
-    --header "Accept: */*" \
-    --header "Content-Type: application/json" \
-    "$@" \
-    "${EMBY_API_URL%%/}/emby/$path"
+  response=$(
+    curl --silent \
+      --write-out "\n%{http_code}" \
+      --header "X-Emby-Token: $EMBY_API_KEY" \
+      --header "Accept: */*" \
+      --header "Content-Type: application/json" \
+      "$@" \
+      "${EMBY_API_URL%%/}/emby/$path"
   )
 
   # TODO: handle binary responses
@@ -660,7 +671,25 @@ users() {
     return 1
   fi
 
-  api /Users | jq -r '.[] | "\(.Name) (ID: \(.Id), Admin: \(.Policy.IsAdministrator))"'
+  local users
+
+  users=$(api /Users | jq -r '.[] | [
+      "\(.Name)",
+      "\(.Id)",
+      "\(.Policy.IsAdministrator)"
+    ] | @tsv
+  ')
+
+  if [[ -z "$users" ]]; then
+    echo "No users found"
+    return 0
+  fi
+
+  {
+    printf 'Name\tID\tAdmin\n'
+    echo "$users"
+  } | _tableize
+
 }
 
 # Usage: emby devices
@@ -679,16 +708,33 @@ devices() {
     return 1
   fi
 
-  api /Devices | jq -r '.Items | .[] | [
-    "Name: \(.Name)",
-    "IP Address: \(.IpAddress)",
-    "Last User: \(.LastUserName)",
-    "App: \(.AppName) (\(.AppVersion))",
-    "ID: \(.Id)\n"
-  ] | join("\n")'
+  local devices
+
+  devices=$(api /Devices | jq -r '.Items | .[] | [
+      "\(.Name)",
+      "\(.IpAddress)",
+      "\(.LastUserName)",
+      "\(.AppName) (\(.AppVersion))",
+      "\(.Id)"
+    ] | @tsv
+  ')
+
+  if [[ -z "$devices" ]]; then
+    echo "No devices found"
+    return 0
+  fi
+
+  {
+    printf 'Name\tIP Address\tLast User\tApp (Version)\tID\n'
+    echo "$devices"
+  } | _tableize
 }
 
 : "${EMBY_CONFIG:="${XDG_CONFIG_HOME:-$HOME/.config}/emby-api.json"}"
+
+_tableize() {
+  column -t -s $'\t'
+}
 
 _read_config() {
   if ! type jq &> /dev/null; then
@@ -714,7 +760,7 @@ _load_config() {
 
   for var in $(_read_config); do
     case "${var%=*}" in
-      EMBY_API_URL|EMBY_API_KEY)
+      EMBY_API_URL | EMBY_API_KEY)
         export "${var?}"
         ;;
     esac
@@ -765,7 +811,7 @@ main() {
       help "$cmd"
       return 0
       ;;
-    api|devices|playing|restart|scan|system|users)
+    api | devices | playing | restart | scan | system | users)
       "$cmd" "$@"
       return $?
       ;;
