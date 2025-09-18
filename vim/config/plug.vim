@@ -31,9 +31,6 @@ endif
 
 " Core/editor
 Plug 'tpope/vim-sensible'
-Plug 'lifepillar/vim-solarized8'
-Plug 'joshdick/onedark.vim'
-Plug 'catppuccin/nvim', { 'as': 'vim-catppuccin' }
 Plug 'tpope/vim-unimpaired'
 Plug 'itchyny/lightline.vim'
 Plug 'yssl/QFEnter', { 'for': 'qf' }
@@ -42,6 +39,13 @@ Plug 'jszakmeister/vim-togglecursor'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-scriptease'
+
+" Themes
+Plug 'lifepillar/vim-solarized8'
+Plug 'joshdick/onedark.vim'
+if has('lua')
+  Plug 'catppuccin/nvim', { 'as': 'vim-catppuccin' }
+endif
 
 if s:platform == 'macos'
   Plug 'junegunn/vim-peekaboo'
