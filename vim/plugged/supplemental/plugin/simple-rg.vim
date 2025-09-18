@@ -69,3 +69,6 @@ command! -bang -nargs=* -complete=file Rg call s:rg(<q-args>, 1, <bang>0)
 " :LRg[!] <query> - Search for <query>, open results in location list
 " :LRg[!]         - Search for word under cursor, open results in location list
 command! -bang -nargs=* -complete=file LRg call s:rg(<q-args>, 0, <bang>0)
+
+" :Todos[!] [paths] - Search for TODO and FIXME, open results in quickfix window
+command! -bang -nargs=* -complete=file Todos call s:rg('-e TODO -e FIXME -w -i ' . <q-args>, 1, <bang>0)
