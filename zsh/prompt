@@ -6,7 +6,7 @@ zstyle ':vcs_info:*'     enable git
 zstyle ':vcs_info:git:*' get-revision true
 zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git:*' unstagedstr   "%F{magenta}•%f"  # %u below
-zstyle ':vcs_info:git:*' stagedstr     "%F{cyan}•%f"     # %c below
+zstyle ':vcs_info:git:*' stagedstr     "%F{green}•%f"    # %c below
 zstyle ':vcs_info:git:*' actionformats "%F{yellow}%a:%f%F{cyan}%b%f %u%c"
 zstyle ':vcs_info:git:*' formats                      "%F{cyan}%b%f %u%c"
 
