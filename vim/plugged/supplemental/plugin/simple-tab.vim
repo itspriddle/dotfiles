@@ -18,5 +18,5 @@ function! s:SimpleTab(completion, trigger)
   endif
 endfunction
 
-inoremap <expr> <tab>   <SID>SimpleTab("\<c-p>", "\<tab>")
-inoremap <expr> <s-tab> <SID>SimpleTab("\<c-n>", "\<s-tab>")
+inoremap <expr> <tab>   <SID>SimpleTab("\<c-n>", "\<tab>")
+inoremap <expr> <s-tab> <SID>SimpleTab("\<c-p>", "\<s-tab>")
