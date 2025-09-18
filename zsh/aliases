@@ -53,6 +53,9 @@ if type lcars &> /dev/null; then
   alias lcd='lcars docs'
   alias lcq='lcars exec -- bash "$(lcars --root)/contrib/lcars-fun:quote"'
   alias jqf='lcars exec -- bash "$(lcars --root)/contrib/lcars-util:jqf"'
+  alias tlog='tail -f storage/logs/laravel.log'
+  alias lcars="$HOME/work/lcars/bin/lcars"
+  alias lroutes="php artisan route:list"
 fi
 
 # OS X
@@ -81,6 +84,9 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias st='script/test'
   alias stb='script/test backend'
   alias stf='script/test frontend'
+  alias stp='script/test pest'
+  alias stlp='script/test backend:lint'
+  alias stfp='script/test frontend:lint'
   alias sr='script/reset'
   alias deploy='script/deploy'
 
@@ -90,9 +96,6 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   # PHP/Laravel
   alias pp='pest --parallel'
   alias stan='phpstan analyze'
-  alias tlog='tail -f storage/logs/laravel.log'
-  alias lcars="$HOME/work/lcars/bin/lcars"
-  alias lroutes="php artisan route:list"
 fi
 
 # vim: ft=zsh
