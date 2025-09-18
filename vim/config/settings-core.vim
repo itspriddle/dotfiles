@@ -56,6 +56,12 @@ if executable('/bin/bash')
   set shell=/bin/bash
 endif
 
+" Enable mouse in TMUX
+
+if exists('$TMUX')
+  set mouse=a
+endif
+
 " }}}
 
 " Viewing/Editing {{{
