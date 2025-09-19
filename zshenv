@@ -191,7 +191,7 @@ if [ "${OSTYPE:0:6}" = darwin ] && [ -d "$HOME/Library/Application Support/Herd"
   export PATH="$HOME/Library/Application Support/Herd/bin:$PATH"
 
   # Herd injected PHP 8.5 configuration.
-  export HERD_PHP_84_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/84/:$HOME/.dotfiles/share/php/"
+  export HERD_PHP_85_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/85/:$HOME/.dotfiles/share/php/"
 
   # Herd injected PHP 8.4 configuration.
   export HERD_PHP_84_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/84/:$HOME/.dotfiles/share/php/"
