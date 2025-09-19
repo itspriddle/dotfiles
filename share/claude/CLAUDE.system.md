@@ -11,6 +11,7 @@
 - **Challenge security anti-patterns** - flag potential vulnerabilities
 - **Verify dependencies** - never assume packages exist, check first
 - **Defensive coding** - handle errors gracefully, don't expose internals
+- **Environment file protection** - NEVER read .env* files other than .env.example without explicit permission
 
 ## Standards
 
