@@ -32,6 +32,22 @@ function! s:rg(args, qf, limit) abort
 
   let l:results = systemlist(l:cmd)
 
+  " Note to self: once every couple years you think `:grep` should work. You
+  " search around for a while, then stumble on the following:
+  "
+  "   let &grepformat = "%f:%l:%c:%m"
+  "   let &grepprg = "rg --vimgrep"
+  "   let &shellpipe="&>"
+  "   set t_te=
+  "   set t_ti=
+  "
+  " Then you actually try it and it works fine. Until you search for something
+  " in a large codebase with thousand of results. It hangs a long time
+  " populating the quickfix list. Then you remember that's one of the reasons
+  " you added the count behavior in the first place.
+  "
+  " So after the 2nd or 3rd time you've done it, you are at least smart enough
+  " to leave a warning for next time.
   execute "silent" (a:qf ? "cgetexpr" : "lgetexpr") "l:results[0:".l:count."]"
 
   let l:duration = printf("[duration: %.2f]", reltimefloat(reltime(l:start)))
