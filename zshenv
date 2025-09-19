@@ -190,11 +190,6 @@ if [ "$ZSH_VERSION" ]; then
   export ZSHZ_TILDE=1
 fi
 
-# tat
-if command -v tat > /dev/null; then
-  eval "$(tat --completions "${ZSH_VERSION+zsh}${BASH_VERSION+bash}")"
-fi
-
 # PHP
 if [ "${OSTYPE:0:6}" = darwin ] && [ -d "$HOME/Library/Application Support/Herd" ]; then
   # Herd injected PHP binary.
@@ -226,5 +221,10 @@ fi
 
 # And my bin takes top priority
 export PATH="$HOME/.dotfiles/bin:$PATH"
+
+# tat
+if command -v tat > /dev/null; then
+  eval "$(tat --completions "${ZSH_VERSION+zsh}${BASH_VERSION+bash}")"
+fi
 
 # vim: ft=bash
