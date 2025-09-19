@@ -176,11 +176,6 @@ if command -v slack-notify > /dev/null; then
   export SLACK_WEBHOOK_URL="https://slack.priddle.network"
 fi
 
-# Direnv
-if command -v direnv > /dev/null; then
-  eval "$(direnv hook "${ZSH_VERSION+zsh}${BASH_VERSION+bash}")"
-fi
-
 # Ripgrep
 if command -v rg > /dev/null && [ -f "$HOME/.ripgreprc" ]; then
   export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
@@ -221,10 +216,5 @@ fi
 
 # And my bin takes top priority
 export PATH="$HOME/.dotfiles/bin:$PATH"
-
-# tat
-if command -v tat > /dev/null; then
-  eval "$(tat --completions "${ZSH_VERSION+zsh}${BASH_VERSION+bash}")"
-fi
 
 # vim: ft=bash
