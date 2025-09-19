@@ -1,0 +1,48 @@
+#!/usr/bin/env sh
+# Usage: osname [options]
+#
+# NAME
+#   osname -- Prints my OS
+#
+# SYNOPSIS
+#   osname
+#
+# DESCRIPTION
+#   osname prints my OS. I use this internally to set different shell options
+#   based on the OS I'm using.
+#
+# OPTIONS
+#   -h, --help
+#     Print this help message and exit
+
+if [ "$DEBUG" ]; then
+  export PS4='+ [${BASH_SOURCE[0]##*/}:${LINENO}${FUNCNAME[0]:+:${FUNCNAME[0]}()}] '
+  set -x
+fi
+
+set -e
+
+if [ "${1:-}" = '-h' ] || [ "${1:-}" = '--help' ]; then
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="${1#-h}" '!f && /^Usage:/ || u { u=!/^s*(eg:)?$/; if (!u) exit } u || f'
+  exit 1
+elif [ "$#" -ne 0 ]; then
+  echo "Usage: ${0##*/}" >&2
+  exit 1
+fi
+
+if [ -f /etc/zshrc_Apple_Terminal ]; then
+  echo "macos"
+elif [ -f /etc/rpi-issue ]; then
+  echo "linux-rpi"
+elif [ -f /etc/lsb-release ]; then
+  echo "linux-ubuntu"
+elif [ -f /etc/centos-release ]; then
+  echo "linux-centos"
+elif [ -f /etc/synoinfo.conf ]; then
+  echo "linux-synology"
+elif type freebsd-version 2>&1 /dev/null; then
+  echo "freebsd"
+else
+  echo "unknown"
+fi
