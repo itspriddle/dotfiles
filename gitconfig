@@ -93,7 +93,6 @@
 [status]
 	short = true
 	branch = true
-	showUntrackedFiles = all
 
 [include]
 	path = ~/.gitconfig.local
