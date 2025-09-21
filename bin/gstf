@@ -1,0 +1,161 @@
+#!/usr/bin/env bash
+# Usage: gstf [options]
+#
+# NAME
+#   gstf -- interactive git stash viewer and manager using fzf
+#
+# SYNOPSIS
+#   gstf
+#
+# DESCRIPTION
+#   gstf is a utility that helps you interactively manage git stashes
+#   using fzf. It displays a list of stashes along with their commit
+#   messages and relative dates. You can select a stash to apply it,
+#   or drop stashes using ctrl-x.
+#
+#   Press `@` to toggle the stash preview pane, and use alt-up/alt-down to
+#   scroll through the stash content.
+#
+# OPTIONS
+#   -h, --help
+#     Print this help message and exit
+
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE[0]##*/}:${LINENO}${FUNCNAME[0]:+:${FUNCNAME[0]}()}] '
+  set -x
+fi
+
+set -e
+
+if ! type -p fzf >/dev/null; then
+  echo "error: install \`fzf' to use this command" >&2
+  exit 1
+fi
+
+
+list_stashes() {
+  git stash list --color=always --pretty=format:"%gd"$'\t'"%gs"$'\n'
+}
+
+drop_stash() {
+  local stash="$1"
+
+  if [[ -z "$stash" ]]; then
+    echo "error: no stash specified" >&2
+    return 1
+  fi
+
+  git stash drop "$stash"
+}
+
+show_help() {
+  sed -ne '/^#/!q;s/^#$/# /;/^# /s/^# //p' < "$0" |
+    awk -v f="${1#-h}" '!f && /^Usage:/ || u { u=!/^s*(eg:)?$/; if (!u) exit } u || f'
+}
+
+tableize() {
+  column -t -s$'\t'
+}
+
+choose() {
+  local rendered
+
+  rendered="$(render)" || return 1
+
+  if [[ -z "$rendered" ]]; then
+    echo "No stashes found" >&2
+    return 1
+  fi
+
+  _fzf <<< "$rendered"
+}
+
+render() {
+  list_stashes | tableize
+}
+
+_fzf() {
+  local preview
+
+  # shellcheck disable=SC2016
+  preview='[[ "${FZF_PREVIEW_LINES-0}" -gt 0 ]] &&
+    [[ -n {} ]] &&
+    git show --color=always $(echo {} | awk "{print \$1}")
+  '
+
+  # shellcheck disable=SC2016
+  fzf \
+    --height 50% \
+    --ansi \
+    --bind '?:transform:[[ $FZF_PREVIEW_LABEL = *scrolls* ]] &&
+      echo "change-list-label(  Stashes  )+change-preview-label(  Stash Content  )" ||
+      echo "change-list-label(  Stashes (alt-backspace drops)  )+change-preview-label(  Stash Content (alt-down/alt-up scrolls)  )"' \
+    --bind "ctrl-r:reload(\"$0\" -l)" \
+    --bind 'alt-/:toggle-preview-wrap+toggle-wrap' \
+    --bind "alt-backspace:execute-silent(\"$0\" -d \$(echo {} | awk '{print \$1}'))+reload(\"$0\" -l)" \
+    --bind 'alt-down:preview-page-down' \
+    --bind 'alt-up:preview-page-up' \
+    --style full \
+    --border rounded \
+    --prompt '› ' \
+    --border-label '  Git Stashes  ' \
+    --border-label-pos -5 \
+    --color 'label:blue:bold,info:regular:magenta:bold,pointer:magenta' \
+    --ghost '  esc to quit, ? for help' \
+    --list-label '  Stashes  ' \
+    --no-sort \
+    --no-multi \
+    \
+    --preview "$preview" \
+    --preview-border rounded \
+    --preview-label '  Stash Content  ' \
+    --preview-window right,50% \
+      | awk '{print $1}'
+}
+
+main() {
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+    -h|--help)
+      show_help "$1"
+      return 0
+      ;;
+    -l)
+      shift
+      render
+      return $?
+      ;;
+    -d)
+      shift
+      drop_stash "$@"
+      return $?
+      ;;
+    -)
+      break
+      ;;
+    --)
+      break
+      ;;
+    -*)
+      echo "error: unknown argument: $1" >&2
+      show_help -h >&2
+      return 1
+      ;;
+    esac
+  done
+
+  if [[ "$#" -gt 0 ]]; then
+    git stash apply "$@"
+    return $?
+  fi
+
+  local selected
+
+  selected="$(choose)"
+
+  [[ -n "$selected" ]] || return 1
+
+  git stash apply "$selected"
+}
+
+main "$@"
