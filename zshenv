@@ -20,9 +20,6 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
     #                   includes /etc/zshrc_Apple_Terminal, which all relates
     #                   to terminal sessions, which I don't use
     unsetopt GLOBAL_RCS
-
-    # Load SSH passphrases from macOS keychain
-    (ssh-add --apple-load-keychain -q 2>/dev/null &)
   fi
 
   # arm64 Homebrew setup (M1)
