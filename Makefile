@@ -11,13 +11,6 @@ PREFIX ?= /usr/local
 install: $(LINKS) ## install all dotfiles to $HOME
 .PHONY: install
 
-setup-raspberry-pi: ## setup dotfiles for a Raspberry Pi
-	ln -s gitconfig $(HOME)/.gitconfig
-	ln -s inputrc $(HOME)/.inputrc
-	ln -s vim $(HOME)/.vim
-	share/linux/scripts/rpi-init.sh
-.PHONY: setup-raspberry-pi
-
 uninstall: ## uninstall dotfiles (if they are symlinks)
 	-for i in $(LINKS); do test -L $$i && rm -vf $$i; done
 .PHONY: uninstall
