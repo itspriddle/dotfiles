@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-siriusxm-turbo-json | jq -r '.[] | "\(.track.name) - \(.track.artists[0])"'
