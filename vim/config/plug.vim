@@ -81,7 +81,7 @@ Plug 'jeetsukumaran/vim-filebeagle'
 if s:platform == 'macos'
   Plug 'junegunn/fzf'
 else
-  Plug 'junegunn/fzf', { 'do': './install --all' }
+  Plug 'junegunn/fzf', { 'do': './install --bin' }
 endif
 
 if s:platform == 'macos'
