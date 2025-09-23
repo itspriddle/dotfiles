@@ -87,6 +87,9 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias stp='script/test pest'
   alias stbl='script/test backend:lint'
   alias stfl='script/test frontend:lint'
+  alias sff='script/format frontend'
+  alias sfb='script/format backend'
+  alias sfs='script/format scripts'
   alias sr='script/reset'
   alias deploy='script/deploy'
 
