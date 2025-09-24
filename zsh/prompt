@@ -24,8 +24,8 @@ _josh_prompt_precmd() {
   local host_prompt=""
   local host_format="%m"
   local job_prompt="%(1j.%F{24}[%j]%f .)%f"
-  local dir_prompt="%B%F{blue}%3~%f%b"
-  # local dir_prompt="%B%F{blue}$(shrink-path -f)%f%b"
+  # local dir_prompt="%B%F{blue}%3~%f%b"
+  local dir_prompt="%B%F{blue}$(shrink-path -l 2 -s -t)%f%b"
 
   if [[ -n $SSH_CONNECTION ]]; then
     host_prompt="%B%F{yellow}${user_format}${host_format}%f:%b"
