@@ -183,6 +183,10 @@ if [ "$ZSH_VERSION" ]; then
 fi
 
 # PHP
+if [ "${OSTYPE:0:6}" = darwin ]; then
+  export PHP_INI_SCAN_DIR=":$HOME/.dotfiles/share/php"
+fi
+
 if [ "${OSTYPE:0:6}" = darwin ] && [ -d "$HOME/Library/Application Support/Herd" ]; then
   # Herd injected PHP binary.
   export PATH="$HOME/Library/Application Support/Herd/bin:$PATH"
