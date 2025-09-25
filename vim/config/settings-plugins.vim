@@ -71,6 +71,12 @@ let g:blade_custom_directives = ['props']
 
 " }}}
 
+" vim-dispatch {{{
+
+let g:dispatch_no_tmux_make = 1
+
+" }}}
+
 " vim-easy-align {{{
 
 " Allow aligning stuff that is commented out
