@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-# Usage: gcof [options]
+# Usage: git checkout-fzf [options]
 #
 # NAME
-#   gcof -- interactive git branch checkout and viewer using fzf
+#   git checkout-fzf -- interactive git branch checkout and viewer using fzf
 #
 # SYNOPSIS
-#   gcof
+#   git checkout-fzf
 #
 # DESCRIPTION
-#   gcof is a utility that helps you interactively switch between git branches
-#   using fzf. It displays a list of local branches along with their recent
-#   commit messages and relative commit dates. You can select a branch to
-#   check it out, or delete branches using alt-backspace.
+#   git checkout-fzf is a utility that helps you interactively switch between
+#   git branches using fzf. It displays a list of local branches along with
+#   their recent commit messages and relative commit dates. You can select a
+#   branch to check it out, or delete branches using alt-backspace.
 #
 #   Press `@` to toggle the commit preview pane, and use alt-up/alt-down to
 #   scroll through the commit history of the selected branch.

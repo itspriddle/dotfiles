@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# Usage: gstf [options]
+# Usage: git stash-fzf [options]
 #
 # NAME
-#   gstf -- interactive git stash viewer and manager using fzf
+#   git stash-fzf -- interactive git stash viewer and manager using fzf
 #
 # SYNOPSIS
-#   gstf
+#   git stash-fzf
 #
 # DESCRIPTION
-#   gstf is a utility that helps you interactively manage git stashes
+#   git stash-fzf is a utility that helps you interactively manage git stashes
 #   using fzf. It displays a list of stashes along with their commit
 #   messages and relative dates. You can select a stash to apply it,
 #   or drop stashes using ctrl-x.

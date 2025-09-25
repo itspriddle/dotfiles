@@ -25,6 +25,8 @@ alias gcomp='git checkout "$(git symbolic-ref refs/remotes/origin/head | sed "s@
 alias grm="git status --porcelain | awk '\$1 == \"D\" {print \$2}' | xargs git --git-dir=\$(git rev-parse --git-dir) rm --ignore-unmatch"
 alias gs='git status'
 alias gv='vim "+Ge :"'
+type git-checkout-fzf &> /dev/null && alias gcof='git-checkout-fzf'
+type git-stash-fzf &> /dev/null && alias gstf='git-stash-fzf'
 
 # Others
 alias path='echo -e ${PATH//:/\\n}'
