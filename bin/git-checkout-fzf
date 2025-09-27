@@ -148,6 +148,9 @@ main() {
       show_help -h >&2
       return 1
       ;;
+    *)
+      break
+      ;;
     esac
   done
 
