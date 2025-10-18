@@ -18,4 +18,4 @@ echo ~/Downloads ~/Pictures ~/Sites ~/work |
       --log-file="$HOME/Library/Logs/rsync-mac.log" \
       --archive \
       -e "ssh" \
-      "{}" "scarif5.priddle.network:/volume1/NetBackup/$target/"
+      "{}" "scarif.priddle.network:/volume1/NetBackup/$target/"
