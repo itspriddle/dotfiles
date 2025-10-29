@@ -7,15 +7,20 @@ if [[ -z "$target" ]]; then
   exit 1
 fi
 
-echo ~/Downloads ~/Pictures ~/Sites ~/work |
-  xargs -I {} -P 5 -n 1 \
+folders=(~/Downloads ~/Pictures ~/Sites ~/work)
+
+printf '%s\n' "${folders[@]}" | \
+  parallel -j 5 --bar --tag --line-buffer \
     rsync "$@" \
       --stats \
       --delete \
-      --progress \
       --partial \
       --verbose \
-      --log-file="$HOME/Library/Logs/rsync-mac.log" \
+      --log-file="$HOME/Library/Logs/rsync-mac-{#}.log" \
       --archive \
       -e "ssh" \
-      "{}" "scarif.priddle.network:/volume1/NetBackup/$target/"
+      {} "scarif.priddle.network:/volume1/NetBackup/$target/"
+
+echo -e "\n=== Backup Summary ==="
+grep -h "Total transferred file size" "$HOME/Library/Logs/rsync-mac-"*.log | \
+  awk '{sum+=$5} END {print "Total transferred:", sum, "bytes"}'
