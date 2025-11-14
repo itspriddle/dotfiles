@@ -8,9 +8,6 @@ tap "homebrew/services"
 tap "itspriddle/brews"
 tap "teamookla/speedtest"
 
-# Casks
-# cask "chromedriver"
-
 # Ruby/Rails apps
 brew "chruby"
 brew "node"
