@@ -7,7 +7,7 @@ if [[ -z "$target" ]]; then
   exit 1
 fi
 
-folders=(~/Downloads ~/Pictures ~/Sites ~/work)
+folders=(~/Downloads ~/Sites ~/work)
 
 printf '%s\n' "${folders[@]}" | \
   parallel -j 5 --bar --tag --line-buffer \
