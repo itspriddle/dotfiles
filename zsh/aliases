@@ -96,7 +96,7 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias deploy='script/deploy'
 
   # Robots
-  alias claude='claude --model sonnet'
+  # alias claude='claude --model sonnet'
 
   # PHP/Laravel
   alias pp='pest --parallel'
