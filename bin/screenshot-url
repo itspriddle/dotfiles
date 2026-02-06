@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+# Captures a screenshot of a single URL using a headless browser.
+#
+# Usage: screenshot-url <url> [output.png]
+#
+# Dependencies:
+#   gem install ferrum
+
+begin
+  gem "ferrum", "0.17.1"
+  require "ferrum"
+  require "uri"
+  require "fileutils"
+rescue Gem::LoadError
+  abort "Can't find ferrum. Run `gem install ferrum` to install it."
+end
+
+WINDOW_SIZE = [1280, 800]
+
+url = ARGV[0]
+unless url
+  $stderr.puts "Usage: screenshot-url <url> [output.png]"
+  exit 1
+end
+
+# Default output filename from the URL
+if ARGV[1]
+  output_path = ARGV[1]
+else
+  uri = URI.parse(url)
+  name = uri.host.to_s.gsub(".", "-")
+  path_part = uri.path.to_s.gsub(/^\/|\/$/, "").gsub("/", "-")
+  name = "#{name}-#{path_part}" unless path_part.empty?
+  output_path = "#{name}.png"
+end
+
+browser = Ferrum::Browser.new(
+  window_size: WINDOW_SIZE,
+  timeout: 45,
+  process_timeout: 15,
+  browser_options: { "force-device-scale-factor" => "2" }
+)
+
+begin
+  puts "Capturing #{url} -> #{output_path}..."
+  browser.goto(url)
+  browser.network.wait_for_idle(timeout: 10)
+  browser.screenshot(path: output_path, full: true)
+  puts "Done!"
+ensure
+  browser.quit
+end
