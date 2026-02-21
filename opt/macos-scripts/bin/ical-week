@@ -156,7 +156,7 @@ week_number() {
       end if
 
       -- return YYYY-MM-DD format
-      return (year of theResult as string) & \"-\" & pad(month of theResult as integer) & \"-\" & (day of theResult as string)
+      return (year of theResult as string) & \"-\" & pad(month of theResult as integer) & \"-\" & pad(day of theResult as integer)
     end getStartEndOfDayWeek
 
     on run argv
