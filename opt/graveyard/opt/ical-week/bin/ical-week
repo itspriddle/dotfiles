@@ -84,7 +84,7 @@ warn() {
 #
 # These options are not appropriate to obtain the week number used by
 # Calendar.app. Instead, January 1 is Week 1 *always*, which consequently
-# means Week 53 only occurs in Calendar.app if December 31 is a Sunday.
+# means Week 53 only occurs in Calendar.app if December 31 is a Saturday.
 #
 # The days that `date` considers start of week for its various week number
 # options also complicate things.
@@ -99,83 +99,46 @@ warn() {
 #   - %W: is also close to what we want, like %U, but its week starts on a
 #         Monday.
 #
-# With all that in mind, we reach for NSDate which does what we want.
+# With all that in mind, we calculate the week number using the same
+# algorithm as NSCalendar/ICU: week = floor((dayOfYear - 1 + dow(Jan1)) / 7) + 1
+# with Sunday as the first day of the week and minimumDaysInFirstWeek = 1.
 #
-# See https://en.wikipedia.org/wiki/ISO_week_date#Calculating_the_week_number_from_a_month_and_day_of_the_month_or_ordinal_date
+# See https://en.wikipedia.org/wiki/ISO_week_date
 week_number() {
-  local now="$1" pad="$2" start_or_end="$3" week
-
-  # https://gist.github.com/RichardHyde/3386ac57b55455b71140
-  week=$( osascript -e "
-    use scripting additions
-    use framework \"Foundation\"
-
-    on getWeekFromDate(theDate)
-      try
-        set theASDate to theDate as date
-        set theNSDate to current application's NSDate's dateWithTimeInterval:0 sinceDate:theASDate
-        set theNSCalendar to current application's NSCalendar's currentCalendar()
-        set theWeekInteger to (theNSCalendar's component:(current application's NSCalendarUnitWeekOfYear) fromDate:theNSDate) as integer
-        return theWeekInteger
-      on error
-        return -1 as integer
-      end try
-    end getWeekFromDate
-
-    -- Convert date function. Call with string in YYYY-MM-DD HH:MM:SS format (time part optional)
-    on convertDate(textDate)
-      set resultDate to the current date
-      set the month of resultDate to (1 as integer)
-      set the day of resultDate to (1 as integer)
-
-      set the year of resultDate to (text 1 thru 4 of textDate)
-      set the month of resultDate to (text 6 thru 7 of textDate)
-      set the day of resultDate to (text 9 thru 10 of textDate)
-      set the time of resultDate to 0
-
-      return resultDate
-    end convertDate
-
-    on pad(v)
-      return text -2 thru -1 of ((v + 100) as text)
-    end pad
-
-    -- get start/end day of week
-    on getStartEndOfDayWeek(theTarget, theDate)
-      set theWeekdays to {\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\"}
-      set theWeekday to weekday of theDate as string
-
-      repeat with i from 1 to (count theWeekdays)
-        if item i of theWeekdays = theWeekday then exit repeat
-      end repeat
-
-      if theTarget = \"start\" then
-        set theResult to theDate - (i - 1) * days
-      else
-        set theResult to theDate + (7 - i) * days
-      end if
-
-      -- return YYYY-MM-DD format
-      return (year of theResult as string) & \"-\" & pad(month of theResult as integer) & \"-\" & pad(day of theResult as integer)
-    end getStartEndOfDayWeek
-
-    on run argv
-      if (item 1 of argv) = \"start\"
-        return getStartEndOfDayWeek(\"start\", convertDate(item 2 of argv))
-      else if (item 1 of argv) = \"end\"
-        return getStartEndOfDayWeek(\"end\", convertDate(item 2 of argv))
-      else
-        return getWeekFromDate(convertDate(item 2 of argv))
-      end if
-    end run
-    " "$start_or_end" "$now"
-  )
+  local now="$1" pad="$2" start_or_end="$3"
 
   if [[ "$start_or_end" ]]; then
-    printf "%s" "$week"
-  else
-    printf "%${pad}d" "$week"
+    local dow
+    dow=$(date -j -f "%F" "$now" "+%w")
+    if [[ "$start_or_end" == "start" ]]; then
+      printf "%s" "$(date -j -v-${dow}d -f "%F" "$now" "+%F")"
+    else
+      printf "%s" "$(date -j -v+$((6 - dow))d -f "%F" "$now" "+%F")"
+    fi
+    return
   fi
+
+  local year="${now:0:4}"
+  local day_of_year dow dow_jan1 days_in_year week
+
+  read -r day_of_year dow < <(date -j -f "%F" "$now" "+%j %w")
+  dow_jan1=$(date -j -f "%F" "${year}-01-01" "+%w")
+
+  if (( year % 4 == 0 && (year % 100 != 0 || year % 400 == 0) )); then
+    days_in_year=366
+  else
+    days_in_year=365
+  fi
+
+  # If the date's week (Sun-Sat) extends into the next year,
+  # NSCalendar considers it week 1 of the next year
+  if (( 10#$day_of_year + 6 - dow > days_in_year )); then
+    week=1
+  else
+    week=$(( (10#$day_of_year - 1 + dow_jan1) / 7 + 1 ))
+  fi
+
+  printf "%${pad}d" "$week"
 }
 
 # Print the help text for this program
