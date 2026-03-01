@@ -111,6 +111,10 @@ elif [ "${OSTYPE:0:5}" = linux ]; then
   if [ -f /etc/rpi-issue ]; then
     export PATH="$HOME/.dotfiles/opt/rpi-scripts/bin:$PATH"
   fi
+
+  if [ -d "$HOME/.local/bin" ]; then
+    export PATH="$HOME/.local/bin:$PATH"
+  fi
 fi
 
 # FZF
