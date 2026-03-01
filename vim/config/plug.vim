@@ -111,9 +111,10 @@ endif
 if s:platform == 'macos' || s:platform =~# '^linux-synology'
   " Git integration
   Plug 'tpope/vim-git'
-  Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-rhubarb'
 endif
+
+Plug 'tpope/vim-fugitive'
 
 " Syntax
 Plug 'plasticboy/vim-markdown', { 'as': 'vim-markdown-plasticboy' }
