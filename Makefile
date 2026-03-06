@@ -56,8 +56,19 @@ uninstall-opt: ## Uninstall binaries from PREFIX/bin for opt/PACKAGE/bin/*
 ##@ Code Quality
 
 .PHONY: test
-test: ## Run shellcheck on shell scripts
-	gh shellcheck -e SC1090,SC1091 -- :tmux.d :opt/graveyard :bash/git-prompt.sh
+test: test-shellcheck ## Run all tests
+
+.PHONY: test-shellcheck
+test-shellcheck: ## Run shellcheck on shell scripts
+	gh shellcheck -e SC1090,SC1091 -- :tmux.d :opt/graveyard :bash/git-prompt.sh :bash/completion.d/
+
+.PHONY: test-shfmt
+test-shfmt: ## Run shfmt on shell scripts
+	gh shfmt -- :tmux.d :opt/graveyard :bash/git-prompt.sh :bash/completion.d/
+
+.PHONY: fmt-shfmt
+fmt-shfmt: ## Run shfmt -w on shell scripts
+	gh shfmt -w -- :tmux.d :opt/graveyard :bash/git-prompt.sh :bash/completion.d/
 
 ##@ Info
 
