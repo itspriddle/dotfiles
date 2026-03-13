@@ -5,8 +5,6 @@
 
 # Taps
 tap "homebrew/services"
-tap "itspriddle/brews"
-tap "teamookla/speedtest"
 
 # Ruby/Rails apps
 brew "chruby"
@@ -17,40 +15,55 @@ brew "ruby-install"
 brew "php"
 brew "shivammathur/php/php@8.3"
 brew "shivammathur/extensions/redis@8.3"
-brew "mysql"
 brew "wp-cli"
 brew "composer"
 
+# Golang
+brew "go"
+brew "golangci-lint"
+
+# Swift
+brew "swiftlint"
+brew "swift-format"
+
 # Utilities
 brew "1password-cli"
+brew "btop"
 brew "ccusage"
-brew "claude"
 brew "direnv"
 brew "duckdb"
-# brew "exiftool"
-brew "emby-cli"
+brew "minicodemonkey/chief/chief"
+brew "itspriddle/brews/emby-cli"
 brew "fd"
 brew "fzf"
 brew "gh"
 brew "git"
 brew "gnupg2"
-# brew "ical-buddy"
-brew "ical-guy"
-# brew "itspriddle/brews/imgur-bash", args: ["HEAD"]
+brew "itspriddle/brews/ical-guy"
 brew "vim"
 brew "jq"
-brew "php"
 brew "ripgrep"
 brew "rename"
 brew "rsync"
 brew "shellcheck"
-brew "speedtest"
-brew "switchaudio-osx"
-brew "the_silver_searcher"
+brew "shfmt"
+brew "teamookla/speedtest/speedtest"
 brew "testssl"
 brew "tmux"
 brew "tree"
-brew "universal-ctags"
-brew "vnstat"
+brew "uv"
 brew "wget"
 brew "youtube-dl"
+
+# Work
+brew "built-fast/devtools/lcars"
+brew "built-fast/devtools/vector"
+
+## Old/unused
+# brew "exiftool"
+# brew "ical-buddy"
+# brew "itspriddle/brews/imgur-bash", args: ["HEAD"]
+# brew "the_silver_searcher"
+# brew "universal-ctags"
+# brew "mysql"
+# brew "vnstat"
