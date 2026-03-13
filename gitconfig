@@ -1,7 +1,7 @@
 [user]
 	name  = Josh Priddle
 	email = jpriddle@me.com
-  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF4LsgFuqYLjfCqCd73SuOoK358dlTzg2W0BuT2qdnm5
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF4LsgFuqYLjfCqCd73SuOoK358dlTzg2W0BuT2qdnm5
 
 [color]
 	ui = auto
