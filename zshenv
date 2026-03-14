@@ -76,6 +76,10 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   # 1;35 : bold magenta
   export GREP_COLOR='1;35'
 
+  if [ -d "$HOME/.local/bin" ]; then
+    export PATH="$HOME/.local/bin:$PATH"
+  fi
+
   # Final macOS paths
   export PATH="$HOME/.dotfiles/opt/macos-scripts/bin:/opt/podman/bin:$PATH"
 elif [ "${OSTYPE:0:5}" = linux ]; then
