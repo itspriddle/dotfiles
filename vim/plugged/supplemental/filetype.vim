@@ -16,6 +16,9 @@ augroup filetypedetect
   " YAML highlighting for Rails secrets
   autocmd BufNewFile,BufRead secrets.yml.enc.[0-9]\+ setfiletype yaml
 
+  " Perl highlighting for gitweb.conf
+  autocmd BufNewFile,BufRead gitweb.conf setfiletype perl
+
   " Direnv/dotenv
   autocmd BufNewFile,BufRead {.,}envrc,{,.}direnvrc,.env{rc,}.*
     \ let g:is_bash = 1 |
