@@ -171,6 +171,12 @@ if command -v fzf > /dev/null; then
   "
 fi
 
+# gh - don't track
+if command -v gh > /dev/null; then
+  export GH_TELEMETRY=false
+  export DO_NOT_TRACK=true
+fi
+
 # jq colors (solarized dark)
 if command -v jq > /dev/null; then
   export JQ_COLORS="0;02:0;35:0;35:0;36:0;92:1;39:1;39:1;34"
