@@ -20,7 +20,7 @@ static-openvpn
 static-prowlarr
 # static-speedtest
 # static-ssl-check
-static-syno
+# static-syno
 static-transmission
 # static-vnstat
 
