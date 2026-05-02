@@ -79,4 +79,16 @@ if [[ "$SYNO_NGINX_RELOAD" == 1 ]]; then
   fi
 fi
 
+sudo -E "$ACME_ROOT/acme.sh" \
+  --force \
+  --home "$ACME_ROOT" \
+  --to-pkcs12 \
+  --password 'passw0rd' \
+  -d '*.priddle.network'
+
+sudo install -m 0644 "$ACME_ROOT/*.priddle.network/*.priddle.network.pfx" \
+  /volume1/emby/ssl/star.priddle.network.pfx
+
+curl -d "Emby SSL updated" https://ntfy.priddle.network/emby
+
 healthchecks scarif-acme
