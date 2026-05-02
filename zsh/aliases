@@ -49,6 +49,10 @@ type man &> /dev/null &&
 
 type fzf &> /dev/null && alias vf='vim $(fzf)'
 
+if ! type unzip &> /dev/null && type 7z &> /dev/null; then
+  alias unzip='7z e'
+fi
+
 if type lcars &> /dev/null; then
   alias lc='lcars'
   alias lcr='lcars db:reset'
