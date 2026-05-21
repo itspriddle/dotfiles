@@ -100,7 +100,7 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias deploy='script/deploy'
 
   # Robots
-  # alias claude='claude --model sonnet'
+  alias claude='DO_NOT_TRACK= claude'
 
   # PHP/Laravel
   alias pp='pest --parallel'
@@ -111,6 +111,9 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   # composer require --working-dir="$HOME/.local/share/ymir-cli" ymirapp/cli:^2.0
   # composer update --working-dir="$HOME/.local/share/ymir-cli"
   alias ymir='php ~/.local/share/ymir-cli/vendor/bin/ymir'
+
+  # Soft Serve
+  alias soft-serve='ssh git.priddle.network'
 fi
 
 # vim: ft=zsh
