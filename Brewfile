@@ -12,15 +12,14 @@ brew "node"
 brew "ruby-install"
 
 # PHP/WP
-brew "php"
-brew "shivammathur/php/php@8.3"
-brew "shivammathur/extensions/redis@8.3"
-brew "wp-cli"
 brew "composer"
+brew "php"
+brew "wp-cli"
 
 # Golang
 brew "go"
 brew "golangci-lint"
+brew "govulncheck"
 
 # Swift
 brew "swiftlint"
@@ -28,6 +27,7 @@ brew "swift-format"
 
 # Utilities
 brew "1password-cli"
+brew "actionlint"
 brew "atuin"
 brew "btop"
 brew "ccusage"
@@ -48,6 +48,7 @@ brew "ripgrep"
 brew "rsync"
 brew "shellcheck"
 brew "shfmt"
+brew "stripe-cli"
 brew "teamookla/speedtest/speedtest"
 brew "testssl"
 brew "tmux"
@@ -56,6 +57,7 @@ brew "uv"
 brew "vim"
 brew "wget"
 brew "youtube-dl"
+brew "zizmor"
 brew "zsh-autosuggestions"
 
 # Work
