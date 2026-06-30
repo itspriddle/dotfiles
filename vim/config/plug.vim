@@ -49,7 +49,6 @@ endif
 
 if s:platform == 'macos'
   Plug 'junegunn/vim-peekaboo'
-  Plug 'github/copilot.vim'
 endif
 
 " Unix
