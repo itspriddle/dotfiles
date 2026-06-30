@@ -88,7 +88,7 @@ if s:platform == 'macos'
   " Syntax
   Plug 'hail2u/vim-css3-syntax'
   Plug 'othree/html5.vim'
-  Plug 'markcornick/vim-bats'
+  Plug 'aliou/bats.vim'
   Plug 'tpope/vim-liquid'
   Plug 'tpope/vim-rails'
   Plug 'tpope/vim-rake'
