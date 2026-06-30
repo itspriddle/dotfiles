@@ -8,7 +8,7 @@
 #   gem install ferrum
 
 begin
-  gem "ferrum", "0.17.1"
+  gem "ferrum", "0.17.2"
   require "ferrum"
   require "uri"
   require "fileutils"
