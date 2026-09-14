@@ -12,7 +12,7 @@ CONTAINER="network.priddle.transmission"
 DIG=(dig -4 ch txt whoami.cloudflare +short @1.1.1.1 +time=10)
 
 notify() {
-  slack-notify --webhook-url "https://slack.priddle.network" "$@"
+  curl -d "$@" https://ntfy.priddle.network/transmission
 }
 
 transmission_running() {
@@ -44,12 +44,10 @@ openvpn_ip=$( (docker exec -t "$CONTAINER" "${DIG[@]}" 2> /dev/null || echo UNKN
 if [[ "$real_ip" == "$openvpn_ip" ]]; then
   stop_transmission
 
-  notify \
-    --channel "#transmission" \
-    --color "F1AEB5" \
-    --pretext "Transmission IP is the same as our real IP! Transmission is now shutdown" \
-    --field "OpenVPN IP|$openvpn_ip" \
-    --field "Real IP|$real_ip"
+  notify "Transmission IP is the same as our real IP! Transmission is now shutdown.
+
+OpenVPN IP: $openvpn_ip
+Real IP: $real_ip"
 
   touch ~/.transmission-notified
 
