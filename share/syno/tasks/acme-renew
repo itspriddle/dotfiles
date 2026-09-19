@@ -86,7 +86,7 @@ sudo -E "$ACME_ROOT/acme.sh" \
   --password 'passw0rd' \
   -d '*.priddle.network'
 
-sudo install -m 0644 "$ACME_ROOT/*.priddle.network/*.priddle.network.pfx" \
+sudo install -m 0644 "$ACME_ROOT/*.priddle.network_ecc/*.priddle.network.pfx" \
   /volume1/emby/ssl/star.priddle.network.pfx
 
 curl -d "Emby SSL updated" https://ntfy.priddle.network/emby
