@@ -7,7 +7,7 @@ fi
 
 set -e
 
-CONTAINER="network.priddle.transmission"
+CONTAINER="transmission"
 
 DIG=(dig -4 ch txt whoami.cloudflare +short @1.1.1.1 +time=10)
 

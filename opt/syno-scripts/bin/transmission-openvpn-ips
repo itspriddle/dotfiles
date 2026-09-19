@@ -6,7 +6,7 @@ if [[ "$DEBUG" ]]; then
   set -x
 fi
 
-CONTAINER=network.priddle.transmission
+CONTAINER=transmission
 
 NOW="$(date '+%F %T')"
 TIME="$(date '+%-l:%M %p')"
