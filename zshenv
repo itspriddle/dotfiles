@@ -82,7 +82,7 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   fi
 
   # Final macOS paths
-  export PATH="$HOME/.dotfiles/opt/macos-scripts/bin:/opt/podman/bin:$PATH"
+  export PATH="$HOME/.dotfiles/opt/macos-scripts/bin:$PATH"
 elif [ "${OSTYPE:0:5}" = linux ]; then
   # Disable weird keyboard bindkey behavior on Ubuntu/Debian
   if [ -f /etc/debian_version ]; then
