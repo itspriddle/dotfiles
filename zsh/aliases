@@ -114,6 +114,9 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
 
   # Soft Serve
   alias soft-serve='ssh git.priddle.network'
+
+  # hass-cli
+  alias hass-cli='uvx --python 3.13 --from homeassistant-cli hass-cli'
 fi
 
 # vim: ft=zsh
