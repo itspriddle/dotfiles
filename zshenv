@@ -69,7 +69,8 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   # "Bx": bold red, setgid executable
   # "Ex": bold blue, dir writable to others with sticky bit
   # "Ex": bold blue, dir writable to others no sticky
-  export LSCOLORS=ExGxFxDxCxDxDxBxBxExEx
+  # "xx": normal, dataless file (i.e. iCloud off-loaded files)
+  export LSCOLORS=ExGxFxDxCxDxDxBxBxExExxx
 
   # `grep` colors
   #
