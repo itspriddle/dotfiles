@@ -102,10 +102,9 @@ if [ "${OSTYPE:0:6}" = "darwin" ]; then
   alias stan='phpstan analyze'
 
   # Ymir
-  # mkdir -p ~/.local/share/ymir-cli
-  # composer require --working-dir="$HOME/.local/share/ymir-cli" ymirapp/cli:^2.0
-  # composer update --working-dir="$HOME/.local/share/ymir-cli"
-  alias ymir='php ~/.local/share/ymir-cli/vendor/bin/ymir'
+  #   composer global require cpx/cpx
+  #   cpx alias ymirapp/cli ymir
+  alias ymir='cpx ymir'
 
   # Soft Serve
   alias soft-serve='ssh git.priddle.network'
