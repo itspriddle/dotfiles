@@ -148,6 +148,63 @@ use_herd_php() {
   log_status "using Herd PHP $version shim at ${target_shim/$HOME/\~}"
 }
 
+# Sets PATH for Yerd PHP versions.
+#
+# Usage in .envrc:
+#
+#   use yerd_php [system]
+#   use yerd_php 8.3
+use_yerd_php() {
+  local php_dir="$HOME/Library/Application Support/io.yerd.Yerd/php"
+
+  if [[ ! -d "$php_dir" ]]; then
+    log_error "Yerd not found"
+    return 1
+  fi
+
+  local version="${1-}"
+
+  if [[ -z "$version" ]] && [[ -f .php-version ]]; then
+    version=$(< .php-version)
+    log_status "Using PHP version from .php-version: $version"
+  fi
+
+  if [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    version="${version%.*}" # only major.minor
+  elif [[ "$version" =~ ^(system|default)$ ]] || [[ -z "$version" ]]; then
+    version="default"
+  elif [[ ! "$version" =~ ^[0-9]+\.[0-9]+$ ]]; then
+    log_error "Invalid PHP version '$version'"
+    log_error "Use 'system', 'default' or a version like '8.3' or '8.3.1'"
+
+    return 1
+  fi
+
+  if [[ "$version" != "default" ]]; then
+    local target_dir="$php_dir/php-$version"
+
+    if [[ ! -x "$target_dir/bin/php" ]]; then
+      log_error "Yerd PHP $version not found at '${target_dir/$HOME/\~}'"
+      log_error "Try one of these .envrc configurations:"
+      log_error
+      log_error "- use_yerd_php system (Yerd default configured version)"
+
+      for d in "$php_dir"/php-*; do
+        [[ -x "$d/bin/php" ]] && log_error "- use_yerd_php ${d##*/php-}"
+      done
+
+      return 1
+    fi
+
+    PATH_add "$target_dir/sbin"
+    PATH_add "$target_dir/bin"
+  fi
+
+  if [[ -d vendor/bin ]]; then
+    PATH_add vendor/bin
+  fi
+}
+
 # Sets work specific git email.
 #
 # Usage in .envrc:
