@@ -203,18 +203,13 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   export PHP_INI_SCAN_DIR=":$HOME/.dotfiles/share/php"
 fi
 
-if [ "${OSTYPE:0:6}" = darwin ] && [ -d "$HOME/Library/Application Support/Herd" ]; then
-  # Herd injected PHP binary.
-  export PATH="$HOME/Library/Application Support/Herd/bin:$PATH"
+if [ "${OSTYPE:0:6}" = darwin ] && [ -d "$HOME/Library/Application Support/io.yerd.Yerd" ]; then
+  case ":$PATH:" in
+    *":$HOME/Library/Application Support/io.yerd.Yerd/bin:"*) ;;
+    *) export PATH="$HOME/Library/Application Support/io.yerd.Yerd/bin:$PATH" ;;
+  esac
 
-  # Herd injected PHP 8.5 configuration.
-  export HERD_PHP_85_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/85/:$HOME/.dotfiles/share/php/"
-
-  # Herd injected PHP 8.4 configuration.
-  export HERD_PHP_84_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/84/:$HOME/.dotfiles/share/php/"
-
-  # Herd injected PHP 8.3 configuration.
-  export HERD_PHP_83_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/83/:$HOME/.dotfiles/share/php/"
+  export PHPRC="$HOME/Library/Application Support/io.yerd.Yerd/php-cli.ini"
 fi
 
 if command -v composer > /dev/null; then
