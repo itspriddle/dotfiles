@@ -12,7 +12,11 @@ CONTAINER="transmission"
 DIG=(dig -4 ch txt whoami.cloudflare +short @1.1.1.1 +time=10)
 
 notify() {
-  curl -d "$@" https://ntfy.priddle.network/transmission
+  curl -X POST \
+    -F "title=$1" \
+    -F "body=$2" \
+    -F "tags=josh" \
+    https://apprise.priddle.network/notify/apprise
 }
 
 transmission_running() {
@@ -30,7 +34,6 @@ sanitize() {
 if ! transmission_running; then
   if [[ ! -f ~/.transmission-notified ]]; then
     touch ~/.transmission-notified
-    notify "Transmission is not running!"
   fi
   exit 1
 else
@@ -44,7 +47,8 @@ openvpn_ip=$( (docker exec -t "$CONTAINER" "${DIG[@]}" 2> /dev/null || echo UNKN
 if [[ "$real_ip" == "$openvpn_ip" ]]; then
   stop_transmission
 
-  notify "Transmission IP is the same as our real IP! Transmission is now shutdown.
+  notify "Transmission: OpenVPN Down" \
+    "Transmission IP is the same as our real IP! Transmission is now shutdown.
 
 OpenVPN IP: $openvpn_ip
 Real IP: $real_ip"
