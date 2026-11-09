@@ -59,18 +59,18 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
 
   # `ls` colors
   #
-  # "Ex": bold blue, directory
-  # "Gx": bold cyan, symlink
-  # "Fx": bold magenta, socket
-  # "Dx": bold brown, pipe
-  # "Cx": bold green, executable
-  # "Dx": bold brown, block special
-  # "Dx": bold brown, character special
-  # "Bx": bold red, setuid executable
-  # "Bx": bold red, setgid executable
-  # "Ex": bold blue, dir writable to others with sticky bit
-  # "Ex": bold blue, dir writable to others no sticky
-  # "xx": normal, dataless file (i.e. iCloud off-loaded files)
+  # Ex - bold blue, directory
+  # Gx - bold cyan, symlink
+  # Fx - bold magenta, socket
+  # Dx - bold brown, pipe
+  # Cx - bold green, executable
+  # Dx - bold brown, block special
+  # Dx - bold brown, character special
+  # Bx - bold red, setuid executable
+  # Bx - bold red, setgid executable
+  # Ex - bold blue, dir writable to others with sticky bit
+  # Ex - bold blue, dir writable to others no sticky
+  # xx - normal, dataless file (i.e. iCloud off-loaded files)
   export LSCOLORS=ExGxFxDxCxDxDxBxBxExExxx
 
   # `grep` colors
@@ -94,6 +94,26 @@ elif [ "${OSTYPE:0:5}" = linux ]; then
   export QUOTING_STYLE=literal
 
   # `ls` colors
+  #
+  # bd=1;33 - (bold yellow) Block (buffered) special file
+  # ca      - file with capability
+  # cd=1;33 - (bold yellow) Character (unbuffered) special file
+  # di=1;34 - (bold blue) Directory
+  # do      - door (solaris)
+  # ex=1;32 - (bold green) File which is executable (ie. has 'x' set in permissions).
+  # fi      - File
+  # ln=1;36 - (bold cyan) Symbolic Link
+  # mh      - multi-hardlink
+  # mi      - Non-existent file pointed to by a symbolic link (visible when you type ls -l)
+  # or      - Symbolic Link pointing to a non-existent file (orphan)
+  # ow=1;34 - (bold blue) other-writable directory
+  # pi=1;33 - (bold yellow) Fifo file
+  # rs      - reset to no color
+  # sg=1;31 - (bold red) set-group-ID
+  # so=1;35 - (bold magenta) Socket file
+  # st      - sticky directory
+  # su=1;31 - (bold red) set-user-ID
+  # tw=1;34 - (bold blue) stick and other-writable directory
   export LS_COLORS="di=1;34:ln=1;36:so=1;35:pi=1;33:ex=1;32:bd=1;33:cd=1;33:su=1;31:sg=1;31:tw=1;34:ow=1;34"
 
   # CentOS uses an override flag
@@ -182,11 +202,6 @@ fi
 # jq colors (solarized dark)
 if command -v jq > /dev/null; then
   export JQ_COLORS="0;02:0;35:0;35:0;36:0;92:1;39:1;39:1;34"
-fi
-
-# slack-notify
-if command -v slack-notify > /dev/null; then
-  export SLACK_WEBHOOK_URL="https://slack.priddle.network"
 fi
 
 # Ripgrep
