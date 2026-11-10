@@ -46,9 +46,6 @@ if [ "${OSTYPE:0:6}" = darwin ]; then
   # Disable homebrew autoupdate
   export HOMEBREW_NO_AUTO_UPDATE=1
 
-  # $(sysctl -n hw.ncpu) + 1
-  export MAKEFLAGS="-j9"
-
   # Disable Apple Terminal sessions
   export SHELL_SESSIONS_DISABLE=1
 
