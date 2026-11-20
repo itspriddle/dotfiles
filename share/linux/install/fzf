@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+#
+# Install fzf from GitHub releases.
+#
+# Usage: fzf [PREFIX=/usr/local] [VERSION=x.y.z]
+#
+# https://github.com/junegunn/fzf/releases
+
+set -euo pipefail
+
+REPO="junegunn/fzf"
+PREFIX="${PREFIX:-/usr/local}"
+VERSION="${VERSION:-}"
+
+die() { echo "${0##*/}: $*" >&2; exit 1; }
+
+for arg in "$@"; do
+  case "$arg" in
+    PREFIX=*) PREFIX="${arg#PREFIX=}" ;;
+    VERSION=*) VERSION="${arg#VERSION=}" ;;
+    -h|--help) sed -n '3,7s/^# \{0,1\}//p' "$0"; exit 0 ;;
+    *) die "unknown argument: $arg" ;;
+  esac
+done
+
+[[ "$(uname -s)" == Linux ]] || die "Linux only"
+[[ -n "$PREFIX" ]] || die "PREFIX is empty"
+command -v curl >/dev/null || die "curl is required"
+command -v sha256sum >/dev/null || die "sha256sum is required"
+
+case "$(uname -m)" in
+  x86_64|amd64) arch=amd64 ;;
+  aarch64|arm64) arch=arm64 ;;
+  armv7*) arch=armv7 ;;
+  armv6*) arch=armv6 ;;
+  armv5*) arch=armv5 ;;
+  *) die "unsupported architecture: $(uname -m)" ;;
+esac
+
+if [[ -z "$VERSION" ]]; then
+  latest="$(curl -fsSLI -o /dev/null -w '%{url_effective}' "https://github.com/$REPO/releases/latest")"
+  VERSION="${latest##*/v}"
+fi
+VERSION="${VERSION#v}"
+[[ "$VERSION" =~ ^[0-9]+(\.[0-9]+)*$ ]] || die "invalid version: $VERSION"
+
+asset="fzf-${VERSION}-linux_${arch}.tar.gz"
+checksums="fzf_${VERSION}_checksums.txt"
+base="https://github.com/$REPO/releases/download/v${VERSION}"
+
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+
+echo "Downloading $asset"
+curl -fsSL --proto '=https' -o "$tmp/$asset" "$base/$asset"
+curl -fsSL --proto '=https' -o "$tmp/$checksums" "$base/$checksums"
+
+(cd "$tmp" && grep -F "  $asset" "$checksums" | sha256sum -c --strict -) \
+  || die "checksum verification failed"
+
+mkdir "$tmp/src"
+tar -xzf "$tmp/$asset" -C "$tmp/src" fzf
+
+install -d "$PREFIX/bin"
+install -m 755 "$tmp/src/fzf" "$PREFIX/bin/fzf"
+
+echo "Installed fzf $VERSION to $PREFIX/bin/fzf"

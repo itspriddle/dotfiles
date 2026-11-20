@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+#
+# Install the Ookla Speedtest CLI (binary + man page).
+#
+# Usage: speedtest [PREFIX=/usr/local] [VERSION=1.2.0]
+#
+# https://www.speedtest.net/apps/cli
+
+set -euo pipefail
+
+PREFIX="${PREFIX:-/usr/local}"
+VERSION="${VERSION:-1.2.0}"
+
+die() { echo "${0##*/}: $*" >&2; exit 1; }
+
+for arg in "$@"; do
+  case "$arg" in
+    PREFIX=*) PREFIX="${arg#PREFIX=}" ;;
+    VERSION=*) VERSION="${arg#VERSION=}" ;;
+    -h|--help) sed -n '3,7s/^# \{0,1\}//p' "$0"; exit 0 ;;
+    *) die "unknown argument: $arg" ;;
+  esac
+done
+
+[[ "$(uname -s)" == Linux ]] || die "Linux only"
+[[ -n "$PREFIX" ]] || die "PREFIX is empty"
+[[ "$VERSION" =~ ^[0-9]+(\.[0-9]+)*$ ]] || die "invalid version: $VERSION"
+command -v curl >/dev/null || die "curl is required"
+
+case "$(uname -m)" in
+  x86_64|amd64) arch=x86_64 ;;
+  aarch64|arm64) arch=aarch64 ;;
+  armv7*) arch=armhf ;;
+  armv6*|armv5*) arch=armel ;;
+  i386|i686) arch=i386 ;;
+  *) die "unsupported architecture: $(uname -m)" ;;
+esac
+
+asset="ookla-speedtest-${VERSION}-linux-${arch}.tgz"
+url="https://install.speedtest.net/app/cli/$asset"
+
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+
+echo "Downloading $asset"
+curl -fsSL --proto '=https' -o "$tmp/$asset" "$url"
+
+mkdir "$tmp/src"
+tar -xzf "$tmp/$asset" -C "$tmp/src" speedtest speedtest.5
+
+install -d "$PREFIX/bin" "$PREFIX/share/man/man5"
+install -m 755 "$tmp/src/speedtest" "$PREFIX/bin/speedtest"
+install -m 644 "$tmp/src/speedtest.5" "$PREFIX/share/man/man5/speedtest.5"
+
+echo "Installed speedtest $VERSION to $PREFIX"
