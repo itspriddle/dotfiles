@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+#
+# Install shellcheck from GitHub releases.
+#
+# Usage: shellcheck [PREFIX=/usr/local] [VERSION=x.y.z]
+#
+# https://github.com/koalaman/shellcheck/releases
+
+set -euo pipefail
+
+REPO="koalaman/shellcheck"
+PREFIX="${PREFIX:-/usr/local}"
+VERSION="${VERSION:-}"
+
+die() { echo "${0##*/}: $*" >&2; exit 1; }
+
+for arg in "$@"; do
+  case "$arg" in
+    PREFIX=*) PREFIX="${arg#PREFIX=}" ;;
+    VERSION=*) VERSION="${arg#VERSION=}" ;;
+    -h|--help) sed -n '3,7s/^# \{0,1\}//p' "$0"; exit 0 ;;
+    *) die "unknown argument: $arg" ;;
+  esac
+done
+
+[[ "$(uname -s)" == Linux ]] || die "Linux only"
+[[ -n "$PREFIX" ]] || die "PREFIX is empty"
+command -v curl >/dev/null || die "curl is required"
+
+case "$(uname -m)" in
+  x86_64|amd64) arch=x86_64 ;;
+  aarch64|arm64) arch=aarch64 ;;
+  armv6*|armv7*) arch=armv6hf ;;
+  riscv64) arch=riscv64 ;;
+  *) die "unsupported architecture: $(uname -m)" ;;
+esac
+
+if [[ -z "$VERSION" ]]; then
+  latest="$(curl -fsSLI -o /dev/null -w '%{url_effective}' "https://github.com/$REPO/releases/latest")"
+  VERSION="${latest##*/v}"
+fi
+VERSION="${VERSION#v}"
+[[ "$VERSION" =~ ^[0-9]+(\.[0-9]+)*$ ]] || die "invalid version: $VERSION"
+
+asset="shellcheck-v${VERSION}.linux.${arch}.tar.gz"
+url="https://github.com/$REPO/releases/download/v${VERSION}/$asset"
+
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+
+echo "Downloading $asset"
+curl -fsSL --proto '=https' -o "$tmp/$asset" "$url"
+
+mkdir "$tmp/src"
+tar -xzf "$tmp/$asset" -C "$tmp/src" "shellcheck-v${VERSION}/shellcheck"
+
+install -d "$PREFIX/bin"
+install -m 755 "$tmp/src/shellcheck-v${VERSION}/shellcheck" "$PREFIX/bin/shellcheck"
+
+echo "Installed shellcheck $VERSION to $PREFIX/bin/shellcheck"
