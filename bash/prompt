@@ -49,8 +49,10 @@ _josh_prompt_command() {
 
   case "$TERM" in
     xterm*|rxvt*)
-      if [ "$SSH_CONNECTION" ]; then
+      if [ "$SSH_CONNECTION" ] && [ "$USER" != priddle ]; then
         printf '\e]0;%s@%s:%s\a' "$USER" "$HOSTNAME" "$cwd"
+      elif [ "$SSH_CONNECTION" ]; then
+        printf '\e]0;%s:%s\a' "$HOSTNAME" "$cwd"
       else
         printf '\e]0;%s\a' "$cwd"
       fi
