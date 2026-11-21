@@ -6,19 +6,25 @@
 # "+": staged
 # "*": unstaged
 export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_DIRTYSTATE_UNSTAGED_MARK='_UNSTAGED_'
+export GIT_PS1_DIRTYSTATE_STAGED_MARK='_STAGED_'
 
 # "$": something stashed
 # export GIT_PS1_SHOWSTASHSTATE=1
 
 _josh_prompt_command() {
-  local blue cyan yellow reset git host cwd prompt_cwd
+  local blue cyan yellow reset magenta green git host cwd prompt_cwd
 
   blue='\[\e[1;34m\]'
   cyan='\[\e[0;36m\]'
   yellow='\[\e[1;33m\]'
   reset='\[\e[0m\]'
+  magenta='\[\e[1;35m\]'
+  green='\[\e[1;32m\]'
 
   git="$(__git_ps1 " ${cyan}(%s)${reset}" 2> /dev/null)"
+  git="${git/$GIT_PS1_DIRTYSTATE_UNSTAGED_MARK/${magenta}•${cyan}}"
+  git="${git/$GIT_PS1_DIRTYSTATE_STAGED_MARK/${green}•${cyan}}"
 
   if [ "$SSH_CONNECTION" ]; then
     if [ "$USER" = priddle ]; then
