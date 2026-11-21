@@ -238,6 +238,18 @@ if [ -f ~/.ruby-version ] && [ -f "$HOMEBREW_PREFIX/opt/chruby/share/chruby/chru
   chruby "$RUBY_VERSION"
 fi
 
+# Claude
+if command -v claude > /dev/null; then
+  # Disable feedback survey prompts
+  export CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=1
+
+  # Subagents can't spawn subagents
+  export CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH=1
+
+  # Limit max concurrent subagents
+  export CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS=5
+fi
+
 # And my bin takes top priority
 export PATH="$HOME/.dotfiles/bin:$PATH"
 
