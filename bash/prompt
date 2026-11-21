@@ -13,7 +13,7 @@ export GIT_PS1_DIRTYSTATE_STAGED_MARK='_STAGED_'
 # export GIT_PS1_SHOWSTASHSTATE=1
 
 _josh_prompt_command() {
-  local blue cyan yellow reset magenta green git host cwd prompt_cwd
+  local blue cyan yellow reset magenta green git dimmed job_count job host cwd prompt_cwd
 
   blue='\[\e[1;34m\]'
   cyan='\[\e[0;36m\]'
@@ -21,6 +21,7 @@ _josh_prompt_command() {
   reset='\[\e[0m\]'
   magenta='\[\e[1;35m\]'
   green='\[\e[1;32m\]'
+  dimmed='\[\e[2;34m\]'
 
   git="$(__git_ps1 " ${cyan}(%s)${reset}" 2> /dev/null)"
   git="${git/$GIT_PS1_DIRTYSTATE_UNSTAGED_MARK/${magenta}•${cyan}}"
@@ -36,9 +37,15 @@ _josh_prompt_command() {
 
   cwd="${PWD/$HOME/$'~'}"
 
-  prompt_cwd="$("$HOME/.dotfiles/bash/shrink-path" -l 2 -s -t)"
+  job_count="$(jobs -p | wc -l)"
 
-  PS1="${host}${blue}${prompt_cwd}${reset}${git} $ "
+  if [[ "$job_count" -gt 0 ]]; then
+    job="${dimmed}[${job_count}]${reset} "
+  fi
+
+  prompt_cwd="${blue}$("$HOME/.dotfiles/bash/shrink-path" -l 2 -s -t)${reset}"
+
+  PS1="${job}${host}${prompt_cwd}${git} \$ "
 
   case "$TERM" in
     xterm*|rxvt*)
