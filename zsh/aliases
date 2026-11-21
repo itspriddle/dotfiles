@@ -30,15 +30,18 @@ type git-stash-fzf &> /dev/null && alias gstf='git-stash-fzf'
 
 # Others
 alias path='echo -e ${PATH//:/\\n}'
-alias rm='rm -iv'
-alias cp='cp -iv'
-alias mv='mv -iv'
 alias grep='grep --color'
 alias dush='du -shc'
 alias gmt-date="date -u"
 alias weather="curl 'wttr.in/Clifton+Park+NY?n'"
 alias pjq='pbpaste | jq'
 alias vview='vim -MR -'
+
+if [ -n "$CLAUDECODE" ]; then
+  alias rm='rm -iv'
+  alias cp='cp -iv'
+  alias mv='mv -iv'
+fi
 
 type man &> /dev/null &&
   alias vman='MANPAGER="vim +MANPAGER --not-a-term -" man'
