@@ -142,10 +142,6 @@ fi
 
 # FZF
 if command -v fzf > /dev/null; then
-  # Old
-  # --color gutter:1,marker:3,prompt:5,info:3,pointer:5,border:0
-  # --tiebreak end,length,index
-  #
   # Solarized light
   #   --color border:7
   #
@@ -170,7 +166,6 @@ if command -v fzf > /dev/null; then
     --min-height 10+
   "
 
-  # export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
   export FZF_DEFAULT_COMMAND="rg --follow --hidden --files --sort-files --glob '!.git'"
 
   export FZF_CTRL_T_OPTS="
@@ -198,7 +193,15 @@ fi
 
 # jq colors (solarized dark)
 if command -v jq > /dev/null; then
-  export JQ_COLORS="0;02:0;35:0;35:0;36:0;92:1;39:1;39:1;34"
+  # null        - dim
+  # false       - magenta
+  # true        - magenta
+  # numbers     - violet
+  # strings     - cyan
+  # arrays      - bold normal
+  # objects     - bold normal
+  # object keys - bold blue
+  export JQ_COLORS="0;02:0;35:0;35:0;95:0;36:1;01:1;01:1;34"
 fi
 
 # Ripgrep
