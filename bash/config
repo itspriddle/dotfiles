@@ -25,9 +25,9 @@ done
 unset plugin old_nullglob
 
 # History
-export HISTCONTROL=ignoredups
-export HISTFILESIZE=5000
-export HISTSIZE=5000
+export HISTCONTROL=ignoredups:erasedups
+export HISTFILESIZE=20000
+export HISTSIZE=20000
 
 # check the window size after each command and, if necessary, update the
 # values of LINES and COLUMNS.
