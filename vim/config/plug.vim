@@ -75,12 +75,7 @@ endtry
 
 " File browsing/search
 Plug 'jeetsukumaran/vim-filebeagle'
-
-if s:platform == 'macos'
-  Plug 'junegunn/fzf'
-else
-  Plug 'junegunn/fzf', { 'do': './install --bin' }
-endif
+Plug 'junegunn/fzf'
 
 if s:platform == 'macos'
   " Syntax
