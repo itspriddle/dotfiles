@@ -11,7 +11,7 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 # export GIT_PS1_SHOWSTASHSTATE=1
 
 _josh_prompt_command() {
-  local blue cyan yellow reset git host pat cwd tmp prompt_cwd
+  local blue cyan yellow reset git host cwd prompt_cwd
 
   blue='\[\e[1;34m\]'
   cyan='\[\e[0;36m\]'
@@ -28,15 +28,9 @@ _josh_prompt_command() {
     fi
   fi
 
-  pat="$(printf '/*%.0s' {1..3})"
   cwd="${PWD/$HOME/$'~'}"
-  tmp="${cwd%"$pat"}"
 
-  if [ "${#tmp}" -gt 0 ] && [ "$tmp" != "$cwd" ]; then
-    prompt_cwd="$(printf "%s" "${cwd:${#tmp}+1}")"
-  else
-    prompt_cwd="$(printf "%s" "$cwd")"
-  fi
+  prompt_cwd="$("$HOME/.dotfiles/bash/shrink-path" -l 2 -s -t)"
 
   PS1="${host}${blue}${prompt_cwd}${reset}${git} $ "
 
