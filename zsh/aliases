@@ -37,7 +37,7 @@ alias weather="curl 'wttr.in/Clifton+Park+NY?n'"
 alias pjq='pbpaste | jq'
 alias vview='vim -MR -'
 
-if [ -n "$CLAUDECODE" ]; then
+if [ -z "$CLAUDECODE" ]; then
   alias rm='rm -iv'
   alias cp='cp -iv'
   alias mv='mv -iv'
