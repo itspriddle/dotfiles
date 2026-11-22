@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Enable debug mode
+if [[ "$DEBUG" ]]; then
+  export PS4='+ [${BASH_SOURCE##*/}:$LINENO] '
+  set -x
+fi
+
+set -euo pipefail
+
+PATH="$(dirname "$0"):$PATH"
+export PATH
+
+SUBS=()
+
+while IFS='' read -r line; do
+  SUBS+=("$line")
+done < <(jq -r 'to_entries[] | .key' ~/.config/adguardhome-api.json)
+
+for sub in "${SUBS[@]}"; do
+  printf "[%s] flush cache: %s\n" "$sub" "$(adguardhome-api "$sub" control/cache_clear -X POST)"
+done
