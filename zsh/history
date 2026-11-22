@@ -62,9 +62,9 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey '\e[A' history-beginning-search-backward-end
 bindkey '\e[B' history-beginning-search-forward-end
 
-if [[ -d /opt/homebrew ]]; then
-  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=242"
-  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=242"
+for f in {/opt/homebrew,/usr/local,/usr}/share/zsh-autosuggestions/zsh-autosuggestions.zsh(N); do
+  source "$f" && break
+done
 
 # vim: ft=zsh
