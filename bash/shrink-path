@@ -21,6 +21,7 @@
 #   -e SYMBOL        Postfix symbol(s) to indicate that a directory name had been truncated.
 #   -q, --quote      Quote special characters in the shrunk path
 #   -x, --expand     Print the full path. This takes precedence over the other options
+#   -v VAR           Assign the result to VAR instead of printing it (no subshell needed)
 #
 # Differences from the zsh version:
 #
@@ -40,7 +41,7 @@
 
 shrink-path() {
   local -i lastfull=0 short=0 tilde=0 length=1 quote=0 expand=0
-  local ellipsis=""
+  local ellipsis="" outvar=""
 
   while [[ $1 == -* ]]; do
     case $1 in
@@ -67,6 +68,7 @@ Usage: shrink-path [-f -l -s -t] [directory]
  -e SYMBOL       Postfix symbol(s) to indicate that a directory name had been truncated.
  -q, --quote     Quote special characters in the shrunk path
  -x, --expand    Print the full path. This takes precedence over the other options
+ -v VAR          Assign the result to VAR instead of printing it
 EOF
         return 0
         ;;
@@ -89,16 +91,20 @@ EOF
       -g|--glob) ellipsis='*' ;;
       -q|--quote) quote=1 ;;
       -x|--expand) expand=1 ;;
+      -v)
+        shift
+        outvar=$1
+        ;;
     esac
     shift
   done
 
   local dir=${1-$PWD}
 
-  [[ -d $dir ]] || return 0
+  [[ -d $dir ]] || { _shrink_path_out "$outvar" ""; return 0; }
 
   if (( expand )); then
-    printf '%s\n' "$dir"
+    _shrink_path_out "$outvar" "$dir"
     return 0
   fi
 
@@ -122,8 +128,11 @@ EOF
   fi
 
   # Glob with nullglob on, everything else that affects matching off
-  local saved_shopts
-  saved_shopts=$(shopt -p nullglob failglob nocaseglob dotglob)
+  local opt
+  local -a saved_shopts=()
+  for opt in nullglob failglob nocaseglob dotglob; do
+    shopt -q "$opt" && saved_shopts+=("$opt")
+  done
   shopt -s nullglob
   shopt -u failglob nocaseglob dotglob
 
@@ -164,9 +173,18 @@ EOF
     tree=("${tree[@]:1}")
   done
 
-  eval "$saved_shopts"
+  shopt -u nullglob
+  (( ${#saved_shopts[@]} )) && shopt -s "${saved_shopts[@]}"
 
-  printf '%s\n' "${result:-/}"
+  _shrink_path_out "$outvar" "${result:-/}"
+}
+
+_shrink_path_out() {
+  if [[ -n $1 ]]; then
+    printf -v "$1" '%s' "$2"
+  else
+    printf '%s\n' "$2"
+  fi
 }
 
 if [[ ${BASH_SOURCE[0]} == "$0" ]]; then

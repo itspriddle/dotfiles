@@ -3,14 +3,17 @@
 # "%": untracked files in repo
 # export GIT_PS1_SHOWUNTRACKEDFILES=1
 
-# "+": staged
-# "*": unstaged
+# "+": staged (swapped for green '•')
+# "*": unstaged (swapped for magenta '•')
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_DIRTYSTATE_UNSTAGED_MARK='_UNSTAGED_'
 export GIT_PS1_DIRTYSTATE_STAGED_MARK='_STAGED_'
 
 # "$": something stashed
 # export GIT_PS1_SHOWSTASHSTATE=1
+
+# shellcheck disable=1091
+source "$HOME/.dotfiles/bash/shrink-path"
 
 _josh_prompt_command() {
   local blue cyan yellow reset magenta green git dimmed job_count job host cwd prompt_cwd
@@ -35,15 +38,22 @@ _josh_prompt_command() {
     fi
   fi
 
-  cwd="${PWD/$HOME/$'~'}"
+  cwd="${PWD/#$HOME/$'~'}"
 
-  job_count="$(jobs -p | wc -l)"
+  # ${var@P} (bash 4.4+) expands the \j prompt escape without a subshell
+  if (( BASH_VERSINFO[0] > 4 || (BASH_VERSINFO[0] == 4 && BASH_VERSINFO[1] >= 4) )); then
+    local j='\j'
+    job_count="${j@P}"
+  else
+    job_count=$(( $(jobs -p | wc -l) ))
+  fi
 
-  if [[ "$job_count" -gt 0 ]]; then
+  if (( job_count > 0 )); then
     job="${dimmed}[${job_count}]${reset} "
   fi
 
-  prompt_cwd="${blue}$("$HOME/.dotfiles/bash/shrink-path" -l 2 -s -t)${reset}"
+  shrink-path -l 2 -s -t -v prompt_cwd
+  prompt_cwd="${blue}${prompt_cwd}${reset}"
 
   PS1="${job}${host}${prompt_cwd}${git} \$ "
 
