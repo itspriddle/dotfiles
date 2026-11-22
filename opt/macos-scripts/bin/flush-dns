@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
-sudo dscacheutil -flushcache
-sudo killall -HUP mDNSResponder
-sudo killall -HUP mDNSResponderHelper
+echo "Flushing macOS Directory Service cache"
+sudo dscacheutil -flushcache > /dev/null 2>&1
+
+echo "Flushing macOS mDNS"
+sudo killall -HUP mDNSResponder > /dev/null 2>&1
+sudo killall -HUP mDNSResponderHelper > /dev/null 2>&1
+
+if [[ "${1-}" =~ ^(-r|--remote)$ ]]; then
+  if [[ -x ~/.dotfiles/opt/adguardhome-cli/bin/adguardhome-flush-cache ]]; then
+    echo "Flushing AdGuard Home DNS cache"
+    ~/.dotfiles/opt/adguardhome-cli/bin/adguardhome-flush-cache
+  else
+    echo "AdGaurd Home cache flush script not found"
+    exit 1
+  fi
+fi
