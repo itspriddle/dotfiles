@@ -8,6 +8,9 @@ fi
 
 set -euo pipefail
 
+PATH="$(dirname "$0"):$PATH"
+export PATH
+
 SUBS=()
 
 while IFS='' read -r line; do
