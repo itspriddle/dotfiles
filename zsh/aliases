@@ -53,7 +53,7 @@ type man &> /dev/null &&
 type fzf &> /dev/null && alias vf='vim $(fzf)'
 
 if ! type unzip &> /dev/null && type 7z &> /dev/null; then
-  alias unzip='7z e'
+  alias unzip='7z x'
 fi
 
 if type lcars &> /dev/null; then
