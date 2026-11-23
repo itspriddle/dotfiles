@@ -12,9 +12,6 @@ export GIT_PS1_DIRTYSTATE_STAGED_MARK='_STAGED_'
 # "$": something stashed
 # export GIT_PS1_SHOWSTASHSTATE=1
 
-# shellcheck disable=1091
-source "$HOME/.dotfiles/bash/shrink-path"
-
 _josh_prompt_command() {
   local blue cyan yellow reset magenta green git dimmed job_count job host cwd prompt_cwd
 
