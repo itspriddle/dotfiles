@@ -67,6 +67,13 @@ if type lcars &> /dev/null; then
   alias lroutes="php artisan route:list"
 fi
 
+if type docker &> /dev/null; then
+  alias dcls='docker compose ls'
+  alias dcl='docker compose logs -n10 -f'
+  alias dcd='docker compose down'
+  alias dcu='docker compose up -d'
+fi
+
 # OS X
 if [ "${OSTYPE:0:6}" = "darwin" ]; then
   # GPG
