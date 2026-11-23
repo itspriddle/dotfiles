@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+#
+# Install rename (Perl) from GitHub tags.
+#
+# Usage: rename [PREFIX=/usr/local] [VERSION=x.y.z]
+#
+# https://github.com/ap/rename/tags
+
+set -euo pipefail
+
+REPO="ap/rename"
+PREFIX="${PREFIX:-/usr/local}"
+VERSION="${VERSION:-1.601}"
+
+die() { echo "${0##*/}: $*" >&2; exit 1; }
+
+for arg in "$@"; do
+  case "$arg" in
+    PREFIX=*) PREFIX="${arg#PREFIX=}" ;;
+    VERSION=*) VERSION="${arg#VERSION=}" ;;
+    -h|--help) sed -n '3,7s/^# \{0,1\}//p' "$0"; exit 0 ;;
+    *) die "unknown argument: $arg" ;;
+  esac
+done
+
+[[ "$(uname -s)" == Linux ]] || die "Linux only"
+[[ -n "$PREFIX" ]] || die "PREFIX is empty"
+command -v curl >/dev/null || die "curl is required"
+command -v perl >/dev/null || die "perl is required"
+
+# Upstream does not publish GitHub releases, only tags, so there is no
+# "latest" to resolve; pin a known tag and allow overriding it.
+VERSION="${VERSION#v}"
+[[ "$VERSION" =~ ^[0-9]+(\.[0-9]+)*$ ]] || die "invalid version: $VERSION"
+
+url="https://raw.githubusercontent.com/$REPO/v${VERSION}/rename"
+
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+
+echo "Downloading rename $VERSION"
+curl -fsSL --proto '=https' -o "$tmp/rename" "$url"
+perl -c "$tmp/rename" >/dev/null 2>&1 || die "downloaded file is not valid Perl"
+
+install -d "$PREFIX/bin"
+install -m 755 "$tmp/rename" "$PREFIX/bin/rename"
+
+echo "Installed rename $VERSION to $PREFIX/bin/rename"
