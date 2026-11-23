@@ -228,6 +228,8 @@ _z() {
 
 alias ${_Z_CMD:-z}='_z 2>&1'
 
+export _Z_NO_RESOLVE_SYMLINKS=1
+
 [ "$_Z_NO_RESOLVE_SYMLINKS" ] || _Z_RESOLVE_SYMLINKS="-P"
 
 if type compctl >/dev/null 2>&1; then
