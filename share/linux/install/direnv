@@ -2,14 +2,14 @@
 #
 # Install direnv from GitHub releases.
 #
-# Usage: direnv [PREFIX=/usr/local] [VERSION=x.y.z]
+# Usage: direnv PREFIX=/path [VERSION=x.y.z]
 #
 # https://github.com/direnv/direnv/releases
 
 set -euo pipefail
 
 REPO="direnv/direnv"
-PREFIX="${PREFIX:-/usr/local}"
+PREFIX="${PREFIX:-}"
 VERSION="${VERSION:-}"
 
 die() { echo "${0##*/}: $*" >&2; exit 1; }
@@ -23,8 +23,8 @@ for arg in "$@"; do
   esac
 done
 
+[[ -n "$PREFIX" ]] || die "PREFIX is required (e.g. PREFIX=/usr/local)"
 [[ "$(uname -s)" == Linux ]] || die "Linux only"
-[[ -n "$PREFIX" ]] || die "PREFIX is empty"
 command -v curl >/dev/null || die "curl is required"
 
 case "$(uname -m)" in

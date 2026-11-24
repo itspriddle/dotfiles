@@ -2,14 +2,14 @@
 #
 # Install btop from GitHub releases (static musl build) via `make install`.
 #
-# Usage: btop [PREFIX=/usr/local] [VERSION=x.y.z]
+# Usage: btop PREFIX=/path [VERSION=x.y.z]
 #
 # https://github.com/aristocratos/btop/releases
 
 set -euo pipefail
 
 REPO="aristocratos/btop"
-PREFIX="${PREFIX:-/usr/local}"
+PREFIX="${PREFIX:-}"
 VERSION="${VERSION:-}"
 
 die() { echo "${0##*/}: $*" >&2; exit 1; }
@@ -23,8 +23,8 @@ for arg in "$@"; do
   esac
 done
 
+[[ -n "$PREFIX" ]] || die "PREFIX is required (e.g. PREFIX=/usr/local)"
 [[ "$(uname -s)" == Linux ]] || die "Linux only"
-[[ -n "$PREFIX" ]] || die "PREFIX is empty"
 command -v curl >/dev/null || die "curl is required"
 command -v make >/dev/null || die "make is required"
 

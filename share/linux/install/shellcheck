@@ -2,14 +2,14 @@
 #
 # Install shellcheck from GitHub releases.
 #
-# Usage: shellcheck [PREFIX=/usr/local] [VERSION=x.y.z]
+# Usage: shellcheck PREFIX=/path [VERSION=x.y.z]
 #
 # https://github.com/koalaman/shellcheck/releases
 
 set -euo pipefail
 
 REPO="koalaman/shellcheck"
-PREFIX="${PREFIX:-/usr/local}"
+PREFIX="${PREFIX:-}"
 VERSION="${VERSION:-}"
 
 die() { echo "${0##*/}: $*" >&2; exit 1; }
@@ -23,8 +23,8 @@ for arg in "$@"; do
   esac
 done
 
+[[ -n "$PREFIX" ]] || die "PREFIX is required (e.g. PREFIX=/usr/local)"
 [[ "$(uname -s)" == Linux ]] || die "Linux only"
-[[ -n "$PREFIX" ]] || die "PREFIX is empty"
 command -v curl >/dev/null || die "curl is required"
 
 case "$(uname -m)" in
