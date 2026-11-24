@@ -131,8 +131,10 @@ elif [ "${OSTYPE:0:5}" = linux ]; then
   # Ubuntu's /etc/zshrc tries to initialize completion, skip it
   [ "$ZSH_VERSION" ] && skip_global_compinit=1
 
-  if [ -f /etc/rpi-issue ]; then
+  if [ -f /etc/rpi-issue ]; then # Raspberry Pi
     export PATH="$HOME/.dotfiles/opt/rpi-scripts/bin:$PATH"
+  elif [ -d /usr/syno ]; then # Synology
+    export PATH="/usr/syno/sbin:/usr/syno/bin:$PATH"
   fi
 
   if [ -d "$HOME/.local/bin" ]; then
