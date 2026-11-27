@@ -2,7 +2,7 @@
 
 PARTS = \
 	ctags direnvrc gitconfig gitignore hushlogin inputrc rgignore screenrc \
-	tmux.d tmux.conf vim/vimrc zshenv zshrc
+	tmux.d tmux.conf vim zshenv zshrc
 
 LINKS = $(addprefix $(HOME)/., $(PARTS))
 PREFIX ?= /usr/local
