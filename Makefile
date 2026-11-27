@@ -16,42 +16,6 @@ install: $(LINKS) ## Install all dotfiles to $HOME
 uninstall: ## Uninstall dotfiles (if they are symlinks)
 	-for i in $(LINKS); do test -L $$i && rm -vf $$i; done
 
-.PHONY: install-opt
-install-opt: ## Install binaries from opt/PACKAGE/bin/* to PREFIX/bin
-	$(eval PACKAGE := $(or $(NAME),$(filter-out install-opt,$(MAKECMDGOALS))))
-	@if [ -z "$(PACKAGE)" ]; then \
-		echo "Error: Package name required. Usage: make install-opt PACKAGE or make install-opt NAME=PACKAGE"; \
-		exit 1; \
-	fi
-	@if [ ! -d "opt/$(PACKAGE)/bin" ]; then \
-		echo "Error: opt/$(PACKAGE)/bin directory not found"; \
-		exit 1; \
-	fi
-	@mkdir -p $(PREFIX)/bin
-	@if [ -n "$$(ls -A opt/$(PACKAGE)/bin/ 2>/dev/null)" ]; then \
-		ln -sf $(abspath opt/$(PACKAGE))/bin/* $(PREFIX)/bin/; \
-	else \
-		echo "No files found in opt/$(PACKAGE)/bin/"; \
-	fi
-
-.PHONY: uninstall-opt
-uninstall-opt: ## Uninstall binaries from PREFIX/bin for opt/PACKAGE/bin/*
-	$(eval PACKAGE := $(or $(NAME),$(filter-out uninstall-opt,$(MAKECMDGOALS))))
-	@if [ -z "$(PACKAGE)" ]; then \
-		echo "Error: Package name required. Usage: make uninstall-opt PACKAGE or make uninstall-opt NAME=PACKAGE"; \
-		exit 1; \
-	fi
-	@if [ ! -d "opt/$(PACKAGE)/bin" ]; then \
-		echo "Error: opt/$(PACKAGE)/bin directory not found"; \
-		exit 1; \
-	fi
-	@for f in opt/$(PACKAGE)/bin/*; do \
-		target="$(PREFIX)/bin/$$(basename $$f)"; \
-		if [ -L "$$target" ]; then \
-			rm -vf "$$target"; \
-		fi; \
-	done
-
 ##@ Code Quality
 
 .PHONY: test
@@ -70,10 +34,6 @@ fmt-shfmt: ## Run shfmt -w on shell scripts
 	gh shfmt -w -- :tmux.d :opt/graveyard :bash/git-prompt.sh :bash/completion.d/ :bash/plugins/
 
 ##@ Info
-
-# Prevent make from treating package names as targets
-%:
-	@:
 
 $(LINKS):
 	ln -s $(abspath $(@:$(HOME)/.%=%)) $@
