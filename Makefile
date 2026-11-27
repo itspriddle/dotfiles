@@ -1,9 +1,8 @@
 .DEFAULT_GOAL := help
 
 PARTS = \
-	agignore ctags direnvrc gemrc gitconfig gitignore hushlogin \
-	icalBuddyConfig.plist inputrc irbrc irb.d my.cnf psqlrc rgignore \
-	ruby-version screenrc tmux.d tmux.conf vim zshenv zshrc
+	ctags direnvrc gitconfig gitignore hushlogin inputrc rgignore screenrc \
+	tmux.d tmux.conf vim/vimrc zshenv zshrc
 
 LINKS = $(addprefix $(HOME)/., $(PARTS))
 PREFIX ?= /usr/local
